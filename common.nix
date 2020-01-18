@@ -17,7 +17,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim
+    wget curl
+    vim
+    tmux
   ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
