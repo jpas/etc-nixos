@@ -22,6 +22,14 @@
     tmux
   ];
 
+  # List fonts installed in system.
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    libertinus
+    iosevka
+  ];
+
   # Enable the Keybase daemon and filesystem.
   services.keybase.enable = true;
   services.kbfs.enable = true;
