@@ -72,6 +72,7 @@
   environment.systemPackages = with pkgs; [
     papirus-icon-theme
     arc-theme
+    firefox
   ];
 
   #environment.pathsToLink = [ "/share" ];
