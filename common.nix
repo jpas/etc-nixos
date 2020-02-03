@@ -29,6 +29,7 @@
     noto-fonts-cjk
     libertinus
     iosevka
+    jetbrains-mono
   ];
 
   # Enable the Keybase daemon and filesystem.
