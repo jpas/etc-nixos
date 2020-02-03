@@ -5,10 +5,11 @@
 { config, pkgs, ... }:
 {
   # Select internationalisation properties.
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_CA.UTF-8";
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
   };
 
   # Set your time zone.
@@ -52,5 +53,5 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "19.09"; # Did you read the comment?
+  system.stateVersion = "unstable"; # Did you read the comment?
 }
