@@ -24,13 +24,16 @@
   ];
 
   # List fonts installed in system.
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    libertinus
-    iosevka
-    jetbrains-mono
-  ];
+  fonts = {
+    fontconfig.penultimate.enable = true;
+    fonts = with pkgs; [
+      #font-awesome-5
+      libertinus
+      noto-fonts
+      noto-fonts-cjk
+      #nerdfonts
+    ];
+  };
 
   # Enable the Keybase daemon and filesystem.
   services.keybase.enable = true;
