@@ -58,4 +58,6 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "unstable"; # Did you read the comment?
+
+  system.autoUpgrade.enable = true;
 }
