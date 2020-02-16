@@ -15,6 +15,12 @@
   # Set your time zone.
   time.timeZone = "America/Regina";
 
+  environment.loginShellInit = ''
+    if [ -r "$HOME/.profile" ]; then
+        . "$HOME/.profile"
+    fi
+  '';
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
