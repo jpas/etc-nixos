@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   users.users.jpas = {
     isNormalUser = true;

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   users.users.kbell = {
     isNormalUser = true;
