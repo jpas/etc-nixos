@@ -27,11 +27,14 @@
   fonts = {
     fontconfig.penultimate.enable = true;
     fonts = with pkgs; [
-      #font-awesome-5
+      dejavu_fonts
+      hack-font
       libertinus
+      nerdfonts
       noto-fonts
       noto-fonts-cjk
-      #nerdfonts
+      noto-fonts-emoji
+      noto-fonts-extra
     ];
   };
 
