@@ -30,7 +30,6 @@
       dejavu_fonts
       hack-font
       libertinus
-      nerdfonts
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
