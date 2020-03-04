@@ -15,7 +15,9 @@
     # Enable touchpad support.
     libinput.enable = true;
 
-    displayManager.sddm.enable = true;
+    displayManager.gdm.enable = true;
+
+    desktopManager.gnome3.enable = true;
 
     windowManager.i3 = {
       enable = true;
@@ -23,13 +25,14 @@
     };
   };
 
-  #environment.extraInit = ''
-  #  rm -f ~/.config/Trolltech.conf
-  #  rm -f ~/.config/gtk-3.0/settings.ini
+  environment.extraInit = ''
+    # remove these two to maintain consistency
+    rm -f ~/.config/Trolltech.conf
+    rm -f ~/.config/gtk-3.0/settings.ini
+  '';
 
   #  # GTK3: add arc theme to search path for themes
   #  export XDG_DATA_DIRS="${pkgs.arc-theme}/share:$XDG_DATA_DIRS"
-
 
   #  # ensure xdg home is set up properly
   #  export XDG_CONFIG_HOME=$HOME/.config
@@ -46,13 +49,13 @@
   #  mode = "444";
   #};
 
-  qt5 = {
-    enable = true;
-    style = "gtk2";
-    platformTheme = "gtk2";
-  };
+  #qt5 = {
+  #  enable = true;
+  #  style = "gtk2";
+  #  platformTheme = "gtk2";
+  #};
 
-  environment.etc."gtk-2.0/gtkrc" = {
+  environment.etc."xdg/gtk-2.0/gtkrc" = {
     text = ''
       gtk-icon-theme-name="Papirus-Dark"
       gtk-theme-name="Arc-Dark"
@@ -60,7 +63,7 @@
     mode = "444";
   };
 
-  environment.etc."gtk-3.0/settings.ini" = {
+  environment.etc."xdg/gtk-3.0/settings.ini" = {
     text = ''
       [Settings]
       gtk-icon-theme-name=Papirus-Dark
