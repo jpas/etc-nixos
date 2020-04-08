@@ -1,47 +1,37 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
+  imports = [
+    ../hardware-configuration.nix
+    ./base-packages.nix
+  ];
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
+  # Boot faster!
+  boot.loader.timeout = 1;
 
   # Set your time zone.
   time.timeZone = "America/Regina";
 
-  environment.loginShellInit = ''
-    if [ -r "$HOME/.profile" ]; then
-        . "$HOME/.profile"
-    fi
-  '';
+  # Select internationalisation properties.
+  i18n = {
+    defaultLocale = "en_CA.UTF-8";
+  };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget curl
-    vim
-    tmux
-  ];
+  console = {
+    useXkbConfig = true;
 
-  # List fonts installed in system.
-  fonts = {
-    fontconfig.penultimate.enable = true;
-    fonts = with pkgs; [
-      dejavu_fonts
-      hack-font
-      libertinus
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      noto-fonts-extra
+    font = "Lat2-Terminus16";
+    colors = [
+      # gruvbox dark
+      "282828" "cc241d" "98971a" "d79921" "458588" "b16286" "689d6a" "a89984"
+      "928374" "fb4934" "b8bb26" "fabd2f" "83a598" "d3869b" "8ec07c" "ebdbb2"
     ];
   };
 
-  # Enable the Keybase daemon and filesystem.
-  services.keybase.enable = true;
-  services.kbfs.enable = true;
+  services.xserver = {
+    # Does not enable xserver, but make sure the keymap is in sync
+    layout = "us";
+    xkbOptions = "caps:swapescape";
+  };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -63,5 +53,12 @@
   # should.
   system.stateVersion = "unstable"; # Did you read the comment?
 
+  # We like to live really dangerously!
   system.autoUpgrade.enable = true;
+
+  nix = {
+    optimise.automatic = true;
+    gc.automatic = true;
+    gc.options = "--delete-older-than 7d";
+  };
 }
