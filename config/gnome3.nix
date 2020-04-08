@@ -1,8 +1,5 @@
-{ pkgs, ... }:
-{
-  imports = [
-    ./xserver.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./xserver.nix ];
 
   services.xserver = {
     displayManager.gdm.enable = true;
@@ -11,14 +8,11 @@
     desktopManager.xterm.enable = false;
   };
 
-  environment.systemPackages = (with pkgs; [
-    alacritty # replaces gnome-terminal
-    firefox # replaces epiphany
-  ] ++ (with gnomeExtensions; [
-    gsconnect
-    caffeine
-    draw-on-your-screen
-  ]));
+  environment.systemPackages = (with pkgs;
+    [
+      alacritty # replaces gnome-terminal
+      firefox # replaces epiphany
+    ] ++ (with gnomeExtensions; [ gsconnect caffeine draw-on-your-screen ]));
 
   networking.firewall.allowedUDPPorts = [
     1716 # open for gsconnect

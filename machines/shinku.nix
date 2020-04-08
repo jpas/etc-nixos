@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   imports = [
     # Include custom generic configurations.
     ../common.nix

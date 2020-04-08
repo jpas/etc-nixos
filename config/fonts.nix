@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   fonts = {
     fontconfig.penultimate.enable = true;
     fonts = with pkgs; [

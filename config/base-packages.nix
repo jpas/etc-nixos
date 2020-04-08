@@ -1,9 +1,3 @@
-{ pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    curl
-    neovim
-    tmux
-    wget
-  ];
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ curl neovim tmux wget ];
 }

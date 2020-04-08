@@ -1,6 +1,1 @@
-{ ... }:
-{
-  imports = [
-    <home-manager/nixos>
-  ];
-}
+{ ... }: { imports = [ <home-manager/nixos> ]; }

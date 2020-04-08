@@ -1,9 +1,5 @@
-{ config, ... }:
-{
-  imports = [
-    ../hardware-configuration.nix
-    ./base-packages.nix
-  ];
+{ config, ... }: {
+  imports = [ ../hardware-configuration.nix ./base-packages.nix ];
 
   # Boot faster!
   boot.loader.timeout = 1;
@@ -12,9 +8,7 @@
   time.timeZone = "America/Regina";
 
   # Select internationalisation properties.
-  i18n = {
-    defaultLocale = "en_CA.UTF-8";
-  };
+  i18n = { defaultLocale = "en_CA.UTF-8"; };
 
   console = {
     useXkbConfig = true;
@@ -22,8 +16,22 @@
     font = "Lat2-Terminus16";
     colors = [
       # gruvbox dark
-      "282828" "cc241d" "98971a" "d79921" "458588" "b16286" "689d6a" "a89984"
-      "928374" "fb4934" "b8bb26" "fabd2f" "83a598" "d3869b" "8ec07c" "ebdbb2"
+      "282828"
+      "cc241d"
+      "98971a"
+      "d79921"
+      "458588"
+      "b16286"
+      "689d6a"
+      "a89984"
+      "928374"
+      "fb4934"
+      "b8bb26"
+      "fabd2f"
+      "83a598"
+      "d3869b"
+      "8ec07c"
+      "ebdbb2"
     ];
   };
 
@@ -45,7 +53,8 @@
   users.mutableUsers = false;
 
   # Prevent lockout...
-  users.users.root.hashedPassword = "$6$nSxJ1J4lJ5w$PoC7DaVweDBiorbQfiWmnOkWAnRsHL2sYgP5LN2sAZr2EETZZAKWnYtEJ/9VRtLHGaISxEgz7qglme205lQ0y/";
+  users.users.root.hashedPassword =
+    "$6$nSxJ1J4lJ5w$PoC7DaVweDBiorbQfiWmnOkWAnRsHL2sYgP5LN2sAZr2EETZZAKWnYtEJ/9VRtLHGaISxEgz7qglme205lQ0y/";
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

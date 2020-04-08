@@ -1,9 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     #_1password
-    (hunspellWithDicts (with pkgs.hunspellDicts; [
-      en_CA-large
-    ]))
+    (hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]))
     chezmoi
     coreutils
     exa
@@ -54,9 +52,7 @@
 
   programs.readline = {
     enable = true;
-    variables = {
-      editing-mode = "vi";
-    };
+    variables = { editing-mode = "vi"; };
   };
 
   programs.ssh.enable = false;
@@ -69,7 +65,7 @@
   services.lorri.enable = true;
   services.nextcloud-client.enable = false;
 
-  dconf.settings = {};
+  dconf.settings = { };
 
   qt = {
     enable = true;
