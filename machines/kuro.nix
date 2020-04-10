@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+let
+  hostName = "kuro";
+  domain = "jpas.xyz";
+in {
   imports = [
     ../config/base.nix
     ../roles/laptop.nix
@@ -7,8 +11,9 @@
   ];
 
   # Define your hostname.
-  networking.hostName = "kuro";
-  networking.domain = "jpas.xyz";
+  networking.hostName = "${hostName}.${domain}";
+  networking.domain = domain;
+  services.avahi.hostName = hostName;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
