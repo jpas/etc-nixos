@@ -63,7 +63,7 @@
   system.stateVersion = "unstable"; # Did you read the comment?
 
   # We like to live really dangerously!
-  system.autoUpgrade.enable = true;
+  system.autoUpgrade.enable = false;
 
   nix = {
     optimise.automatic = true;

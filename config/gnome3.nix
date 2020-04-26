@@ -12,7 +12,12 @@
     [
       alacritty # replaces gnome-terminal
       firefox # replaces epiphany
-    ] ++ (with gnomeExtensions; [ gsconnect caffeine draw-on-your-screen ]));
+      vlc
+    ] ++ (with gnomeExtensions; [
+      gsconnect
+      caffeine
+      #draw-on-your-screen # not on stable, yet
+    ]));
 
   networking.firewall.allowedUDPPorts = [
     1716 # open for gsconnect

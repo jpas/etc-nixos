@@ -75,8 +75,8 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Arc-Dark";
-      package = pkgs.arc-theme;
+      name = "vimix-dark-laptop-doder";
+      package = pkgs.vimix-gtk-themes;
     };
     iconTheme = {
       name = "Papirus-Dark";

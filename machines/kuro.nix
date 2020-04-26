@@ -19,6 +19,9 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable firmware update daemon.
+  services.fwupd.enable = true;
+
   # Lets try some bleeding stuff to make WiFi work...
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
 
