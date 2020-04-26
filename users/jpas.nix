@@ -11,9 +11,8 @@
       "networkmanager"
     ];
 
-    # Generated with `mkpasswd -m sha-512`
-    hashedPassword =
-      "$6$IUhiVYbf1uNK2vC$WqRJsg80aoenjtn1EQ1reJivbZ2Yew5LzP1sWAlTvpF0iwqTET5BV6IJzGpB9QyFoGerlxSnQ/lCj1RCfh1Ax.";
+    # password is in secret/passwords.nix
+
     isNormalUser = true;
     createHome = true;
   };

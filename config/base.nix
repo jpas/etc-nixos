@@ -1,5 +1,9 @@
 { config, ... }: {
-  imports = [ ../hardware-configuration.nix ./base-packages.nix ];
+  imports = [
+    ./base-packages.nix
+    ../hardware-configuration.nix
+    ../secret/passwords.nix
+  ];
 
   # Boot faster!
   boot.loader.timeout = 1;
@@ -38,7 +42,9 @@
   services.xserver = {
     # Does not enable xserver, but make sure the keymap is in sync
     layout = "us";
-    xkbOptions = "caps:swapescape";
+
+    # TODO: fix not being set in gnome3
+    xkbOptions = "caps:swapescape"; # swap 'caps lock' and 'esc'
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -46,15 +52,13 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  # root password is set in secret/passwords.nix
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   # Disble mutation of users.
   users.mutableUsers = false;
-
-  # Prevent lockout...
-  users.users.root.hashedPassword =
-    "$6$nSxJ1J4lJ5w$PoC7DaVweDBiorbQfiWmnOkWAnRsHL2sYgP5LN2sAZr2EETZZAKWnYtEJ/9VRtLHGaISxEgz7qglme205lQ0y/";
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

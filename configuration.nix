@@ -1,1 +1,0 @@
-machines/kuro.nix
