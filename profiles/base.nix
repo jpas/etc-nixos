@@ -1,8 +1,14 @@
-{ config, ... }: {
+{ pkgs, ... }: {
   imports = [
-    ./base-packages.nix
     ../hardware-configuration.nix
-    ../secret/passwords.nix
+  ];
+
+  # Essential packages.
+  environment.systemPackages = with pkgs; [
+    curl wget
+    neovim
+    tmux
+    manpages
   ];
 
   # Boot faster!
@@ -12,12 +18,10 @@
   time.timeZone = "America/Regina";
 
   # Select internationalisation properties.
-  i18n = { defaultLocale = "en_CA.UTF-8"; };
+  i18n.defaultLocale = "en_CA.UTF-8";
 
   console = {
     useXkbConfig = true;
-
-    font = "Lat2-Terminus16";
     colors = [
       # gruvbox dark
       "282828"
@@ -52,13 +56,17 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
-  # root password is set in secret/passwords.nix
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Disble mutation of users.
-  users.mutableUsers = false;
+  users = {
+    # Disble mutation of users.
+    mutableUsers = false;
+
+    # Read root's hashed password from file to prevent lockout
+    users.root.hashedPassword = (import ../secrets/passwords.nix).root;
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -74,4 +82,5 @@
     gc.automatic = true;
     gc.options = "--delete-older-than 7d";
   };
+
 }

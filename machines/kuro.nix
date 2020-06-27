@@ -1,33 +1,21 @@
 { lib, pkgs, ... }:
-let
-  hostName = "kuro";
-  domain = "jpas.xyz";
-in {
+{
+  # Define your hostname.
+  networking.hostName = "kuro";
+
   imports = [
-    ../config/base.nix
-    ../roles/laptop.nix
-    ../roles/workstation.nix
+    ../hardware/dell-xps-13-9300.nix
+    ../hardware/logitech-mx-master-3.nix
+
+    ../profiles/graphical.nix
     ../users/jpas.nix
   ];
 
-  # Define your hostname.
-  networking.hostName = "${hostName}.${domain}";
-  networking.domain = domain;
-  services.avahi.hostName = hostName;
+  networking.firewall.allowedUDPPorts = [
+    34197 # open for factorio
+  ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Enable firmware update daemon.
-  services.fwupd.enable = true;
-
-  # Lets try some bleeding stuff to make WiFi work...
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
-
-  environment.systemPackages = with pkgs;
-    [
-      libsmbios # For Dell BIOS/UEFI
-    ];
+  # Enable documentation for development
+  documentation.dev.enable = true;
 }
 
