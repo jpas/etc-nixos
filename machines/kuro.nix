@@ -1,5 +1,4 @@
-{ lib, pkgs, ... }:
-{
+{ lib, pkgs, ... }: {
   # Define your hostname.
   networking.hostName = "kuro";
 

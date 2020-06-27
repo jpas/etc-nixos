@@ -1,9 +1,5 @@
-{ config, pkgs, ... }:
-{
-  imports = [
-    ./base.nix
-    ../services/gnome.nix
-  ];
+{ config, pkgs, ... }: {
+  imports = [ ./base.nix ../services/gnome.nix ];
 
   services.printing.enable = true;
 

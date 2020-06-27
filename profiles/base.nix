@@ -1,15 +1,8 @@
-{ pkgs, ... }: {
-  imports = [
-    ../hardware-configuration.nix
-  ];
+{ pkgs, options, ... }: {
+  imports = [ ../hardware-configuration.nix ];
 
   # Essential packages.
-  environment.systemPackages = with pkgs; [
-    curl wget
-    neovim
-    tmux
-    manpages
-  ];
+  environment.systemPackages = with pkgs; [ curl wget neovim tmux manpages ];
 
   # Boot faster!
   boot.loader.timeout = 1;
@@ -55,7 +48,6 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

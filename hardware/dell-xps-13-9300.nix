@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
     <nixos-hardware/dell/xps/13-9300> # TODO: upstream...
   ];
