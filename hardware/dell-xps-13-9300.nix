@@ -3,10 +3,6 @@
     <nixos-hardware/dell/xps/13-9300> # TODO: upstream...
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   environment.systemPackages = [
     pkgs.libsmbios # For Dell BIOS/UEFI
   ];
@@ -27,6 +23,6 @@
   services.tlp.enable = true;
   services.thermald.enable = true;
 
-  # WiFi drivers do not work on Linux < 5.7
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_5_7;
+  # WiFi drivers do not work on Linux < 5.7, this should be at least that.
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
 }

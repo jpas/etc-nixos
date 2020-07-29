@@ -1,6 +1,13 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  #neuron = (let
+  #  rev = "0c1a2296acd532a1cc54c370ddea8d012224c26e";
+  #  src = builtins.fetchTarball
+  #    "https://github.com/srid/neuron/archive/${rev}.tar.gz";
+  #in import src { });
+in rec {
   home.packages = with pkgs; [
-    #_1password
+    _1password
     (hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]))
     chezmoi
     coreutils
@@ -16,15 +23,29 @@
     tmux
     file
     nixfmt
+    #neuron # TODO: cachix install?
 
     # gui
     kitty
-    #discord
+    discord
     emacs
     gnome3.gnome-tweaks
     signal-desktop
-
+    steam
   ];
+
+  #systemd.user.services.neuron = {
+  #  Unit.Description = "Neuron zettelkasten service";
+  #  Install.WantedBy = [ "graphical-session.target" ];
+  #  Service = {
+  #    ExecStart = "${neuron}/bin/neuron rib -wS";
+  #  };
+  #};
+
+  nixpkgs.config = {
+    # TODO: sync with ~/.config/nixpkgs/config.nix
+    allowUnfree = true;
+  };
 
   programs.bash.enable = false;
   programs.bat.enable = true;

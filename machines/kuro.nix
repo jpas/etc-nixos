@@ -7,6 +7,9 @@
     ../hardware/logitech-mx-master-3.nix
 
     ../profiles/graphical.nix
+
+    ../services/systemd-boot.nix
+
     ../users/jpas.nix
   ];
 
@@ -17,4 +20,3 @@
   # Enable documentation for development
   documentation.dev.enable = true;
 }
-
