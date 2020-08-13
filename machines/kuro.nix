@@ -9,12 +9,9 @@
     ../profiles/graphical.nix
 
     ../services/systemd-boot.nix
+    ../services/games
 
     ../users/jpas.nix
-  ];
-
-  networking.firewall.allowedUDPPorts = [
-    34197 # open for factorio
   ];
 
   # Enable documentation for development

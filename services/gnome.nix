@@ -7,6 +7,8 @@
     desktopManager.xterm.enable = false;
   };
 
+  services.pipewire.enable = true;
+
   environment.systemPackages = (with pkgs;
     [
       kitty # replaces gnome-terminal

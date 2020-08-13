@@ -1,6 +1,8 @@
-{ ... }: {
-  users.users.kbell = {
-    isNormalUser = true;
-    createHome = true;
-  };
+(import ./user.nix) "kbell" {
+  uid = 1001;
+  extraGroups = [
+    "audio"
+    "scanner"
+    "networkmanager"
+  ];
 }
