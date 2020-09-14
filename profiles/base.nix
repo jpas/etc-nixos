@@ -7,6 +7,8 @@
   # Boot faster!
   boot.loader.timeout = 1;
 
+  boot.tmpOnTmpfs = true;
+
   # Set your time zone.
   time.timeZone = "America/Regina";
 
