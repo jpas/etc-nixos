@@ -1,56 +1,40 @@
 { pkgs, ... }:
 let
-  #neuron = (let
-  #  rev = "0c1a2296acd532a1cc54c370ddea8d012224c26e";
-  #  src = builtins.fetchTarball
-  #    "https://github.com/srid/neuron/archive/${rev}.tar.gz";
-  #in import src { });
+  nixosConfig = (import <nixpkgs/nixos> {}).config;
+  hasGUI = nixosConfig.services.xserver.enable;
 in rec {
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let
+    hunspell = hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]);
+  in [
+    #scholar
     _1password
-    (hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]))
     chezmoi
     coreutils
     exa
     fd
+    file
     fzf
     git
     gnumake
+    hunspell
     modd
+    nixfmt
     python39
     ripgrep
-    #scholar
     tmux
-    file
-    nixfmt
-    #neuron # TODO: cachix install?
-
-    # gui
-    kitty
+  ] ++ (if hasGUI 
+  then [
     discord
-    emacs
     gnome3.gnome-tweaks
+    kitty
     signal-desktop
     steam
-  ];
-
-  #systemd.user.services.neuron = {
-  #  Unit.Description = "Neuron zettelkasten service";
-  #  Install.WantedBy = [ "graphical-session.target" ];
-  #  Service = {
-  #    ExecStart = "${neuron}/bin/neuron rib -wS";
-  #  };
-  #};
-
-  #nixpkgs.config = {
-  #  # TODO: sync with ~/.config/nixpkgs/config.nix
-  #  allowUnfree = true;
-  #};
+  ] 
+  else []);
 
   programs.bash.enable = false;
   programs.bat.enable = true;
   programs.direnv.enable = true;
-  programs.emacs.enable = false;
 
   programs.go = {
     enable = true;
@@ -58,7 +42,10 @@ in rec {
   };
 
   programs.firefox = {
+    # This doesn't work properly yet...
     enable = false;
+    #enable = hasGUI;
+
     package = pkgs.firefox-wayland;
     profiles.jpas = {
       # TODO: extensions?
@@ -163,18 +150,17 @@ in rec {
   programs.texlive.enable = false;
   programs.tmux.enable = false;
 
-  services.emacs.enable = false;
   services.lorri.enable = true;
 
   dconf.settings = { };
 
   qt = {
-    enable = true;
+    enable = hasGUI;
     platformTheme = "gnome";
   };
 
   gtk = {
-    enable = true;
+    enable = hasGUI;
     theme = {
       name = "Pop-dark";
       package = pkgs.pop-gtk-theme;

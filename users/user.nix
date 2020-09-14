@@ -6,5 +6,5 @@ name: user:
     isNormalUser = true;
     createHome = true;
   } // user;
-  home-manager.users."${name}" = import (./. + "/${name}-home-configuration.nix");
+  home-manager.users."${name}" = import (./. + "/${name}/home-configuration.nix");
 }

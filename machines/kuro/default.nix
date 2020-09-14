@@ -11,7 +11,7 @@
     ../../services/systemd-boot.nix
     ../../services/games
 
-    ../../users/jpas.nix
+    ../../users/jpas
   ];
 
   # Enable documentation for development

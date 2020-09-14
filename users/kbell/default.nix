@@ -1,4 +1,4 @@
-(import ./user.nix) "kbell" {
+(import ../user.nix) "kbell" {
   uid = 1001;
   extraGroups = [
     "audio"

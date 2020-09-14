@@ -9,7 +9,7 @@
     ../services/systemd-boot.nix
     ../services/games
 
-    ../users/jpas.nix
-    ../users/kbell.nix
+    ../users/jpas
+    ../users/kbell
   ];
 }
