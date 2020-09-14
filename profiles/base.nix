@@ -1,5 +1,5 @@
 { pkgs, options, ... }: {
-  imports = [ ../cachix.nix ../hardware-configuration.nix ];
+  imports = [ ../hardware-configuration.nix ];
 
   # Essential packages.
   environment.systemPackages = with pkgs; [ curl wget neovim tmux manpages ];
