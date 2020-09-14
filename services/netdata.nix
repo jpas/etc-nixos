@@ -1,0 +1,4 @@
+{ ... }:
+{
+  services.netdata.enable = true;
+}

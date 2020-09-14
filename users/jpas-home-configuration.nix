@@ -42,10 +42,10 @@ in rec {
   #  };
   #};
 
-  nixpkgs.config = {
-    # TODO: sync with ~/.config/nixpkgs/config.nix
-    allowUnfree = true;
-  };
+  #nixpkgs.config = {
+  #  # TODO: sync with ~/.config/nixpkgs/config.nix
+  #  allowUnfree = true;
+  #};
 
   programs.bash.enable = false;
   programs.bat.enable = true;
@@ -58,7 +58,7 @@ in rec {
   };
 
   programs.firefox = {
-    enable = true;
+    enable = false;
     package = pkgs.firefox-wayland;
     profiles.jpas = {
       # TODO: extensions?

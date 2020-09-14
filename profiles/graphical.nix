@@ -13,9 +13,6 @@
   hardware.pulseaudio.support32Bit = config.hardware.pulseaudio.enable;
 
   fonts = {
-    # Improve font rendering
-    fontconfig.penultimate.enable = true;
-
     fonts = with pkgs; [
       dejavu_fonts
       hack-font
@@ -26,5 +23,15 @@
       noto-fonts-emoji
       noto-fonts-extra
     ];
+
+    # TODO: set default fonts
+    fontconfig = {
+      defaultFonts = {
+        # monospace = [];
+        # serif = [];
+        # sansSerif = [];
+        # emoji = [];
+      };
+    };
   };
 }

@@ -39,9 +39,6 @@
   services.xserver = {
     # Does not enable xserver, but make sure the keymap is in sync
     layout = "us";
-
-    # TODO: fix not being set in gnome3
-    xkbOptions = "caps:swapescape"; # swap 'caps lock' and 'esc'
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -69,10 +66,18 @@
   # We like to live really dangerously!
   system.autoUpgrade.enable = false;
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   nix = {
     optimise.automatic = true;
     gc.automatic = true;
     gc.options = "--delete-older-than 7d";
+
+    nixPath =
+      options.nix.nixPath.default ++
+      [ "nixpkgs-overlays=/etc/nixos/overlays" ]; # TODO: install instead?
   };
 
 }
