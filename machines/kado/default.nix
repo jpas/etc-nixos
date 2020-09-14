@@ -14,11 +14,11 @@
   ];
 
   imports = [
-    ../profiles/base.nix
+    ../../profiles/base.nix
 
-    ../services/systemd-boot.nix
-    ../services/docker.nix
+    ../../services/systemd-boot.nix
+    ../../services/docker.nix
 
-    ../users/jpas
+    ../../users/jpas
   ];
 }

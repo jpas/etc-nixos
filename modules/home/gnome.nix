@@ -1,19 +1,19 @@
 { pkgs, ... }:
-let
-  hasGUI = (import <nixpkgs/nixos> {}).config.services.xserver.enable;
-in
-{
-  home.packages = with pkgs; [
+let 
+hasGUI = (import <nixpkgs/nixos> { }).config.services.xserver.enable;
+in 
+if hasGUI then {
+  home.packages = with pkgs; [ 
     gnome3.gnome-tweaks
   ];
 
   qt = {
-    enable = hasGUI;
+    enable = true;
     platformTheme = "gnome";
   };
 
   gtk = {
-    enable = hasGUI;
+    enable = true;
     theme = {
       name = "Pop-dark";
       package = pkgs.pop-gtk-theme;
@@ -23,4 +23,5 @@ in
       package = pkgs.papirus-icon-theme;
     };
   };
-}
+} 
+else { }
