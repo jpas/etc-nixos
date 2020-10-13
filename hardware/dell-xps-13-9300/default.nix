@@ -27,6 +27,8 @@
 
   # Thermal management for laptops.
   services.tlp.enable = lib.mkDefault true;
+
+  # TODO: figure out which config file to use from dptfxtract
   services.thermald.enable = lib.mkDefault true;
 
   # WiFi drivers do not work on Linux < 5.7, this should be at least that.
