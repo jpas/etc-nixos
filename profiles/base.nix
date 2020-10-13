@@ -68,8 +68,13 @@
   # We like to live really dangerously!
   system.autoUpgrade.enable = false;
 
-  nixpkgs.config = {
-    allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+    overlays = [
+      (import ../overlays/mine)
+    ];
   };
 
   nix = {
@@ -79,7 +84,6 @@
 
     nixPath =
       options.nix.nixPath.default ++
-      [ "nixpkgs-overlays=/etc/nixos/overlays" ]; # TODO: install instead?
+      [ "nixpkgs-overlays=/etc/nixos/lib/overlays-compat" ];
   };
-
 }
