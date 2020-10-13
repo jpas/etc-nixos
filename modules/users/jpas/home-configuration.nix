@@ -4,7 +4,7 @@ let
   hasGUI = nixosConfig.services.xserver.enable;
 in rec {
   imports = [
-    ../../modules/home
+    ../../home
   ];
 
   home.packages = with pkgs; let

@@ -1,5 +1,5 @@
 { pkgs, options, ... }: {
-  imports = [ ../hardware-configuration.nix ];
+  imports = [ ../../hardware-configuration.nix ];
 
   # Essential packages.
   environment.systemPackages = with pkgs; [ curl wget neovim tmux manpages ];
@@ -56,7 +56,7 @@
     mutableUsers = false;
 
     # Read root's hashed password from file to prevent lockout
-    users.root.hashedPassword = (import ../secrets/passwords.nix).root;
+    users.root.hashedPassword = (import ../../secrets/passwords.nix).root;
   };
 
   # This value determines the NixOS release with which your system is to be
@@ -73,7 +73,7 @@
       allowUnfree = true;
     };
     overlays = [
-      (import ../overlays/mine)
+      (import ../../overlays/mine)
     ];
   };
 
