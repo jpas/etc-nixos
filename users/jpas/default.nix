@@ -1,4 +1,4 @@
-(import ../user.nix) "jpas" {
+(import ../../lib/user.nix) "jpas" {
   uid = 1000;
   extraGroups = [
     "wheel" # Enable ‘sudo’ for the user.
