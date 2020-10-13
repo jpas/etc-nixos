@@ -5,15 +5,15 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   imports = [
-    ../../hardware/dell-xps-13-9300
-    ../../hardware/logitech-mx-master-3.nix
+    ../../modules/hardware/dell-xps-13-9300
+    ../../modules/hardware/logitech-mx-master-3.nix
 
-    ../../profiles/graphical.nix
+    ../../modules/profiles/graphical.nix
 
-    ../../services/systemd-boot.nix
-    ../../services/games
+    ../../modules/services/systemd-boot.nix
+    ../../modules/services/games
 
-    ../../users/jpas
+    ../../modules/users/jpas
   ];
 
   # Enable documentation for development

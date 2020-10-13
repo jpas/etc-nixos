@@ -7,18 +7,19 @@
     enp0s20f3.useDHCP = true;
   };
 
+  # TODO: these are wrong...
   networking.firewall.allowedUDPPorts = [
     80
     443
-    9091
+    9091 # What am I used for?
   ];
 
   imports = [
-    ../../profiles/base.nix
+    ../../modules/profiles/base.nix
 
-    ../../services/systemd-boot.nix
-    ../../services/docker.nix
+    ../../modules/services/systemd-boot.nix
+    ../../modules/services/docker.nix
 
-    ../../users/jpas
+    ../../modules/users/jpas
   ];
 }

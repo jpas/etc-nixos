@@ -2,14 +2,14 @@
   networking.hostName = "shiro"; # Define your hostname.
 
   imports = [
-    ../hardware/logitech-mx-master-3.nix
+    ../modules/hardware/logitech-mx-master-3.nix
 
-    ../profiles/graphical.nix
+    ../modules/profiles/graphical.nix
 
-    ../services/systemd-boot.nix
-    ../services/games
+    ../modules/services/systemd-boot.nix
+    ../modules/services/games
 
-    ../users/jpas
-    ../users/kbell
+    ../modules/users/jpas
+    ../modules/users/kbell
   ];
 }
