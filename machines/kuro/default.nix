@@ -2,6 +2,8 @@
   # Define your hostname.
   networking.hostName = "kuro";
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   imports = [
     ../../hardware/dell-xps-13-9300
     ../../hardware/logitech-mx-master-3.nix
