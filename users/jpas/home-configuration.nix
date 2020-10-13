@@ -10,27 +10,36 @@ in rec {
   home.packages = with pkgs; let
     hunspell = hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]);
   in [
-    #scholar
     _1password
     chezmoi
     coreutils
+    duf
     exa
     fd
     file
     fzf
     git
+    glances
     gnumake
     hunspell
     modd
     nixfmt
+    p7zip
+    pandoc
     python39
     ripgrep
+    rmapi
+    scholar
+    tectonic
     tmux
   ] ++ (if hasGUI
   then [
     discord
     signal-desktop
+    spotify
     steam
+    steam-run
+    zoom-us
   ]
   else []);
 

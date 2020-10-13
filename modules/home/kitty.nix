@@ -6,9 +6,11 @@ in
   programs.kitty = {
     enable = hasGUI;
 
-    font.name = "JetBrains Mono 9"; # TODO: use default monospace?
+    font.name = "JetBrains Mono"; # TODO: use default monospace?
 
     settings = {
+      font_size = 9;
+
       enable_audio_bell = false;
       visual_bell_duration = 0;
 
