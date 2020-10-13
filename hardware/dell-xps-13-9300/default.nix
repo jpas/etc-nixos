@@ -10,6 +10,9 @@
   # Enable touchpad support
   services.xserver.libinput.enable = lib.mkDefault true;
 
+  # Disbale i2c_hid touchpad, since it makes tons of IRQ/s...
+  boot.blacklistedKernelModules = [ "i2c_hid" ];
+
   # Enable firmware update daemon.
   services.fwupd.enable = lib.mkDefault true;
 
