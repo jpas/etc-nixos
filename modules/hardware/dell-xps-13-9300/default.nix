@@ -33,4 +33,10 @@
 
   # WiFi drivers do not work on Linux < 5.7, this should be at least that.
   boot.kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
+
+  # Enable fan monitoring
+  boot.initrd.kernelModules = lib.mkDefault [ "dell_smm_hwmon" ];
+  boot.extraModprobeConfig = lib.mkDefault ''
+    options dell-smm-hwmon ignore_dmi=1
+  '';
 }

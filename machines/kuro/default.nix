@@ -27,13 +27,4 @@
 
   # Disable thermald since it may get in the way of throttled
   services.thermald.enable = false;
-
-  # Enable fan monitoring
-  boot.initrd.kernelModules = [
-    "dell_smm_hwmon"
-  ];
-
-  boot.extraModprobeConfig = ''
-    options dell-smm-hwmon ignore_dmi=1
-  '';
 }
