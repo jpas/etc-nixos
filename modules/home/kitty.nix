@@ -9,7 +9,7 @@ in
     font.name = "JetBrains Mono"; # TODO: use default monospace?
 
     settings = {
-      font_size = 9;
+      font_size = 10;
 
       enable_audio_bell = false;
       visual_bell_duration = 0;
