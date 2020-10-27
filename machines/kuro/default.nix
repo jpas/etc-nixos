@@ -14,6 +14,8 @@
     ../../modules/services/games
 
     ../../modules/users/jpas
+
+    ./pulseaudio.nix
   ];
 
   # Enable documentation for development

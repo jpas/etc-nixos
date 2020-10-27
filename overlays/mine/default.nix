@@ -12,4 +12,5 @@ in rec {
   fancon = callPackage ./pkgs/fancon { };
   scholar = callPackage ./pkgs/scholar { };
   srvfb = callPackage ./pkgs/srvfb { };
+  librnnoise-ladspa = callPackage ./pkgs/librnnoise-ladspa { };
 }
