@@ -17,14 +17,9 @@
     ] ++ (with gnomeExtensions; [
       caffeine
       draw-on-your-screen # not on stable, yet
-      gsconnect
       sound-output-device-chooser
       window-is-ready-remover
     ]));
-
-  networking.firewall.allowedUDPPorts = [
-    1716 # open for gnomeExtensions.gsconnect
-  ];
 
   # TODO: Figure out how to set default themes, maybe look at dbus.
 
