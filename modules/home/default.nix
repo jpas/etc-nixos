@@ -13,5 +13,6 @@
     ./lorri.nix
     ./nvim.nix
     ./readline.nix
+    ./xdg.nix
   ];
 }
