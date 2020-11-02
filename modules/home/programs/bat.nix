@@ -18,4 +18,8 @@ in {
       gruvbox = builtins.readFile "${gruvbox-theme}/gruvbox.tmTheme";
     };
   };
+
+  programs.bash.shellAliases = {
+    cat = "bat";
+  };
 }

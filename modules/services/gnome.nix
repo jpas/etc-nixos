@@ -7,8 +7,6 @@
     desktopManager.xterm.enable = false;
   };
 
-  services.pipewire.enable = true;
-
   environment.systemPackages = (with pkgs;
     [
       kitty # replaces gnome-terminal
@@ -16,9 +14,10 @@
       vlc
     ] ++ (with gnomeExtensions; [
       caffeine
-      draw-on-your-screen # not on stable, yet
+      # draw-on-your-screen # not on stable, yet
       sound-output-device-chooser
       window-is-ready-remover
+      material-shell
     ]));
 
   # TODO: Figure out how to set default themes, maybe look at dbus.

@@ -14,11 +14,7 @@ in rec {
     chezmoi
     coreutils
     duf
-    exa
-    fd
     file
-    fzf
-    git
     glances
     gnumake
     hunspell
@@ -39,31 +35,19 @@ in rec {
     spotify
     steam
     steam-run
-    zoom-us
+    #zoom-us
   ]
   else []);
 
-  programs.bash.enable = false;
+  #programs.bash.enable = false;
 
-  programs.git.enable = false;
+  programs.git = {
+    userName = "Jarrod Pas";
+    userEmail = "jarrod@jarrodpas.com";
+  };
 
   programs.ssh.enable = false;
   programs.texlive.enable = false;
-  programs.tmux.enable = false;
 
   dconf.settings = { };
-
-  xdg = {
-    enable = true;
-    userDirs = {
-      desktop = "$HOME/opt";
-      documents = "$HOME/documents";
-      download = "$HOME/download";
-      music = "$HOME/music";
-      pictures = "$HOME/pictures";
-      publicShare = "$HOME/opt";
-      templates = "$HOME/opt";
-      videos = "$HOME/opt";
-    };
-  };
 }

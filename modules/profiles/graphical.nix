@@ -1,5 +1,15 @@
-{ config, pkgs, ... }: {
-  imports = [ ./base.nix ../services/gnome.nix ];
+{ config
+, pkgs
+, ...
+}:
+{
+  imports = [
+    ./base.nix
+    ../services/gnome.nix
+    # sound doesn't work in fshenv applications yet...
+    # ../services/pipewire.nix
+
+  ];
 
   services.printing.enable = true;
 
