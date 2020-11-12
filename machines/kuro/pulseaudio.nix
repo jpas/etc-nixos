@@ -23,16 +23,6 @@ let
     '';
 in {
   environment.systemPackages = [
-    librnnoise-ladspa
+    # librnnoise-ladspa
   ];
-
-  hardware.pulseaudio = {
-    extraConfig = ''
-    '';
-
-    daemon.config = {
-      default-sample-format = "s16le";
-      default-sample-rate = "48000";
-    };
-  };
 }

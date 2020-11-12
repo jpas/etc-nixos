@@ -39,4 +39,12 @@
   boot.extraModprobeConfig = lib.mkDefault ''
     options dell-smm-hwmon ignore_dmi=1
   '';
+
+  hardware.pulseaudio = {
+    daemon.config = {
+      avoid-resampling = lib.mkDefault true;
+      #default-sample-format = lib.mkDefault "s16le";
+      #default-sample-rate = lib.mkDefault "48000";
+    };
+  };
 }

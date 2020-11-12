@@ -18,6 +18,7 @@
       sound-output-device-chooser
       window-is-ready-remover
       material-shell
+      pop-shell
     ]));
 
   # TODO: Figure out how to set default themes, maybe look at dbus.
