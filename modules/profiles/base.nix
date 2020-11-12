@@ -2,7 +2,14 @@
   imports = [ ../../hardware-configuration.nix ];
 
   # Essential packages.
-  environment.systemPackages = with pkgs; [ curl wget neovim tmux manpages ];
+  environment.systemPackages = with pkgs; [ 
+    curl
+    kitty.terminfo
+    manpages
+    neovim
+    tmux
+    wget
+  ];
 
   # Boot faster!
   boot.loader.timeout = 1;
