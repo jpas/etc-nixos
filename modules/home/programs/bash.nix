@@ -32,7 +32,7 @@
 
           local prompt=""
 
-          if [[ -n "''${SSY_TTY}" ]]; then
+          if [[ -n "''${SSH_TTY}" ]]; then
             prompt+="''${BLUE}\u''${RESET} at ''${CYAN}\h''${RESET} in "
           fi
 
