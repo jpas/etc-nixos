@@ -6,6 +6,7 @@
 
   imports = [
     ../../modules/hardware/dell-xps-13-9300
+    ../../modules/hardware/dell-u2720q
     ../../modules/hardware/logitech-mx-master-3.nix
 
     ../../modules/profiles/graphical.nix
@@ -16,17 +17,18 @@
     ../../modules/users/jpas
 
     ./pulseaudio.nix
+    ./throttled.nix
   ];
 
   # Enable documentation for development
   documentation.dev.enable = true;
 
-  # Undervolting to improve battery life and temperatures.
-  services.throttled.enable = true;
-  # *** WARNING *** these were tweaked specifically for my machine, using them
-  # on your own machine may result in instability
-  services.throttled.extraConfig = builtins.readFile ./throttled.conf;
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
 
-  # Disable thermald since it may get in the way of throttled
-  services.thermald.enable = false;
+  security.audit = {
+    enable = true;
+    rules = [
+      "-w /home/jpas/Downloads -p arwx -k stopmakingthis"
+    ];
+  };
 }

@@ -56,7 +56,10 @@
   networking.useDHCP = false;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+  };
 
   users = {
     # Disble mutation of users.

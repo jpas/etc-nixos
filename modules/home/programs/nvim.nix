@@ -6,11 +6,11 @@
   };
 
   home.sessionVariables = {
-    VISUAL = "nvim";
-    EDITOR = "nvim";
+    VISUAL = "vim";
+    EDITOR = "vim";
   };
 
   programs.bash.shellAliases = {
-    vim = "nvim -p";
+    vim = "vim -p";
   };
 }

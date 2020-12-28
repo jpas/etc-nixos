@@ -12,7 +12,7 @@ in rec {
   fancon = callPackage ./pkgs/fancon { };
   scholar = callPackage ./pkgs/scholar { };
   srvfb = callPackage ./pkgs/srvfb { };
-  timeular = callPackage ./pkgs/timeular { };
+  #timeular = callPackage ./pkgs/timeular { };
   #noisetorch = callPackage ./pkgs/noisetorch { };
   librnnoise-ladspa = callPackage ./pkgs/librnnoise-ladspa { };
 
@@ -33,4 +33,16 @@ in rec {
   #    libpulseaudio = self.pipewire.pulse;
   #  };
   #});
+
+  ddccontrol-db = super.ddccontrol-db.overrideAttrs (old: rec {
+    version = "20201221";
+    name = "ddccontrol-db-${version}";
+
+    src = super.fetchFromGitHub {
+      owner = "ddccontrol";
+      repo = "ddccontrol-db";
+      rev = version;
+      sha256 = "1sryyjjad835mwc7a2avbij6myln8b824kjdr78gc9hh3p16929b";
+    };
+  });
 }

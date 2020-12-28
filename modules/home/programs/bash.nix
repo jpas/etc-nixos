@@ -16,6 +16,10 @@
       la = "ll -a";
     };
 
+    profileExtra = ''
+      export PATH="$HOME/.local/bin:$PATH"
+    '';
+
     initExtra = let
       promptConfig = ''
         _prompt_generate() {
