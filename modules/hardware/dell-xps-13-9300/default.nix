@@ -1,8 +1,14 @@
-{ lib, pkgs, ... }: {
+{ config
+, lib
+, pkgs
+, ...
+}:
+
+{
   imports = [
-    <nixos-hardware/dell/xps/13-9300> # TODO: upstream...
     ./dell-smm-hwmon.nix
     ./thermald
+    ./intel.nix
   ];
 
   environment.systemPackages = [
@@ -18,17 +24,16 @@
   # Enable firmware update daemon.
   services.fwupd.enable = lib.mkDefault true;
 
-  # Use only Intel driver for X11
-  services.xserver.videoDrivers = lib.mkDefault [ "intel" ];
-
-  # System specific tweaks...
-  # https://wiki.archlinux.org/index.php/Dell_XPS_13_(9300)
+  services.fstrim.enable = lib.mkDefault true;
 
   # Thermal management for laptops.
   services.tlp.enable = lib.mkDefault true;
 
-  # WiFi drivers do not work on Linux < 5.7, this should be at least that.
-  boot.kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
+  # This can be removed when the default kernel is at at least version 5.7.
+  # On versions older, WiFi will not work.
+  boot.kernelPackages = lib.mkIf
+    (lib.versionOlder pkgs.linux.version "5.6")
+    (lib.mkDefault pkgs.linuxPackages_latest);
 
   hardware.pulseaudio = {
     daemon.config = {
