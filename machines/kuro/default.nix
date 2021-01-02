@@ -5,8 +5,9 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   imports = [
-    ../../modules/hardware/dell-xps-13-9300
     ../../modules/hardware/dell-u2720q
+    ../../modules/hardware/dell-xps-13-9300
+    ../../modules/hardware/keychron
     ../../modules/hardware/logitech-mx-master-3.nix
 
     ../../modules/profiles/graphical.nix

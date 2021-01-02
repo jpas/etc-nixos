@@ -8,7 +8,6 @@ in
 if hasGUI then {
   home.packages = with pkgs; [
     gnome3.gnome-tweaks
-    pkgs.capitaine-cursors
   ];
 
   qt = {
@@ -18,17 +17,26 @@ if hasGUI then {
 
   gtk = {
     enable = true;
-    theme = {
-      name = "Materia-dark-compact";
-      package = pkgs.materia-theme;
-    };
-    iconTheme = {
-      name = "Pop";
-      package = pkgs.pop-icon-theme;
-    };
+    # theme = {
+    #   name = "Materia-dark-compact";
+    #   package = pkgs.materia-theme;
+    # };
+    # iconTheme = {
+    #   name = "Pop";
+    #   package = pkgs.pop-icon-theme;
+    # };
   };
 
   dconf.settings = {
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      screenshot = [];
+      screenshot-clip = [];
+      area-screenshot = [];
+      area-screenshot-clip = [ "Print" ];
+      window-screenshot = [];
+      window-screenshot-clip = [];
+    };
+
     "org/gnome/desktop/input-sources" = {
       # TODO(jpas): sources = [("xkb", "us")];
       xkb-options = [ "lv3:ralt_switch" "caps:escape" ];
