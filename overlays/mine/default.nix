@@ -20,6 +20,8 @@ in rec {
     pop-shell = callPackage ./pkgs/pop-shell { };
   };
 
+  intel-undervolt = callPackage ./pkgs/intel-undervolt { };
+
   #spotify = super.spotify-unwrapped.override {
   #  libpulseaudio = self.pipewire.pulse;
   #};
