@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
@@ -20,6 +21,8 @@
       kitty # replaces gnome-terminal
       firefox-wayland # replaces epiphany
       vlc
+      wl-clipboard
+      xclip
     ] ++ (with gnomeExtensions; [
       caffeine
       # draw-on-your-screen # not on stable, yet

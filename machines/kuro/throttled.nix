@@ -9,12 +9,12 @@
 
   # *** WARNING *** these were tweaked specifically for my machine, using them
   # on your own machine may result in instability
-  services.throttled.extraConfig = builtins.toFile "throttled.conf" (let
-    undervolt = rec {
-      core = -61;
-      gpu = 0;
-      uncore = 0;
-      analogIO = 0;
+  services.throttled.extraConfig = let
+    undervolt = {
+      core = "-61";
+      gpu = "0";
+      uncore = "0";
+      analogIO = "0";
     };
   in ''
     [GENERAL]
@@ -117,5 +117,5 @@
     # GPU:
     # # CPU cache max current (A)
     # CACHE:
-  '');
+  '';
 }

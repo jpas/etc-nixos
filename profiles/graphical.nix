@@ -5,10 +5,7 @@
 {
   imports = [
     ./base.nix
-    ../services/gnome.nix
-    # sound doesn't work in fshenv applications yet...
-    # ../services/pipewire.nix
-
+    ./gnome.nix
   ];
 
   services.printing.enable = true;
@@ -16,7 +13,7 @@
   # Enable OpenGL for 32-bit applications
   hardware.opengl = {
     enable = true;
-    driSupport32Bit = true;
+    driSupport32Bit = config.hardware.opengl.enable;
   };
 
   # Enable pulseaudio for 32-bit applications

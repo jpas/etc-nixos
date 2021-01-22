@@ -1,6 +1,8 @@
 name: user:
 { ... }: {
-  imports = [ ../services/home-manager.nix ];
+  imports = [
+    ../home-manager.nix
+  ];
   users.users."${name}" = {
     hashedPassword = (import ../../secrets/passwords.nix)."${name}";
     isNormalUser = true;

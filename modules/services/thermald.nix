@@ -1,8 +1,6 @@
 { lib, ... }:
 {
   services.thermald = {
-    enable = lib.mkDefault true;
-
     # Empty config to remove example config from logs
     configFile = lib.mkDefault (builtins.toFile "thermal-conf.xml.empty" ''
       <?xml version="1.0"?>

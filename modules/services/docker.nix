@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ lib, config, pkgs, ... }:
+with lib;
 {
   virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
+    autoPrune.enable = mkDefault config.virtualisation.docker.enable;
   };
 
-  environment.systemPackages = with pkgs; [
-    docker-compose
+  environment.systemPackages = mkIf config.virtualisation.docker.enable [
+    pkgs.docker-compose
   ];
 }

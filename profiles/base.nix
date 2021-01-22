@@ -1,8 +1,12 @@
-{ pkgs, options, ... }: {
-  imports = [ ../../hardware-configuration.nix ];
+{ pkgs, options, ... }:
+{
+  imports = [
+    ../modules/all-modules.nix
+    ../hardware-configuration.nix
+  ];
 
   # Essential packages.
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     curl
     kitty.terminfo
     manpages
@@ -14,7 +18,14 @@
   # Boot faster!
   boot.loader.timeout = 1;
 
-  boot.tmpOnTmpfs = true;
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  # XXX: 2020-01-20 turning on causes failed boots.
+  boot.tmpOnTmpfs = false;
 
   # Set your time zone.
   time.timeZone = "America/Regina";
@@ -66,14 +77,8 @@
     mutableUsers = false;
 
     # Read root's hashed password from file to prevent lockout
-    users.root.hashedPassword = (import ../../secrets/passwords.nix).root;
+    users.root.hashedPassword = (import ../secrets/passwords.nix).root;
   };
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "unstable"; # Did you read the comment?
 
   # We like to live really dangerously!
   system.autoUpgrade.enable = false;
@@ -83,7 +88,7 @@
       allowUnfree = true;
     };
     overlays = [
-      (import ../../overlays/mine)
+      (import ../overlays/mine)
     ];
   };
 
@@ -96,4 +101,10 @@
       options.nix.nixPath.default ++
       [ "nixpkgs-overlays=/etc/nixos/lib/overlays-compat" ];
   };
+
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  system.stateVersion = "unstable"; # Did you read the comment?
 }

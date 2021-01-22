@@ -1,30 +1,30 @@
 { lib, pkgs, ... }: {
-  # Define your hostname.
   networking.hostName = "kuro";
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  # Lets use a new kernel!
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
 
   imports = [
-    ../../modules/hardware/dell-u2720q
-    ../../modules/hardware/dell-xps-13-9300
-    ../../modules/hardware/keychron
-    ../../modules/hardware/logitech-mx-master-3.nix
+    ../../profiles/base.nix
+    ../../profiles/graphical.nix
+    ../../profiles/games.nix
 
-    ../../modules/profiles/graphical.nix
-
-    ../../modules/services/systemd-boot.nix
-    ../../modules/services/games
+    ../../profiles/hardware/dell-u2720q.nix
+    ../../profiles/hardware/dell-xps-13-9300.nix
+    ../../profiles/hardware/keychron-k3.nix
+    ../../profiles/hardware/logitech-mx-master-3.nix
 
     ../../modules/users/jpas
-
-    ./pulseaudio.nix
-    ./throttled.nix
   ];
 
   # Enable documentation for development
   documentation.dev.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
+  hardware.pulseaudio = {
+    daemon.config = {
+      avoid-resampling = true;
+    };
+  };
 
   security.audit = {
     enable = true;

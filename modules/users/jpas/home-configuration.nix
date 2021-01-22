@@ -5,6 +5,7 @@ let
 in rec {
   imports = [
     ../../home
+    ./nvim.nix
   ];
 
   home.packages = with pkgs; let
@@ -25,6 +26,7 @@ in rec {
     python39
     ripgrep
     rmapi
+    sage
     scholar
     tectonic
     tmux
@@ -33,8 +35,7 @@ in rec {
     discord
     signal-desktop
     spotify
-    steam
-    steam-run
+    desmume
     #zoom-us
   ]
   else []);
