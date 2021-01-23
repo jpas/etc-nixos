@@ -25,11 +25,4 @@
       avoid-resampling = true;
     };
   };
-
-  security.audit = {
-    enable = true;
-    rules = [
-      "-w /home/jpas/Downloads -p arwx -k stopmakingthis"
-    ];
-  };
 }
