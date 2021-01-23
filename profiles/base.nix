@@ -99,7 +99,7 @@
 
     nixPath =
       options.nix.nixPath.default ++
-      [ "nixpkgs-overlays=/etc/nixos/lib/overlays-compat" ];
+      [ "nixpkgs-overlays=/etc/nixos/overlays/compat" ];
   };
 
   # This value determines the NixOS release with which your system is to be
