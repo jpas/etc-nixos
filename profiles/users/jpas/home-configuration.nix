@@ -24,12 +24,12 @@ in rec {
     python39
     ripgrep
     rmapi
-    sage
     scholar
     tectonic
     tmux
   ] ++ (if hasGUI
   then [
+    sage
     discord
     signal-desktop
     spotify

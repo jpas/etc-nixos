@@ -1,5 +1,7 @@
-{ ... }: {
-  networking.hostName = "kado"; # Define your hostname.
+{ ... }: 
+{
+  networking.hostName = "kado"; 
+
   networking.interfaces = {
     enp0s20f0.useDHCP = true;
     enp0s20f1.useDHCP = true;
@@ -7,19 +9,27 @@
     enp0s20f3.useDHCP = true;
   };
 
-  # TODO: these are wrong...
-  networking.firewall.allowedUDPPorts = [
+  networking.firewall.allowedTCPPorts = [
     80
     443
     9091 # What am I used for?
+    3724 # trinitycore authserver
+    8085 # trinitycore worldserver
   ];
 
   imports = [
-    ../../modules/profiles/base.nix
-
-    ../../modules/services/systemd-boot.nix
-    ../../modules/services/docker.nix
+    ../../profiles/base.nix
 
     ../../modules/users/jpas
   ];
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "Wed *-*-1..7 4:00";
+    fileSystems = [ "/data" ];
+  };
+
+  services.fail2ban.enable = true;
+
+  virtualisation.docker.enable = true;
 }
