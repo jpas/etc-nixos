@@ -20,7 +20,7 @@
   imports = [
     ../../profiles/base.nix
 
-    ../../modules/users/jpas
+    ../../profiles/users/jpas
   ];
 
   services.btrfs.autoScrub = {
