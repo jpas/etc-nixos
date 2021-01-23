@@ -1,12 +1,16 @@
-name: user:
-{ ... }: {
-  imports = [
-    ../home-manager.nix
-  ];
-  users.users."${name}" = {
-    hashedPassword = (import ../../secrets/passwords.nix)."${name}";
+{ name, user, home }:
+
+{ ... }:
+{
+  users.users."${name}" = user // {
     isNormalUser = true;
-    createHome = true;
-  } // user;
-  home-manager.users."${name}" = import (../users + "/${name}/home-configuration.nix");
+    hashedPassword = (import ../../secrets/passwords.nix)."${name}";
+  };
+
+  home-manager.users."${name}" = { ... }: {
+    imports = [
+      ../../modules/home/all-modules.nix
+      home
+    ];
+  };
 }

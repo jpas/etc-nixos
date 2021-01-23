@@ -72,6 +72,8 @@
     passwordAuthentication = false;
   };
 
+  services.tailscale.enable = true;
+
   users = {
     # Disble mutation of users.
     mutableUsers = false;

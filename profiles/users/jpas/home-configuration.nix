@@ -1,6 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, nixosConfig, ... }:
 let
-  nixosConfig = (import <nixpkgs/nixos> {}).config;
   hasGUI = nixosConfig.services.xserver.enable;
 in rec {
   imports = [
