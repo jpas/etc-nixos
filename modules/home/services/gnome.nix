@@ -2,31 +2,7 @@
 , lib
 , ...
 }:
-let
-  hasGUI = (import <nixpkgs/nixos> { }).config.services.xserver.enable;
-in
-if hasGUI then {
-  home.packages = with pkgs; [
-    gnome3.gnome-tweaks
-  ];
-
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-  };
-
-  gtk = {
-    enable = true;
-    # theme = {
-    #   name = "Materia-dark-compact";
-    #   package = pkgs.materia-theme;
-    # };
-    # iconTheme = {
-    #   name = "Pop";
-    #   package = pkgs.pop-icon-theme;
-    # };
-  };
-
+{
   dconf.settings = {
     "org/gnome/settings-daemon/plugins/media-keys" = {
       screenshot = [];
@@ -119,8 +95,5 @@ if hasGUI then {
       pop-monitor-left = [ "<Super><Shift><Primary>Left" "<Super><Shift><Primary>h" ];
       pop-monitor-right = [ "<Super><Shift><Primary>Right" "<Super><Shift><Primary>l" ];
     };
-
   };
-}
-else {
 }

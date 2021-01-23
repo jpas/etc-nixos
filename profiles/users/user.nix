@@ -1,6 +1,6 @@
 { name, user, home }:
 
-{ ... }:
+{ config, ... }:
 {
   users.users."${name}" = user // {
     isNormalUser = true;
@@ -8,8 +8,7 @@
   };
 
   home-manager.users."${name}" = { ... }: {
-    imports = [
-      ../../modules/home/all-modules.nix
+    imports = config.home-manager.imports ++ [
       home
     ];
   };

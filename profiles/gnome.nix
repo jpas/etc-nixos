@@ -7,33 +7,29 @@
       wayland = true;
     };
     desktopManager.xterm.enable = false;
+
+    desktopManager.gnome3 = {
+      enable = true;
+      sessionPath = with pkgs; [
+        gnome3.mutter
+        # missing mutter gsettings schema
+        # see: https://github.com/NixOS/nixpkgs/issues/33277
+      ];
+    };
   };
 
-  services.xserver.desktopManager.gnome3 = {
-    enable = true;
-
-    sessionPath = with pkgs; [
-      gnome3.mutter
-      # missing mutter gsettings schema
-      # see: https://github.com/NixOS/nixpkgs/issues/33277
-    ];
-  };
-
-  environment.systemPackages = (with pkgs;
-    [
-      kitty # replaces gnome-terminal
+  environment.systemPackages = (with pkgs; [
       firefox-wayland # replaces epiphany
+      gnome3.gnome-tweaks
+      kitty # replaces gnome-terminal
       vlc
-      wl-clipboard
-      xclip
-    ] ++ (with gnomeExtensions; [
+    ]) ++ (with pkgs.gnomeExtensions; [
       caffeine
       # draw-on-your-screen # not on stable, yet
       sound-output-device-chooser
       window-is-ready-remover
-      material-shell
       pop-shell
-    ]));
+    ]);
 
   # TODO: Figure out how to set default themes, maybe look at dbus.
 
@@ -53,5 +49,21 @@
     gnome-software
     gnome-weather
     totem
+  ];
+
+  home-manager.imports = [
+    ({ ... }: {
+      qt = {
+        enable = true;
+        platformTheme = "gnome";
+      };
+
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Adwaita-dark";
+        };
+      };
+    })
   ];
 }
