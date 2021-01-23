@@ -13,14 +13,13 @@
     80
     443
     9091 # What am I used for?
-    3724 # trinitycore authserver
-    8085 # trinitycore worldserver
   ];
 
   imports = [
     ../../profiles/base.nix
-
     ../../profiles/users/jpas
+
+    ./factorio.nix
   ];
 
   services.btrfs.autoScrub = {
