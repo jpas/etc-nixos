@@ -1,7 +1,7 @@
 { pkgs, options, ... }:
 {
   imports = [
-    ../modules/all-modules.nix
+    ../modules/nixos/all-modules.nix
     ../hardware-configuration.nix
   ];
 

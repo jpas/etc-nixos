@@ -14,7 +14,7 @@
     ../../profiles/hardware/keychron-k3.nix
     ../../profiles/hardware/logitech-mx-master-3.nix
 
-    ../../modules/users/jpas
+    ../../profiles/users/jpas
   ];
 
   # Enable documentation for development

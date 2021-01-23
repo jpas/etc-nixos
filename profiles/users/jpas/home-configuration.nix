@@ -4,7 +4,6 @@ let
   hasGUI = nixosConfig.services.xserver.enable;
 in rec {
   imports = [
-    ../../home
     ./nvim.nix
   ];
 
