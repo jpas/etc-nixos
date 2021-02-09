@@ -1,4 +1,8 @@
-{ pkgs, options, ... }:
+{ config
+, options
+, pkgs
+, ...
+}:
 {
   imports = [
     ../modules/nixos/all-modules.nix
@@ -13,6 +17,7 @@
     neovim
     tmux
     wget
+    sshfs
   ];
 
   # Boot faster!
@@ -22,7 +27,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" "sshfs" ];
 
   # XXX: 2020-01-20 turning on causes failed boots.
   boot.tmpOnTmpfs = false;

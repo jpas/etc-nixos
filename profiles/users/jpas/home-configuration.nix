@@ -49,4 +49,29 @@ in rec {
   programs.texlive.enable = false;
 
   dconf.settings = { };
+
+  systemd.user.mounts = {
+    home-jpas-archive-kado = {
+      Unit = {
+        Description = "Mount archive from kado";
+        After = [ "basic.target" ];
+        Requires = [ "basic.target" ];
+      };
+
+      Install = {
+        WantedBy = [ "basic.target" ];
+      };
+
+      Mount = {
+        What = "jpas@kado.jpas.xyz:/data/jpas/archive";
+        Where = "/home/jpas/archive/kado";
+        Type = "fuse.sshfs";
+        Options = builtins.concatStringsSep "," [
+          "IdentityFile=/home/jpas/.ssh/id_ed25519"
+          "x-systemd.automount"
+          "reconnect"
+        ];
+      };
+    };
+  };
 }
