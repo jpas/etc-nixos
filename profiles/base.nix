@@ -77,6 +77,7 @@
     passwordAuthentication = false;
   };
 
+  services.resolved.enable = true;
   services.tailscale.enable = true;
 
   users = {
