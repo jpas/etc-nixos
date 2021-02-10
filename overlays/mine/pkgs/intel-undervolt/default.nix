@@ -1,4 +1,5 @@
-{ stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , pkg-config
 , ...
@@ -31,7 +32,7 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Intel CPU undervolting and throttling configuration tool";
     license = licenses.gpl3;
     homepage = "https://github.com/kitsuyan/intel-undervolt";

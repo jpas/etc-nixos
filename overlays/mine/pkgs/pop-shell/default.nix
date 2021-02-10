@@ -1,4 +1,5 @@
-{ stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , glib
 , nodePackages
@@ -23,7 +24,7 @@ stdenv.mkDerivation rec {
     rmdir $out/usr
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A tiling extension for the GNOME Shell";
     longDescription = ''
       A keyboard-driven layer for GNOME Shell which allows for quick and
