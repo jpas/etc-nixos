@@ -15,10 +15,13 @@
   ];
 
   imports = [
+    ../common.nix
+
     ../../profiles/base.nix
     ../../profiles/users/jpas
 
     ./factorio.nix
+    ./nfs.nix
   ];
 
   services.btrfs.autoScrub = {

@@ -6,6 +6,8 @@
   virtualisation.docker.enable = true;
 
   imports = [
+    ../common.nix
+
     ../../profiles/base.nix
     #../../profiles/gnome.nix
     ../../profiles/sway.nix
