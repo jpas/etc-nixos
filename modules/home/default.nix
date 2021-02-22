@@ -1,6 +1,7 @@
-{ ... }:
-{
+{ ... }: {
   imports = [
+    ../hole/home
+
     ./programs/bash.nix
     ./programs/bat.nix
     ./programs/direnv.nix

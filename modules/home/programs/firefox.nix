@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   programs.firefox = {
     # This doesn't work properly yet...
     enable = false;
@@ -40,42 +39,42 @@
       };
 
       userChrome = ''
-      /* Hide tabs unpinned tabs and new tab button */
-      #tabs-newtab-button,
-      #tabbrowser-arrowscrollbox tab.tabbrowser-tab:not([pinned]) {
-        display: none;
-      }
+        /* Hide tabs unpinned tabs and new tab button */
+        #tabs-newtab-button,
+        #tabbrowser-arrowscrollbox tab.tabbrowser-tab:not([pinned]) {
+          display: none;
+        }
 
-      /* Hide sidebar header for Tree Style Tab */
-      #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
-        display: none;
-      }
+        /* Hide sidebar header for Tree Style Tab */
+        #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+          display: none;
+        }
 
-      /* Force thin dark scrollbar */
-      :root {
-        scrollbar-width: thin;
-        /* scrollbar-color: var(--grey-50) var(--theme-splitter-color); */
-        /* inspected values from firefox dark theme */
-        scrollbar-color: #737373 #38383d;
-      }
+        /* Force thin dark scrollbar */
+        :root {
+          scrollbar-width: thin;
+          /* scrollbar-color: var(--grey-50) var(--theme-splitter-color); */
+          /* inspected values from firefox dark theme */
+          scrollbar-color: #737373 #38383d;
+        }
       '';
 
       userContent = ''
-      /* Force thin dark scrollbar */
-      :root {
-        scrollbar-width: thin;
-        /* scrollbar-color: var(--grey-50) var(--theme-splitter-color); */
-        /* inspected values from firefox dark theme */
-        scrollbar-color: #737373 #38383d;
-      }
-
-      /* Darken about:blank */
-      @-moz-document url-prefix(about:blank) {
-        html > body:empty {
-          background-color: #38383d !important;
-          margin 0 !important;
+        /* Force thin dark scrollbar */
+        :root {
+          scrollbar-width: thin;
+          /* scrollbar-color: var(--grey-50) var(--theme-splitter-color); */
+          /* inspected values from firefox dark theme */
+          scrollbar-color: #737373 #38383d;
         }
-      }
+
+        /* Darken about:blank */
+        @-moz-document url-prefix(about:blank) {
+          html > body:empty {
+            background-color: #38383d !important;
+            margin 0 !important;
+          }
+        }
       '';
     };
   };

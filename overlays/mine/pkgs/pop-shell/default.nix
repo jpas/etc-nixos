@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, glib
-, nodePackages
-}:
+{ lib, stdenv, fetchFromGitHub, glib, nodePackages }:
 
 stdenv.mkDerivation rec {
   pname = "gnome-shell-extension-pop-shell";

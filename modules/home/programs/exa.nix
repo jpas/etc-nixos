@@ -1,12 +1,5 @@
-{ pkgs
-, ...
-}:
-{
-  home.packages = [
-    pkgs.exa
-  ];
+{ pkgs, ... }: {
+  home.packages = [ pkgs.exa ];
 
-  programs.bash.shellAliases = {
-    ls = "exa";
-  };
+  programs.bash.shellAliases = { ls = "exa"; };
 }

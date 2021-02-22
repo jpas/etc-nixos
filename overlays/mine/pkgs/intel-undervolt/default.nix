@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, pkg-config
-, ...
-}:
+{ lib, stdenv, fetchFromGitHub, pkg-config, ... }:
 
 stdenv.mkDerivation rec {
   pname = "intel-undervolt";
@@ -18,12 +13,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkg-config ];
 
-  configureFlags =
-    [ "--bindir=${placeholder "out"}/bin"
-      "--sysconfdir=/etc"
-      "--unitdir=${placeholder "out"}/etc/systemd/system"
-      "--enable-systemd"
-    ];
+  configureFlags = [
+    "--bindir=${placeholder "out"}/bin"
+    "--sysconfdir=/etc"
+    "--unitdir=${placeholder "out"}/etc/systemd/system"
+    "--enable-systemd"
+  ];
 
   installPhase = ''
     runHook preInstall

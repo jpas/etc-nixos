@@ -1,6 +1,1 @@
-{ pkgs
-, ...
-}:
-{
-  home.packages = [ pkgs.fd ];
-}
+{ pkgs, ... }: { home.packages = [ pkgs.fd ]; }

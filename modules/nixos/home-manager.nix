@@ -2,12 +2,8 @@
 
 with lib;
 
-let
-  home-manager = builtins.fetchTarball {
-    url = "https://github.com/rycee/home-manager/archive/master.tar.gz";
-  };
-in {
-  imports = [ "${home-manager}/nixos" ];
+{
+  imports = [ <home-manager/nixos> ];
 
   options = {
     home-manager.imports = mkOption {
@@ -21,8 +17,6 @@ in {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
 
-    home-manager.imports = [
-      (import ../home/all-modules.nix)
-    ];
+    home-manager.imports = [ (import ../home) ];
   };
 }

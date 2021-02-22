@@ -1,77 +1,49 @@
-{ pkgs, nixosConfig, ... }:
-let
-  hasGUI = nixosConfig.services.xserver.enable;
-in rec {
-  imports = [
-    ./nvim.nix
+{ lib, config, pkgs, ... }:
+
+with lib;
+
+let profiles = config.hole.profiles;
+in {
+  imports = [ ./home ];
+
+  config = mkMerge [
+    {
+      home.packages = with pkgs; [
+        _1password
+        coreutils
+        duf
+        file
+        s-tui
+        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
+        gnumake
+        nixfmt
+        p7zip
+        python3
+        ripgrep
+        rmapi
+        tmux
+      ];
+
+      programs.bash.enable = true;
+
+      programs.git = {
+        userName = "Jarrod Pas";
+        userEmail = "jarrod@jarrodpas.com";
+      };
+
+      #programs.ssh.enable = true;
+    }
+
+    (mkIf (!profiles.minimal) { home.packages = with pkgs; [ sage ]; })
+
+    (mkIf profiles.graphical {
+      wayland.windowManager.sway.enable = true;
+
+      programs.zathura.enable = true;
+
+      xdg.mimeApps.enable = true;
+
+      home.packages = with pkgs; [ discord desmume bemenu ];
+    })
   ];
-
-  home.packages = with pkgs; let
-    hunspell = hunspellWithDicts (with pkgs.hunspellDicts; [ en_CA-large ]);
-  in [
-    _1password
-    chezmoi
-    coreutils
-    duf
-    file
-    glances
-    gnumake
-    hunspell
-    modd
-    nixfmt
-    p7zip
-    pandoc
-    python39
-    ripgrep
-    rmapi
-    scholar
-    tectonic
-    tmux
-  ] ++ (if hasGUI
-  then [
-    sage
-    discord
-    signal-desktop
-    spotify
-    desmume
-    #zoom-us
-  ]
-  else []);
-
-  #programs.bash.enable = false;
-
-  programs.git = {
-    userName = "Jarrod Pas";
-    userEmail = "jarrod@jarrodpas.com";
-  };
-
-  programs.ssh.enable = false;
-  programs.texlive.enable = false;
-
-  dconf.settings = { };
-
-  systemd.user.mounts = {
-    home-jpas-archive-kado = {
-      Unit = {
-        Description = "Mount archive from kado";
-        After = [ "basic.target" ];
-        Requires = [ "basic.target" ];
-      };
-
-      Install = {
-        WantedBy = [ "basic.target" ];
-      };
-
-      Mount = {
-        What = "jpas@kado.jpas.xyz:/data/jpas/archive";
-        Where = "/home/jpas/archive/kado";
-        Type = "fuse.sshfs";
-        Options = builtins.concatStringsSep "," [
-          "IdentityFile=/home/jpas/.ssh/id_ed25519"
-          "x-systemd.automount"
-          "reconnect"
-        ];
-      };
-    };
-  };
 }

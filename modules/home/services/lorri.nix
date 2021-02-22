@@ -1,7 +1,4 @@
-{ ... }:
-{
-  imports = [
-    ../programs/direnv.nix
-  ];
+{ ... }: {
+  imports = [ ../programs/direnv.nix ];
   services.lorri.enable = true;
 }

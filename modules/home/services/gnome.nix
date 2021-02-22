@@ -1,22 +1,17 @@
-{ pkgs
-, lib
-, nixosConfig
-, ...
-}:
+{ pkgs, lib, nixosConfig, ... }:
 
 with lib;
 
-let
-  hasGnome = nixosConfig.services.xserver.desktopManager.gnome3.enable;
+let hasGnome = nixosConfig.services.xserver.desktopManager.gnome3.enable;
 in {
   dconf.settings = mkIf hasGnome {
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      screenshot = [];
-      screenshot-clip = [];
-      area-screenshot = [];
+      screenshot = [ ];
+      screenshot-clip = [ ];
+      area-screenshot = [ ];
       area-screenshot-clip = [ "Print" ];
-      window-screenshot = [];
-      window-screenshot-clip = [];
+      window-screenshot = [ ];
+      window-screenshot-clip = [ ];
     };
 
     "org/gnome/desktop/input-sources" = {
@@ -96,10 +91,14 @@ in {
       # Workspace Management -->
       pop-workspace-down = [ "<Super><Shift>Down" "<Super><Shift>j" ];
       pop-workspace-up = [ "<Super><Shift>Up" "<Super><Shift>k" ];
-      pop-monitor-down = [ "<Super><Shift><Primary>Down" "<Super><Shift><Primary>j" ];
-      pop-monitor-up = [ "<Super><Shift><Primary>Up" "<Super><Shift><Primary>k" ];
-      pop-monitor-left = [ "<Super><Shift><Primary>Left" "<Super><Shift><Primary>h" ];
-      pop-monitor-right = [ "<Super><Shift><Primary>Right" "<Super><Shift><Primary>l" ];
+      pop-monitor-down =
+        [ "<Super><Shift><Primary>Down" "<Super><Shift><Primary>j" ];
+      pop-monitor-up =
+        [ "<Super><Shift><Primary>Up" "<Super><Shift><Primary>k" ];
+      pop-monitor-left =
+        [ "<Super><Shift><Primary>Left" "<Super><Shift><Primary>h" ];
+      pop-monitor-right =
+        [ "<Super><Shift><Primary>Right" "<Super><Shift><Primary>l" ];
     };
   };
 }

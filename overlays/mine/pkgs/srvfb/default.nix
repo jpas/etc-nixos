@@ -11,9 +11,7 @@ buildGoModule rec {
     sha256 = "0jpk422frqmjwj34q69z3yyb4il6q6qfgd9ssz9jpjxgfg3d8nmx";
   };
 
-  patches = [
-    ./0001-add-go-modules-support.patch
-  ];
+  patches = [ ./0001-add-go-modules-support.patch ];
 
   vendorSha256 = "0djjfi3v8nl4q9x0r0p8j7ni3jjvfj29dgglf3vhn27qz4jpc97g";
 

@@ -10,7 +10,5 @@
     EDITOR = "vim";
   };
 
-  programs.bash.shellAliases = {
-    vim = "vim -p";
-  };
+  programs.bash.shellAliases = { vim = "vim -p"; };
 }

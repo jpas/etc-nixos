@@ -1,9 +1,4 @@
-{ stdenv
-, cmake
-, fetchFromGitHub
-, lib
-, ...
-}:
+{ stdenv, cmake, fetchFromGitHub, lib, ... }:
 
 stdenv.mkDerivation rec {
   pname = "librnnnoise-ladspa";
@@ -16,7 +11,5 @@ stdenv.mkDerivation rec {
     sha256 = "18bq5b50xw3d4r1ildinafpg3isb9y216430h4mm9wr3ir7h76a7";
   };
 
-  buildInputs = [
-    cmake
-  ];
+  buildInputs = [ cmake ];
 }

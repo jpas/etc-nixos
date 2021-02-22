@@ -1,4 +1,5 @@
-{ stdenv, lib, fetchFromGitHub, cmake, lm_sensors, boost, protobuf, grpc, which, clang }:
+{ stdenv, lib, fetchFromGitHub, cmake, lm_sensors, boost, protobuf, grpc, which
+, clang }:
 
 stdenv.mkDerivation rec {
   name = "fancon-${version}";
@@ -14,9 +15,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ which cmake ];
   buildInputs = [ clang boost lm_sensors protobuf grpc ];
 
-  cmakeFlags = [
-    "-DNVIDIA_SUPPORT=OFF"
-  ];
+  cmakeFlags = [ "-DNVIDIA_SUPPORT=OFF" ];
 
   meta = {
     description = "A fan control daemon";

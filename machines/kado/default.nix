@@ -1,6 +1,5 @@
-{ ... }: 
-{
-  networking.hostName = "kado"; 
+{ ... }: {
+  networking.hostName = "kado";
 
   networking.interfaces = {
     enp0s20f0.useDHCP = true;

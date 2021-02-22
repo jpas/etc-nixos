@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+{ pkgs, ... }:
 let
   gruvbox-theme = pkgs.fetchFromGitHub {
     owner = "austinwagner";
@@ -19,7 +17,5 @@ in {
     };
   };
 
-  programs.bash.shellAliases = {
-    cat = "bat";
-  };
+  programs.bash.shellAliases = { cat = "bat"; };
 }

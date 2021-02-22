@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   xdg = {
     enable = true;
     userDirs = {

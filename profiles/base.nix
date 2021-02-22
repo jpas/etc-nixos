@@ -1,13 +1,5 @@
-{ config
-, options
-, pkgs
-, ...
-}:
-{
-  imports = [
-    ../modules/nixos/all-modules.nix
-    ../hardware-configuration.nix
-  ];
+{ config, options, pkgs, ... }: {
+  imports = [ ../hardware-configuration.nix ../modules/nixos ];
 
   # Essential packages.
   environment.systemPackages = with pkgs; [
@@ -40,25 +32,7 @@
 
   console = {
     useXkbConfig = true;
-    colors = [
-      # gruvbox dark
-      "282828"
-      "cc241d"
-      "98971a"
-      "d79921"
-      "458588"
-      "b16286"
-      "689d6a"
-      "a89984"
-      "928374"
-      "fb4934"
-      "b8bb26"
-      "fabd2f"
-      "83a598"
-      "d3869b"
-      "8ec07c"
-      "ebdbb2"
-    ];
+    colors = config.hole.colors.gruvbox.dark-no-hash.console;
   };
 
   services.xserver = {
@@ -68,18 +42,13 @@
 
   networking.networkmanager.wifi.backend = "iwd";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
+  services.upower.enable = config.powerManagement.enable;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
   };
-
-  services.resolved.enable = true;
 
   services.tailscale.enable = true;
 
@@ -95,12 +64,8 @@
   system.autoUpgrade.enable = false;
 
   nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-    overlays = [
-      (import ../overlays/mine)
-    ];
+    config = { allowUnfree = true; };
+    overlays = [ (import ../overlays/mine) ];
   };
 
   nix = {
@@ -108,9 +73,8 @@
     gc.automatic = true;
     gc.options = "--delete-older-than 7d";
 
-    nixPath =
-      options.nix.nixPath.default ++
-      [ "nixpkgs-overlays=/etc/nixos/overlays/compat" ];
+    nixPath = options.nix.nixPath.default
+      ++ [ "nixpkgs-overlays=/etc/nixos/overlays/compat" ];
   };
 
   # This value determines the NixOS release with which your system is to be

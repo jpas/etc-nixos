@@ -1,35 +1,34 @@
-{ pkgs, ... }:
-{
-  services.xserver = {
-    enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
-    desktopManager.xterm.enable = false;
+{ lib, pkgs, config, ... }:
 
+with lib;
+
+{
+  imports = [ ./graphical.nix ];
+
+  services.xserver = {
     desktopManager.gnome3 = {
       enable = true;
-      sessionPath = with pkgs; [
-        gnome3.mutter
-        # missing mutter gsettings schema
-        # see: https://github.com/NixOS/nixpkgs/issues/33277
-      ];
+      sessionPath = with pkgs;
+        [
+          gnome3.mutter
+          # missing mutter gsettings schema
+          # see: https://github.com/NixOS/nixpkgs/issues/33277
+        ];
     };
   };
 
   environment.systemPackages = (with pkgs; [
-      firefox-wayland # replaces epiphany
-      gnome3.gnome-tweaks
-      kitty # replaces gnome-terminal
-      vlc
-    ]) ++ (with pkgs.gnomeExtensions; [
-      caffeine
-      # draw-on-your-screen # not on stable, yet
-      sound-output-device-chooser
-      window-is-ready-remover
-      pop-shell
-    ]);
+    firefox-wayland # replaces epiphany
+    gnome3.gnome-tweaks
+    kitty # replaces gnome-terminal
+    vlc
+  ]) ++ (with pkgs.gnomeExtensions; [
+    caffeine
+    # draw-on-your-screen # not on stable, yet
+    sound-output-device-chooser
+    window-is-ready-remover
+    pop-shell
+  ]);
 
   # TODO: Figure out how to set default themes, maybe look at dbus.
 
@@ -60,9 +59,7 @@
 
       gtk = {
         enable = true;
-        theme = {
-          name = "Adwaita-dark";
-        };
+        theme = { name = "Adwaita-dark"; };
       };
     })
   ];

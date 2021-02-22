@@ -1,6 +1,4 @@
-{ ...
-}:
-{
+{ ... }: {
   programs.bash = {
     enable = true;
 
@@ -54,7 +52,7 @@
         }
 
         _prompt_hook() {
-          local previous_exit_status=''$?
+          local previous_exit_status=$?
           trap -- "" SIGINT
           PS1="$(_prompt_generate ''${previous_exit_status})"
           trap - SIGINT

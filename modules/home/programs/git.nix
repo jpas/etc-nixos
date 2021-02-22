@@ -1,6 +1,4 @@
-{ ...
-}:
-{
+{ ... }: {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -9,17 +7,11 @@
     delta.enable = true;
 
     extraConfig = {
-      pull = {
-        ff = "only";
-      };
+      pull = { ff = "only"; };
 
-      status = {
-        submodulesummary = 1;
-      };
+      status = { submodulesummary = 1; };
 
-      submodule = {
-        recurse = true;
-      };
+      submodule = { recurse = true; };
     };
   };
 }
