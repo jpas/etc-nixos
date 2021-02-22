@@ -2,16 +2,7 @@
 
 with lib;
 
-let
-  mkExports = e: "";
-
-  exports = {
-    "/export" = {
-      options = [ "rw" "fsid=0" "no_subtree_check" ];
-    };
-  };
-
-in {
+{
   services.nfs = {
     extraConfig = toINI {
       nfsd = {
