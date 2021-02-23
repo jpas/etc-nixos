@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   services.factorio = {
+    package = pkgs.volatile.factorio-headless;
     enable = true;
     openFirewall = true;
     requireUserVerification = false;

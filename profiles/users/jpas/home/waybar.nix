@@ -6,9 +6,9 @@ let
   sway = config.wayland.windowManager.sway;
   waybar = config.programs.waybar;
 in mkMerge [
-  {
+  (mkIf config.hole.profiles.graphical {
     programs.waybar = {
-      systemd.enable = true;
+      #systemd.enable = true;
 
       settings = [{
         layer = "top";
@@ -21,7 +21,7 @@ in mkMerge [
         modules-right = [ "clock" ];
       }];
     };
-  }
+  })
 
   (mkIf waybar.enable {
     wayland.windowManager.sway = {

@@ -4,8 +4,8 @@ with lib;
 
 let
   hole = {
-    kado = "100.116.4.62";
-    kuro = "100.65.152.104";
+    kado = "100.65.152.104";
+    kuro = "100.116.4.62";
   };
 
   mkHosts = hosts: domain:

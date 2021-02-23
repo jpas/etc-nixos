@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
   networking.hostName = "kado";
 
   networking.interfaces = {
@@ -8,6 +8,8 @@
     enp0s20f3.useDHCP = true;
   };
 
+  services.pipewire.media-session.enable = config.services.pipewire.enable;
+  
   networking.firewall.allowedTCPPorts = [
     80
     443

@@ -65,7 +65,7 @@ let
     '';
 
 in mkMerge [
-  {
+  (mkIf sway.enable {
     home.packages = with pkgs; [
       sway-contrib.grimshot
       pavucontrol
@@ -189,13 +189,12 @@ in mkMerge [
       '';
     };
 
-  }
-
-  (mkIf nixosConfig.programs.sway.enable {
-    wayland.windowManager.sway.package = null;
-
     programs.kitty.enable = true;
     services.kanshi.enable = true;
     services.gammastep.enable = true;
+  })
+
+  (mkIf nixosConfig.programs.sway.enable {
+    wayland.windowManager.sway.package = null;
   })
 ]
