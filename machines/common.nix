@@ -12,5 +12,5 @@ let
     mapAttrs' (host: ip: { name = ip; value = [ (host + domain) ]; }) hosts;
 
 in {
-  networking.hosts = mkHosts hole ".hole";
+  networking.hosts = mkHosts hole ".o";
 }

@@ -22,8 +22,8 @@ in {
     server = {
       enable = true;
       exports = ''
-        /export      *.hole(insecure,rw,sync,no_subtree_check,crossmnt,fsid=root)
-        /export/data *.hole(insecure,rw,sync,no_subtree_check)
+        /export      *.o(insecure,rw,sync,no_subtree_check,crossmnt,fsid=root)
+        /export/data *.o(insecure,rw,sync,no_subtree_check)
       '';
     };
   };
