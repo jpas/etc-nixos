@@ -21,8 +21,8 @@
 
     ../../profiles/users/jpas
 
-    ./intel-undervolt.nix
     ./kanshi.nix
+    ./throttled.nix
   ];
 
   # Enable documentation for development
@@ -34,8 +34,6 @@
   };
 
   networking.wireless.iwd.enable = true;
-
-  services.throttled.enable = true;
 
   fileSystems."/data" = {
     device = "kado.o:/data";
