@@ -3,6 +3,7 @@
 
   # Lets use a new kernel!
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
+
   virtualisation.docker.enable = true;
 
   imports = [

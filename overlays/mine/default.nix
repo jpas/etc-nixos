@@ -1,5 +1,5 @@
 final: prev:
-let callPackage = prev.lib.callPackageWith prev;
+let inherit (prev) callPackage;
 in rec {
   volatile = import <nixos-volatile> { config = final.config; };
 

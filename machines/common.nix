@@ -9,8 +9,9 @@ let
   };
 
   mkHosts = hosts: domain:
-    mapAttrs' (host: ip: { name = ip; value = [ (host + domain) ]; }) hosts;
+    mapAttrs' (host: ip: {
+      name = ip;
+      value = [ (host + domain) ];
+    }) hosts;
 
-in {
-  networking.hosts = mkHosts hole ".o";
-}
+in { networking.hosts = mkHosts hole ".o"; }

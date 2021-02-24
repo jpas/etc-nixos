@@ -22,48 +22,6 @@ let
         --tf=${fg} "$@"
     '';
 
-  lock-cfg = pkgs.writeText "config" (with gruvbox.dark-no-hash; ''
-    font=JetBrain Mono
-    text-color=${bg}
-
-    color=${bg}
-
-    key-hl-color=${green1}
-    bs-hl-color=${red1}
-    caps-lock-bs-hl-color=${red1}
-    caps-lock-key-hl-color=${yellow1}
-
-    inside-color=${bg}
-    inside-clear-color=${bg}
-    inside-caps-lock-color=${bg}
-    inside-ver-color=${bg}
-    inside-wrong-color=${bg}
-
-    line-color=${bg}
-    line-clear-color=${bg}
-    line-ver-color=${bg}
-    line-caps-lock-color=${bg}
-    line-wrong-color=${bg}
-    no-unlock-indicator
-    separator-color=${bg}
-
-    ring-color=${bg}
-    ring-clear-color=${yellow1}
-    ring-ver-color=${green1}
-    ring-wrong-color=${red1}
-
-    text-color=${bg}
-    text-clear-color=${bg}
-    text-caps-color=${bg}
-    text-ver-color=${bg}
-    text-wrong-color=${bg}
-
-  '');
-  lock = with gruvbox.dark-no-hash;
-    pkgs.writeShellScriptBin "lock" ''
-      swaylock --no-unlock-indicator -c ${bg} "$@"
-    '';
-
 in mkMerge [
   (mkIf sway.enable {
     home.packages = with pkgs; [
@@ -72,8 +30,8 @@ in mkMerge [
       pamixer
       playerctl
       (pkgs.symlinkJoin {
-        name = "sway-utils";
-        paths = [ lock menu ];
+        name = "sway-stuff";
+        paths = [ menu ];
       })
     ];
 
@@ -97,12 +55,13 @@ in mkMerge [
             always = true;
           }
           {
+            # TODO: add a systemd user service for swayidle
             command = ''
               swayidle -w \
-                timeout 300 lock \
-                 timeout 600 'swaymsg "output * dpms off"' \
-                 resume 'swaymsg "output * dpms on"' \
-                 before-sleep lock \
+                timeout 300 swaylock \
+                timeout 600 'swaymsg "output * dpms off"' \
+                resume 'swaymsg "output * dpms on"' \
+                before-sleep swaylock
             '';
             # This will lock your screen after 300 seconds of inactivity,
             # then turn off your displays after another 300 seconds, and turn
@@ -192,6 +151,39 @@ in mkMerge [
     programs.kitty.enable = true;
     services.kanshi.enable = true;
     services.gammastep.enable = true;
+
+    xdg.configFile."swaylock/config" = {
+      text = with gruvbox.dark-no-hash; ''
+        font=JetBrain Mono
+        text-color=${fg}
+
+        color=${bg}
+
+        key-hl-color=${fg}
+        bs-hl-color=${red1}
+        caps-lock-bs-hl-color=${red1}
+        caps-lock-key-hl-color=${yellow1}
+
+        inside-color=${bg}
+        inside-clear-color=${bg}
+        inside-caps-lock-color=${bg}
+        inside-ver-color=${bg}
+        inside-wrong-color=${bg}
+
+        line-uses-inside
+
+        ring-color=${bg}
+        ring-ver-color=${green1}
+        ring-clear-color=${yellow1}
+        ring-wrong-color=${red1}
+
+        text-color=${bg}
+        text-clear-color=${bg}
+        text-caps-lock-color=${bg}
+        text-ver-color=${bg}
+        text-wrong-color=${bg}
+      '';
+    };
   })
 
   (mkIf nixosConfig.programs.sway.enable {

@@ -9,7 +9,7 @@
   };
 
   services.pipewire.media-session.enable = config.services.pipewire.enable;
-  
+
   networking.firewall.allowedTCPPorts = [
     80
     443

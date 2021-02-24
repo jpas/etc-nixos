@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  toINI = generators.toINI { };
+let toINI = generators.toINI { };
 in {
   services.nfs = {
     extraConfig = toINI {
@@ -28,7 +27,5 @@ in {
     };
   };
 
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
-    2049
-  ];
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 2049 ];
 }
