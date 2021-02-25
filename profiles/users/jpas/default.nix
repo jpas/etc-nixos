@@ -21,5 +21,5 @@
     ];
   };
 
-  home = import ./home-configuration.nix;
+  home = import ./home;
 }

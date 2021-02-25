@@ -6,8 +6,6 @@ in rec {
   scholar = callPackage ./scholar { };
   srvfb = callPackage ./srvfb { };
 
-  wdomirror = callPackage ./wdomirror { };
-
   intel-undervolt = callPackage ./intel-undervolt { };
 
   ddccontrol-db = pkgs.ddccontrol-db.overrideAttrs (old: rec {

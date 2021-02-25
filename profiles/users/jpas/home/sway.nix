@@ -3,7 +3,9 @@
 with lib;
 
 let
+
   sway = config.wayland.windowManager.sway;
+
   gruvbox = config.hole.colors.gruvbox;
 
   menu = with gruvbox.dark;
@@ -148,7 +150,6 @@ in mkMerge [
       '';
     };
 
-    programs.kitty.enable = true;
     services.kanshi.enable = true;
     services.gammastep.enable = true;
 

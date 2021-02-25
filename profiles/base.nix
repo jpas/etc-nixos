@@ -22,7 +22,7 @@
   boot.supportedFilesystems = [ "ntfs" "sshfs" ];
 
   # XXX: 2020-01-20 turning on causes failed boots.
-  boot.tmpOnTmpfs = false;
+  boot.tmpOnTmpfs = true;
 
   # Set your time zone.
   time.timeZone = "America/Regina";

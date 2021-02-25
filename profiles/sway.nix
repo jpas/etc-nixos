@@ -18,16 +18,21 @@ with lib;
         dmenu
         firefox-wayland
         gammastep
-        kitty
+        kitty # terminal
         pamixer # output/volume control, use pw-cli for profile switch
         playerctl # multimedia controls
         swayidle
         swaylock
         xwayland
 
-        wdomirror
-        wev
-        #sway-contrib
+        # TODO: wait for merge
+        volatile.wdomirror
+
+        # For more, see: https://arewewaylandyet.com/
+        mako # notifications daemon
+        mpv # multimedia player
+        imv # image viewer
+        zathura # document viewer
       ];
 
       extraSessionCommands = ''

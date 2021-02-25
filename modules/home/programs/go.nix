@@ -1,6 +1,9 @@
-{ ... }: {
+{ lib, ... }:
+
+with lib;
+
+{
   programs.go = {
-    enable = true;
-    goPath = ".local/share/go";
+    goPath = lib.mkDefault ".local/share/go";
   };
 }
