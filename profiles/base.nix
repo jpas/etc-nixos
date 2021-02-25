@@ -87,8 +87,7 @@
           in foldl' (flip extends) (_: prev) overlays final
         '';
       };
-    in options.nix.nixPath.default
-      ++ [ "nixpkgs-overlays=${overlays-compat}" ];
+    in options.nix.nixPath.default ++ [ "nixpkgs-overlays=${overlays-compat}" ];
   };
 
   # This value determines the NixOS release with which your system is to be

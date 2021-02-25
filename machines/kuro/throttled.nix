@@ -1,6 +1,4 @@
-{ lib
-, ...
-}:
+{ lib, ... }:
 
 with lib;
 
@@ -10,10 +8,8 @@ with lib;
 
     # *** WARNING *** these were tweaked specifically for my machine, using
     # them on your own machine may result in instability
-    extraConfig = generators.toINI {} {
-      GENERAL = {
-        Enabled = true;
-      };
+    extraConfig = generators.toINI { } {
+      GENERAL = { Enabled = true; };
 
       AC = {
         Update_Rate_s = 5;
