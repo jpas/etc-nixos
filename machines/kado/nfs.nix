@@ -7,7 +7,6 @@ in {
   services.nfs = {
     extraConfig = toINI {
       nfsd = {
-        host = "100.65.152.104"; # TODO: get tailscale IPs from somewhere
         vers2 = false;
         vers3 = false;
         "vers4.0" = false;
@@ -27,5 +26,9 @@ in {
     };
   };
 
+  # Only allow traffic from tailscale interface.
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 2049 ];
+
+  # We do not need rpcbind for nfs4
+  systemd.services.rpcbind.enable = false;
 }

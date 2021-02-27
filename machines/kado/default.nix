@@ -1,5 +1,9 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   networking.hostName = "kado";
+
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
+
+  hardware.cpu.intel.updateMicrocode = true;
 
   networking.interfaces = {
     enp0s20f0.useDHCP = true;
