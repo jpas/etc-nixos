@@ -24,10 +24,8 @@
 
   services.pipewire = {
     enable = true;
-
     alsa.enable = true;
     alsa.support32Bit = config.services.pipewire.alsa.enable;
-
     pulse.enable = true;
   };
 

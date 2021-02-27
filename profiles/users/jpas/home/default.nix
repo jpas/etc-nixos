@@ -2,26 +2,20 @@
 
 with lib;
 
-let profiles = config.hole.profiles;
+let
+
+  profiles = config.hole.profiles;
+
 in {
   imports = [
     ./bash.nix
-    ./bat.nix
-    ./exa.nix
     ./firefox.nix
-    ./fzf.nix
-    ./gammastep.nix
-    ./git.nix
-    ./htop.nix
     ./imv.nix
     ./kitty.nix
-    ./nvim.nix
-    ./readline.nix
-    ./signal.nix
+    ./mako.nix
+    ./neovim.nix
     ./sway.nix
     ./tmux.nix
-    ./waybar.nix
-    ./xdg.nix
     ./zathura.nix
   ];
 
@@ -31,8 +25,8 @@ in {
         _1password
         coreutils
         duf
+        fd
         file
-        s-tui
         (hunspellWithDicts [ hunspellDicts.en_CA-large ])
         gnumake
         nixfmt
@@ -40,38 +34,109 @@ in {
         python3
         ripgrep
         rmapi
+        s-tui
         tmux
-        fd
       ];
 
       programs.bash.enable = true;
 
-      programs.git = {
-        userName = "Jarrod Pas";
-        userEmail = "jarrod@jarrodpas.com";
+      programs.jq.enable = true;
+
+      programs.bat = {
+        enable = true;
+        catAlias = true;
+        config = { theme = "gruvbox"; };
       };
 
-      programs.jq.enable = true;
-      programs.direnv.enable = config.services.lorri.enable;
+      programs.exa = {
+        enable = true;
+        lsAlias = true;
+      };
 
-      services.lorri.enable = true;
+      programs.fzf = {
+        enable = true;
+        defaultCommand = "fd --type f --follow";
+        defaultOptions = [ "--layout=reverse" "--inline-info" "--color=16" ];
+      };
 
-      #programs.ssh.enable = true;
+      programs.git = {
+        enable = true;
+        lfs.enable = true;
+        userName = "Jarrod Pas";
+        userEmail = "jarrod@jarrodpas.com";
+        extraConfig = {
+          pull = { ff = "only"; };
+          status = { submodulesummary = 1; };
+          submodule = { recurse = true; };
+        };
+      };
+
+      programs.go = { goPath = ".local/share/go"; };
+
+      programs.htop = {
+        enable = true;
+        hideKernelThreads = true;
+        hideUserlandThreads = true;
+        showProgramPath = false;
+        treeView = true;
+      };
+
+      programs.neovim.enable = true;
+
+      programs.readline = {
+        enable = true;
+        variables = { editing-mode = "vi"; };
+      };
+
+      xdg = {
+        enable = true;
+        userDirs = {
+          desktop = "$HOME/opt";
+          documents = "$HOME/documents";
+          download = "$HOME/download";
+          music = "$HOME/music";
+          pictures = "$HOME/pictures";
+          publicShare = "$HOME/opt";
+          templates = "$HOME/opt";
+          videos = "$HOME/opt";
+        };
+      };
     }
 
-    (mkIf (!profiles.minimal) { home.packages = with pkgs; [ sage ]; })
+    (mkIf (!profiles.minimal) {
+      home.packages = with pkgs; [ sage ];
+
+      programs.direnv.enable = true;
+
+      services.lorri.enable = true;
+    })
 
     (mkIf profiles.graphical {
       wayland.windowManager.sway.enable = true;
 
       programs.imv.enable = true;
       programs.kitty.enable = true;
+      programs.mako.enable = false;
+      programs.mpv.enable = true;
       programs.signal.enable = true;
       programs.zathura.enable = true;
 
+      services.gammastep = {
+        latitude = config.hole.location.latitude;
+        longitude = config.hole.location.longitude;
+        temperature = {
+          day = 3600;
+          night = 2700;
+        };
+      };
+
       xdg.mimeApps.enable = true;
 
-      home.packages = with pkgs; [ discord desmume bemenu ];
+      home.packages = with pkgs; [
+        firefox-wayland
+        desmume
+        discord
+      ];
     })
   ];
 }

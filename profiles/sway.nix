@@ -14,27 +14,6 @@ with lib;
         gtk = true;
       };
 
-      extraPackages = with pkgs; [
-        dmenu
-        firefox-wayland
-        gammastep
-        kitty # terminal
-        pamixer # output/volume control, use pw-cli for profile switch
-        playerctl # multimedia controls
-        swayidle
-        swaylock
-        xwayland
-
-        # TODO: wait for merge
-        volatile.wdomirror
-
-        # For more, see: https://arewewaylandyet.com/
-        mako # notifications daemon
-        mpv # multimedia player
-        imv # image viewer
-        zathura # document viewer
-      ];
-
       extraSessionCommands = ''
         source /etc/profile
         test -f $HOME/.profile && source $HOME/.profile

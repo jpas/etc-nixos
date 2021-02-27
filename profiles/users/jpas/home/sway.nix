@@ -4,11 +4,11 @@ with lib;
 
 let
 
-  sway = config.wayland.windowManager.sway;
+  cfg = config.wayland.windowManager.sway;
 
-  gruvbox = config.hole.colors.gruvbox;
+  colors = config.hole.colors.gruvbox;
 
-  menu = with gruvbox.dark;
+  menu = with colors.dark;
     pkgs.writeShellScriptBin "menu" ''
       export BEMENU_BACKEND=wayland
       exec bemenu -b -m -1 \
@@ -25,18 +25,7 @@ let
     '';
 
 in mkMerge [
-  (mkIf sway.enable {
-    home.packages = with pkgs; [
-      sway-contrib.grimshot
-      pavucontrol
-      pamixer
-      playerctl
-      (pkgs.symlinkJoin {
-        name = "sway-stuff";
-        paths = [ menu ];
-      })
-    ];
-
+  {
     wayland.windowManager.sway = {
       config = {
         fonts = [ "JetBrains Mono 10" ];
@@ -53,10 +42,6 @@ in mkMerge [
 
         startup = [
           {
-            command = "systemctl restart --user kanshi";
-            always = true;
-          }
-          {
             # TODO: add a systemd user service for swayidle
             command = ''
               swayidle -w \
@@ -72,7 +57,7 @@ in mkMerge [
           }
         ];
 
-        keybindings = let modifier = sway.config.modifier;
+        keybindings = let modifier = cfg.config.modifier;
         in lib.mkOptionDefault {
           # Screenshots:
           "Print" = "exec grimshot copy area";
@@ -103,7 +88,7 @@ in mkMerge [
             childBorder = c;
             background = c;
           };
-        in with gruvbox.dark; rec {
+        in with colors.dark; rec {
           background = bg;
 
           focused = color fg aqua1 bg2;
@@ -120,7 +105,7 @@ in mkMerge [
             separator_symbol "|"
           '';
 
-          fonts = sway.config.fonts;
+          fonts = cfg.config.fonts;
 
           statusCommand =
             "while date +'%Y-%m-%d %l:%M:%S %p '; do sleep 1; done";
@@ -131,7 +116,7 @@ in mkMerge [
               border = c;
               background = c;
             };
-          in with gruvbox.dark; rec {
+          in with colors.dark; rec {
             statusline = fg;
             background = bg;
             separator = bg2;
@@ -149,12 +134,26 @@ in mkMerge [
         seat * pointer_constraint disable
       '';
     };
+  }
 
-    services.kanshi.enable = true;
-    services.gammastep.enable = true;
+  (mkIf cfg.enable {
+    home.packages = with pkgs; [
+      dmenu # needed for dmenu_path
+      bemenu
+      pamixer
+      pavucontrol
+      playerctl
+      sway-contrib.grimshot
+      volatile.wdomirror
+      wl-clipboard
+      (pkgs.symlinkJoin {
+        name = "sway-stuff";
+        paths = [ menu ];
+      })
+    ];
 
     xdg.configFile."swaylock/config" = {
-      text = with gruvbox.dark-no-hash; ''
+      text = with colors.dark-no-hash; ''
         font=JetBrain Mono
         text-color=${fg}
 
@@ -185,6 +184,16 @@ in mkMerge [
         text-wrong-color=${bg}
       '';
     };
+
+    services.kanshi.enable = mkDefault true;
+    services.gammastep.enable = mkDefault true;
+  })
+
+  (mkIf config.services.kanshi.enable {
+    wayland.windowManager.sway.config.startup = [{
+      command = "systemctl restart --user kanshi";
+      always = true;
+    }];
   })
 
   (mkIf nixosConfig.programs.sway.enable {

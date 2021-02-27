@@ -16,6 +16,10 @@ in {
       enable_audio_bell = false;
       visual_bell_duration = 0;
 
+      remember_window_size = false;
+      initial_window_height = "80c";
+      initial_window_width = "160c";
+
       window_padding_width = 3;
       placement_strategy = "center";
 

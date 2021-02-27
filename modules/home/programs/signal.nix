@@ -18,6 +18,7 @@ in {
       };
     };
   };
+
   config = mkMerge [
     (mkIf cfg.enable {
       home.packages = [ cfg.package ];

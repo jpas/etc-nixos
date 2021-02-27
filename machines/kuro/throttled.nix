@@ -26,7 +26,7 @@ with lib;
       };
 
       UNDERVOLT = rec {
-        CORE = -71;
+        CORE = -70;
         CACHE = CORE;
         GPU = 0;
         UNCORE = 0;
