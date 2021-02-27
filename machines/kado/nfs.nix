@@ -28,7 +28,4 @@ in {
 
   # Only allow traffic from tailscale interface.
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 2049 ];
-
-  # We do not need rpcbind for nfs4
-  systemd.services.rpcbind.enable = false;
 }

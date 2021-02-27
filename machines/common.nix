@@ -14,4 +14,9 @@ let
       value = [ (host + domain) ];
     }) hosts;
 
-in { networking.hosts = mkHosts hole ".o"; }
+in {
+  networking.hosts = mkHosts hole ".o";
+
+  # We do not need rpcbind for nfs4
+  systemd.services.rpcbind.enable = false;
+}
