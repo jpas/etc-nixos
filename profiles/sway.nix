@@ -15,9 +15,6 @@ with lib;
       };
 
       extraSessionCommands = ''
-        source /etc/profile
-        test -f $HOME/.profile && source $HOME/.profile
-
         # Fix for some Java AWT applications (e.g. Android Studio),
         # use this if they aren't displayed properly:
         export _JAVA_AWT_WM_NONREPARENTING=1
@@ -27,6 +24,10 @@ with lib;
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
         export SDL_VIDEODRIVER=wayland
+        export XDG_CURRENT_DESKTOP=sway
+
+        #source /etc/profile
+        #test -f $HOME/.profile && source $HOME/.profile
 
         systemctl --user import-environment
       '';

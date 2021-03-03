@@ -6,7 +6,8 @@ let
 
   profiles = config.hole.profiles;
 
-in {
+in
+{
   imports = [
     ./bash.nix
     ./firefox.nix
@@ -14,7 +15,7 @@ in {
     ./kitty.nix
     ./mako.nix
     ./neovim.nix
-    ./sway.nix
+    ./sway
     ./tmux.nix
     ./zathura.nix
   ];
@@ -45,7 +46,7 @@ in {
       programs.bat = {
         enable = true;
         catAlias = true;
-        config = { theme = "gruvbox"; };
+        config = { theme = "gruvbox-dark"; };
       };
 
       programs.exa = {
@@ -120,15 +121,6 @@ in {
       programs.mpv.enable = true;
       programs.signal.enable = true;
       programs.zathura.enable = true;
-
-      services.gammastep = {
-        latitude = config.hole.location.latitude;
-        longitude = config.hole.location.longitude;
-        temperature = {
-          day = 3600;
-          night = 2700;
-        };
-      };
 
       xdg.mimeApps.enable = true;
 

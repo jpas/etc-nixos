@@ -3,7 +3,8 @@
 with lib;
 
 let hasGnome = nixosConfig.services.xserver.desktopManager.gnome3.enable;
-in {
+in
+{
   dconf.settings = mkIf hasGnome {
     "org/gnome/settings-daemon/plugins/media-keys" = {
       screenshot = [ ];

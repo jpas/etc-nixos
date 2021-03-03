@@ -6,7 +6,8 @@ let
 
   colors = config.hole.colors.gruvbox.dark;
 
-in {
+in
+{
   programs.kitty = {
     font.name = "JetBrains Mono"; # TODO: use default monospace?
 

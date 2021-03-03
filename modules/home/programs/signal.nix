@@ -6,7 +6,8 @@ let
 
   cfg = config.programs.signal;
 
-in {
+in
+{
   options = {
     programs.signal = {
       enable = mkEnableOption "Signal";

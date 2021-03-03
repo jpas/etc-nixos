@@ -6,7 +6,8 @@ let
 
   cfg = config.programs.bat;
 
-in {
+in
+{
   options = { programs.bat.catAlias = mkEnableOption "Alias cat to bat"; };
 
   config = mkIf cfg.catAlias {

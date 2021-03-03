@@ -3,7 +3,8 @@
 with lib;
 
 mkMerge [
-  { # Intel Ivy Lake processor
+  {
+    # Intel Ivy Lake processor
     hardware.cpu.intel.updateMicrocode =
       config.hardware.enableRedistributableFirmware;
 
@@ -22,7 +23,8 @@ mkMerge [
       useGlamor = true;
     };
   }
-  { # XPS 9300 specific tweaks
+  {
+    # XPS 9300 specific tweaks
 
     # Enable fan sensors via smm
     boot.initrd.kernelModules = mkDefault [ "dell_smm_hwmon" ];

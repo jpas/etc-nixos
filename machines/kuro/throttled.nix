@@ -15,7 +15,7 @@ with lib;
         Update_Rate_s = 5;
         PL1_Tdp_W = 25;
         PL2_Tdp_W = 32;
-        Trip_Temp_C = 96;
+        Trip_Temp_C = 94;
         cTDP = 2;
       };
 
@@ -26,7 +26,7 @@ with lib;
       };
 
       UNDERVOLT = rec {
-        CORE = -70;
+        CORE = -69;
         CACHE = CORE;
         GPU = 0;
         UNCORE = 0;

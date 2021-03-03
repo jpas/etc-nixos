@@ -6,6 +6,15 @@ with lib;
   imports = [ ./graphical.nix ];
 
   services.xserver = {
+    enable = true;
+
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+
+    desktopManager.xterm.enable = false;
+
     desktopManager.gnome3 = {
       enable = true;
       sessionPath = with pkgs;

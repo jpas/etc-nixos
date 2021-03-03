@@ -1,6 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 let inherit (pkgs) callPackage;
-in rec {
+in
+rec {
   volatile = import <nixos-volatile> { inherit (pkgs) config; };
 
   intel-undervolt = callPackage ./intel-undervolt { };

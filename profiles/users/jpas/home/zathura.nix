@@ -8,7 +8,8 @@ let
 
   colors = config.hole.colors.gruvbox.dark;
 
-in mkMerge [
+in
+mkMerge [
   {
     programs.zathura = {
       options = with colors; rec {

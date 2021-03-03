@@ -8,7 +8,8 @@ let
 
   colors = config.hole.colors.gruvbox.dark;
 
-in mkMerge [
+in
+mkMerge [
   {
     programs.mako = {
       font = "JetBrains Mono 10";

@@ -40,7 +40,11 @@
     fsType = "nfs";
     options = [
       "nfsvers=4.2"
+      "async"
+      "noatime"
+      "nodiratime"
       "noauto"
+      #"nconnect=8"
       "x-systemd.automount"
       "x-systemd.idle-timeout=600"
     ];

@@ -6,7 +6,8 @@ let
 
   cfg = config.services.intel-undervolt;
 
-in {
+in
+{
   options = {
     services.intel-undervolt = {
       enable = mkOption {

@@ -73,21 +73,23 @@
     gc.automatic = true;
     gc.options = "--delete-older-than 7d";
 
-    nixPath = let
-      overlays-compat = pkgs.writeTextFile {
-        name = "overlays-compat";
-        destination = "/overlays.nix";
-        text = ''
-          final: prev:
-          with prev.lib;
-          let
-            # Load the system config and get the `nixpkgs.overlays` option
-            overlays = (import <nixpkgs/nixos> { }).config.nixpkgs.overlays;
-            # Apply all overlays to the input of the current "main" overlay
-          in foldl' (flip extends) (_: prev) overlays final
-        '';
-      };
-    in options.nix.nixPath.default ++ [ "nixpkgs-overlays=${overlays-compat}" ];
+    nixPath =
+      let
+        overlays-compat = pkgs.writeTextFile {
+          name = "overlays-compat";
+          destination = "/overlays.nix";
+          text = ''
+            final: prev:
+            with prev.lib;
+            let
+              # Load the system config and get the `nixpkgs.overlays` option
+              overlays = (import <nixpkgs/nixos> { }).config.nixpkgs.overlays;
+              # Apply all overlays to the input of the current "main" overlay
+            in foldl' (flip extends) (_: prev) overlays final
+          '';
+        };
+      in
+      options.nix.nixPath.default ++ [ "nixpkgs-overlays=${overlays-compat}" ];
   };
 
   # This value determines the NixOS release with which your system is to be

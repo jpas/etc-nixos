@@ -9,12 +9,15 @@ let
   };
 
   mkHosts = hosts: domain:
-    mapAttrs' (host: ip: {
-      name = ip;
-      value = [ (host + domain) ];
-    }) hosts;
+    mapAttrs'
+      (host: ip: {
+        name = ip;
+        value = [ (host + domain) ];
+      })
+      hosts;
 
-in {
+in
+{
   networking.hosts = mkHosts hole ".o";
 
   # We do not need rpcbind for nfs4

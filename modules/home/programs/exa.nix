@@ -6,7 +6,8 @@ let
 
   cfg = config.programs.exa;
 
-in {
+in
+{
   options = {
     programs.exa = {
       enable = mkEnableOption "exa, a modern replacement for ls";

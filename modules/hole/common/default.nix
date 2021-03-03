@@ -20,7 +20,8 @@ let
       inherit default;
     };
 
-in {
+in
+{
   imports = [
     ./colors.nix
 

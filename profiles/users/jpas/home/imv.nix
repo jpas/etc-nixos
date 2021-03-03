@@ -8,7 +8,8 @@ let
 
   color = config.hole.colors.gruvbox.dark-no-hash;
 
-in mkMerge [
+in
+mkMerge [
   {
     programs.imv = {
       settings = {

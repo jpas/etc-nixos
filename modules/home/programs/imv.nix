@@ -8,7 +8,8 @@ let
 
   cfgFmt = pkgs.formats.ini { };
 
-in {
+in
+{
   options = {
     programs.imv = {
       enable = mkEnableOption "imv";
@@ -32,7 +33,7 @@ in {
     (mkIf cfg.enable {
       home.packages = [ cfg.package ];
 
-      xdg.configFile."imv/config" = mkIf  (cfg.settings != { }) {
+      xdg.configFile."imv/config" = mkIf (cfg.settings != { }) {
         source = cfgFmt.generate "config" cfg.settings;
       };
     })

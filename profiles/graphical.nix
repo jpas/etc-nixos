@@ -3,17 +3,6 @@
 
   hole.profiles.graphical = true;
 
-  services.xserver = {
-    enable = true;
-
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
-
-    desktopManager.xterm.enable = false;
-  };
-
   hardware.opengl = {
     enable = true;
     # Enable OpenGL for 32-bit applications
@@ -24,14 +13,11 @@
 
   services.pipewire = {
     enable = true;
+
     alsa.enable = true;
     alsa.support32Bit = config.services.pipewire.alsa.enable;
-    pulse.enable = true;
-  };
 
-  hardware.pulseaudio = {
-    enable = !config.services.pipewire.pulse.enable;
-    support32Bit = config.hardware.pulseaudio.enable;
+    pulse.enable = true;
   };
 
   services.printing.enable = true;
@@ -39,7 +25,6 @@
   fonts = {
     fonts = with pkgs; [
       dejavu_fonts
-      hack-font
       libertinus
       jetbrains-mono
       noto-fonts
@@ -73,8 +58,9 @@
 
   environment.etc."gtk-3.0/settings.ini".text = ''
     [Settings]
-    gtk-icon-theme-name = Adwaita
     gtk-theme-name = Adwaita-dark
+    gtk-icon-theme-name = Adwaita
+    gtk-cursor-theme-name = Adwaita
     gtk-application-prefer-dark-theme = true
   '';
 
