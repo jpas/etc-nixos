@@ -8,7 +8,6 @@ with lib;
 
 let
   cfg = config.programs.imv;
-
   cfgFmt = pkgs.formats.ini { };
 in
 {

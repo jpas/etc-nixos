@@ -20,6 +20,13 @@ in
         '';
       };
 
+      package = mkOption {
+        type = types.package;
+        default = pkgs.intel-undervolt;
+        defaultText = literalExample "pkgs.intel-undervolt";
+        description = "intel-undervolt package to use";
+      };
+
       extraConfig = mkOption {
         type = types.str;
         default = "";
@@ -28,9 +35,12 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
-    systemd.packages = [ pkgs.intel-undervolt ];
-    systemd.services.intel-undervolt.wantedBy = [ "multi-user.target" ];
+  config = mkIf cfg.enable {
+    systemd.packages = [ cfg.package ];
+
+    systemd.services.intel-undervolt = {
+      wantedBy = [ "multi-user.target" ];
+    };
 
     environment.etc."intel-undervolt.conf" = mkIf (cfg.extraConfig != "") {
       source = pkgs.writeText "intel-undervolt.conf" cfg.extraConfig;

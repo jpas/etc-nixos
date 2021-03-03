@@ -6,7 +6,8 @@
 
 with lib;
 
-let hasGnome = nixosConfig.services.xserver.desktopManager.gnome3.enable;
+let
+  hasGnome = nixosConfig.services.xserver.desktopManager.gnome3.enable;
 in
 {
   dconf.settings = mkIf hasGnome {
