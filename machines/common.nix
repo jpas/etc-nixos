@@ -18,5 +18,7 @@ in {
   networking.hosts = mkHosts hole ".o";
 
   # We do not need rpcbind for nfs4
-  systemd.services.rpcbind.enable = false;
+  #systemd.sockets.rpcbind.enable = false;
+  #systemd.services.rpcbind.enable = false;
+  #systemd.services."rpc-statd".enable = false;
 }

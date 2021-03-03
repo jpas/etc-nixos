@@ -1,9 +1,14 @@
-{ lib, ... }:
+{ lib
+, ...
+}:
 
 with lib;
 
-let toINI = generators.toINI { };
-in {
+let
+  cfg = config.services.nfs;
+  toINI = generators.toINI { };
+in
+{
   services.nfs = {
     extraConfig = toINI {
       nfsd = {
@@ -20,8 +25,8 @@ in {
     server = {
       enable = true;
       exports = ''
-        /export      *.o(insecure,rw,sync,no_subtree_check,crossmnt,fsid=root)
-        /export/data *.o(insecure,rw,sync,no_subtree_check)
+        /export      *.o(insecure,rw,async,no_subtree_check,crossmnt,fsid=root)
+        /export/data *.o(insecure,rw,async,no_subtree_check)
       '';
     };
   };

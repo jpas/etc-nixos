@@ -18,6 +18,11 @@
     80
     443
     9091 # What am I used for?
+    5201
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    5201
   ];
 
   imports = [
@@ -25,9 +30,11 @@
 
     ../../profiles/base.nix
     ../../profiles/users/jpas
+    ../../profiles/users/kbell
 
     ./factorio.nix
     ./nfs.nix
+    ./samba.nix
   ];
 
   services.btrfs.autoScrub = {

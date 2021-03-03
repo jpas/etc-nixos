@@ -3,8 +3,8 @@
 
   user = {
     uid = 1001;
-    extraGroups = [ "audio" "scanner" "networkmanager" ];
+    extraGroups = [ ];
   };
 
-  home = import ./home-configuration.nix;
+  home = { };
 }
