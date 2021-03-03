@@ -1,11 +1,13 @@
-{ lib, config, pkgs, ... }:
+{ lib
+, config
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
-
   profiles = config.hole.profiles;
-
 in
 {
   imports = [

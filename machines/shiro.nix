@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   networking.hostName = "shiro"; # Define your hostname.
 
   imports = [

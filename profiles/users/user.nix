@@ -1,4 +1,7 @@
-{ name, user, home }:
+{ name
+, user
+, home
+}:
 
 { config, ... }: {
   users.users."${name}" = user // {

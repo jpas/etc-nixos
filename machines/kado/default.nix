@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: {
+{ config
+, pkgs
+, ...
+}:
+
+{
   networking.hostName = "kado";
 
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;

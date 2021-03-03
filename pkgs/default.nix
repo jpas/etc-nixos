@@ -1,5 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
-let inherit (pkgs) callPackage;
+
+let
+  inherit (pkgs) callPackage;
 in
 rec {
   volatile = import <nixos-volatile> { inherit (pkgs) config; };

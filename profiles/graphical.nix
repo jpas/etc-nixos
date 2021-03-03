@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: {
+{ config
+, pkgs
+, ...
+}:
+
+{
   imports = [ ./base.nix ];
 
   hole.profiles.graphical = true;

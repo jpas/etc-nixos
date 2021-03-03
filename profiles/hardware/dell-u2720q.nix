@@ -1,4 +1,8 @@
-{ config, ... }: {
+{ config
+, ...
+}:
+
+{
   services.colord.enable = true;
 
   boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];

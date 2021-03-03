@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }: {
+{ lib
+, pkgs
+, ...
+}:
+
+{
   networking.hostName = "kuro";
 
   # Lets use a new kernel!

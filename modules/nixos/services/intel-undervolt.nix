@@ -1,11 +1,13 @@
-{ lib, config, pkgs, ... }:
+{ lib
+, config
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.services.intel-undervolt;
-
 in
 {
   options = {

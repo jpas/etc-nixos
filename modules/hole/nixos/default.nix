@@ -1,1 +1,4 @@
-{ ... }: { imports = [ ../common ]; }
+{ ... }:
+{
+  imports = [ ../common ];
+}

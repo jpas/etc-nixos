@@ -1,11 +1,13 @@
-{ lib, config, pkgs, ... }:
+{ lib
+, config
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.programs.exa;
-
 in
 {
   options = {

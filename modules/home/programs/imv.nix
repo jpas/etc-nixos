@@ -1,13 +1,15 @@
-{ lib, config, pkgs, ... }:
+{ lib
+, config
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.programs.imv;
 
   cfgFmt = pkgs.formats.ini { };
-
 in
 {
   options = {

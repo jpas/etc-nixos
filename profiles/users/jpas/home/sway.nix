@@ -1,9 +1,13 @@
-{ lib, config, nixosConfig, pkgs, ... }:
+{ lib
+, config
+, nixosConfig
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.wayland.windowManager.sway;
 
   colors = config.hole.colors.gruvbox;
@@ -23,7 +27,6 @@ let
         --tb=${bg2} \
         --tf=${fg} "$@"
     '';
-
 in
 mkMerge [
   {

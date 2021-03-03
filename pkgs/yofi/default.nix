@@ -1,4 +1,10 @@
-{ lib, rustPlatform, fetchFromGitHub, cmake, pkg-config, pango }:
+{ lib
+, rustPlatform
+, fetchFromGitHub
+, cmake
+, pkg-config
+, pango
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "yofi";

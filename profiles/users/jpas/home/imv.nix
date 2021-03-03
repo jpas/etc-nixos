@@ -1,13 +1,14 @@
-{ lib, config, ... }:
+{ lib
+, config
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.programs.imv;
 
   color = config.hole.colors.gruvbox.dark-no-hash;
-
 in
 mkMerge [
   {

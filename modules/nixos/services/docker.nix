@@ -1,7 +1,13 @@
-{ lib, config, pkgs, ... }:
+{ lib
+, config
+, pkgs
+, ...
+}:
+
 with lib;
 
-let cfg = config.virtualisation.docker;
+let
+  cfg = config.virtualisation.docker;
 in
 {
   virtualisation.docker = { autoPrune.enable = mkDefault cfg.enable; };

@@ -1,11 +1,9 @@
 { ... }:
 
 let
-
   laptop = "Sharp Corporation 0x14CC 0x00000000";
   monitor = "Dell Inc. DELL U2720Q 86CZZ13";
   tv = "Goldstar Company Ltd LG TV 0x00000000";
-
 in
 {
   home-manager.imports = [

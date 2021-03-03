@@ -1,4 +1,6 @@
-args@{ lib, ... }:
+{ lib
+, ...
+} @ args:
 
 with lib;
 
@@ -19,7 +21,6 @@ let
       type = types.bool;
       inherit default;
     };
-
 in
 {
   imports = [

@@ -1,13 +1,13 @@
-{ lib, config, ... }:
+{ lib
+, config
+, ...
+}:
 
 with lib;
 
 let
-
   cfg = config.programs.zathura;
-
   colors = config.hole.colors.gruvbox.dark;
-
 in
 mkMerge [
   {

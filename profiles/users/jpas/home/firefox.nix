@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs
+, ...
+}:
+
+{
   programs.firefox = {
     # This doesn't work properly yet...
     enable = false;

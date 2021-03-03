@@ -1,4 +1,10 @@
-{ config, options, pkgs, ... }: {
+{ config
+, options
+, pkgs
+, ...
+}:
+
+{
   imports = [ ../hardware-configuration.nix ../modules/nixos ];
 
   # Essential packages.

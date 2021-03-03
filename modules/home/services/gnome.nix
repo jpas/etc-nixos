@@ -1,4 +1,8 @@
-{ pkgs, lib, nixosConfig, ... }:
+{ lib
+, nixosConfig
+, pkgs
+, ...
+}:
 
 with lib;
 

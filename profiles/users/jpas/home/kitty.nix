@@ -1,11 +1,12 @@
-{ lib, config, ... }:
+{ lib
+, config
+, ...
+}:
 
 with lib;
 
 let
-
   colors = config.hole.colors.gruvbox.dark;
-
 in
 {
   programs.kitty = {
