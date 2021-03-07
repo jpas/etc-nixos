@@ -15,9 +15,10 @@
     ../common.nix
 
     ../../profiles/base.nix
-    #../../profiles/gnome.nix
+    ../../profiles/laptop.nix
     ../../profiles/sway.nix
     ../../profiles/games.nix
+
 
     ../../profiles/hardware/dell-u2720q.nix
     ../../profiles/hardware/dell-xps-13-9300.nix
@@ -45,11 +46,9 @@
     fsType = "nfs";
     options = [
       "nfsvers=4.2"
-      "async"
       "noatime"
       "nodiratime"
       "noauto"
-      #"nconnect=8"
       "x-systemd.automount"
       "x-systemd.idle-timeout=600"
     ];

@@ -86,21 +86,15 @@ in
         config.startup = [{
           command = ''
             swayidle -w \
-                       lock swaylock \
-               before-sleep 'loginctl lock-session' \
-               timeout  300 'loginctl lock-session' \
-              idlehint 1800
-          '';
-        }
-          {
-            # The -w flag on the session locking daemon prevents the screen from
-            # blanking until the screen is unlocked. So we need two instances.
-            command = ''
-              swayidle \
+              idlehint 1800 \
+                       lock 'swaylock -f' \
+                     unlock 'pkill -QUIT -x swaylock' \
+               before-sleep 'swaylock -f' \
+                timeout 300 'swaylock -f' \
                 timeout 600 'swaymsg "output * dpms off"' \
                      resume 'swaymsg "output * dpms on "'
-            '';
-          }];
+          '';
+        }];
       };
     }
   ];

@@ -127,7 +127,7 @@ in
       xdg.mimeApps.enable = true;
 
       home.packages = with pkgs; [
-        firefox-wayland
+        firefox-bin
         desmume
         discord
       ];

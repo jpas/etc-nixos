@@ -41,32 +41,7 @@ mkMerge [
         window.titlebar = true;
         floating.titlebar = true;
 
-        window.commands = [
-          {
-            criteria = {
-              title = "\\ -\\ Sharing\\ Indicator$";
-            };
-            command = "border none, floating enable, sticky enable";
-          }
-        ];
-
         output."*".bg = "~/.config/sway/bg.png fill";
-
-        startup = [
-          #{
-          #  # TODO: add a systemd user service for swayidle
-          #  command = ''
-          #    swayidle -w \
-          #      timeout 300 swaylock \
-          #      timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-          #      before-sleep swaylock
-          #  '';
-          #  # This will lock your screen after 300 seconds of inactivity,
-          #  # then turn off your displays after another 300 seconds, and turn
-          #  # your screens back on when resumed. It will also lock your
-          #  # screen before your computer goes to sleep.
-          #}
-        ];
 
         keybindings =
           let modifier = cfg.config.modifier;
