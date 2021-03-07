@@ -18,6 +18,8 @@
     sshfs
   ];
 
+  networking.useDHCP = false;
+
   # Boot faster!
   boot.loader.timeout = 1;
 
@@ -55,8 +57,6 @@
     enable = true;
     passwordAuthentication = false;
   };
-
-  services.tailscale.enable = true;
 
   users = {
     # Disble mutation of users.

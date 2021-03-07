@@ -1,27 +1,6 @@
-{ lib
-, ...
-}:
-
-with lib;
-
-let
-  cfg = config.services.nfs;
-  toINI = generators.toINI { };
-in
+{ ... }:
 {
   services.nfs = {
-    extraConfig = toINI {
-      nfsd = {
-        vers2 = false;
-        vers3 = false;
-        "vers4.0" = false;
-        "vers4.1" = false;
-        "vers4.2" = true;
-      };
-
-      mountd = { manage-gids = true; };
-    };
-
     server = {
       enable = true;
       exports = ''
@@ -31,6 +10,5 @@ in
     };
   };
 
-  # Only allow traffic from tailscale interface.
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 2049 ];
 }

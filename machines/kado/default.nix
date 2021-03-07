@@ -7,8 +7,20 @@
   networking.hostName = "kado";
 
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
-
   hardware.cpu.intel.updateMicrocode = true;
+
+  imports = [
+    ../common
+
+    ../../profiles/base.nix
+
+    ../../profiles/users/jpas
+    ../../profiles/users/kbell
+
+    ./factorio.nix
+    ./nfs.nix
+    ./samba.nix
+  ];
 
   networking.interfaces = {
     enp0s20f0.useDHCP = true;
@@ -17,29 +29,15 @@
     enp0s20f3.useDHCP = true;
   };
 
-  services.pipewire.media-session.enable = config.services.pipewire.enable;
-
   networking.firewall.allowedTCPPorts = [
     80
     443
-    9091 # What am I used for?
     5201
+    9091 # TODO: transmission
   ];
 
   networking.firewall.allowedUDPPorts = [
     5201
-  ];
-
-  imports = [
-    ../common.nix
-
-    ../../profiles/base.nix
-    ../../profiles/users/jpas
-    ../../profiles/users/kbell
-
-    ./factorio.nix
-    ./nfs.nix
-    ./samba.nix
   ];
 
   services.btrfs.autoScrub = {

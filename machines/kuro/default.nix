@@ -9,16 +9,13 @@
   # Lets use a new kernel!
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
 
-  virtualisation.docker.enable = true;
-
   imports = [
-    ../common.nix
+    ../common
 
     ../../profiles/base.nix
+    ../../profiles/games.nix
     ../../profiles/laptop.nix
     ../../profiles/sway.nix
-    ../../profiles/games.nix
-
 
     ../../profiles/hardware/dell-u2720q.nix
     ../../profiles/hardware/dell-xps-13-9300.nix
@@ -41,6 +38,10 @@
 
   networking.wireless.iwd.enable = true;
 
+  networking.interfaces = {
+    wlan0.useDHCP = true;
+  };
+
   fileSystems."/data" = {
     device = "kado.o:/data";
     fsType = "nfs";
@@ -53,4 +54,6 @@
       "x-systemd.idle-timeout=600"
     ];
   };
+
+  virtualisation.docker.enable = true;
 }
