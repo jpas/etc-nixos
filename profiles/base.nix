@@ -5,7 +5,7 @@
 }:
 
 {
-  imports = [ ../hardware-configuration.nix ../modules/nixos ];
+  imports = [ ../hardware-configuration.nix ../modules/nixos ../secrets ];
 
   # Essential packages.
   environment.systemPackages = with pkgs; [
@@ -63,7 +63,7 @@
     mutableUsers = false;
 
     # Read root's hashed password from file to prevent lockout
-    users.root.hashedPassword = (import ../secrets/passwords.nix).root;
+    users.root.hashedPassword = config.hole.secrets.passwd.root;
   };
 
   # We like to live really dangerously!

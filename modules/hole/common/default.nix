@@ -38,5 +38,10 @@ in
       type = types.float;
       default = -106.4;
     })
+
+    (mkHoleOption [ "secrets" ] {
+      type = types.anything;
+      default = { };
+    })
   ];
 }
