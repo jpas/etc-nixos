@@ -27,9 +27,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = [ ];
-
-  # XXX: 2020-01-20 turning on causes failed boots.
   boot.tmpOnTmpfs = true;
 
   # Set your time zone.
