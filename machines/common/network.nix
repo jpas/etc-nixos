@@ -17,7 +17,6 @@ let
         value = [ (host + domain) ];
       })
       hosts;
-
 in
 {
   networking.hosts = mkHosts hole ".o";

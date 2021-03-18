@@ -10,12 +10,12 @@
   # Essential packages.
   environment.systemPackages = with pkgs; [
     curl
+    htop
     kitty.terminfo
     manpages
     neovim
     tmux
     wget
-    sshfs
   ];
 
   networking.useDHCP = false;
@@ -27,7 +27,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = [ "ntfs" "sshfs" ];
+  boot.supportedFilesystems = [ ];
 
   # XXX: 2020-01-20 turning on causes failed boots.
   boot.tmpOnTmpfs = true;
@@ -52,12 +52,6 @@
 
   services.upower.enable = config.powerManagement.enable;
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-  };
-
   users = {
     # Disble mutation of users.
     mutableUsers = false;
@@ -76,8 +70,8 @@
 
   nix = {
     optimise.automatic = true;
-    #gc.automatic = true;
-    #gc.options = "--delete-older-than 7d";
+    gc.automatic = true;
+    gc.options = "--delete-older-than 30d";
 
     nixPath =
       let
