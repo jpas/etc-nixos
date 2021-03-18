@@ -28,6 +28,11 @@
     ./throttled.nix
   ];
 
+  hole.profiles = {
+    minimal = false;
+    graphical = true;
+  };
+
   # Enable documentation for development
   documentation.dev.enable = true;
 

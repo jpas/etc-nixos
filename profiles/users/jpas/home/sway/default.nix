@@ -14,6 +14,13 @@ in
 
   config = mkMerge [
     {
+      # consistent keybind with sway
+      programs.kitty.keybindings = {
+        "super+shift+enter" = "new_os_window_with_cwd";
+      };
+    }
+
+    {
       home.packages = [ pkgs.kanshi ];
 
       wayland.windowManager.sway = {

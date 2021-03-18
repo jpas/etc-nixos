@@ -1,3 +1,5 @@
 /secrets
 /configuration.nix
 /hardware-configuration.nix
+/cachix
+/cachix.nix

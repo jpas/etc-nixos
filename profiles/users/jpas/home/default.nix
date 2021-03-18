@@ -51,6 +51,11 @@ in
         config = { theme = "gruvbox-dark"; };
       };
 
+      programs.direnv = {
+        enable = true;
+        enableNixDirenvIntegration = true;
+      };
+
       programs.exa = {
         enable = true;
         lsAlias = true;
@@ -107,11 +112,10 @@ in
     }
 
     (mkIf (!profiles.minimal) {
-      home.packages = with pkgs; [ sage ];
+      home.packages = with pkgs; [
+        #sage # XXX: forces compile (2021-03-08)
+      ];
 
-      programs.direnv.enable = true;
-
-      services.lorri.enable = true;
     })
 
     (mkIf profiles.graphical {
