@@ -97,9 +97,7 @@ in
                        lock 'swaylock -f' \
                      unlock 'pkill -QUIT -x swaylock' \
                before-sleep 'swaylock -f' \
-                timeout 300 'swaylock -f' \
-                timeout 600 'swaymsg "output * dpms off"' \
-                     resume 'swaymsg "output * dpms on "'
+                timeout 300 'swaylock -f'
           '';
         }];
       };
