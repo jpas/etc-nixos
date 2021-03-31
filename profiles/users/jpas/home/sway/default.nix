@@ -8,49 +8,88 @@ with lib;
 
 let
   colors = config.hole.colors.gruvbox;
+
+  mkStartupCommand = { command, always ? false, packages ? [ ] }: {
+    home.packages = packages;
+    wayland.windowManager.sway.config.startup = [{
+      inherit command always;
+    }];
+  };
 in
 {
   imports = [ ../sway.nix ];
 
   config = mkMerge [
     {
-      # consistent keybind with sway
       programs.kitty.keybindings = {
         "super+shift+enter" = "new_os_window_with_cwd";
       };
     }
 
     {
-      home.packages = [ pkgs.kanshi ];
-
-      wayland.windowManager.sway = {
-        config.startup = [{ command = "kanshi"; }];
+      home.packages = [ pkgs.pavucontrol ];
+      wayland.windowManager.sway.config = {
+        floating.criteria = [{ app_id = "pavucontrol"; }];
       };
     }
 
     {
-      home.packages = [ pkgs.gammastep ];
-
-      xdg.configFile."gammastep/config.ini".text = generators.toINI { } {
-        general = {
-          location-provider = "manual";
-          temp-day = 3600;
-          temp-night = 2700;
-        };
-
-        manual = {
-          lat = config.hole.location.latitude;
-          lon = config.hole.location.longitude;
-        };
-      };
-
-      wayland.windowManager.sway = {
-        config.startup = [{ command = "gammastep"; }];
-      };
+      home.packages = [ pkgs.wlsunset ];
+      wayland.windowManager.sway.config.startup = [{
+        command = ''
+          sleep 0.5; pkill wlsunset; \
+          exec wlsunset -t 2700 -T 3600 -l 52.1 -L -106.4
+        '';
+        always = true;
+      }];
     }
 
     {
-      home.packages = [ pkgs.swaylock ];
+      #home.packages = [ pkgs.kanshi ];
+      #wayland.windowManager.sway.config.startup = [{
+      #  command = "pkill kanshi; exec kanshi";
+      #  always = true;
+      #}];
+    }
+
+    {
+      home.packages = with pkgs; [
+        swaylock
+        swayidle
+        (writeShellScriptBin "screen-lock" ''
+          swaylock -f
+        '')
+        (symlinkJoin {
+          name = "sway-screen-utils";
+          paths = [
+            (writeShellScriptBin "screen-unlock" ''
+              pkill -QUIT -x swaylock
+            '')
+            (writeShellScriptBin "screen-on" ''
+              swaymsg output '*' dpms on
+            '')
+            (writeShellScriptBin "screen-off" ''
+              swaymsg output '*' dpms off
+            '')
+          ];
+        })
+      ];
+
+      wayland.windowManager.sway.config = {
+        startup = [{
+          always = true;
+          command = ''
+            pkill swayidle; \
+            exec swayidle -w \
+              idlehint 1800 \
+                       lock screen-lock \
+                     unlock screen-unlock \
+               before-sleep screen-lock \
+               timeout  300 screen-lock \
+               timeout 3600 screen-off resume screen-on
+          '';
+        }];
+      };
 
       xdg.configFile."swaylock/config" = {
         text = with colors.dark-no-hash; ''
@@ -83,23 +122,6 @@ in
           text-ver-color=${bg}
           text-wrong-color=${bg}
         '';
-      };
-    }
-
-    {
-      home.packages = [ pkgs.swayidle pkgs.swaylock ];
-
-      wayland.windowManager.sway = {
-        config.startup = [{
-          command = ''
-            swayidle -w \
-              idlehint 1800 \
-                       lock 'swaylock -f' \
-                     unlock 'pkill -QUIT -x swaylock' \
-               before-sleep 'swaylock -f' \
-                timeout 300 'swaylock -f'
-          '';
-        }];
       };
     }
   ];

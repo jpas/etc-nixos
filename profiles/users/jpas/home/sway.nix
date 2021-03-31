@@ -13,7 +13,7 @@ let
   colors = config.hole.colors.gruvbox;
 
   menu = with colors.dark;
-    pkgs.writeShellScriptBin "menu" ''
+    pkgs.writeShellScriptBin "menu-old" ''
       export BEMENU_BACKEND=wayland
       exec bemenu -b -m -1 \
         --fn "JetBrains Mono 10" \
@@ -39,6 +39,10 @@ mkMerge [
         workspaceAutoBackAndForth = true;
 
         window.titlebar = true;
+
+        window.commands = [
+          { command = "floating enable; sticky enable; border pixel 2"; criteria = { app_id = "menu"; };}
+        ];
         floating.titlebar = true;
 
         output."*".bg = "~/.config/sway/bg.png fill";
@@ -66,7 +70,14 @@ mkMerge [
             "XF86AudioRaiseVolume" = "exec pamixer --increase 5";
 
             "${modifier}+d" =
-              "exec dmenu_path | menu --prompt='|>' | xargs swaymsg exec --";
+              "exec menu menu-path 'xargs -r swaymsg -t command exec --'";
+
+            "${modifier}+p" = ''
+                exec menu \
+                  menu-pdfs \
+                  "xargs -r swaymsg -t command exec zathura --" \
+                  "--delimiter / --with-nth -1"
+            '';
           };
 
         colors =
@@ -127,29 +138,17 @@ mkMerge [
           };
         };
       };
-
-      extraConfig = ''
-        seat * pointer_constraint disable
-      '';
     };
   }
 
   (mkIf cfg.enable {
     home.packages = with pkgs; [
-      dmenu # needed for dmenu_path
-      bemenu
       pamixer
-      pavucontrol
       playerctl
       sway-contrib.grimshot
       volatile.wdomirror
       wl-clipboard
-      (pkgs.symlinkJoin {
-        name = "sway-stuff";
-        paths = [ menu ];
-      })
     ];
-
   })
 
   (mkIf nixosConfig.programs.sway.enable {

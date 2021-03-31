@@ -8,24 +8,37 @@ in
 {
   home-manager.imports = [
     ({ pkgs, ... }: {
-      xdg.configFile."kanshi/config".text = ''
-        profile laptop {
-          output "${laptop}"  enable  scale 2 position 0,0
-        }
+      wayland.windowManager.sway = {
+        config = {
+          output = {
+            "${laptop}" = {
+              scale = "2";
+              position = "0 2160";
+            };
 
-        profile docked {
-          output "${laptop}"  disable scale 2 position 0,2160
-          output "${monitor}" enable  scale 1 position 1920,0
-          exec pactl set-card-profile 43 output:hdmi-stereo-extra3+input:analog-stereo
-        }
+            "${monitor}" = {
+              scale = "1";
+              position = "1920 0";
+            };
+          };
+        };
 
-        profile docked+tv {
-          output "${laptop}"  disable scale 2 position 0,2160
-          output "${monitor}" enable  scale 1 position 1920,0
-          output "${tv}"      enable  scale 1 position 1920,2160
-          exec pactl set-card-profile 43 output:hdmi-stereo-extra3+input:analog-stereo
-        }
-      '';
+        extraConfig = ''
+          workspace 1 output "${monitor}" "${laptop}" "${tv}"
+          workspace 2 output "${monitor}" "${laptop}" "${tv}"
+          workspace 3 output "${monitor}" "${laptop}" "${tv}"
+          workspace 4 output "${monitor}" "${laptop}" "${tv}"
+          workspace 5 output "${monitor}" "${laptop}" "${tv}"
+          workspace 6 output "${monitor}" "${laptop}" "${tv}"
+          workspace 7 output "${monitor}" "${laptop}" "${tv}"
+          workspace 8 output "${monitor}" "${laptop}" "${tv}"
+          workspace 9 output "${monitor}" "${laptop}" "${tv}"
+
+          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode "${laptop}"
+          bindswitch --reload --locked lid:off exec swayutil clamshell-mode "${laptop}"
+          exec_always swayutil clamshell-mode "${laptop}"
+        '';
+      };
     })
   ];
 }

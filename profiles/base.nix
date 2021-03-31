@@ -16,6 +16,8 @@
     neovim
     tmux
     wget
+    nix-output-monitor
+    cachix
   ];
 
   networking.useDHCP = false;

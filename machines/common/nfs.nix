@@ -23,4 +23,6 @@ with lib;
   systemd.services.rpcbind.enable = false;
   systemd.services."rpc-statd".enable = false;
   systemd.services."rpc-statd-notify".enable = false;
+  systemd.services."rpc-gssd".enable = false;
+  systemd.services."rpc-svcgssd".enable = false;
 }

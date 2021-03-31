@@ -17,6 +17,7 @@ in
     ./kitty.nix
     ./mako.nix
     ./neovim.nix
+    ./spotifyd.nix
     ./sway
     ./tmux.nix
     ./zathura.nix
@@ -32,8 +33,9 @@ in
         file
         (hunspellWithDicts [ hunspellDicts.en_CA-large ])
         gnumake
-        nixfmt
+        nixpkgs-fmt
         p7zip
+        papis
         python3
         ripgrep
         rmapi
@@ -121,6 +123,7 @@ in
     (mkIf profiles.graphical {
       wayland.windowManager.sway.enable = true;
 
+      services.spotifyd.enable = true;
       programs.imv.enable = true;
       programs.kitty.enable = true;
       programs.mako.enable = false;
@@ -131,7 +134,6 @@ in
       xdg.mimeApps.enable = true;
 
       home.packages = with pkgs; [
-        firefox-wayland
         desmume
         discord
       ];

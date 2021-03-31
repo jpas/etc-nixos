@@ -20,6 +20,7 @@
     ./factorio.nix
     ./nfs.nix
     ./samba.nix
+    ./croc.nix
   ];
 
   networking.interfaces = {

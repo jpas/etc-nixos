@@ -27,6 +27,13 @@ with lib;
     }
 
     {
+      environment.systemPackages = with pkgs; [
+        xdg-user-dirs
+        xdg-utils
+      ];
+    }
+
+    {
       services.pipewire = {
         enable = true;
 
@@ -84,6 +91,7 @@ with lib;
         gtk-application-prefer-dark-theme = true
       '';
 
+      /*
       home-manager.imports = [
         ({ ... }: {
           qt = {
@@ -103,6 +111,7 @@ with lib;
           };
         })
       ];
+      */
     }
   ];
 }
