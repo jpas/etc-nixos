@@ -24,6 +24,8 @@
       set list
       set smartcase
 
+      set nobackup nowritebackup
+
       syntax on
       syntax sync minlines=500
     '';
@@ -33,7 +35,6 @@
         plugin = gruvbox;
         config = ''
           colorscheme gruvbox
-
         '';
       }
       {

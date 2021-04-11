@@ -19,9 +19,8 @@ in
       visual_bell_duration = 0;
 
       remember_window_size = false;
-      initial_window_height = "80c";
-      initial_window_width = "160c";
-
+      initial_window_width = 800;
+      initial_window_height = 600;
       window_padding_width = 3;
       placement_strategy = "center";
 

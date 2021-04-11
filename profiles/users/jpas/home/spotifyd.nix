@@ -12,11 +12,6 @@ let
 in
 {
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      playerctl
-      spotify-tui
-    ];
-
     services.spotifyd = {
       package = pkgs.spotifyd.override {
         withPulseAudio = true;

@@ -43,6 +43,7 @@ with lib;
         slurp
         swayidle
         swaylock
+        wl-clipboard
         wlsunset
         xwayland
       ];

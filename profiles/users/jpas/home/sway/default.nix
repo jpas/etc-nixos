@@ -21,19 +21,6 @@ in
 
   config = mkMerge [
     {
-      programs.kitty.keybindings = {
-        "super+shift+enter" = "new_os_window_with_cwd";
-      };
-    }
-
-    {
-      home.packages = [ pkgs.pavucontrol ];
-      wayland.windowManager.sway.config = {
-        floating.criteria = [{ app_id = "pavucontrol"; }];
-      };
-    }
-
-    {
       home.packages = [ pkgs.wlsunset ];
       wayland.windowManager.sway.config.startup = [{
         command = ''
@@ -45,34 +32,21 @@ in
     }
 
     {
-      #home.packages = [ pkgs.kanshi ];
-      #wayland.windowManager.sway.config.startup = [{
-      #  command = "pkill kanshi; exec kanshi";
-      #  always = true;
-      #}];
-    }
-
-    {
       home.packages = with pkgs; [
         swaylock
         swayidle
         (writeShellScriptBin "screen-lock" ''
           swaylock -f
         '')
-        (symlinkJoin {
-          name = "sway-screen-utils";
-          paths = [
-            (writeShellScriptBin "screen-unlock" ''
-              pkill -QUIT -x swaylock
-            '')
-            (writeShellScriptBin "screen-on" ''
-              swaymsg output '*' dpms on
-            '')
-            (writeShellScriptBin "screen-off" ''
-              swaymsg output '*' dpms off
-            '')
-          ];
-        })
+        (writeShellScriptBin "screen-unlock" ''
+          pkill -QUIT -x swaylock
+        '')
+        (writeShellScriptBin "screen-on" ''
+          swaymsg output '*' dpms on
+        '')
+        (writeShellScriptBin "screen-off" ''
+          swaymsg output '*' dpms off
+        '')
       ];
 
       wayland.windowManager.sway.config = {

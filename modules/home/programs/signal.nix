@@ -22,13 +22,7 @@ in
     };
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
-      home.packages = [ cfg.package ];
-
-      wayland.windowManager.sway.config = {
-        floating.criteria = [{ class = "Signal"; }];
-      };
-    })
-  ];
+  config = mkIf cfg.enable {
+    home.packages = [ cfg.package ];
+  };
 }
