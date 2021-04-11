@@ -48,8 +48,8 @@
     wlan0.useDHCP = true;
   };
 
-  fileSystems."/data" = {
-    device = "kado.o:/data";
+  fileSystems."/aleph" = {
+    device = "kado.o:/aleph";
     fsType = "nfs";
     options = [
       "nfsvers=4.2"

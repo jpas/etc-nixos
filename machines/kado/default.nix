@@ -6,10 +6,12 @@
 {
   networking.hostName = "kado";
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_testing;
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
   hardware.cpu.intel.updateMicrocode = true;
 
   imports = [
+    ./hardware.nix
+
     ../common
 
     ../../profiles/base.nix
@@ -44,7 +46,7 @@
   services.btrfs.autoScrub = {
     enable = true;
     interval = "Wed *-*-1..7 4:00";
-    fileSystems = [ "/data" ];
+    fileSystems = [ "/aleph" ];
   };
 
   services.fail2ban.enable = true;

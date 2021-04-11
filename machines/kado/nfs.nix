@@ -4,8 +4,8 @@
     server = {
       enable = true;
       exports = ''
-        /export      *.o(insecure,rw,async,no_subtree_check,crossmnt,fsid=root)
-        /export/data *.o(insecure,rw,async,no_subtree_check)
+        /export       *.o(insecure,rw,async,no_subtree_check,crossmnt,fsid=root)
+        /export/aleph *.o(insecure,rw,async,no_subtree_check)
       '';
     };
   };

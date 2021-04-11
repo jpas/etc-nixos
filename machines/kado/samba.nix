@@ -34,7 +34,7 @@ in mkMerge [
 
     shares = {
       data = {
-        path = "/export/data";
+        path = "/export/aleph";
         browseable = "yes";
         "guest ok" = "no";
         "read only" = "no";
