@@ -5,6 +5,8 @@
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "lock";
     extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      HandleSuspendKey=suspend-then-hibernate
       HandleSuspendKey=suspend-then-hibernate
     '';
   };

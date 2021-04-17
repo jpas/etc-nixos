@@ -17,7 +17,7 @@ with lib;
         Update_Rate_s = 5;
         PL1_Tdp_W = 25;
         PL2_Tdp_W = 32;
-        Trip_Temp_C = 94;
+        Trip_Temp_C = 92;
         cTDP = 2;
       };
 

@@ -19,8 +19,8 @@ in
       };
       settings = {
         global = {
-          username_cmd = "cat ~/.config/spotifyd/username";
-          password_cmd = "cat ~/.config/spotifyd/password";
+          username_cmd = "${pkgs.coreutils}/bin/cat ~/.config/spotifyd/username";
+          password_cmd = "${pkgs.coreutils}/bin/cat ~/.config/spotifyd/password";
           backend = "pulseaudio";
           use_mpris = true;
           bitrate = 320;

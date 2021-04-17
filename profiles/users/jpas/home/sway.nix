@@ -75,7 +75,7 @@ let
         separator_symbol "|"
       '';
 
-      statusCommand = "while date +'%Y-%m-%d %l:%M:%S %p '; do sleep 1; done";
+      statusCommand = "~/src/bar/bar"; #while date +'%Y-%m-%d %l:%M:%S %p '; do sleep 1; done";
 
       colors = with colors.dark; rec {
         background = bg;
@@ -229,6 +229,25 @@ mkMerge [
       };
     };
     packages = [ pkgs.brightnessctl ];
+  })
+
+  (mkConfig {
+    sway = {
+      keybindings = mkOptionDefault {
+        "Mod4+p" = "exec 1password";
+      };
+      window.commands = [
+        {
+          criteria = { class = "1Password"; };
+          command = "floating enable; sticky enable";
+        }
+        {
+          criteria = { app_id = "1Password"; };
+          command = "floating enable; sticky enable";
+        }
+      ];
+    };
+    packages = [ pkgs._1password-gui ];
   })
 
   (mkIf nixosConfig.programs.sway.enable {
