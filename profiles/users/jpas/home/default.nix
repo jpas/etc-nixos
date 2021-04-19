@@ -60,7 +60,7 @@ in
 
       programs.exa = {
         enable = true;
-        lsAlias = true;
+        enableAliases = true;
       };
 
       programs.fzf = {

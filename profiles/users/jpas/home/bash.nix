@@ -9,10 +9,6 @@
     shellAliases = {
       v = "$VISUAL";
       e = "$EDITOR";
-
-      l = "ls";
-      ll = "l -l";
-      la = "ll -a";
     };
 
     profileExtra = ''
