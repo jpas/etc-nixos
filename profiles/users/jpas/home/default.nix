@@ -20,6 +20,7 @@ in
     ./spotifyd.nix
     ./sway
     ./tmux.nix
+    ./xplr.nix
     ./zathura.nix
   ];
 
