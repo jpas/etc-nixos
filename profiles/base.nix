@@ -5,7 +5,7 @@
 }:
 
 {
-  imports = [ ../hardware-configuration.nix ../modules/nixos ../secrets ];
+  imports = [ ../modules/nixos ../secrets ];
 
   # Essential packages.
   environment.systemPackages = with pkgs; [

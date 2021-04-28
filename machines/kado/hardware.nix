@@ -26,8 +26,12 @@
 
       "/aleph/home" = onAleph "/home";
       "/aleph/media" = onAleph "/media";
-      "/export/aleph" = {
-        device = "/aleph";
+      "/srv/exports/aleph/home" = {
+        device = "/aleph/home";
+        options = [ "bind" ];
+      };
+      "/srv/exports/aleph/media" = {
+        device = "/aleph/media";
         options = [ "bind" ];
       };
     };

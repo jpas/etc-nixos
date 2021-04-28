@@ -10,4 +10,6 @@ rec {
   scholar = callPackage ./scholar { };
   srvfb = callPackage ./srvfb { };
   yofi = callPackage ./yofi { };
+
+  ftpserver = callPackage ./ftpserver { };
 }

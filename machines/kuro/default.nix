@@ -10,6 +10,8 @@
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
 
   imports = [
+    ../../hardware-configuration.nix
+
     ../common
     #../../cachix.nix
 

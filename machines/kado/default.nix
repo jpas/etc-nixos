@@ -21,8 +21,9 @@
 
     ./factorio.nix
     ./nfs.nix
-    ./samba.nix
+    #./samba.nix
     ./croc.nix
+    ./print-and-scan.nix
   ];
 
   networking.interfaces = {
