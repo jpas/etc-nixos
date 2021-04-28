@@ -1,24 +1,35 @@
-{ config
+{ lib
+, config
 , options
 , pkgs
 , ...
 }:
 
+with lib;
+
 {
-  imports = [ ../modules/nixos ../secrets ];
+  imports = [
+    ../modules/nixos
+    ../secrets
+
+    ./graphical.nix
+    ./laptop.nix
+  ];
 
   # Essential packages.
-  environment.systemPackages = with pkgs; [
-    curl
-    htop
-    kitty.terminfo
-    manpages
-    neovim
-    tmux
-    wget
-    nix-output-monitor
-    cachix
-  ];
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs)
+      cachix
+      curl
+      htop
+      manpages
+      neovim
+      nix-output-monitor
+      tmux
+      wget
+      ;
+    kitty-terminfo = pkgs.kitty.terminfo;
+  };
 
   networking.useDHCP = false;
 
@@ -49,7 +60,7 @@
 
   networking.networkmanager.wifi.backend = "iwd";
 
-  services.upower.enable = config.powerManagement.enable;
+  services.upower.enable = mkDefault config.powerManagement.enable;
 
   users = {
     # Disble mutation of users.
@@ -63,8 +74,12 @@
   system.autoUpgrade.enable = false;
 
   nixpkgs = {
-    config = { allowUnfree = true; };
-    overlays = [ (import ../pkgs/overlay.nix) ];
+    config = {
+      allowUnfree = true;
+    };
+    overlays = [
+      (import ../pkgs/overlay.nix)
+    ];
   };
 
   nix = {

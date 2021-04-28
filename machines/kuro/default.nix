@@ -13,23 +13,19 @@
     ../../hardware-configuration.nix
 
     ../common
-    #../../cachix.nix
-
-    ../../profiles/base.nix
-    ../../profiles/games.nix
-    ../../profiles/laptop.nix
-    ../../profiles/sway.nix
-
-    ../../profiles/hardware/dell-u2720q.nix
-    ../../profiles/hardware/dell-xps-13-9300.nix
-    ../../profiles/hardware/keychron-k3.nix
-    ../../profiles/hardware/logitech-mx-master-3.nix
 
     ../../profiles/users/jpas
 
+    ./hardware.nix
     ./kanshi.nix
-    ./throttled.nix
   ];
+
+  profiles = {
+    graphical = true;
+    laptop = true;
+  };
+
+  programs.sway.enable = true;
 
   hole.profiles = {
     minimal = false;
@@ -40,7 +36,6 @@
   documentation.dev.enable = true;
 
   hardware.bluetooth = {
-    enable = true;
     settings = { General.FastConnectable = true; };
   };
 
@@ -63,7 +58,7 @@
     ];
   };
 
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
 
   nix = {
     package = pkgs.nixFlakes;

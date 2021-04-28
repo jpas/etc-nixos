@@ -14,8 +14,6 @@
 
     ../common
 
-    ../../profiles/base.nix
-
     ../../profiles/users/jpas
     ../../profiles/users/kbell
 

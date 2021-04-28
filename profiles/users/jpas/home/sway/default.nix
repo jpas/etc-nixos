@@ -25,7 +25,7 @@ in
       wayland.windowManager.sway.config.startup = [{
         command = ''
           sleep 0.5; pkill wlsunset; \
-          exec wlsunset -t 2700 -T 3600 -l 52.1 -L -106.4
+          exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4
         '';
         always = true;
       }];

@@ -27,11 +27,25 @@ mkMerge [
       useGlamor = true;
     };
   }
+
+  {
+    # from hardware-configuration.nix
+    boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
+    boot.initrd.kernelModules = [ ];
+    boot.kernelModules = [ "kvm-intel" ];
+    boot.extraModulePackages = [ ];
+
+    hardware.video.hidpi.enable = mkDefault true;
+
+    powerManagement.cpuFreqGovernor = mkDefault "powersave";
+  }
+
   {
     # XPS 9300 specific tweaks
+    hardware.bluetooth.enable = true;
 
     # Enable fan sensors via smm
-    boot.initrd.kernelModules = mkDefault [ "dell_smm_hwmon" ];
+    boot.initrd.kernelModules = [ "dell_smm_hwmon" ];
     boot.extraModprobeConfig = ''
       options dell-smm-hwmon ignore_dmi=1
     '';
@@ -45,18 +59,11 @@ mkMerge [
     boot.kernelPackages = mkIf (versionOlder pkgs.linux.version "5.6")
       (mkDefault pkgs.linuxPackages_latest);
 
-    # Enable touchpad support
-    services.xserver.libinput.enable = mkDefault true;
-
     # Enable trim service for SSD
     services.fstrim.enable = mkDefault true;
 
     # Enable firmware update daemon.
     services.fwupd.enable = mkDefault true;
-
-    # Thermal management for laptops.
-    services.tlp.enable = mkDefault true;
-    services.thermald.enable = mkDefault true;
 
     environment.systemPackages = [
       pkgs.libsmbios # For interacting with Dell BIOS/UEFI
