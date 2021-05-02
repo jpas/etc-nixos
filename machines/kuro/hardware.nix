@@ -6,10 +6,12 @@ with lib;
 
 {
   imports = [
-    ../../profiles/hardware/dell-u2720q.nix
-    ../../profiles/hardware/dell-xps-13-9300.nix
-    ../../profiles/hardware/keychron-k3.nix
-    ../../profiles/hardware/logitech-mx-master-3.nix
+    ../hardware/wifi.nix
+    ../hardware/bluetooth.nix
+    ../hardware/dell-u2720q.nix
+    ../hardware/dell-xps-13-9300.nix
+    ../hardware/keychron-k3.nix
+    ../hardware/logitech-mx-master-3.nix
   ];
 
   config = {
@@ -34,36 +36,12 @@ with lib;
       size = (16 + 4) * 1024;
     }];
 
-    services.throttled = {
+    services.undervolt = {
       enable = mkDefault true;
-
-      extraConfig = generators.toINI { } {
-        # *** WARNING *** these were tweaked specifically for my machine, using
-        # them on your own machine may result in instability
-        GENERAL = { Enabled = true; };
-
-        AC = {
-          Update_Rate_s = 5;
-          PL1_Tdp_W = 25;
-          PL2_Tdp_W = 32;
-          Trip_Temp_C = 92;
-          cTDP = 2;
-        };
-
-        BATTERY = {
-          Update_Rate_s = 30;
-          PL1_Tdp_W = 15;
-          PL2_Tdp_W = 18;
-        };
-
-        UNDERVOLT = rec {
-          CORE = -66;
-          CACHE = CORE; # core and cache must have the same undervolt
-          GPU = 0;
-          UNCORE = 0;
-          ANALOGIO = 0;
-        };
-      };
+      # *** WARNING *** these were tweaked specifically for my machine, using
+      # them on your own machine may result in instability
+      temp = 93;
+      coreOffset = -68;
     };
   };
 }

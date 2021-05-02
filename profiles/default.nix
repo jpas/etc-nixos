@@ -16,6 +16,8 @@ with lib;
     ./laptop.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+
   # Essential packages.
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
@@ -23,7 +25,6 @@ with lib;
       curl
       htop
       manpages
-      neovim
       nix-output-monitor
       tmux
       wget
@@ -31,46 +32,48 @@ with lib;
     kitty-terminfo = pkgs.kitty.terminfo;
   };
 
-  networking.useDHCP = false;
+  # Enable documentation for development
+  documentation.dev.enable = mkDefault true;
+
+  # This will become the default eventually, but it isn't at the moment.
+  networking.useDHCP = mkDefault false;
 
   # Boot faster!
-  boot.loader.timeout = 1;
+  boot.loader.timeout = mkDefault 1;
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = mkDefault true;
+  boot.loader.efi.canTouchEfiVariables = mkDefault true;
 
-  boot.tmpOnTmpfs = true;
+  boot.tmpOnTmpfs = mkDefault true;
 
   # Set your time zone.
-  time.timeZone = "America/Regina";
+  time.timeZone = mkDefault "America/Regina";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
+  i18n.defaultLocale = mkDefault "en_CA.UTF-8";
 
   console = {
-    useXkbConfig = true;
-    colors = config.hole.colors.gruvbox.dark-no-hash.console;
+    useXkbConfig = mkDefault true;
+    colors = mkDefault config.hole.colors.gruvbox.dark-no-hash.console;
   };
 
   services.xserver = {
     # Does not enable xserver, but make sure the keymap is in sync
-    layout = "us";
+    layout = mkDefault "us";
   };
 
-  networking.networkmanager.wifi.backend = "iwd";
+  networking.networkmanager.wifi.backend = mkDefault "iwd";
 
   services.upower.enable = mkDefault config.powerManagement.enable;
 
   users = {
-    # Disble mutation of users.
     mutableUsers = false;
 
     # Read root's hashed password from file to prevent lockout
     users.root.hashedPassword = config.hole.secrets.passwd.root;
   };
 
-  # We like to live really dangerously!
   system.autoUpgrade.enable = false;
 
   nixpkgs = {
@@ -83,7 +86,14 @@ with lib;
   };
 
   nix = {
+    package = pkgs.nixFlakes;
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
     optimise.automatic = true;
+
     gc.automatic = true;
     gc.options = "--delete-older-than 30d";
 

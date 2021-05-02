@@ -25,6 +25,10 @@ let
       xkb_options = "caps:escape";
     };
 
+    input."type:touchpad" = {
+      tap = "enabled";
+    };
+
     output."*".bg = "~/.config/sway/bg.png fill";
 
     window.commands = [
@@ -115,7 +119,8 @@ let
 
   mkKitty = { command, kittyArgs ? "", cmdArgs ? "" }:
     pkgs.writeShellScriptBin "kitty-${command}" ''
-      exec kitty --single-instance --class "kitty-${command}" ${kittyArgs} -- "${command}" ${cmdArgs}
+      exec kitty --single-instance --class "kitty-${command}" ${kittyArgs} -- \
+        "${command}" ${cmdArgs}
     '';
 in
 mkMerge [
@@ -248,6 +253,89 @@ mkMerge [
       ];
     };
     packages = [ pkgs._1password-gui ];
+  })
+
+  (mkConfig {
+    sway = {
+      startup = [{
+        command = ''
+          sleep 1; pkill wlsunset; \
+          exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4
+        '';
+        always = true;
+      }];
+    };
+    packages = [ pkgs.wlsunset ];
+  })
+
+  (mkConfig {
+    sway = {
+      startup = [{
+        command = ''
+          sleep 1; pkill swayidle; \
+          exec swayidle -w \
+            idlehint 1800 \
+                     lock screen-lock \
+                   unlock screen-unlock \
+             before-sleep screen-lock \
+             timeout  300 screen-lock \
+             timeout 3600 screen-off resume screen-on
+        '';
+        always = true;
+      }];
+    };
+
+    packages = with pkgs; [
+      swaylock
+      swayidle
+      (writeShellScriptBin "screen-lock" ''
+        swaylock -f
+      '')
+      (writeShellScriptBin "screen-unlock" ''
+        pkill -QUIT -x swaylock
+      '')
+      (writeShellScriptBin "screen-on" ''
+        swaymsg output '*' dpms on
+      '')
+      (writeShellScriptBin "screen-off" ''
+        swaymsg output '*' dpms off
+      '')
+    ];
+
+    config.xdg.configFile = {
+      "swaylock/config" = {
+        text = with colors.dark-no-hash; ''
+          font=JetBrain Mono
+          text-color=${fg}
+
+          color=${bg}
+
+          key-hl-color=${fg}
+          bs-hl-color=${red1}
+          caps-lock-bs-hl-color=${red1}
+          caps-lock-key-hl-color=${yellow1}
+
+          inside-color=${bg}
+          inside-clear-color=${bg}
+          inside-caps-lock-color=${bg}
+          inside-ver-color=${bg}
+          inside-wrong-color=${bg}
+
+          line-uses-inside
+
+          ring-color=${bg}
+          ring-ver-color=${green1}
+          ring-clear-color=${yellow1}
+          ring-wrong-color=${red1}
+
+          text-color=${bg}
+          text-clear-color=${bg}
+          text-caps-lock-color=${bg}
+          text-ver-color=${bg}
+          text-wrong-color=${bg}
+        '';
+      };
+    };
   })
 
   (mkIf nixosConfig.programs.sway.enable {

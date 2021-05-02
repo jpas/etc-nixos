@@ -19,7 +19,6 @@ with lib;
         extraConfig = ''
           HandlePowerKey=suspend-then-hibernate
           HandleSuspendKey=suspend-then-hibernate
-          HandleSuspendKey=suspend-then-hibernate
         '';
       };
 
@@ -31,14 +30,15 @@ with lib;
     }
 
     {
+      hardware.bluetooth.enable = mkDefault true;
+
+      networking.wireless.iwd.enable = mkDefault true;
+
       powerManagement.enable = mkDefault true;
 
-      # touchpad drivers
-      services.xserver.libinput.enable = mkDefault true;
-
-      # laptop thermal management
-      services.tlp.enable = mkDefault true;
       services.thermald.enable = mkDefault true;
+      services.tlp.enable = mkDefault true;
+      services.xserver.libinput.enable = mkDefault true;
     }
- ]);
+  ]);
 }

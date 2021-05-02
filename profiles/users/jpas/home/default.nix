@@ -18,7 +18,7 @@ in
     ./mako.nix
     ./neovim.nix
     ./spotifyd.nix
-    ./sway
+    ./sway.nix
     ./tmux.nix
     ./xplr.nix
     ./zathura.nix
@@ -58,18 +58,23 @@ in
         enable = true;
         enableNixDirenvIntegration = true;
       };
+    }
 
+    {
       programs.exa = {
         enable = true;
-        enableAliases = true;
       };
+    }
 
+    {
       programs.fzf = {
         enable = true;
         defaultCommand = "fd --type f --follow";
         defaultOptions = [ "--layout=reverse" "--inline-info" "--color=16" ];
       };
+    }
 
+    {
       programs.git = {
         enable = true;
         lfs.enable = true;
@@ -81,9 +86,13 @@ in
           submodule = { recurse = true; };
         };
       };
+    }
 
+    {
       programs.go = { goPath = ".local/share/go"; };
+    }
 
+    {
       programs.htop = {
         enable = true;
         hideKernelThreads = true;
@@ -91,14 +100,20 @@ in
         showProgramPath = false;
         treeView = true;
       };
+    }
 
+    {
       programs.neovim.enable = true;
+    }
 
+    {
       programs.readline = {
         enable = true;
         variables = { editing-mode = "vi"; };
       };
+    }
 
+    {
       xdg = {
         enable = true;
         userDirs = {
