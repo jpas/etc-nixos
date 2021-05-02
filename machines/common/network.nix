@@ -23,4 +23,6 @@ in
   networking.hosts = mkHosts hole ".o";
 
   services.tailscale.enable = true;
+
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
 }
