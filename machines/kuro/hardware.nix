@@ -41,7 +41,7 @@ with lib;
       # *** WARNING *** these were tweaked specifically for my machine, using
       # them on your own machine may result in instability
       temp = 93;
-      coreOffset = -68;
+      coreOffset = -69;
     };
   };
 }

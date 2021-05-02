@@ -27,7 +27,6 @@ in
   config = mkMerge [
     {
       home.packages = with pkgs; [
-        _1password
         coreutils
         duf
         fd
