@@ -6,7 +6,6 @@
 {
   networking.hostName = "kado";
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
   hardware.cpu.intel.updateMicrocode = true;
 
   imports = [
