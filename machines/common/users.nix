@@ -6,7 +6,7 @@ with lib;
 
 let
   mkUser = { name, uid, home-config ? { }, ... }:
-    { config, ...}: {
+    { config, ... }: {
       users.users."${name}" = {
         inherit uid;
         isNormalUser = true;
@@ -17,7 +17,8 @@ let
         imports = config.home-manager.imports ++ [ home-config ];
       };
     };
-in mkMerge [
+in
+mkMerge [
   (mkUser {
     name = "jpas";
     uid = 1000;

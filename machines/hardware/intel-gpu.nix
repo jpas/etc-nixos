@@ -19,8 +19,8 @@ in
   hardware.opengl = {
     extraPackages = (multiPkgs pkgs) ++ (attrValues {
       inherit (pkgs)
-        intel-compute-runtime # OpenCL support
-        intel-media-driver # hardware video acceleration
+        intel-compute-runtime
+        intel-media-driver
         ;
     });
     extraPackages32 = multiPkgs pkgs.pkgsi686Linux;

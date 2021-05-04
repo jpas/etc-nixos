@@ -7,5 +7,6 @@
     ./services/intel-undervolt.nix
     ./services/thermald.nix
     ./services/iwd.nix
+    ./xdg-desktop-portal-wlr.nix
   ];
 }

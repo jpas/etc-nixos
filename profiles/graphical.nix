@@ -123,11 +123,30 @@ with lib;
       xdg.portal = {
         enable = mkDefault true;
         extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
           # required to get gtk apps to find the correct theme
           xdg-desktop-portal-gtk
         ];
         gtkUsePortal = mkDefault true;
+
+        wlr = {
+          enable = mkDefault true;
+          settings.screencast =
+            let
+              clear = "#00000000";
+              selected = "#${config.hole.colors.gruvbox.dark.aqua0}7f";
+              cmd = concatStringsSep " " [
+                "${pkgs.slurp}/bin/slurp -or -f %o"
+                "-B ${clear}"
+                "-b ${clear}"
+                "-s ${selected}"
+                "-w 0"
+              ];
+            in
+            {
+              chooser_type = mkDefault "simple";
+              chooser_cmd = mkDefault cmd;
+            };
+        };
       };
     })
 

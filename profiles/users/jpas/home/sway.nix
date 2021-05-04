@@ -18,19 +18,20 @@ let
     modifier = "Mod4";
     workspaceAutoBackAndForth = true;
 
-    floating.titlebar = true;
-    window.titlebar = true;
-
-    input."type:keyboard" = {
-      xkb_options = "caps:escape";
-    };
-
-    input."type:touchpad" = {
-      tap = "enabled";
+    input = {
+      "type:keyboard" = {
+        xkb_options = "caps:escape";
+      };
+      "type:touchpad" = {
+        tap = "enabled";
+      };
     };
 
     output."*".bg = "~/.config/sway/bg.png fill";
 
+    floating.titlebar = true;
+
+    window.titlebar = true;
     window.commands = [
       {
         criteria = { app_id = "menu"; };
@@ -40,30 +41,33 @@ let
         criteria = { class = "explorer.exe"; };
         command = "floating enable; border pixel 2";
       }
+      { criteria = { class = "^.*"; }; command = "inhibit_idle fullscreen"; }
+      { criteria = { app_id = "^.*"; }; command = "inhibit_idle fullscreen"; }
     ];
 
-    keybindings = let inherit (cfg.config) modifier; in mkOptionDefault {
-      # Switch display mode
-      # XXX: Dell XPS 9300's media key to "switch displays" has odd
-      # behaviour holding fn then pressing f8 beings holding Mod4, then
-      # taps p. Continuing to tap f8 results in more taps of p. Once fn
-      # is released Mod4 will be released.
-      #"Mod4+p" = "";
+    keybindings = let inherit (cfg.config) modifier; in
+      mkOptionDefault {
+        # Switch display mode
+        # XXX: Dell XPS 9300's media key to "switch displays" has odd
+        # behaviour holding fn then pressing f8 beings holding Mod4, then
+        # taps p. Continuing to tap f8 results in more taps of p. Once fn
+        # is released Mod4 will be released.
+        #"Mod4+p" = "";
 
-      "${modifier}+d" =
-        "exec menu menu-path 'xargs -r swaymsg -t command exec --'";
+        "${modifier}+d" =
+          "exec menu menu-path 'xargs -r swaymsg -t command exec --'";
 
-      "${modifier}+o" = ''
-        exec menu \
-          menu-pdfs \
-          "xargs -r swaymsg -t command exec zathura --" \
-          "--delimiter / --with-nth -1"
-      '';
-    };
+        "${modifier}+o" = ''
+          exec menu \
+            menu-pdfs \
+            "xargs -r swaymsg -t command exec zathura --" \
+            "--delimiter / --with-nth -1"
+        '';
+      };
 
     colors = with colors.dark; rec {
       background = bg;
-      focused = mkClientColor fg aqua1 bg2;
+      focused = mkClientColor fg aqua0 bg2;
       focusedInactive = unfocused;
       placeholder = unfocused;
       unfocused = mkClientColor fg2 bg1 bg1;
@@ -108,7 +112,7 @@ let
     background = c;
   };
 
-  mkConfig = { sway ? {}, packages ? [], config ? {} }:
+  mkConfig = { sway ? { }, packages ? [ ], config ? { } }:
     mkIf cfg.enable (mkMerge [
       config
       {

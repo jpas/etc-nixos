@@ -74,9 +74,9 @@ mkMerge [
   }
 
   (mkIf config.programs.exa.enable {
-    programs.bash.shellAliases  = {
+    programs.bash.shellAliases = {
       ls = "exa";
-      l  = "exa --long ";
+      l = "exa --long";
       la = "exa --long --all";
       lt = "exa --tree";
     };

@@ -11,7 +11,7 @@
 
     initExtra = ''
       xd() {
-        local there=$(xplr)
+        local there=$(xplr "$1")
         cd "$there" || cd "$(dirname "$there")"
       }
     '';

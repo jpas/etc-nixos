@@ -1,4 +1,6 @@
 { lib
+, config
+, pkgs
 , ...
 }:
 
@@ -20,9 +22,36 @@ let
       hosts;
 in
 {
-  networking.hosts = mkHosts hole ".o";
 
-  services.tailscale.enable = true;
+  config = mkMerge [
+    {
+      services.tailscale.enable = true;
+      networking.firewall.trustedInterfaces = [ "tailscale0" ];
+      networking.hosts = mkHosts hole ".o";
+    }
 
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+    (mkIf config.services.tailscale.enable {
+      systemd.services."tailscale-peer@" = {
+        scriptArgs = "%I";
+        script =
+          let
+            tailscale = "${config.services.tailscale.package}/bin/tailscale";
+          in
+          ''
+            until ${tailscale} ping "''$1" > /dev/null; do
+              sleep 0.5
+            done
+          '';
+
+        bindsTo = [ "tailscaled.service" ];
+        after = [ "tailscaled.service" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          Restart = "on-failure";
+          RemainAfterExit = true;
+        };
+      };
+    })
+  ];
 }

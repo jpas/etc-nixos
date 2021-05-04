@@ -1,7 +1,8 @@
 { lib
-, pkgs
 , ...
 }:
+
+with lib;
 
 {
   networking.hostName = "kuro";
@@ -26,20 +27,9 @@
     graphical = true;
   };
 
+  hole.aleph.enable = true;
+
   networking.interfaces = {
     wlan0.useDHCP = true;
-  };
-
-  fileSystems."/aleph" = {
-    device = "kado.o:/aleph";
-    fsType = "nfs";
-    options = [
-      "nfsvers=4.2"
-      "noatime"
-      "nodiratime"
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=600"
-    ];
   };
 }
