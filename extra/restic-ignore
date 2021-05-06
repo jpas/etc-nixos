@@ -2,6 +2,10 @@
 
 /var/swapfile
 /var/lib/docker
+/var/lib/systemd/coredump
+
+/var/cache
+/var/tmp
 
 /home/*/src/**/target
 /home/*/src/**/.stack-work

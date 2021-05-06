@@ -36,6 +36,8 @@ with lib;
 
   services.fwupd.enable = mkDefault true;
 
+  services.hardware.bolt.enable = mkDefault true;
+
   environment.systemPackages = [
     pkgs.libsmbios # For interacting with Dell BIOS/UEFI
   ];
