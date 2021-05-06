@@ -1,3 +1,5 @@
+# To build the iso run the following. It will be at ./result/iso/nixos-*.iso
+# nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=/path/to/install-iso.nix
 { lib
 , pkgs
 , ...
@@ -9,23 +11,14 @@ with lib;
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
+    ../profiles/base.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
   hardware.enableRedistributableFirmware = true;
 
-  environment.systemPackages = attrValues {
-    inherit (pkgs)
-      curl
-      exa
-      htop
-      manpages
-      nix-output-monitor
-      tmux
-      wget
-      ;
-    kitty-terminfo = pkgs.kitty.terminfo;
-  };
+  environment.defaultPackages = [
+    pkgs.restic
+  ];
 
   programs.neovim = {
     enable = true;
