@@ -27,6 +27,8 @@ with lib;
     options dell-smm-hwmon ignore_dmi=1
   '';
 
+  powerManagement.cpuFreqGovernor = "powersave";
+
   # Needed for wifi and bluetooth to work
   hardware.enableRedistributableFirmware = mkDefault true;
 

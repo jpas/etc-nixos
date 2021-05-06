@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./bash.nix
+    ./email.nix
     ./firefox.nix
     ./imv.nix
     ./kitty.nix

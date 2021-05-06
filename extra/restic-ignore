@@ -1,0 +1,9 @@
+/nix
+
+/var/swapfile
+/var/lib/docker
+
+/home/*/src/**/target
+/home/*/src/**/.stack-work
+/home/*/.cache
+/home/*/.local/opt

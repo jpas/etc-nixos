@@ -31,25 +31,37 @@ in
     }
 
     (mkIf config.services.tailscale.enable {
-      systemd.services."tailscale-peer@" = {
-        scriptArgs = "%I";
-        script =
-          let
-            tailscale = "${config.services.tailscale.package}/bin/tailscale";
-          in
-          ''
-            until ${tailscale} ping "''$1" > /dev/null; do
-              sleep 0.5
-            done
-          '';
+      systemd.services = {
+        "iwd" = {
+          requires = [ "dbus.service" ];
+          after = [ "dbus.service" ];
+        };
 
-        bindsTo = [ "tailscaled.service" ];
-        after = [ "tailscaled.service" ];
+        "tailscaled" = {
+          requires = [ "network-online.target" ];
+          after = [ "network-online.target" ];
+        };
 
-        serviceConfig = {
-          Type = "oneshot";
-          Restart = "on-failure";
-          RemainAfterExit = true;
+        "tailscale-peer@" = {
+          scriptArgs = "%I";
+          script =
+            let
+              tailscale = "${config.services.tailscale.package}/bin/tailscale";
+            in
+            ''
+              until ${tailscale} ping "''$1" > /dev/null; do
+                sleep 0.5
+              done
+            '';
+
+          bindsTo = [ "tailscaled.service" ];
+          after = [ "tailscaled.service" ];
+
+          serviceConfig = {
+            Type = "oneshot";
+            Restart = "on-failure";
+            RemainAfterExit = true;
+          };
         };
       };
     })

@@ -1,3 +1,10 @@
+{ lib
+, config
+, ...
+}:
+
+with lib;
+
 {
   imports = [
     ../../profiles
@@ -6,5 +13,6 @@
     ./nfs.nix
     ./ssh.nix
     #./users.nix
+    #./steam.nix
   ];
 }

@@ -12,6 +12,8 @@ rec {
 
   ftpserver = callPackage ./ftpserver { };
 
+  oauth2ms = callPackage ./oauth2ms { };
+
   scholar = callPackage ./scholar { };
 
   srvfb = callPackage ./srvfb { };
