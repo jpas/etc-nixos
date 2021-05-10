@@ -13,7 +13,7 @@ mkMerge [
   {
     programs.zathura = {
       options = with colors; rec {
-        font = "JetBrains Mono 10";
+        font = "monospace 10";
 
         selection-clipboard = "clipboard";
         guioptions = "";

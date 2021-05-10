@@ -12,7 +12,7 @@ let
 in
 {
   programs.mako = {
-    font = "JetBrains Mono 10";
+    font = "monospace 10";
 
     anchor = "bottom-right";
 

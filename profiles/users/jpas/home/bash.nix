@@ -13,6 +13,10 @@ mkMerge [
       # enableVteIntegration = true;
       historyFile = "/dev/null";
 
+      sessionVariables = {
+        LESSHIST = "/dev/null";
+      };
+
       shellAliases = {
         v = "$VISUAL";
         e = "$EDITOR";

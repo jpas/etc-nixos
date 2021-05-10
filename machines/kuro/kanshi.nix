@@ -8,17 +8,28 @@ in
 {
   home-manager.imports = [
     ({ pkgs, ... }: {
+
+      xdg.configFile."kanshi/config".text = ''
+        profile docked {
+          output "${monitor}" enable position 0,0
+          output "${laptop}" position 3840,2160
+          exec swayutil clamshell-mode "${laptop}"
+        }
+
+        profile nomad {
+          output "${laptop}" enable position 0,0
+        }
+      '';
+
       wayland.windowManager.sway = {
         config = {
           output = {
             "${laptop}" = {
               scale = "2";
-              position = "0 2160";
             };
 
             "${monitor}" = {
               scale = "1";
-              position = "1920 0";
             };
           };
         };

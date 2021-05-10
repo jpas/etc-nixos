@@ -16,7 +16,7 @@ mkMerge [
         options = {
           background = color.bg;
 
-          overlay_font = "JetBrains Mono:14";
+          overlay_font = "monospace:14";
 
           overlay_text_color = color.fg;
           overlay_text_alpha = "ff";

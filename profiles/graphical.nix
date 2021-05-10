@@ -103,6 +103,9 @@ with lib;
           export SDL_VIDEODRIVER=wayland
           export XDG_CURRENT_DESKTOP=sway
 
+          # Shouldn't be needed since it is in /etc/gtk-3.0/settings.ini
+          export GTK_THEME=Adwaita-dark
+
           systemctl --user import-environment
         '';
 

@@ -10,7 +10,7 @@ let
 in
 {
   programs.kitty = {
-    font.name = "JetBrains Mono"; # TODO: use default monospace?
+    font.name = "monospace";
 
     settings = {
       font_size = 10;

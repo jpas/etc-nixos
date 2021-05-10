@@ -13,7 +13,10 @@ let
   colors = config.hole.colors.gruvbox;
 
   swayConfig = {
-    fonts = [ "JetBrains Mono 10" ];
+    fonts = {
+      names = [ "monospace" ];
+      size = 10.0;
+    };
 
     modifier = "Mod4";
     workspaceAutoBackAndForth = true;
@@ -31,6 +34,8 @@ let
 
     floating.titlebar = true;
 
+    seat."*".xcursor_theme = "Adwaita";
+
     window.titlebar = true;
     window.commands = [
       {
@@ -41,8 +46,8 @@ let
         criteria = { class = "explorer.exe"; };
         command = "floating enable; border pixel 2";
       }
-      { criteria = { class = "^.*"; }; command = "inhibit_idle fullscreen"; }
-      { criteria = { app_id = "^.*"; }; command = "inhibit_idle fullscreen"; }
+      { criteria = { title = "."; }; command = "inhibit_idle fullscreen"; }
+      { criteria = { shell = "xwayland"; }; command = "title_format \"[xwayland] %title\""; }
     ];
 
     keybindings = let inherit (cfg.config) modifier; in
@@ -126,10 +131,36 @@ let
       exec kitty --single-instance --class "kitty-${command}" ${kittyArgs} -- \
         "${command}" ${cmdArgs}
     '';
+
+  mkStartupScript = name: { script, always ? false }: {
+    command = "${pkgs.writeShellScript name script}";
+    inherit always;
+  };
+
+  mkSessionConfig = { name, script, packages ? [ ], config ? { } }:
+    mkConfig {
+      inherit packages config;
+      sway.startup = [
+        (mkStartupScript "${name}-session" {
+          always = true;
+          script = ''
+            lock="$XDG_RUNTIME_DIR/${name}-$XDG_SESSION_ID.lock"
+            touch "$lock"
+            ${pkgs.psmisc}/bin/fuser --kill "$lock"
+            exec 4<>"$lock"
+            ${pkgs.util-linux}/bin/flock --nonblock 4 || exit 1
+            ${script}
+          '';
+        })
+      ];
+    };
 in
 mkMerge [
   (mkConfig {
     sway = swayConfig;
+    config.wayland.windowManager.sway.extraConfig = ''
+      focus_on_window_activation none
+    '';
   })
 
   # terminal
@@ -259,57 +290,48 @@ mkMerge [
     packages = [ pkgs._1password-gui ];
   })
 
-  (mkConfig {
-    sway = {
-      startup = [{
-        command = ''
-          sleep 1; pkill wlsunset; \
-          exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4
-        '';
-        always = true;
-      }];
-    };
-    packages = [ pkgs.wlsunset ];
+  # TODO: only enable if needed
+  (mkSessionConfig {
+    name = "kanshi";
+    script = "exec kanshi";
   })
 
-  (mkConfig {
-    sway = {
-      startup = [{
-        command = ''
-          sleep 1; pkill swayidle; \
-          exec swayidle -w \
-            idlehint 1800 \
-                     lock screen-lock \
-                   unlock screen-unlock \
-             before-sleep screen-lock \
-             timeout  300 screen-lock \
-             timeout 3600 screen-off resume screen-on
-        '';
-        always = true;
-      }];
-    };
+  (mkSessionConfig  {
+    name = "wlsunset";
+    script = "exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4";
+  })
+
+  (mkSessionConfig {
+    name = "swayidle";
+    script = ''
+      exec swayidle -w \
+             idlehint 1800 \
+                      lock lock-session \
+                    unlock unlock-session \
+              before-sleep lock-session \
+              timeout  300 lock-session \
+              timeout 3600 "swaymsg output '*' dpms off" \
+                    resume "swaymsg output '*' dpms on"
+    '';
 
     packages = with pkgs; [
-      swaylock
-      swayidle
-      (writeShellScriptBin "screen-lock" ''
-        swaylock -f
+      (writeShellScriptBin "lock-session" ''
+        lock="$XDG_RUNTIME_DIR/swaylock-$XDG_SESSION_ID.lock"
+        exec \
+          ${pkgs.util-linux}/bin/flock --nonblock --no-fork "$lock" \
+          swaylock -f
       '')
-      (writeShellScriptBin "screen-unlock" ''
-        pkill -QUIT -x swaylock
-      '')
-      (writeShellScriptBin "screen-on" ''
-        swaymsg output '*' dpms on
-      '')
-      (writeShellScriptBin "screen-off" ''
-        swaymsg output '*' dpms off
+      (writeShellScriptBin "unlock-session" ''
+        lock="$XDG_RUNTIME_DIR/swaylock-''${1:-$XDG_SESSION_ID}.lock"
+        ${pkgs.psmisc}/bin/fuser --kill "$lock"
       '')
     ];
 
     config.xdg.configFile = {
       "swaylock/config" = {
         text = with colors.dark-no-hash; ''
-          font=JetBrain Mono
+          font=monospace
+          font-size=10
           text-color=${fg}
 
           color=${bg}

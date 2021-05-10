@@ -18,7 +18,12 @@ with lib;
 
   environment.defaultPackages = [
     pkgs.restic
+    pkgs.nvme-cli
+    pkgs.cryptsetup
   ];
+
+  networking.wireless.enable = false;
+  networking.wireless.iwd.enable = true;
 
   programs.neovim = {
     enable = true;

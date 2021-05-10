@@ -14,26 +14,80 @@ with lib;
     ../hardware/logitech-mx-master-3.nix
   ];
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/aebb4b40-046d-4cd0-98e6-d67d5bddad6d";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/DB68-692C";
-      fsType = "vfat";
-    };
+  boot.initrd.luks.devices.vessel = {
+    device = "/dev/disk/by-uuid/8692bc12-d653-405a-9968-353e50b79556";
   };
 
-  swapDevices = [{
-    device = "/var/swapfile";
-    # For systems with more than 1GB of RAM, Ubuntu recommends swap size to
-    # be greater than or equal to the square root of the total RAM.
-    # For hibernation, swap should be total RAM plus the above minimum.
-    # TODO: set nocow on btrfs
-    size = (16 + 4) * 1024;
-  }];
+  fileSystems =
+    let
+      vessel = { subvol, compress ? "zstd", options ? [ ] }: {
+        device = "/dev/disk/by-uuid/288cb025-d7f9-43e2-bde4-265d92e7c036";
+        fsType = "btrfs";
+        options = [ "subvol=${subvol}" "compress=${compress}" "space_cache=v2" ] ++ options;
+        neededForBoot = true;
+      };
+    in
+    {
+      "/boot" = {
+        device = "/dev/disk/by-uuid/4549-DE62";
+        fsType = "vfat";
+      };
+
+      "/" = vessel {
+        subvol = "/system/root";
+        options = [ "relatime" ];
+      };
+
+      "/persist" = vessel {
+        subvol = "/system/persist";
+        options = [ "relatime" ];
+      };
+
+      "/var/log" = vessel {
+        subvol = "/local/log";
+        options = [ "relatime" ];
+      };
+
+      "/var/swap" = vessel {
+        subvol = "/local/swap";
+        compress = "no";
+        options = [ "noatime" ];
+      };
+
+      "/nix" = vessel {
+        subvol = "/local/nix";
+        options = [ "noatime" ];
+      };
+
+      "/home" = vessel {
+        subvol = "/user/home";
+        options = [ "relatime" ];
+      };
+    };
+
+  swapDevices = [
+    {
+      # For systems with more than 1GB of RAM, Ubuntu recommends swap size to
+      # be greater than or equal to the square root of the total RAM.
+      # For hibernation, swap should be total RAM plus the above minimum.
+      device = "/var/swap/live";
+      size = 4 * 1024;
+    }
+    {
+      # TODO: only create when needed
+      device = "/var/swap/hibernate";
+      size = 16 * 1024;
+    }
+  ];
+
+  # Allow usb devices to wake from sleep. This enables pluggin in a monitor to
+  # wake the system in clamshell mode.
+  systemd.tmpfiles.rules = [
+    "w /sys/bus/usb/devices/usb1/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb2/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb3/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb4/power/wakeup - - - - enabled"
+  ];
 
   services.undervolt = {
     enable = mkDefault true;

@@ -89,7 +89,22 @@ in
     }
 
     {
-      programs.go = { goPath = ".local/share/go"; };
+      xdg.configFile."go/env".text = ''
+        GOPATH=${config.xdg.dataHome}/go
+        GOMODCACHE=${config.xdg.cacheHome}/go-mod
+      '';
+    }
+
+    {
+      # TODO: import ~/.config/op?
+    }
+
+    {
+      # TODO: https://doc.rust-lang.org/cargo/guide/cargo-home.html
+    }
+
+    {
+      # TODO: garbage from electron apps in ~/.config/*
     }
 
     {
@@ -114,6 +129,7 @@ in
     }
 
     {
+      xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
       xdg = {
         enable = true;
         userDirs = {
