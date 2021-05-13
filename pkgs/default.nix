@@ -1,7 +1,6 @@
-{ pkgs ? import <nixpkgs> { } }:
-
+final: prev:
 let
-  inherit (pkgs) callPackage;
+  inherit (prev) callPackage;
 in
 rec {
   ftpserver = callPackage ./ftpserver { };
@@ -13,9 +12,9 @@ rec {
   xplr = callPackage ./xplr { };
   yofi = callPackage ./yofi { };
 
-  kanshi = pkgs.kanshi.overrideAttrs (_: {
+  kanshi = prev.kanshi.overrideAttrs (_: {
     version = "2021-02-02-unstable";
-    src = pkgs.fetchFromGitHub {
+    src = final.fetchFromGitHub {
       owner = "emersion";
       repo = "kanshi";
       rev = "dabd7a29174a74b3f21a2b4cc3d9dc63221761bb";
