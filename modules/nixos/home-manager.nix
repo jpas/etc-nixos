@@ -6,8 +6,6 @@
 with lib;
 
 {
-  imports = [ <home-manager/nixos> ];
-
   options = {
     home-manager.imports = mkOption {
       type = types.listOf types.unspecified;
@@ -19,7 +17,6 @@ with lib;
     home-manager.backupFileExtension = "backup";
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-
     home-manager.imports = [ (import ../home) ];
   };
 }

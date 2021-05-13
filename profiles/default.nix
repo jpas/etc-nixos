@@ -9,7 +9,6 @@ with lib;
 
 {
   imports = [
-    ../secrets
     ./base.nix
     ./graphical.nix
     ./laptop.nix
@@ -49,9 +48,7 @@ with lib;
 
   users = {
     mutableUsers = false;
-
-    # Read root's hashed password from file to prevent lockout
-    users.root.hashedPassword = config.hole.secrets.passwd.root;
+    users.root.passwordFile = "/etc/nixos/secrets/passwd.d/root";
   };
 
   nix = {

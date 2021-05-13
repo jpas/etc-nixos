@@ -6,7 +6,7 @@
 { config, ... }: {
   users.users."${name}" = user // {
     isNormalUser = true;
-    hashedPassword = config.hole.secrets.passwd."${name}";
+    passwordFile = "/etc/nixos/secrets/passwd.d/${name}";
   };
 
   home-manager.users."${name}" = { ... }: {

@@ -9,7 +9,6 @@ with lib;
 {
   imports = [
     ../modules/nixos
-    ./overlays-compat.nix
   ];
 
   i18n.defaultLocale = mkDefault "en_CA.UTF-8";
@@ -47,17 +46,7 @@ with lib;
     vimAlias = true;
   };
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [
-      (import ../pkgs/overlay.nix)
-    ];
   };
 }

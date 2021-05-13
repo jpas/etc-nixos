@@ -152,37 +152,5 @@ with lib;
         };
       };
     })
-
-    (mkIf config.services.xserver.desktopManager.gnome3.enable {
-      services.xserver = {
-        enable = mkDefault true;
-
-        displayManager.gdm = {
-          enable = mkDefault true;
-          wayland = mkDefault true;
-        };
-
-        desktopManager.xterm.enable = mkDefault false;
-      };
-
-      environment.systemPackages = (with pkgs; [
-        firefox-wayland
-        gnome3.gnome-tweaks
-        kitty
-      ]) ++ (with pkgs.gnomeExtensions; [
-        caffeine
-        # draw-on-your-screen # not on stable, yet
-        sound-output-device-chooser
-        window-is-ready-remover
-        pop-shell
-      ]);
-
-      environment.gnome3.excludePackages = with pkgs.gnome3; [
-        epiphany
-        geary
-        gedit
-        gnome-software
-      ];
-    })
   ]);
 }
