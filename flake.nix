@@ -13,57 +13,46 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       inherit (nixpkgs) lib;
 
-      systems = lib.attrNames nixpkgs.legacyPackages;
+      mkHosts = lib.mapAttrs (_: { config, system }: lib.nixosSystem {
+        inherit system;
+        modules = [
+          config
+          inputs.self.nixosModules.flake-compat
+          inputs.home-manager.nixosModules.home-manager
+        ];
+      });
+    in
+    {
+      nixosConfigurations = mkHosts {
+        kuro = { config = ./machines/kuro; system = "x86_64-linux"; };
+        kado = { config = ./machines/kado; system = "x86_64-linux"; };
+      };
 
-      forAllSystems = f: lib.genAttrs systems (system: f system);
+      overlay = import ./pkgs/default.nix;
 
-
-      flake-compat = ({ pkgs, ... }: {
-        system.configurationRevision =
-          if self ? rev
-          then self.rev
-          else "${lib.substring 0 8 self.lastModifiedDate}-dirty";
+      nixosModules = {
+        flake-compat = { pkgs, ... }: {
+          system.configurationRevision =
+            if self ? rev
+            then self.rev
+            else "${lib.substring 0 8 self.lastModifiedDate}-dirty";
 
           nix = {
             package = pkgs.nixFlakes;
             extraOptions = ''
-              experimental-features = nix-command flakes ca-references
+              experimental-features = nix-command flakes
             '';
             nixPath = [
               "nixpkgs=${self}/lib/compat/nixpkgs"
             ];
           };
-      });
 
-      machines = lib.mapAttrs (name: { system, config }: lib.nixosSystem {
-        inherit system;
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          config
-          flake-compat
-        ];
-      });
-    in
-    {
-      inherit lib;
-
-      nixosConfigurations = machines {
-        kuro = { config = ./machines/kuro; system = "x86_64-linux"; };
-        kado = { config = ./machines/kado; system = "x86_64-linux"; };
+          nixpkgs.overlays = [ self.overlay ];
+        };
       };
-
-      nixosModules = { };
-
-      overlay = import ./pkgs/default.nix;
-
-      packages = forAllSystems (system:
-        import nixpkgs {
-          inherit system;
-          overlays = [ self.overlay ];
-        });
     };
 }
