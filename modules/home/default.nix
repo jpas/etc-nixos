@@ -3,11 +3,9 @@
   imports = [
     ../hole/home
 
-    ./programs/bat.nix
-    ./programs/imv.nix
-    ./programs/oauth2ms.nix
-    ./programs/signal.nix
-
-    ./services/gnome.nix
+    ./bat.nix
+    ./imv.nix
+    ./oauth2ms.nix
+    ./signal.nix
   ];
 }
