@@ -17,6 +17,6 @@ with lib;
     home-manager.backupFileExtension = "backup";
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.imports = [ (import ../home) ];
+    home-manager.imports = [ (import ../home-manager) ];
   };
 }
