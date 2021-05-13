@@ -1,12 +1,8 @@
-{ ... }:
 {
-  imports = [
-    ../hole/nixos
-    ./home-manager.nix
-    ./services/docker.nix
-    ./services/intel-undervolt.nix
-    ./services/thermald.nix
-    ./services/iwd.nix
-    ./xdg-desktop-portal-wlr.nix
-  ];
+  hole = ../hole/nixos;
+  docker = ./docker.nix;
+  intel-undervolt = ./intel-undervolt.nix;
+  thermald = ./thermald.nix;
+  iwd = ./iwd.nix;
+  xdg-desktop-portal-wlr = ./xdg-desktop-portal-wlr.nix
 }
