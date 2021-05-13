@@ -10,6 +10,6 @@
   };
 
   home-manager.users."${name}" = { ... }: {
-    imports = config.home-manager.imports ++ [ home ];
+    imports = [ home ];
   };
 }

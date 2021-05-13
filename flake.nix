@@ -21,10 +21,12 @@
         inherit system;
         modules = [
           config
-          inputs.self.nixosModules.flake-compat
+          self.nixosModules.flake-compat
           inputs.home-manager.nixosModules.home-manager
         ];
       });
+
+      mkModules = lib.mapAttrs (_: module: import module);
     in
     {
       nixosConfigurations = mkHosts {
@@ -32,7 +34,10 @@
         kado = { config = ./machines/kado; system = "x86_64-linux"; };
       };
 
-      overlay = import ./pkgs/default.nix;
+      overlay = import ./pkgs;
+
+      homeModules = mkModules (import ./modules/home);
+
 
       nixosModules = {
         flake-compat = { pkgs, ... }: {
@@ -52,6 +57,12 @@
           };
 
           nixpkgs.overlays = [ self.overlay ];
+
+          home-manager = {
+            useGlobalPkgs = lib.mkDefault true;
+            useUserPackages = lib.mkDefault false;
+            sharedModules = lib.attrValues self.homeModules;
+          };
         };
       };
     };
