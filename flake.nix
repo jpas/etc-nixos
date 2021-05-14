@@ -21,9 +21,37 @@
         inherit system;
         modules = [
           config
-          self.nixosModules.flake-compat
           inputs.home-manager.nixosModules.home-manager
-        ];
+          ({ pkgs, ... }: {
+            system.configurationRevision =
+              if self ? rev
+              then self.rev
+              else "${lib.substring 0 8 self.lastModifiedDate}-dirty";
+
+            nix = {
+              package = pkgs.nixFlakes;
+              extraOptions = ''
+                experimental-features = nix-command flakes
+              '';
+              nixPath = [
+                "nixos=/etc/nix/nixpkgs"
+                "nixpkgs=/etc/nix/nixpkgs"
+              ];
+            };
+
+            environment.etc."etc/nix/nixpkgs" = {
+              source = "${self}/lib/compat/nixpkgs";
+            };
+
+            nixpkgs.overlays = [ self.overlay ];
+
+            home-manager = {
+              useGlobalPkgs = lib.mkDefault true;
+              useUserPackages = lib.mkDefault false;
+              sharedModules = lib.attrValues self.homeModules;
+            };
+          })
+        ] ++ (lib.attrValues self.nixosModules);
       });
 
       mkModules = lib.mapAttrs (_: module: import module);
@@ -37,33 +65,6 @@
       overlay = import ./pkgs;
 
       homeModules = mkModules (import ./modules/home);
-
-
-      nixosModules = {
-        flake-compat = { pkgs, ... }: {
-          system.configurationRevision =
-            if self ? rev
-            then self.rev
-            else "${lib.substring 0 8 self.lastModifiedDate}-dirty";
-
-          nix = {
-            package = pkgs.nixFlakes;
-            extraOptions = ''
-              experimental-features = nix-command flakes
-            '';
-            nixPath = [
-              "nixpkgs=${self}/lib/compat/nixpkgs"
-            ];
-          };
-
-          nixpkgs.overlays = [ self.overlay ];
-
-          home-manager = {
-            useGlobalPkgs = lib.mkDefault true;
-            useUserPackages = lib.mkDefault false;
-            sharedModules = lib.attrValues self.homeModules;
-          };
-        };
-      };
+      nixosModules = mkModules (import ./modules/nixos);
     };
 }
