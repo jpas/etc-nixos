@@ -15,9 +15,14 @@ with lib;
     ../../profiles/users/jpas
   ];
 
-  programs.sway.enable = true;
+  hole = {
+    profiles = {
+      graphical = true;
+    };
+    aleph.enable = true;
+  };
 
-  hole.aleph.enable = true;
+  programs.sway.enable = true;
 
   networking.interfaces = {
     wlan0.useDHCP = true;
