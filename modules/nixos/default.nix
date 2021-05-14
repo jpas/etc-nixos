@@ -1,5 +1,5 @@
 {
-  hole = ../hole;
+  hole = ../hole/nixos;
 
   intel-undervolt = ./intel-undervolt.nix;
   thermald = ./thermald.nix;

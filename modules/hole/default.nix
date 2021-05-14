@@ -1,4 +1,5 @@
 { lib
+, config
 , ...
 }:
 
@@ -11,6 +12,4 @@ with lib;
       default = { };
     };
   };
-
-  config = { };
 }
