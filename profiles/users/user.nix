@@ -9,7 +9,5 @@
     passwordFile = "/etc/nixos/secrets/passwd.d/${name}";
   };
 
-  home-manager.users."${name}" = { ... }: {
-    imports = [ home ];
-  };
+  home-manager.users."${name}" = home;
 }

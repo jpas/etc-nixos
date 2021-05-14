@@ -21,7 +21,7 @@
         inherit system;
         modules = (lib.attrValues self.nixosModules) ++ [
           config
-          inputs.home-manager.nixosModules.home-manager
+          inputs.home-manager.nixosModule
           ({ pkgs, ... }: {
             system.configurationRevision =
               if self ? rev
