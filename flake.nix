@@ -34,13 +34,12 @@
                 experimental-features = nix-command flakes
               '';
               nixPath = [
-                "nixos=/etc/nix/nixpkgs"
-                "nixpkgs=/etc/nix/nixpkgs"
+                "nixpkgs=/etc/nix/flake/lib/compat/nixpkgs"
               ];
             };
 
-            environment.etc."etc/nix/nixpkgs" = {
-              source = "${self}/lib/compat/nixpkgs";
+            environment.etc."nix/flake" = {
+              source = "${self}";
             };
 
             nixpkgs.overlays = [ self.overlay ];
@@ -48,7 +47,13 @@
             home-manager = {
               useGlobalPkgs = lib.mkDefault true;
               useUserPackages = lib.mkDefault false;
-              sharedModules = lib.attrValues self.homeModules;
+              sharedModules = [
+                ({ ... }: {
+                  home.file.".nix-defexpr/nixos.nix" = {
+                    source = "${self}/lib/compat/nixpkgs/default.nix";
+                  };
+                })
+              ] ++ (lib.attrValues self.homeModules);
             };
           })
         ];
