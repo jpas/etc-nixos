@@ -1,7 +1,7 @@
 let
-  flake = (import flake-compat) { src = ../../..; };
+  flake = (import flake-compat) { src = ../..; };
 
-  lock = builtins.fromJSON (builtins.readFile ../../../flake.lock);
+  lock = builtins.fromJSON (builtins.readFile ../../flake.lock);
 
   flake-compat =
     let
