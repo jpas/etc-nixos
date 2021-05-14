@@ -25,18 +25,5 @@ in
 {
   imports = [
     ./colors.nix
-
-    (mkProfilesOption "graphical" false)
-    (mkProfilesOption "minimal" true)
-
-    (mkHoleOption [ "location" "latitude" ] {
-      type = types.float;
-      default = 52.1;
-    })
-
-    (mkHoleOption [ "location" "longitude" ] {
-      type = types.float;
-      default = -106.4;
-    })
   ];
 }
