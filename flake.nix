@@ -47,13 +47,13 @@
             home-manager = {
               useGlobalPkgs = lib.mkDefault true;
               useUserPackages = lib.mkDefault false;
-              sharedModules = [
+              sharedModules = (lib.attrValues self.homeModules) ++ [
                 ({ ... }: {
                   home.file.".nix-defexpr/nixos.nix" = {
                     source = "${self}/lib/compat/nixpkgs/default.nix";
                   };
                 })
-              ] ++ (lib.attrValues self.homeModules);
+              ];
             };
           })
         ];
