@@ -31,8 +31,8 @@ in
         };
 
         extraConfig = ''
-          set $primary "${monitor}"
-          set $laptop  "${laptop}"
+          set $primary ${monitor}
+          set $laptop  ${laptop}
 
           workspace 1 output ''$primary
           workspace 2 output ''$primary
@@ -44,8 +44,8 @@ in
           workspace 8 output ''$primary
           workspace 9 output ''$primary
 
-          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode "''$laptop"
-          bindswitch --reload --locked lid:off exec swayutil clamshell-mode "''$laptop"
+          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode '"''$laptop"'
+          bindswitch --reload --locked lid:off exec swayutil clamshell-mode '"''$laptop"'
         '';
       };
     })

@@ -137,19 +137,31 @@ let
     inherit always;
   };
 
+  run-unique = pkgs.writeShellScript "run-unique" ''
+    name=$1
+    shift
+
+    lock="$XDG_RUNTIME_DIR/$name-$XDG_SESSION_ID.lock"
+    touch "$lock"
+
+    ${pkgs.psmisc}/bin/fuser --kill "$lock"
+    exec 4<>"$lock"
+    ${pkgs.util-linux}/bin/flock --nonblock 4 || exit 1
+
+    exec systemd-cat -t "$name" -- "$@"
+  '';
+
   mkSessionConfig = { name, script, packages ? [ ], config ? { } }:
+    let
+      start = pkgs.writeShellScript "${name}" script;
+    in
     mkConfig {
       inherit packages config;
       sway.startup = [
         (mkStartupScript "${name}-session" {
           always = true;
           script = ''
-            lock="$XDG_RUNTIME_DIR/${name}-$XDG_SESSION_ID.lock"
-            touch "$lock"
-            ${pkgs.psmisc}/bin/fuser --kill "$lock"
-            exec 4<>"$lock"
-            ${pkgs.util-linux}/bin/flock --nonblock 4 || exit 1
-            ${script}
+            exec ${run-unique} "${name}" ${start}
           '';
         })
       ];
