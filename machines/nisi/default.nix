@@ -15,7 +15,6 @@ with lib;
 
   hole.profiles = {
     minimal = true;
-    graphical = false;
   };
 
   networking.interfaces = {

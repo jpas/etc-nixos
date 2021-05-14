@@ -10,11 +10,7 @@ with lib;
       type = types.attrsOf types.bool;
       default = { };
     };
-
-    #hole.colors = mkOption {
-    #  type = types.attrsOf types.str;
-    #  default = {
-    #  };
-    #};
   };
+
+  config = { };
 }

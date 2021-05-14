@@ -19,7 +19,7 @@
 
       mkHosts = lib.mapAttrs (_: { config, system }: lib.nixosSystem {
         inherit system;
-        modules = [
+        modules = (lib.attrValues self.nixosModules) ++ [
           config
           inputs.home-manager.nixosModules.home-manager
           ({ pkgs, ... }: {
@@ -51,7 +51,7 @@
               sharedModules = lib.attrValues self.homeModules;
             };
           })
-        ] ++ (lib.attrValues self.nixosModules);
+        ];
       });
 
       mkModules = lib.mapAttrs (_: module: import module);

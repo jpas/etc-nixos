@@ -15,17 +15,7 @@ with lib;
     ../../profiles/users/jpas
   ];
 
-  profiles = {
-    graphical = true;
-    laptop = true;
-  };
-
   programs.sway.enable = true;
-
-  hole.profiles = {
-    minimal = false;
-    graphical = true;
-  };
 
   hole.aleph.enable = true;
 

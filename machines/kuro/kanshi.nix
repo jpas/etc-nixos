@@ -6,7 +6,7 @@ let
   tv = "Goldstar Company Ltd LG TV 0x00000000";
 in
 {
-  home-manager.imports = [
+  home-manager.sharedModules = [
     ({ pkgs, ... }: {
 
       xdg.configFile."kanshi/config".text = ''
@@ -27,27 +27,25 @@ in
             "${laptop}" = {
               scale = "2";
             };
-
-            "${monitor}" = {
-              scale = "1";
-            };
           };
         };
 
         extraConfig = ''
-          workspace 1 output "${monitor}" "${laptop}" "${tv}"
-          workspace 2 output "${monitor}" "${laptop}" "${tv}"
-          workspace 3 output "${monitor}" "${laptop}" "${tv}"
-          workspace 4 output "${monitor}" "${laptop}" "${tv}"
-          workspace 5 output "${monitor}" "${laptop}" "${tv}"
-          workspace 6 output "${monitor}" "${laptop}" "${tv}"
-          workspace 7 output "${monitor}" "${laptop}" "${tv}"
-          workspace 8 output "${monitor}" "${laptop}" "${tv}"
-          workspace 9 output "${monitor}" "${laptop}" "${tv}"
+          set $primary "${monitor}"
+          set $laptop  "${laptop}"
 
-          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode "${laptop}"
-          bindswitch --reload --locked lid:off exec swayutil clamshell-mode "${laptop}"
-          exec_always swayutil clamshell-mode "${laptop}"
+          workspace 1 output ''$primary
+          workspace 2 output ''$primary
+          workspace 3 output ''$primary
+          workspace 4 output ''$primary
+          workspace 5 output ''$primary
+          workspace 6 output ''$primary
+          workspace 7 output ''$primary
+          workspace 8 output ''$primary
+          workspace 9 output ''$primary
+
+          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode "''$laptop"
+          bindswitch --reload --locked lid:off exec swayutil clamshell-mode "''$laptop"
         '';
       };
     })

@@ -6,9 +6,6 @@
 
 with lib;
 
-let
-  profiles = config.hole.profiles;
-in
 {
   imports = [
     ./bash.nix
@@ -145,14 +142,13 @@ in
       };
     }
 
-    (mkIf (!profiles.minimal) {
+    (mkIf (! (config.hole.profiles ? minimal)) {
       home.packages = with pkgs; [
         #sage # XXX: forces compile (2021-03-08)
       ];
-
     })
 
-    (mkIf profiles.graphical {
+    (mkIf (config.hole.profiles ? graphical) {
       wayland.windowManager.sway.enable = true;
 
       services.spotifyd.enable = true;

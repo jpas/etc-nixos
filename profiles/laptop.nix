@@ -6,11 +6,7 @@
 with lib;
 
 {
-  options = {
-    profiles.laptop = mkEnableOption "laptop profile";
-  };
-
-  config = mkIf config.profiles.laptop (mkMerge [
+  config = mkIf (config.hole.profiles ? laptop) (mkMerge [
     {
       services.logind = {
         lidSwitch = mkDefault "suspend-then-hibernate";

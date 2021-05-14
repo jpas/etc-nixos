@@ -7,10 +7,6 @@
 with lib;
 
 {
-  imports = [
-    ../modules/nixos
-  ];
-
   i18n.defaultLocale = mkDefault "en_CA.UTF-8";
 
   time.timeZone = mkDefault "America/Regina";

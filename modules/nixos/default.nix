@@ -1,5 +1,6 @@
 {
   hole = ../hole;
+
   intel-undervolt = ./intel-undervolt.nix;
   thermald = ./thermald.nix;
   iwd = ./iwd.nix;

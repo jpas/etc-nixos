@@ -7,11 +7,7 @@
 with lib;
 
 {
-  options = {
-    profiles.graphical = mkEnableOption "graphical profile";
-  };
-
-  config = mkIf config.profiles.graphical (mkMerge [
+  config = mkIf (config.hole.profiles ? graphical) (mkMerge [
     {
       hardware.opengl = {
         enable = mkDefault true;
