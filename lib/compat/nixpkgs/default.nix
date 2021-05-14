@@ -1,5 +1,5 @@
 let
-  flake = import ./flake-compat.nix;
+  flake = import ../flake-compat.nix;
   nixos = import ./nixos { };
 
   nixpkgs = flake.inputs.nixpkgs.outPath;
