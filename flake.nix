@@ -7,14 +7,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-doom-emacs = {
+      url = "github:vlaci/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.emacs-overlay.follows = "emacs-overlay";
+    };
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
 
-    nix-doom-emacs = {
-      url = "github:vlaci/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      flake = false;
     };
   };
 
@@ -47,7 +53,7 @@
               source = "${self}";
             };
 
-            nixpkgs.overlays = [ self.overlay ];
+            nixpkgs.overlays = [ self.overlay (import inputs.emacs-overlay) ];
 
             home-manager = {
               useGlobalPkgs = lib.mkDefault true;

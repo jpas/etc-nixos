@@ -28,6 +28,11 @@ with lib;
     wlan0.useDHCP = true;
   };
 
+  networking.firewall = {
+    allowedUDPPorts = [ 3478 4379 4380 ];
+    allowedUDPPortRanges = [ { from = 27000; to = 27100; } ];
+  };
+
   systemd.tmpfiles.rules = let
     mkLink = path: "L+ ${path} - - - - /persist${path}";
   in [

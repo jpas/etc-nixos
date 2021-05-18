@@ -43,10 +43,11 @@ with lib;
 
       programs.bash.enable = true;
 
-      programs.doom-emacs = {
-        enable = true;
-        doomPrivateDir = ./doom.d;
-      };
+      #programs.doom-emacs = {
+      #  enable = true;
+      #  extraPackages = [ pkgs.agda ];
+      #  doomPrivateDir = ./doom.d;
+      #};
 
       programs.jq.enable = true;
 
