@@ -31,21 +31,18 @@ in
         };
 
         extraConfig = ''
-          set $primary ${monitor}
-          set $laptop  ${laptop}
+          workspace 1 output "${monitor}"
+          workspace 2 output "${monitor}"
+          workspace 3 output "${monitor}"
+          workspace 4 output "${monitor}"
+          workspace 5 output "${monitor}"
+          workspace 6 output "${monitor}"
+          workspace 7 output "${monitor}"
+          workspace 8 output "${monitor}"
+          workspace 9 output "${monitor}"
 
-          workspace 1 output ''$primary
-          workspace 2 output ''$primary
-          workspace 3 output ''$primary
-          workspace 4 output ''$primary
-          workspace 5 output ''$primary
-          workspace 6 output ''$primary
-          workspace 7 output ''$primary
-          workspace 8 output ''$primary
-          workspace 9 output ''$primary
-
-          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode '"''$laptop"'
-          bindswitch --reload --locked lid:off exec swayutil clamshell-mode '"''$laptop"'
+          bindswitch --reload --locked lid:on  exec swayutil clamshell-mode "${laptop}"
+          bindswitch --reload --locked lid:off exec swayutil clamshell-mode "${laptop}"
         '';
       };
     })

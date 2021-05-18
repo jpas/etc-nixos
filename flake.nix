@@ -11,6 +11,11 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+
+    nix-doom-emacs = {
+      url = "github:vlaci/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
@@ -48,6 +53,7 @@
               useGlobalPkgs = lib.mkDefault true;
               useUserPackages = lib.mkDefault false;
               sharedModules = (lib.attrValues self.homeModules) ++ [
+                inputs.nix-doom-emacs.hmModule
                 ({ ... }: {
                   home.file.".nix-defexpr/nixos.nix" = {
                     text = "import <nixpkgs> { }";
