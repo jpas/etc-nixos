@@ -28,9 +28,9 @@ with lib;
     wlan0.useDHCP = true;
   };
 
-  networking.firewall = {
-    allowedUDPPorts = [ 3478 4379 4380 ];
-    allowedUDPPortRanges = [ { from = 27000; to = 27100; } ];
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
   };
 
   systemd.tmpfiles.rules = let

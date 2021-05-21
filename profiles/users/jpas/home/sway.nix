@@ -40,14 +40,25 @@ let
     window.commands = [
       {
         criteria = { app_id = "menu"; };
-        command = "floating enable; sticky enable; border pixel 2";
+        command = "floating enable; border pixel; sticky enable";
       }
-      {
-        criteria = { class = "explorer.exe"; };
-        command = "floating enable; border pixel 2";
-      }
+
       { criteria = { title = "."; }; command = "inhibit_idle fullscreen"; }
       { criteria = { shell = "xwayland"; }; command = "title_format \"[xwayland] %title\""; }
+
+      { criteria = { class = "Steam"; }; command = "border pixel"; }
+      {
+        # steam remote play window
+        criteria = { class = "streaming_client"; };
+        # resize accounts for the width of the border
+        command = "fullscreen disable, floating enable, border pixel, resize set 1924 1084";
+      }
+
+      {
+        # wine virtual desktop
+        criteria = { class = "explorer.exe"; };
+        command = "floating enable, border pixel";
+      }
     ];
 
     keybindings = let inherit (cfg.config) modifier; in
@@ -96,7 +107,7 @@ let
         statusline = fg;
 
         activeWorkspace = focusedWorkspace;
-        bindingMode = mkBarColor fg yellow0;
+        bindingMode = mkBarColor bg0 yellow0;
         focusedWorkspace = mkBarColor fg bg2;
         inactiveWorkspace = mkBarColor fg2 bg1;
         urgentWorkspace = mkBarColor fg red0;
@@ -228,15 +239,12 @@ mkMerge [
       };
       window.commands = [{
         criteria = { app_id = "kitty-pulsemixer"; };
-        command = "border pixel 2; floating enable; sticky enable";
+        command = "border pixel, floating enable, sticky enable, resize set 800 200";
       }];
     };
     packages = [
       pkgs.pulsemixer
-      (mkKitty {
-        command = "pulsemixer";
-        kittyArgs = "--override initial_window_width=800 --override initial_window_height=200";
-      })
+      (mkKitty { command = "pulsemixer"; })
     ];
   })
 
@@ -249,7 +257,7 @@ mkMerge [
       };
       window.commands = [{
         criteria = { app_id = "kitty-spt"; };
-        command = "border pixel 2; move scratchpad; [app_id=\"kitty-spt\"] scratchpad show";
+        command = "border pixel, move scratchpad, resize set 800 400, scratchpad show";
       }];
     };
     packages = [
@@ -263,11 +271,11 @@ mkMerge [
       window.commands = [
         {
           criteria = { class = "Signal"; };
-          command = "border pixel 2; move scratchpad; [class=\"Signal\"] scratchpad show";
+          command = "border pixel, move scratchpad, scratchpad show";
         }
         {
           criteria = { class = "discord"; };
-          command = "border pixel 2; move scratchpad; [class=\"discord\"] scratchpad show";
+          command = "border pixel, move scratchpad, scratchpad show";
         }
       ];
     };
@@ -291,11 +299,11 @@ mkMerge [
       window.commands = [
         {
           criteria = { class = "1Password"; };
-          command = "floating enable; sticky enable";
+          command = "floating enable, sticky enable";
         }
         {
           criteria = { app_id = "1Password"; };
-          command = "floating enable; sticky enable";
+          command = "floating enable, sticky enable";
         }
       ];
     };
@@ -308,7 +316,7 @@ mkMerge [
     script = "exec kanshi";
   })
 
-  (mkSessionConfig  {
+  (mkSessionConfig {
     name = "wlsunset";
     script = "exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4";
   })
@@ -349,9 +357,9 @@ mkMerge [
           color=${bg}
 
           key-hl-color=${fg}
-          bs-hl-color=${red1}
-          caps-lock-bs-hl-color=${red1}
-          caps-lock-key-hl-color=${yellow1}
+          bs-hl-color=${red0}
+          caps-lock-bs-hl-color=${red0}
+          caps-lock-key-hl-color=${yellow0}
 
           inside-color=${bg}
           inside-clear-color=${bg}
@@ -362,9 +370,9 @@ mkMerge [
           line-uses-inside
 
           ring-color=${bg}
-          ring-ver-color=${green1}
-          ring-clear-color=${yellow1}
-          ring-wrong-color=${red1}
+          ring-ver-color=${green0}
+          ring-clear-color=${yellow0}
+          ring-wrong-color=${red0}
 
           text-color=${bg}
           text-clear-color=${bg}
@@ -373,6 +381,34 @@ mkMerge [
           text-wrong-color=${bg}
         '';
       };
+    };
+  })
+
+  (mkIf config.programs.mako.enable {
+    home.packages = [ pkgs.libnotify ];
+
+    programs.mako = with colors.dark; {
+      font = "monospace 10";
+      anchor = "bottom-right";
+
+      textColor = fg;
+      backgroundColor = bg;
+      borderColor = bg2;
+      borderSize = 2;
+
+      icons = false;
+
+      defaultTimeout = 2000;
+      extraConfig = ''
+        ignore-timeout=1
+
+        [urgency=low]
+        border-color=${bg1}
+
+        [urgency=critical]
+        default-timeout=0
+        border-color=${red0}
+      '';
     };
   })
 

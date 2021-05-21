@@ -86,7 +86,11 @@ with lib;
         };
 
         extraSessionCommands = ''
+          # force firefox to run in wayland
           export MOZ_ENABLE_WAYLAND=1
+          # force firefox to use remote backend so apps running in xwayland
+          # open links in the wayland instance.
+          export MOZ_DBUS_REMOTE=1
 
           # Fix for some Java AWT applications (e.g. Android Studio),
           # use this if they aren't displayed properly:

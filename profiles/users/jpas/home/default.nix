@@ -13,7 +13,6 @@ with lib;
     ./firefox.nix
     ./imv.nix
     ./kitty.nix
-    ./mako.nix
     ./neovim.nix
     ./spotifyd.nix
     ./sway.nix
@@ -160,7 +159,7 @@ with lib;
       services.spotifyd.enable = true;
       programs.imv.enable = true;
       programs.kitty.enable = true;
-      programs.mako.enable = false;
+      programs.mako.enable = true;
       programs.mpv.enable = true;
       programs.signal.enable = true;
       programs.zathura.enable = true;

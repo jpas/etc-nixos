@@ -19,7 +19,7 @@ in
     textColor = colors.fg;
     backgroundColor = colors.bg;
     borderColor = colors.bg2;
-    borderSize = 3;
+    borderSize = 2;
 
     icons = false;
   };
