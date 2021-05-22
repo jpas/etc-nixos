@@ -40,6 +40,8 @@
                 nixpkgs.flake = nixpkgs;
               };
 
+              trustedUsers = [ "root" "@wheel" ];
+
               package = pkgs.nixFlakes;
               extraOptions = ''
                 experimental-features = nix-command flakes
@@ -57,7 +59,11 @@
             '';
 
             imports = lib.attrValues self.nixosModules;
-            nixpkgs.overlays = [ self.overlay ];
+
+            nixpkgs = {
+              config.allowUnfree = true;
+              overlays = [ self.overlay ];
+            };
           })
 
           ({ ... }: {

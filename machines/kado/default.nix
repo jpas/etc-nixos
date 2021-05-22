@@ -1,10 +1,7 @@
-{ config
-, pkgs
-, ...
-}:
-
 {
   networking.hostName = "kado";
+
+  nixpkgs.system = "x86_64-linux";
 
   hardware.cpu.intel.updateMicrocode = true;
 
@@ -19,8 +16,7 @@
     ./factorio.nix
     ./nfs.nix
     #./samba.nix
-    ./croc.nix
-    ./print-and-scan.nix
+    #./croc.nix
   ];
 
   networking.interfaces = {
