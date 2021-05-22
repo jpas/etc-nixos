@@ -28,60 +28,63 @@
     let
       inherit (nixpkgs) lib;
 
-      mkHosts = lib.mapAttrs (_: { config, system }: lib.nixosSystem {
-        inherit system;
-        modules = (lib.attrValues self.nixosModules) ++ [
-          config
-          inputs.home-manager.nixosModule
+      mkSystem = name: config: lib.nixosSystem {
+        # XXX: system extraction relies on config being an attrset
+        system = config.nixpkgs.system;
+        modules = [
           ({ pkgs, ... }: {
-            system.configurationRevision =
-              if self ? rev
-              then self.rev
-              else "${lib.substring 0 8 self.lastModifiedDate}-dirty";
-
+            system.configurationRevision = lib.mkIf (self ? rev) self.rev;
             nix = {
+              registry = {
+                hole.flake = self;
+                nixpkgs.flake = nixpkgs;
+              };
+
               package = pkgs.nixFlakes;
               extraOptions = ''
-                experimental-features = nix-command flakes
+                experimental-features nix-command flakes
               '';
+
               nixPath = [
-                "nixpkgs=/etc/nix/flake/lib/compat/nixpkgs"
+                "nixpkgs=/run/current-system/nixpkgs"
+                "nixpkgs-overlays=/run/current-system/flake/pkgs"
               ];
             };
 
-            environment.etc."nix/flake" = {
-              source = "${self}";
-            };
+            system.extraSystemBuilderCmds = ''
+              ln -s '${nixpkgs.outPath}' "$out/nixpkgs"
+              ln -s '${self.outPath}' "$out/flake"
+            '';
 
-            nixpkgs.overlays = [ self.overlay (import inputs.emacs-overlay) ];
+            imports = lib.attrValues self.nixosModules;
+            nixpkgs.overlays = [ self.overlay ];
+          })
 
+          ({ ... }: {
+            imports = [ home-manager.nixosModules.home-manager ];
             home-manager = {
-              useGlobalPkgs = lib.mkDefault true;
-              useUserPackages = lib.mkDefault false;
-              sharedModules = (lib.attrValues self.homeModules) ++ [
-                inputs.nix-doom-emacs.hmModule
-                ({ ... }: {
-                  home.file.".nix-defexpr/nixos.nix" = {
-                    text = "import <nixpkgs> { }";
-                  };
-                })
-              ];
+              useGlobalPkgs = true;
+              useUserPackages = false;
+              sharedModules = lib.attrValues self.hmModules;
             };
           })
-        ];
-      });
 
-      mkModules = lib.mapAttrs (_: module: import module);
+          config
+        ];
+      };
+
+      importDir = dir:
+        lib.mapAttrs
+          (subdir: _: import (dir + "/${subdir}"))
+          (lib.filterAttrs (_: t: t == "directory") (builtins.readDir dir));
+
     in
     {
-      nixosConfigurations = mkHosts {
-        kuro = { config = ./machines/kuro; system = "x86_64-linux"; };
-        kado = { config = ./machines/kado; system = "x86_64-linux"; };
-      };
+      nixosConfigurations = lib.mapAttrs mkSystem (importDir ./machines);
 
       overlay = import ./pkgs;
 
-      homeModules = mkModules (import ./modules/home);
-      nixosModules = mkModules (import ./modules/nixos);
+      hmModules = importDir ./modules/home;
+      nixosModules = importDir ./modules/nixos;
     };
 }

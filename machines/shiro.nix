@@ -2,6 +2,8 @@
 {
   networking.hostName = "shiro"; # Define your hostname.
 
+  nixpkgs.system = "x86_64-linux";
+
   imports = [
     ../modules/hardware/logitech-mx-master-3.nix
 

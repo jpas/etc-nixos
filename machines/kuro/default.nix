@@ -1,10 +1,6 @@
-{ lib
-, ...
-}:
-
-with lib;
-
 {
+  nixpkgs.system = "x86_64-linux";
+
   networking.hostName = "kuro";
 
   imports = [

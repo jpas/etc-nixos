@@ -11,7 +11,11 @@ let
 
 in
 {
-  options = { programs.bat.catAlias = mkEnableOption "Alias cat to bat"; };
+  options = {
+    programs.bat = {
+      catAlias = mkEnableOption "Alias cat to bat";
+    };
+  };
 
   config = mkIf cfg.catAlias {
     programs.bash.shellAliases = { cat = "bat"; };
