@@ -56,8 +56,7 @@
               '';
 
               nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs.nix"
-                #"nixos-config=/run/current-system/flake/lib/compat/configuration.nix"
+                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
               ];
             };
 
