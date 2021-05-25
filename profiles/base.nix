@@ -43,7 +43,5 @@ with lib;
     vimAlias = true;
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
+  nix.trustedUsers = [ "root" "@wheel" ];
 }

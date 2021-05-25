@@ -28,42 +28,42 @@
     let
       inherit (nixpkgs) lib;
 
-      mkSystem = name: config: lib.nixosSystem {
-        # XXX: system extraction relies on config being an attrset
-        system = config.nixpkgs.system;
+      mkSystem = base: lib.nixosSystem {
+        # XXX: system extraction relies on base configuration being an attrset
+        system = base.nixpkgs.system;
         modules = [
+          base
+
           ({ pkgs, ... }: {
+            nixpkgs = rec {
+              pkgs = self.packages.${base.nixpkgs.system};
+              inherit (pkgs) config;
+            };
+
+            imports = lib.attrValues self.nixosModules;
+
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+
             nix = {
               registry = {
-                hole.flake = self;
+                pkgs.flake = self;
                 nixpkgs.flake = nixpkgs;
               };
 
-              trustedUsers = [ "root" "@wheel" ];
-
               package = pkgs.nixFlakes;
               extraOptions = ''
-                experimental-features = nix-command flakes
+                experimental-features = ca-references flakes nix-command
               '';
 
               nixPath = [
-                "nixpkgs=/run/current-system/nixpkgs"
-                "nixpkgs-overlays=/run/current-system/flake/pkgs"
+                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs.nix"
+                #"nixos-config=/run/current-system/flake/lib/compat/configuration.nix"
               ];
             };
 
             system.extraSystemBuilderCmds = ''
-              ln -s '${nixpkgs.outPath}' "$out/nixpkgs"
               ln -s '${self.outPath}' "$out/flake"
             '';
-
-            imports = lib.attrValues self.nixosModules;
-
-            nixpkgs = {
-              config.allowUnfree = true;
-              overlays = [ self.overlay ];
-            };
           })
 
           ({ ... }: {
@@ -74,8 +74,6 @@
               sharedModules = lib.attrValues self.hmModules;
             };
           })
-
-          config
         ];
       };
 
@@ -86,10 +84,20 @@
 
     in
     {
-      nixosConfigurations = lib.mapAttrs mkSystem (importDir ./machines);
+      overlays = {
+        hole = import ./pkgs;
+      };
 
-      overlay = import ./pkgs;
+      packages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
+        (system: import nixpkgs {
+          inherit system;
+          overlays = lib.attrValues self.overlays;
+          config = {
+            allowUnfree = true;
+          };
+        });
 
+      nixosConfigurations = lib.mapAttrs (_: mkSystem) (importDir ./machines);
       hmModules = importDir ./modules/home;
       nixosModules = importDir ./modules/nixos;
     };

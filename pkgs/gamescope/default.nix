@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
-    rev = "496b5f58d2882690c0cc415b242c133ea91a8b9c";
+    rev = "9d40b616456e6f1d5085c9431e40f20783ebeace";
     hash = "sha256-D2Amibvhm7p9ZRC87bH2X9JKAf13ozWZPxO/JUvxbaw=";
   };
 
