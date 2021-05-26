@@ -38,7 +38,7 @@
             imports = [ self.inputs.home-manager.nixosModules.home-manager ];
             home-manager = {
               useGlobalPkgs = true;
-              useUserPackages = false;
+              useUserPackages = true;
               sharedModules = lib.attrValues self.hmModules;
             };
           })
@@ -51,21 +51,26 @@
             nix = {
               package = pkgs.nixUnstable;
               extraOptions = ''
-                experimental-features = flakes nix-command
+                experimental-features = ca-references flakes nix-command
               '';
               nixPath = [
-                "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+                "nixpkgs=/run/current-system/flake/lib/compat/channels"
               ];
+              registry = {
+                pkgs.flake = self;
+                nixpkgs.flake = nixpkgs;
+              };
             };
-
-            systemd.tmpfiles.rules = [
-              "L+ ${self.outPath}/lib/compat/channels - - - /nix/var/nix/profiles/per-user/root/channels"
-            ];
 
             nixpkgs = rec {
               pkgs = self.packages.${system};
               inherit (pkgs) config;
             };
+          })
+
+          ({ lib, pkgs, ... }: {
+            # FIXME: workaround https://github.com/NixOS/nixpkgs/issues/124215
+            documentation.info.enable = lib.mkForce false;
           })
         ];
       };
