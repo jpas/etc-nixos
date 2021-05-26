@@ -51,23 +51,16 @@
             nix = {
               package = pkgs.nixUnstable;
               extraOptions = ''
-                experimental-features = ca-references flakes nix-command
+                experimental-features = flakes nix-command
               '';
-              registry = {
-                pkgs.flake = self;
-                nixpkgs.flake = nixpkgs;
-              };
-
-              # XXX: remove everything from NIX_PATH so that old tools begin
-              # to not work
               nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
+                "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
               ];
             };
 
-            system.extraSystemBuilderCmds = ''
-              ln -s '${self.outPath}' "$out/flake"
-            '';
+            systemd.tmpfiles.rules = [
+              "L+ ${self.outPath}/lib/compat/channels - - - /nix/var/nix/profiles/per-user/root/channels"
+            ];
 
             nixpkgs = rec {
               pkgs = self.packages.${system};
