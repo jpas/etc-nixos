@@ -23,7 +23,6 @@ with lib;
 
   environment.defaultPackages = mkDefault (attrValues {
     inherit (pkgs)
-      neovim
       curl
       htop
       manpages
