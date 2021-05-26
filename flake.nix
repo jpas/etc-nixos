@@ -38,7 +38,7 @@
             imports = [ self.inputs.home-manager.nixosModules.home-manager ];
             home-manager = {
               useGlobalPkgs = true;
-              useUserPackages = true;
+              useUserPackages = false;
               sharedModules = lib.attrValues self.hmModules;
             };
           })
