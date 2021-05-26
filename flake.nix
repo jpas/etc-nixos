@@ -38,7 +38,7 @@
             imports = [ self.inputs.home-manager.nixosModules.home-manager ];
             home-manager = {
               useGlobalPkgs = true;
-              useUserPackages = false;
+              useUserPackages = true;
               sharedModules = lib.attrValues self.hmModules;
             };
           })
@@ -60,8 +60,14 @@
 
               # XXX: remove everything from NIX_PATH so that old tools begin
               # to not work
-              nixPath = [ ];
+              nixPath = [
+                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
+              ];
             };
+
+            system.extraSystemBuilderCmds = ''
+              ln -s '${self.outPath}' "$out/flake"
+            '';
 
             nixpkgs = rec {
               pkgs = self.packages.${system};
