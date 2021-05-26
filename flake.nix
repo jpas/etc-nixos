@@ -28,49 +28,44 @@
     let
       inherit (nixpkgs) lib;
 
-      mkSystem = base: lib.nixosSystem {
+      mkSystem = base: lib.nixosSystem rec {
         # XXX: system extraction relies on base configuration being an attrset
-        system = base.nixpkgs.system;
+        system = (import base).nixpkgs.system;
         modules = [
           base
 
-          ({ pkgs, ... }: {
-            nixpkgs = rec {
-              pkgs = self.packages.${base.nixpkgs.system};
-              inherit (pkgs) config;
+          ({ ... }: {
+            imports = [ self.inputs.home-manager.nixosModules.home-manager ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = false;
+              sharedModules = lib.attrValues self.hmModules;
             };
+          })
+
+          ({ pkgs, ... }: {
+            system.configurationRevision = lib.mkIf (self ? rev) self.rev;
 
             imports = lib.attrValues self.nixosModules;
 
-            system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-
             nix = {
+              package = pkgs.nixUnstable;
+              extraOptions = ''
+                experimental-features = ca-references flakes nix-command
+              '';
               registry = {
                 pkgs.flake = self;
                 nixpkgs.flake = nixpkgs;
               };
 
-              package = pkgs.nixFlakes;
-              extraOptions = ''
-                experimental-features = ca-references flakes nix-command
-              '';
-
-              nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
-              ];
+              # XXX: remove everything from NIX_PATH so that old tools begin
+              # to not work
+              nixPath = [ ];
             };
 
-            system.extraSystemBuilderCmds = ''
-              ln -s '${self.outPath}' "$out/flake"
-            '';
-          })
-
-          ({ ... }: {
-            imports = [ home-manager.nixosModules.home-manager ];
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = false;
-              sharedModules = lib.attrValues self.hmModules;
+            nixpkgs = rec {
+              pkgs = self.packages.${system};
+              inherit (pkgs) config;
             };
           })
         ];
@@ -78,14 +73,19 @@
 
       importDir = dir:
         lib.mapAttrs
-          (subdir: _: import (dir + "/${subdir}"))
+          (subdir: _: dir + "/${subdir}")
           (lib.filterAttrs (_: t: t == "directory") (builtins.readDir dir));
 
     in
     {
+      nixosConfigurations = lib.mapAttrs (_: mkSystem) (importDir ./machines);
+
       overlays = {
         hole = import ./pkgs;
       };
+
+      hmModules = importDir ./modules/home;
+      nixosModules = importDir ./modules/nixos;
 
       packages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
         (system: import nixpkgs {
@@ -95,9 +95,5 @@
             allowUnfree = true;
           };
         });
-
-      nixosConfigurations = lib.mapAttrs (_: mkSystem) (importDir ./machines);
-      hmModules = importDir ./modules/home;
-      nixosModules = importDir ./modules/nixos;
     };
 }
