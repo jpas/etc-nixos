@@ -12,9 +12,6 @@ rec {
   xplr = callPackage ./xplr { };
   yofi = callPackage ./yofi { };
 
-  nix = prev.nixUnstable;
-  nixStable = prev.nix;
-
   kanshi = prev.kanshi.overrideAttrs (_: {
     version = "2021-02-02-unstable";
     src = final.fetchFromGitHub {
