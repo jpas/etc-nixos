@@ -156,7 +156,7 @@ with lib;
     (mkIf (config.hole.profiles ? graphical) {
       wayland.windowManager.sway.enable = true;
 
-      services.spotifyd.enable = true;
+      #services.spotifyd.enable = true;
       programs.imv.enable = true;
       programs.kitty.enable = true;
       programs.mako.enable = true;
