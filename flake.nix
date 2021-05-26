@@ -54,7 +54,7 @@
                 experimental-features = ca-references flakes nix-command
               '';
               nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/channels"
+                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
               ];
               registry = {
                 pkgs.flake = self;
