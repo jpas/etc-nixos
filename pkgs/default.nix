@@ -21,4 +21,8 @@ rec {
       hash = "sha256-FGEYfl6BSSK9RbGEIoynv1tzkFFn0kafxr5Jux/moP0=";
     };
   });
+
+  agda = prev.agda.withPackages (p: [
+    p.standard-library
+  ]);
 }
