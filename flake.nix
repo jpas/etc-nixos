@@ -62,6 +62,10 @@
               };
             };
 
+            system.extraSystemBuilderCmds = ''
+              ln -s '${self.outPath}' "$out/flake"
+            '';
+
             nixpkgs = rec {
               pkgs = self.packages.${system};
               inherit (pkgs) config;
