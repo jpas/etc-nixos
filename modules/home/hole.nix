@@ -1,4 +1,4 @@
 { ... }:
 {
-  imports = [ ../../hole ];
+  imports = [ ../hole ];
 }
