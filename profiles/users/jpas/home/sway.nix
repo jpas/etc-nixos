@@ -22,9 +22,9 @@ let
     workspaceAutoBackAndForth = true;
 
     input = {
-      "type:keyboard" = {
-        xkb_options = "caps:escape";
-      };
+      #"type:keyboard" = {
+      #  xkb_options = "caps:escape";
+      #};
       "type:touchpad" = {
         tap = "enabled";
       };
