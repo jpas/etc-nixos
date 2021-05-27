@@ -21,6 +21,8 @@ with lib;
     kitty-terminfo = pkgs.kitty.terminfo;
   };
 
+  nix.trustedUsers = [ "root" "@wheel" ];
+
   environment.defaultPackages = mkDefault (attrValues {
     inherit (pkgs)
       curl
@@ -41,6 +43,4 @@ with lib;
     viAlias = true;
     vimAlias = true;
   };
-
-  nix.trustedUsers = [ "root" "@wheel" ];
 }

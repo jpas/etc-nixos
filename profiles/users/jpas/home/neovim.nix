@@ -8,31 +8,27 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    extraConfig = ''
-      if &term != "linux"
-        set termguicolors
-      endif
-
-      set guicursor=
-      set encoding=utf-8
-      set fileencoding=utf-8
-      set colorcolumn=80
-      set number
-      set nowrap
-      set list
-      set smartcase
-
-      set nobackup nowritebackup
-
-      syntax on
-      syntax sync minlines=500
-    '';
-
     plugins = with pkgs.vimPlugins; [
       {
         plugin = gruvbox;
+        # FIXME: https://github.com/nix-community/home-manager/pull/1945
         config = ''
+          set guicursor=
+          set encoding=utf-8
+          set fileencoding=utf-8
+          set colorcolumn=80
+          set number
+          set nowrap
+          set list
+          set smartcase
+          set nobackup nowritebackup
+        '' + ''
+          if &term != "linux"
+            set termguicolors
+          endif
           colorscheme gruvbox
+          syntax on
+          syntax sync minlines=500
         '';
       }
       {

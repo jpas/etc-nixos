@@ -17,7 +17,7 @@ with lib;
     ./spotifyd.nix
     ./sway.nix
     ./tmux.nix
-    ./xplr.nix
+    #./xplr.nix
     ./zathura.nix
   ];
 

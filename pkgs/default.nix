@@ -3,6 +3,22 @@ let
   inherit (prev) callPackage;
 in
 rec {
+  makeOzoneWrapper = { bin, pkg, ... }@args_:
+    let
+      args = removeAttrs args_ [ "bin" "pkg" ];
+      wrapped = final.writeShellScriptBin bin ''
+        declare -a args
+        if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+          args+=(--enable-features=UseOzonePlatform --ozone-platform=wayland)
+        fi
+        exec "${pkg}/bin/${bin}" "''${args[@]}" "$@"
+      '';
+    in
+    final.symlinkJoin (args // {
+      name = "${pkg.name}-ozone-wrapper";
+      paths = [ wrapped pkg ];
+    });
+
   ftpserver = callPackage ./ftpserver { };
   gamescope = callPackage ./gamescope { inherit libliftoff; };
   libliftoff = callPackage ./libliftoff { };
@@ -11,6 +27,20 @@ rec {
   srvfb = callPackage ./srvfb { };
   xplr = callPackage ./xplr { };
   yofi = callPackage ./yofi { };
+
+  signal-desktop = makeOzoneWrapper {
+    pkg = prev.signal-desktop;
+    bin = "signal-desktop";
+    postBuild = ''
+      rm $out/bin/signal-desktop-unwrapped
+    '';
+  };
+
+  discord = prev.discord.overrideAttrs (old: {
+    installPhase = (old.installPhase or "") + ''
+      mv $out/bin/Discord $out/bin/discord
+    '';
+  });
 
   kanshi = prev.kanshi.overrideAttrs (_: {
     version = "2021-02-02-unstable";
