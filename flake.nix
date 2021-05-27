@@ -28,6 +28,15 @@
     let
       inherit (self) lib;
 
+      pkgsFor = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
+        (system: import nixpkgs {
+          inherit system;
+          overlays = lib.attrValues self.overlays;
+          config = {
+            allowUnfree = true;
+          };
+        });
+
       mkSystem = base: lib.nixosSystem rec {
         # XXX: system extraction relies on base configuration being an attrset
         system = (import base).nixpkgs.system;
@@ -69,8 +78,15 @@
               ln -s '${nixpkgs.outPath}' "$out/flake/nixpkgs"
             '';
 
+            system.userActivationScripts = [
+              { nix-defexpr.text = ''
+                  ln -sfnT /run/current-system/flake/hole/lib/compat/nix-defexpr.nix "$HOME/.nix-defexpr"
+                '';
+              }
+            ];
+
             nixpkgs = rec {
-              pkgs = self.packages.${system};
+              pkgs = pkgsFor.${system};
               inherit (pkgs) config;
             };
           })
@@ -100,14 +116,6 @@
       hmModules = (import ./modules/home);
       nixosModules = (import ./modules/nixos);
 
-      # TODO: only package from ./pkgs
-      packages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
-        (system: import nixpkgs {
-          inherit system;
-          overlays = lib.attrValues self.overlays;
-          config = {
-            allowUnfree = true;
-          };
-        });
+      packages = lib.mapAttrs (_: pkgs: pkgs.hole) pkgsFor;
     };
 }
