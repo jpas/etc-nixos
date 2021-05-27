@@ -24,7 +24,7 @@ in
       package = mkOption {
         type = types.package;
         default = pkgs.oauth2ms;
-        defaultText = "pkgs.oauth2ms";
+        defaultText = testLibOverlay "pkgs.oauth2ms";
       };
     };
   };

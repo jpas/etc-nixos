@@ -3,6 +3,8 @@ let
   inherit (prev) callPackage;
 in
 rec {
+  lib = prev.lib.extend (import ../lib);
+
   makeOzoneWrapper = { bin, pkg, ... }@args_:
     let
       args = removeAttrs args_ [ "bin" "pkg" ];

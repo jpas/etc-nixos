@@ -26,7 +26,7 @@
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
-      inherit (nixpkgs) lib;
+      inherit (self) lib;
 
       mkSystem = base: lib.nixosSystem rec {
         # XXX: system extraction relies on base configuration being an attrset
@@ -86,7 +86,9 @@
 
     in
     {
-      nixosConfigurations = lib.mapAttrs (_: mkSystem) (importDir ./machines);
+      lib = nixpkgs.lib.extend (import ./lib);
+
+      nixosConfigurations = lib.mapAttrs (_: mkSystem) (import ./machines/machines.nix);
 
       overlays = {
         hole = import ./pkgs;
