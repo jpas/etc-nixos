@@ -54,7 +54,8 @@
                 experimental-features = ca-references flakes nix-command
               '';
               nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
+                "nixpkgs=/run/current-system/flake/nixpkgs"
+                "nixpkgs-overlays=/run/current-system/flake/hole/lib/compat/overlays"
               ];
               registry = {
                 hole.flake = self;
@@ -63,7 +64,9 @@
             };
 
             system.extraSystemBuilderCmds = ''
-              ln -s '${self.outPath}' "$out/flake"
+              mkdir $out/flake
+              ln -s '${self.outPath}' "$out/flake/hole"
+              ln -s '${nixpkgs.outPath}' "$out/flake/nixpkgs"
             '';
 
             nixpkgs = rec {
