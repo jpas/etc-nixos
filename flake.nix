@@ -78,12 +78,16 @@
               ln -s '${nixpkgs.outPath}' "$out/flake/nixpkgs"
             '';
 
-            system.userActivationScripts = [
-              { nix-defexpr.text = ''
-                  ln -sfnT /run/current-system/flake/hole/lib/compat/nix-defexpr.nix "$HOME/.nix-defexpr"
-                '';
-              }
-            ];
+            system.userActivationScripts = {
+              force-nix-defexpr.text = ''
+                link_name=$HOME/.nix-defexpr
+                target=/run/current-system/flake/hole/lib/compat/nix-defexpr.nix
+                if [[ (-e "$link_name") -a (! -h "$link_name") ]]; then
+                  mv -f "$link_name" "$link_name".backup
+                fi
+                ln -sfn "$target" "$link_name"
+              '';
+            };
 
             nixpkgs = rec {
               pkgs = pkgsFor.${system};
