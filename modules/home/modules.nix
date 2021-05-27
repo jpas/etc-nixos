@@ -1,3 +1,0 @@
-{
-  bat = ./programs/bat;
-}

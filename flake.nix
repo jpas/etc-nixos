@@ -88,14 +88,14 @@
     {
       lib = nixpkgs.lib.extend (import ./lib);
 
-      nixosConfigurations = lib.mapAttrs (_: mkSystem) (import ./machines/machines.nix);
+      nixosConfigurations = lib.mapAttrs (_: mkSystem) (import ./machines);
 
       overlays = {
         hole = import ./pkgs;
       };
 
-      hmModules = importDir ./modules/home;
-      nixosModules = importDir ./modules/nixos;
+      hmModules = (import ./modules/home);
+      nixosModules = (import ./modules/nixos);
 
       # TODO: only package from ./pkgs
       packages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
