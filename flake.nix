@@ -78,14 +78,11 @@
               ln -s '${nixpkgs.outPath}' "$out/flake/nixpkgs"
             '';
 
-            system.userActivationScripts = {
-              force-nix-defexpr.text = ''
-                link_name=$HOME/.nix-defexpr
-                target=/run/current-system/flake/hole/lib/compat/nix-defexpr.nix
-                if [[ (-e "$link_name") -a (! -h "$link_name") ]]; then
-                  mv -f "$link_name" "$link_name".backup
-                fi
-                ln -sfn "$target" "$link_name"
+            system.activationScripts = {
+              flake-as-root-nix-channels.text = ''
+                ln --symbolic --force --no-target-directory --no-dereference \
+                  /run/current-system/flake/hole/lib/compat/channels \
+                  /nix/var/nix/profiles/per-user/root/channels
               '';
             };
 
