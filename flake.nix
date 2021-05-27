@@ -54,16 +54,18 @@
                 experimental-features = ca-references flakes nix-command
               '';
               nixPath = [
-                "nixpkgs=/run/current-system/flake/lib/compat/nixpkgs"
+                "nixpkgs=/run/current-system/flake-legacy-compat/nixpkgs"
+                "nixpkgs-overlays=/run/current-system/flake-legacy-compat/overlays"
+                "/run/current-system/flake-legacy-compat/channels"
               ];
               registry = {
-                pkgs.flake = self;
+                hole.flake = self;
                 nixpkgs.flake = nixpkgs;
               };
             };
 
             system.extraSystemBuilderCmds = ''
-              ln -s '${self.outPath}' "$out/flake"
+              ln -s '${pkgs.flake-legacy-compat}' "$out/nix-flake-legacy-compat"
             '';
 
             nixpkgs = rec {
@@ -97,6 +99,7 @@
       hmModules = importDir ./modules/home;
       nixosModules = importDir ./modules/nixos;
 
+      # TODO: only package from ./pkgs
       packages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
         (system: import nixpkgs {
           inherit system;
