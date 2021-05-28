@@ -1,8 +1,4 @@
 let
   flake = builtins.getFlake (toString ./.);
-  nixpkgs = import <nixpkgs> { };
-  lib = nixpkgs.lib;
-in {
-  inherit flake nixpkgs;
-  lib = nixpkgs.lib;
-}
+  pkgs = flake.legacyPackages."${builtins.currentSystem}";
+in flake // { inherit flake pkgs; }
