@@ -1,4 +1,7 @@
-lib: prev:
+lib: _:
+let
+  callLibs = file: import file { inherit lib; };
+in
 {
-  testLibOverlay = x: lib.trace "hello!" x;
+  flakeSystem = callLibs ./flakeSystem.nix;
 }
