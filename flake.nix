@@ -63,13 +63,25 @@
               };
             };
 
-            system.activationScripts = {
-              flake-as-root-nix-channels.text = ''
-                ln --symbolic --force --no-target-directory --no-dereference \
-                  ${self.outPath}/lib/compat/channels \
-                  /nix/var/nix/profiles/per-user/root/channels
-              '';
-            };
+            system.activationScripts =
+              let
+                overlays = pkgs.writeTextFile {
+                  name = "overlays";
+                  text = "import ${self.outPath}/pkgs";
+                  destination = "/overlays.nix";
+                };
+
+                channels = pkgs.linkFarm "flake-legacy-compat" [
+                  { name = "nixos"; path = nixpkgs; }
+                  { name = "nixpkgs-overlays"; path = overlays; }
+                ];
+              in
+              {
+                flake-legacy-compat.text = ''
+                  ln --symbolic --force --no-target-directory --no-dereference \
+                    ${channels} /nix/var/nix/profiles/per-user/root/channels
+                '';
+              };
 
             nixpkgs = rec {
               pkgs = self.legacyPackages.${system};
@@ -95,9 +107,7 @@
 
       nixosConfigurations = lib.mapAttrs (_: mkSystem) (import ./machines);
 
-      overlays = {
-        hole = import ./pkgs;
-      };
+      overlay = import ./pkgs;
 
       hmModules = (import ./modules/home);
       nixosModules = (import ./modules/nixos);
@@ -105,7 +115,7 @@
       legacyPackages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
         (system: import nixpkgs {
           inherit system;
-          overlays = lib.attrValues self.overlays;
+          overlays = [ self.overlay ];
           config = {
             allowUnfree = true;
           };
