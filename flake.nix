@@ -28,16 +28,6 @@
     let
       inherit (self) lib;
 
-      nixpkgsFor = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
-        (system: import nixpkgs {
-          inherit system;
-          overlays = lib.attrValues self.overlays;
-          config = {
-            allowUnfree = true;
-          };
-        });
-
-
       mkSystem = base: lib.nixosSystem rec {
         # XXX: system extraction relies on base configuration being an attrset
         system = (import base).nixpkgs.system;
@@ -76,13 +66,13 @@
             system.activationScripts = {
               flake-as-root-nix-channels.text = ''
                 ln --symbolic --force --no-target-directory --no-dereference \
-                  /run/current-system/flake/hole/lib/compat/channels \
+                  ${self.outPath}/lib/compat/channels \
                   /nix/var/nix/profiles/per-user/root/channels
               '';
             };
 
             nixpkgs = rec {
-              pkgs = nixpkgsFor.${system};
+              pkgs = self.legacyPackages.${system};
               inherit (pkgs) config;
             };
           })
@@ -112,9 +102,13 @@
       hmModules = (import ./modules/home);
       nixosModules = (import ./modules/nixos);
 
-      packages = lib.flip lib.mapAttrs nixpkgsFor
-        (system: pkgs: lib.flip lib.filterAttrs pkgs.hole
-          (_: pkg: lib.isDerivation pkg && lib.meta.availableOn system pkg)
-        );
+      legacyPackages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
+        (system: import nixpkgs {
+          inherit system;
+          overlays = lib.attrValues self.overlays;
+          config = {
+            allowUnfree = true;
+          };
+        });
     };
 }
