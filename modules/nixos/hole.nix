@@ -9,7 +9,10 @@ let
   mkPropagate = lib.mkOverride ((lib.mkDefault { }).priority - 1);
 in
 {
-  imports = [ ../hole ];
+  imports = [
+    ../hole
+    ../hole/secrets.nix
+  ];
 
   home-manager.sharedModules = [
     ({ ... }: {
