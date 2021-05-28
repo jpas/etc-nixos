@@ -114,7 +114,7 @@
 
       packages = lib.flip lib.mapAttrs nixpkgsFor
         (system: pkgs: lib.flip lib.filterAttrs pkgs.hole
-          (_: p: lib.isDerivation p && lib.meta.availableOn system p)
+          (_: pkg: lib.isDerivation pkg && lib.meta.availableOn system pkg)
         );
     };
 }
