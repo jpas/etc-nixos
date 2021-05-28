@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "A micro-compositor";
     license = licenses.bsd2;
-    platforms = platforms.unix;
+    platforms = platforms.linux;
     maintainers = with maintainers; [ jpas ];
   };
 }

@@ -21,4 +21,11 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ meson ninja pkg-config ];
 
   buildInputs = [ libdrm ];
+
+  meta = with lib; {
+    description = " Lightweight KMS plane library";
+    license = licenses.mit;
+    platforms = platforms.linux;
+    maintainers = with maintainers; [ jpas ];
+  };
 }

@@ -33,6 +33,7 @@ python3Packages.buildPythonApplication rec {
   meta = with lib; {
     description = "An XOAUTH2 compatible token fetcher for Office365";
     license = licenses.asl20;
+    platforms = platforms.any;
     maintainers = with maintainers; [ jpas ];
   };
 }

@@ -16,9 +16,10 @@ buildGoModule rec {
 
   vendorSha256 = "08xjakmzzs6ggqj0fv2iygj1rxl0xnjs23j134fis12r3zy9ahcs";
 
-  meta = {
+  meta = with lib; {
     description = "Golang based autonomous FTP server";
     homepage = "https://github.com/fclairamb/ftpserver";
-    license = lib.licenses.mit;
+    license = licenses.mit;
+    platforms = platforms.unix;
   };
 }

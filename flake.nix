@@ -28,7 +28,7 @@
     let
       inherit (self) lib;
 
-      pkgsFor = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
+      nixpkgsFor = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
         (system: import nixpkgs {
           inherit system;
           overlays = lib.attrValues self.overlays;
@@ -36,6 +36,7 @@
             allowUnfree = true;
           };
         });
+
 
       mkSystem = base: lib.nixosSystem rec {
         # XXX: system extraction relies on base configuration being an attrset
@@ -63,20 +64,14 @@
                 experimental-features = ca-references flakes nix-command
               '';
               nixPath = [
-                "nixpkgs=/run/current-system/flake/nixpkgs"
-                "nixpkgs-overlays=/run/current-system/flake/hole/lib/compat/overlays"
+                "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+                "/nix/var/nix/profiles/per-user/root/channels"
               ];
               registry = {
                 hole.flake = self;
                 nixpkgs.flake = nixpkgs;
               };
             };
-
-            system.extraSystemBuilderCmds = ''
-              mkdir $out/flake
-              ln -s '${self.outPath}' "$out/flake/hole"
-              ln -s '${nixpkgs.outPath}' "$out/flake/nixpkgs"
-            '';
 
             system.activationScripts = {
               flake-as-root-nix-channels.text = ''
@@ -87,7 +82,7 @@
             };
 
             nixpkgs = rec {
-              pkgs = pkgsFor.${system};
+              pkgs = nixpkgsFor.${system};
               inherit (pkgs) config;
             };
           })
@@ -117,6 +112,9 @@
       hmModules = (import ./modules/home);
       nixosModules = (import ./modules/nixos);
 
-      packages = lib.mapAttrs (_: pkgs: pkgs.hole) pkgsFor;
+      packages = lib.flip lib.mapAttrs nixpkgsFor
+        (system: pkgs: lib.flip lib.filterAttrs pkgs.hole
+          (_: p: lib.isDerivation p && lib.meta.availableOn system p)
+        );
     };
 }
