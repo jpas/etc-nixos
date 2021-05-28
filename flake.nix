@@ -67,7 +67,9 @@
               let
                 overlays = pkgs.writeTextFile {
                   name = "overlays";
-                  text = "import ${self.outPath}/pkgs";
+                  text = ''
+                    (builtins.getFlake "${self.outPath}").overlay
+                  '';
                   destination = "/overlays.nix";
                 };
 
@@ -95,12 +97,6 @@
           })
         ];
       };
-
-      importDir = dir:
-        lib.mapAttrs
-          (subdir: _: dir + "/${subdir}")
-          (lib.filterAttrs (_: t: t == "directory") (builtins.readDir dir));
-
     in
     {
       lib = nixpkgs.lib.extend (import ./lib);
