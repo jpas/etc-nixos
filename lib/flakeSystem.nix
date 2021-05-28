@@ -1,65 +1,69 @@
 { lib, ... }:
-
 let
-  flakeModule = { flake, pkgs, config, options, ... }: rec {
+  inherit (lib.modules) mkIf mkForce;
+
+  flakeModule = { flake, pkgs, config, options, ... }: {
     _file = ./flakeSystem.nix;
-    key = _file;
+    key = ./flakeSystem.nix;
 
-    config = lib.mkMerge [
-      {
-        # this may cause infinite recursion...
-        nixpkgs.pkgs = flake.legacyPackages.${config.nixpkgs.system};
+    config = {
+      # FIXME: workaround https://github.com/NixOS/nixpkgs/issues/124215
+      documentation.info.enable = lib.mkForce false;
 
-        system.configurationRevision = lib.mkIf (flake ? rev) flake.rev;
-        system.autoUpgrade.flake = flake;
+      # XXX: if this is leading to infinite recursion, ensure the option
+      # nixpkgs.system is a literal string.
+      nixpkgs.pkgs = flake.legacyPackages."${config.nixpkgs.system}";
 
-        nix = {
-          package = pkgs.nixUnstable;
-          extraOptions = lib.mkDefault ''
-            experimental-features = ca-references flakes nix-command
+      nix = {
+        package = pkgs.nixUnstable;
+        extraOptions = lib.mkOptionDefault ''
+          experimental-features = ca-references flakes nix-command
+        '';
+        nixPath = lib.mkOptionDefault [
+          "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+          "/nix/var/nix/profiles/per-user/root/channels"
+        ];
+        registry = {
+          system.flake = lib.mkForce flake;
+          nixpkgs.flake = lib.mkForce flake.inputs.nixpkgs;
+        };
+      };
+
+      home-manager = lib.mkIf (options ? home-manager) {
+        useGlobalPkgs = lib.mkForce true;
+        useUserPackages = lib.mkForce true;
+        sharedModules = lib.attrValues (flake.hmModules or { });
+      };
+
+      system.configurationRevision = lib.mkIf (flake ? rev) flake.rev;
+      system.activationScripts =
+        let
+          configuration = pkgs.writeText "flake-configuration" ''
+            let
+              flake = builtins.getFlake "${flake.outPath}";
+              hostname = flake.inputs.nixpkgs.lib.fileContents /proc/sys/kernel/hostname;
+            in
+              flake.nixosConfigurations."''${hostname}"
           '';
-          nixPath = lib.mkDefault [
-            "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-            "/nix/var/nix/profiles/per-user/root/channels"
-          ];
-          registry = {
-            system.flake = flake;
-            nixpkgs.flake = flake.inputs.nixpkgs;
+
+          flake-channels = pkgs.symlinkJoin {
+            name = "flake-channels";
+            paths = [
+              (pkgs.writeTextDir "nixos/default.nix" ''
+                { ... } @ _: (import ${configuration}).pkgs
+              '')
+              (pkgs.writeTextDir "nixos/nixos/default.nix" ''
+                { ... } @ _: (import ${configuration})
+              '')
+            ];
           };
+        in
+        {
+          flake-channels.text = ''
+            ln -sfn ${flake-channels} /nix/var/nix/profiles/per-user/root/channels
+          '';
         };
-
-        home-manager = lib.mkIf (options ? home-manager) {
-          useGlobalPkgs = lib.mkForce true;
-          useUserPackages = lib.mkForce true;
-          sharedModules = lib.attrValues (flake.hmModules or { });
-        };
-
-        # FIXME: workaround https://github.com/NixOS/nixpkgs/issues/124215
-        documentation.info.enable = lib.mkForce false;
-      }
-
-      {
-        system.activationScripts =
-          let
-            channels-flake-compat = pkgs.symlinkJoin {
-              name = "channels-flake-compat";
-              paths = [
-                (pkgs.writeTextDir "nixos/default.nix" ''
-                  { ... } @ _: (builtins.getFlake "${flake.outPath}").lib.currentConfiguration.pkgs
-                '')
-                (pkgs.writeTextDir "nixos/nixos/default.nix" ''
-                  { ... } @ _: (builtins.getFlake "${flake.outPath}").lib.currentConfiguration
-                '')
-              ];
-            };
-          in
-          {
-            channels-flake-compat.text = ''
-              ln -sfn ${channels-flake-compat} /nix/var/nix/profiles/per-user/root/channels
-            '';
-          };
-      }
-    ];
+    };
   };
 
   flakeSystem = { flake, modules, ... } @ args_:
@@ -70,4 +74,4 @@ let
         ++ (lib.attrValues (flake.nixosModules or { }));
     });
 in
-flakeSystem;
+  flakeSystem

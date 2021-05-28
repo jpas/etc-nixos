@@ -26,13 +26,19 @@
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     rec {
+      # TODO: url = "github:jpas/etc-nixos"
+
       lib = nixpkgs.lib.extend (import ./lib);
 
       nixosConfigurations = lib.flip lib.mapAttrs (import ./machines)
         (name: configuration: lib.flakeSystem {
+          flake = self;
           # XXX: system extraction relies on configuration a path to an attrset
           system = (import configuration).nixpkgs.system;
-          modules = [ configuration ];
+          modules = [
+            configuration
+            home-manager.nixosModules.home-manager
+          ];
         });
 
       overlay = import ./pkgs;
