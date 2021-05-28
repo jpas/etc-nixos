@@ -51,7 +51,7 @@ let
         # steam remote play window
         criteria = { class = "streaming_client"; };
         # resize accounts for the width of the border
-        command = "fullscreen disable, floating enable, border pixel, resize set 1924 1084";
+        command = "fullscreen disable, floating enable, border pixel, resize set 2564 1444";
       }
 
       {
