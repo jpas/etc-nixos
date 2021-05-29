@@ -7,6 +7,7 @@ with lib;
 
 {
   imports = [
+    ../../users
     ../../profiles
     ./aleph.nix
     ./network.nix
