@@ -7,8 +7,6 @@
     ../common
     ./hardware.nix
     ./kanshi.nix
-
-    ../../profiles/users/jpas
   ];
 
   hole = {

@@ -10,9 +10,6 @@
 
     ../common
 
-    ../../profiles/users/jpas
-    ../../profiles/users/kbell
-
     ./factorio.nix
     ./nfs.nix
     #./samba.nix

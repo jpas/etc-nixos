@@ -8,10 +8,7 @@ with lib;
 {
   networking.hostName = "nisi";
 
-  imports = [
-    ../common
-    ../../profiles/users/jpas
-  ];
+  imports = [ ../common ];
 
   hole.profiles = {
     minimal = true;
