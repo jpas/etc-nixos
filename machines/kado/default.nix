@@ -35,12 +35,6 @@
     5201
   ];
 
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "Wed *-*-1..7 4:00";
-    fileSystems = [ "/aleph" ];
-  };
-
   services.fail2ban.enable = true;
 
   virtualisation.docker.enable = true;

@@ -5,6 +5,12 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "Wed *-*-1..7 4:00";
+    fileSystems = [ "/aleph" ];
+  };
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/7932c7d2-49c2-453b-a406-4a73509a57fd";
