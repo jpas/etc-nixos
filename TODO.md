@@ -1,3 +1,7 @@
+# NOTES
+
+- https://feldspaten.org/2020/06/05/microsoft-teams-and-disabled-third-party-cookies-in-firefox/
+
 # TODO
 
 - [x] ensure kado.o is routable before trying to do NFS
