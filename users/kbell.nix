@@ -5,5 +5,5 @@
     isNormalUser = true;
     passwordFile = "/etc/nixos/secrets/passwd.d/kbell";
   };
-  #home-manager.users.kbell = import ./kbell;
+  home-manager.users.kbell = import ./kbell;
 }
