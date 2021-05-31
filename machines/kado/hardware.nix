@@ -5,12 +5,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "Wed *-*-1..7 4:00";
-    fileSystems = [ "/aleph" ];
-  };
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/7932c7d2-49c2-453b-a406-4a73509a57fd";
@@ -20,17 +14,6 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/E914-BBE6";
       fsType = "vfat";
-    };
-
-    "/aleph" = {
-      device = "/dev/disk/by-uuid/8aebe979-4cbd-45c6-a83e-44a165be7226";
-      fsType = "btrfs";
-      options = [ "subvol=/aleph" "space_cache=v2" "autodefrag" "relatime" ];
-    };
-
-    "/srv/exports/aleph" = {
-      device = "/aleph";
-      options = [ "bind" ];
     };
   };
 
