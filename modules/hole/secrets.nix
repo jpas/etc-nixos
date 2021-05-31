@@ -10,47 +10,46 @@ let
   #hosts = config.hole.hosts;
   cfg = config.hole.secrets;
 
-  secret = types.submodule {
-    options = {
-      source = mkOption {
-        type = types.path;
-      };
+  secret = types.submodule
+    { config, ... }: {
+      options = {
+        name = mkOption {
+          type = types.str;
+          defaultText = "name of attribute";
+        };
 
-      destination = mkOption {
-        type = types.str;
-      };
+        source = mkOption {
+          type = types.path;
+        };
 
-      owner = mkOption {
-        type = types.str;
-        default = "root";
-      };
+        path = mkOption {
+          type = types.str;
+          default = "/run/secrets/${config.name}";
+          defaultText = "/run/secrets/<name>";
+        };
 
-      group = mkOption {
-        type = types.str;
-        default = "root";
-      };
+        owner = mkOption {
+          type = types.str;
+          default = "root";
+        };
 
-      permissions = mkOption {
-        type = types.str;
-        default = "0400";
+        group = mkOption {
+          type = types.str;
+          default = "root";
+        };
+
+        mode = mkOption {
+          type = types.str;
+          default = "0400";
+        };
       };
     };
-  };
 
-  mkSecret = { name, source, ... }: pkgs.stdenv.mkDerivation {
-    name = "${name}.age";
-    phases = "installPhase";
-    buildInputs = [ pkgs.rage ];
-    installPhase =
-      let
-        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWAg8IMKXHkRkGLmhFH4eWfVtS1qbhHP2Vd3B53JtGL";
-      in ''
-        rage --encrypt \
-          --recipient '${key}' \
-          --output "$out" \
-          '${source}'
-      '';
-  };
+  activateSecret = secret: ''
+    tmp="${secret.path}.tmp"
+    mkdir -p "$(dirname ${lib.escapeShellArg secret.path})"
+    ${pkgs.rage}/bin/rage -d -i '${identity}' -o '${destination}' '${source}'
+  '';
 
 in
 {
@@ -59,15 +58,16 @@ in
       type = types.attrsOf secret;
       default = {
         testing = {
-          source = /etc/nixos/secrets/testing-secret;
-          destination = "";
+          name = "testing-secret";
+          source = ./secrets/testing-secret.age;
         };
       };
     };
   };
 
   config = {
-    environment.systemPackages = lib.attrValues
-      (lib.mapAttrs (name: secret: mkSecret (secret // { inherit name; })));
+    environment.systemPackages = attrValues (flip mapAttrs cfg
+      (name: secret: mkSecret (secret // { inherit name; }))
+    );
   };
 }
