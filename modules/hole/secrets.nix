@@ -11,7 +11,7 @@ let
   cfg = config.hole.secrets;
 
   secret = types.submodule
-    { config, ... }: {
+    ({ config, ... }: {
       options = {
         name = mkOption {
           type = types.str;
@@ -43,7 +43,7 @@ let
           default = "0400";
         };
       };
-    };
+    });
 
   activateSecret = secret: ''
     tmp="${secret.path}.tmp"
