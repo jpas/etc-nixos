@@ -12,6 +12,7 @@
 
     ./factorio.nix
     ./nfs.nix
+    ./print-and-scan.nix
     #./samba.nix
     #./croc.nix
   ];
