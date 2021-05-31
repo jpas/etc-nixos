@@ -11,7 +11,7 @@ in
 {
   imports = [
     ../hole
-    ../hole/secrets.nix
+    #../hole/secrets.nix
   ];
 
   home-manager.sharedModules = [
