@@ -4,5 +4,5 @@ let
   };
 in
 {
-  home-manager.sharedModules = [ module ]
+  home-manager.sharedModules = [ module ];
 }
