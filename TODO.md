@@ -8,6 +8,11 @@
 - [ ] allow wireless to fail during boot
 - [ ] apply smbios-thermal-blah quiet mode on boot
 
+- [ ] remarkable: sync papers library
+- [ ] remarkable: sync notes
+- [ ] file watcher for ~/tmp/
+- [ ] workflow shortcuts
+- [ ] tui email
 
 # multiheaded wayland
 
