@@ -7,7 +7,6 @@
     # This doesn't work properly yet...
     enable = false;
 
-    package = pkgs.firefox-wayland;
     profiles.jpas = {
       # TODO: extensions?
 

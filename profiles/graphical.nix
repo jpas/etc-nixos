@@ -76,6 +76,9 @@ with lib;
       };
 
       security.rtkit.enable = mkDefault config.services.pipewire.enable;
+
+      hardware.opengl.extraPackages32 = mkIf config.services.pipewire.enable
+        [ pkgs.pkgsi686Linux.pipewire ];
     }
 
     (mkIf config.programs.sway.enable {

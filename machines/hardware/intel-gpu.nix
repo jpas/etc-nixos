@@ -9,6 +9,7 @@ with lib;
 let
   multiPkgs = pkgs: attrValues {
     inherit (pkgs)
+      libva
       libvdpau-va-gl
       vaapiIntel
       vaapiVdpau
