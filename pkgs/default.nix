@@ -1,6 +1,6 @@
 final: prev:
 let
-  inherit (prev) callPackage;
+  inherit (prev) lib callPackage;
 
   hole = rec {
     lib = prev.lib.extend (import ../lib);
@@ -55,6 +55,15 @@ let
     agda = prev.agda.withPackages (p: [
       p.standard-library
     ]);
+
+    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (o: {
+      patches = (o.patches or []) ++ [
+        (prev.fetchpatch {
+          url = "https://patch-diff.githubusercontent.com/raw/swaywm/sway/pull/4952.patch";
+          sha256 = "sha256-SImHOpkObgHRBYl05oWnv8WK/oapr+TrSZYoOCZTLvI=";
+        })
+      ];
+    });
   };
 in
 hole // { inherit hole; }
