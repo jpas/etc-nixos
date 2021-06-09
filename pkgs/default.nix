@@ -25,6 +25,7 @@ let
     gamescope = callPackage ./gamescope { inherit libliftoff; };
     libliftoff = callPackage ./libliftoff { };
     oauth2ms = callPackage ./oauth2ms { };
+    oauth2token = callPackage ./oauth2token { };
     xplr = callPackage ./xplr { };
 
     signal-desktop = makeOzoneWrapper {
