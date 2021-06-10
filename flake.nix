@@ -1,40 +1,22 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nix-doom-emacs = {
-      url = "github:vlaci/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.emacs-overlay.follows = "emacs-overlay";
-    };
-
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
-
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     rec {
-      # TODO: url = "github:jpas/etc-nixos"
-
       lib = nixpkgs.lib.extend (import ./lib);
 
       nixosConfigurations = lib.flip lib.mapAttrs (import ./machines)
         (name: configuration: lib.flakeSystem {
           flake = self;
-          # XXX: system extraction relies on configuration a path to an attrset
-          system = (import configuration).nixpkgs.system;
+          # XXX: Assume the system, but we can set it via `nixpkgs.system`
+          system = "x86_64-linux";
           modules = [
             configuration
             home-manager.nixosModules.home-manager
@@ -43,16 +25,10 @@
 
       overlay = import ./pkgs;
 
-      hmModules = (import ./modules/home);
-      nixosModules = (import ./modules/nixos);
+      hmModule = { imports = lib.attrValues self.hmModules; };
+      hmModules = import ./modules/home;
 
-      legacyPackages = lib.genAttrs (lib.attrNames nixpkgs.legacyPackages)
-        (system: import nixpkgs {
-          inherit system;
-          overlays = [ self.overlay ];
-          config = {
-            allowUnfree = true;
-          };
-        });
+      nixosModule = { imports = lib.attrValues self.nixosModules; };
+      nixosModules = import ./modules/nixos;
     };
 }

@@ -22,6 +22,11 @@ with lib;
   };
 
   nix.trustedUsers = [ "root" "@wheel" ];
+  nix.allowedUsers = [ "@users" ];
+
+  nixpkgs.config = lib.mkDefault {
+    allowUnfree = true;
+  };
 
   environment.defaultPackages = mkDefault (attrValues {
     inherit (pkgs)
