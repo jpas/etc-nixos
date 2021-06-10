@@ -10,7 +10,7 @@
 
     ../common
 
-    ./syncthing.nix
+    ./aleph.nix
     ./factorio.nix
     ./nfs.nix
     ./print-and-scan.nix

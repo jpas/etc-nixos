@@ -1,4 +1,6 @@
 { lib
+, pkgs
+, config
 , ...
 }:
 
@@ -42,29 +44,52 @@ let
     };
   };
 
-  syncthing = {
-    services.syncthing = {
-      enable = true;
-      systemService = true;
-      declarative.folders = {
-        "/aleph/home/kbell" = {
-          id = "aleph-home-kbell";
-          copyOwnershipFromParent = true;
-        };
-        "/aleph/home/share" = {
-          id = "aleph-home-share";
-          copyOwnershipFromParent = true;
+  syncthingFor = name:
+    let
+      user = config.users.users."${name}";
+      folders = [ "/aleph/home/${name}" "/aleph/home/share" ];
+    in
+    {
+      networking.firewall.allowedTCPPorts = [ (21000 + user.uid) ];
+      containers."syncthing-${name}" = {
+        bindMounts = genAttrs folders (path: {
+          hostPath = path;
+          isReadOnly = false;
+        });
+        autoStart = true;
+
+        # TODO: declarative config file
+        # TODO: default folder path
+        config = { ... }: {
+          nixpkgs.pkgs = pkgs;
+
+          services.syncthing = {
+            enable = true;
+            systemService = true;
+            user = user.name;
+            group = "users";
+          };
+
+          systemd.services.syncthing = {
+            serviceConfig = {
+              StateDirectory="syncthing";
+            };
+          };
+
+          users.users."${name}" = {
+            inherit (user) uid isNormalUser;
+            createHome = false;
+            home = "/var/empty";
+            shell = "/run/current-system/sw/bin/nologin";
+          };
         };
       };
     };
 
-    systemd.services.syncthing = {
-      serviceConfig = {
-        AmbientCapabilities = [ "CAP_CHOWN" ];
-      };
-    };
-  };
+  syncthing = mkMerge (map syncthingFor [
+    # "jpas"
+    "kbell"
+  ]);
 
 in
-mkMerge [ mount nfs syncthing ];
-
+mkMerge [ mount nfs syncthing ]
