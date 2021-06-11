@@ -46,7 +46,11 @@ let
       { criteria = { title = "."; }; command = "inhibit_idle fullscreen"; }
       { criteria = { shell = "xwayland"; }; command = "title_format \"[xwayland] %title\""; }
 
-      { criteria = { class = "Steam"; }; command = "border pixel"; }
+      {
+        criteria = { class = "Steam"; };
+        # steam is set to open in small mode so a tall thin window is preferred
+        command = "floating enable, border none, resize set 400 800";
+      }
       {
         # steam remote play window
         criteria = { class = "streaming_client"; };
@@ -183,6 +187,7 @@ mkMerge [
     sway = swayConfig;
     config.wayland.windowManager.sway.extraConfig = ''
       focus_on_window_activation none
+      include local
     '';
   })
 
