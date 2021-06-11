@@ -9,8 +9,11 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
-    rec {
+    let
       lib = nixpkgs.lib.extend (import ./lib);
+    in
+    {
+      inherit lib;
 
       nixosConfigurations = lib.flip lib.mapAttrs (import ./machines)
         (name: configuration: lib.flakeSystem {
@@ -19,7 +22,7 @@
           system = "x86_64-linux";
           modules = [
             configuration
-            home-manager.nixosModules.home-manager
+            home-manager.nixosModule
           ];
         });
 
