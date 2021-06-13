@@ -38,6 +38,12 @@ with lib;
 
   services.hardware.bolt.enable = mkDefault true;
 
+  services.pipewire.config.pipewire-pulse = {
+    context.modules = {
+      # TODO: see https://gitlab.freedesktop.org/pipewire/pipewire/-/blob/master/src/modules/module-protocol-pulse/modules/module-echo-cancel.c
+    };
+  };
+
   environment.systemPackages = [
     pkgs.libsmbios # For interacting with Dell BIOS/UEFI
   ];
