@@ -13,6 +13,7 @@
 - [ ] file watcher for ~/tmp/
 - [ ] workflow shortcuts
 - [ ] tui email
+- [ ] declarative syncthing
 
 # multiheaded wayland
 
