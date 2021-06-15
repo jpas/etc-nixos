@@ -1,11 +1,17 @@
 { lib
+, config
+, pkgs
 , ...
 }:
 
 with lib;
 
 let
-  key = types.submodule ({ config, ... }: {
+  inherit (config.users) users;
+
+  cfg = config.security;
+
+  secret = types.submodule ({ config, ... }: {
     options = {
       name = mkOption {
         type = types.str;

@@ -353,39 +353,45 @@ mkMerge [
     ];
 
     config.xdg.configFile = {
-      "swaylock/config" = {
-        text = with colors.dark-no-hash; ''
-          font=monospace
-          font-size=10
-          text-color=${fg}
+      "swaylock/config" =
+        let
+          inherit (colors.dark-no-hash) fg bg yellow0 orange0 red0 blue0;
+          hide = "00000000";
 
-          color=${bg}
+          cfg = {
+            font = "monospace";
+            font-size = 10;
+            text-color = fg;
+            color = bg;
+            image = "~/.config/sway/bg.png";
+          }
+          // (genColors "inside" hide)
+          // (genColors "text" hide)
+          // (genColors "line" bg)
+          // {
+            key-hl-color = fg;
+            caps-lock-key-hl-color = orange0;
 
-          key-hl-color=${fg}
-          bs-hl-color=${red0}
-          caps-lock-bs-hl-color=${red0}
-          caps-lock-key-hl-color=${yellow0}
+            bs-hl-color = yellow0;
+            caps-lock-bs-hl-color = yellow0;
 
-          inside-color=${bg}
-          inside-clear-color=${bg}
-          inside-caps-lock-color=${bg}
-          inside-ver-color=${bg}
-          inside-wrong-color=${bg}
+            ring-color = bg;
+            ring-caps-lock-color = bg;
 
-          line-uses-inside
+            ring-clear-color = yellow0;
+            ring-ver-color = blue0;
+            ring-wrong-color = red0;
+          };
 
-          ring-color=${bg}
-          ring-ver-color=${green0}
-          ring-clear-color=${yellow0}
-          ring-wrong-color=${red0}
+          fmt = n: v: if isBool v then n else "${n}=${toString v}";
 
-          text-color=${bg}
-          text-clear-color=${bg}
-          text-caps-lock-color=${bg}
-          text-ver-color=${bg}
-          text-wrong-color=${bg}
-        '';
-      };
+          genColors = prefix: value: genAttrs
+            (map (s: "${prefix}${s}-color") [ "" "-clear" "-caps-lock" "-ver" "-wrong" ])
+            (n: value);
+        in
+        {
+          text = concatStringsSep "\n" (mapAttrsToList fmt cfg);
+        };
     };
   })
 
