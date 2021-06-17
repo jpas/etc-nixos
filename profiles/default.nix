@@ -23,7 +23,10 @@ with lib;
 
   boot.loader = {
     timeout = mkDefault 1;
-    systemd-boot.enable = mkDefault true;
+    systemd-boot = {
+      enable = mkDefault true;
+      configurationLimit = 7;
+    };
     efi.canTouchEfiVariables = mkDefault true;
   };
 
@@ -53,7 +56,11 @@ with lib;
 
   nix = {
     optimise.automatic = true;
-    gc.options = "--delete-older-than 30d";
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
 
   system.autoUpgrade.enable = false;
