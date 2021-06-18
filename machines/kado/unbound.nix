@@ -1,24 +1,41 @@
 { lib
+, config
 , ...
 }:
 
-{
-  services.unbound = {
-    enable = true;
-    settings = {
-      server = {
-        interface = [ "0.0.0.0" "::0" ];
-        access-control = [ "10.0.0.0/8" "100.0.0.0/8" ];
+with lib;
+
+
+let
+  cfg = services.unbound;
+in
+mkMerge [
+  {
+    services.unbound.enable = false;
+  }
+
+  (mkIf cfg.enable {
+    networking.firewall.allowedUDPPorts = [ 53 ];
+
+    services.unbound = {
+      settings = {
+        server = {
+          interface = [ "0.0.0.0" "::0" ];
+          access-control = [
+            "10.0.0.0/8 allow"
+            "100.0.0.0/8 allow"
+          ];
+        };
         forward-zone = [
           {
             name = ".";
             forward-addr = [
-              "1.1.1.1@853#cloudflare-dns.com"
-              "1.0.0.1@853#cloudflare-dns.com"
+              "1.1.1.1"
+              "1.0.0.1"
             ];
           }
         ];
       };
     };
-  };
-}
+  })
+]
