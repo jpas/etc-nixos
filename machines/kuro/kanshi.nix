@@ -11,13 +11,13 @@ in
 
       xdg.configFile."kanshi/config".text = ''
         profile docked {
-          output "${monitor}" enable position 0,0
-          output "${laptop}" position 3840,2160
+          output "${monitor}" enable position 1200,0
+          output "${laptop}" position 0,120 transform 270
           exec swayutil clamshell-mode "${laptop}"
         }
 
         profile nomad {
-          output "${laptop}" enable position 0,0
+          output "${laptop}" enable position 0,0 transform normal
         }
       '';
 
