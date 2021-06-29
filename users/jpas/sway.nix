@@ -63,6 +63,10 @@ let
         criteria = { class = "explorer.exe"; };
         command = "floating enable, border pixel";
       }
+      {
+        criteria = { class = "steam_proton"; };
+        command = "floating enable, border pixel";
+      }
     ];
 
     keybindings = let inherit (cfg.config) modifier; in
