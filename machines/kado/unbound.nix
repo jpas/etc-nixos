@@ -7,7 +7,7 @@ with lib;
 
 
 let
-  cfg = services.unbound;
+  cfg = config.services.unbound;
 in
 mkMerge [
   {
