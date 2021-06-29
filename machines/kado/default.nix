@@ -11,6 +11,7 @@
     ../common
 
     ./aleph.nix
+    ./trinity.nix
     ./factorio.nix
     ./nfs.nix
     ./print-and-scan.nix
