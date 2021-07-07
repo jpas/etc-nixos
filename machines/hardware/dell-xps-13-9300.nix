@@ -22,7 +22,7 @@ with lib;
       name = "enable-platform-drivers-dell";
       patch = null;
       extraConfig = ''
-        X86_PLATFORM_DRIVERS_DELL=y
+        X86_PLATFORM_DRIVERS_DELL y
       '';
     }
   ];
