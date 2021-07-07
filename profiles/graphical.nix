@@ -39,6 +39,7 @@ with lib;
         gtk-icon-theme-name = Adwaita
         gtk-cursor-theme-name = Adwaita
         gtk-application-prefer-dark-theme = true
+        gtk-font-name = "sans 10"
       '';
     }
 
@@ -113,7 +114,7 @@ with lib;
         '';
 
         extraPackages = with pkgs; [
-          firefox-bin
+          firefox
           grim
           kanshi
           kitty
