@@ -11,8 +11,8 @@ in
 
       xdg.configFile."kanshi/config".text = ''
         profile docked {
-          output "${monitor}" enable position 1200,0
-          output "${laptop}" position 0,120 transform 270
+          output "${monitor}" enable position 1920,0
+          output "${laptop}" position 0,960
           exec swayutil clamshell-mode "${laptop}"
         }
 

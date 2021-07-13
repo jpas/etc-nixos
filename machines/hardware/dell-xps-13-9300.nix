@@ -57,4 +57,17 @@ with lib;
   environment.systemPackages = [
     pkgs.libsmbios # For interacting with Dell BIOS/UEFI
   ];
+
+  systemd.services = {
+    dell-thermal-mode = {
+      wantedBy = [ "multi-user.target" "post-resume.target" ];
+      after = [ "post-resume.target" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        Restart = "no";
+        ExecStart = "${pkgs.libsmbios}/bin/smbios-thermal-ctl --set-thermal-mode=quiet";
+      };
+    };
+  };
 }
