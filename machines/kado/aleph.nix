@@ -18,7 +18,13 @@ let
       "/aleph" = {
         device = "/dev/disk/by-uuid/8aebe979-4cbd-45c6-a83e-44a165be7226";
         fsType = "btrfs";
-        options = [ "subvol=/aleph" "space_cache=v2" "autodefrag" "relatime" ];
+        options = [
+          "autodefrag"
+          "commit=5"
+          "relatime"
+          "space_cache=v2"
+          "subvol=/aleph"
+        ];
       };
     };
   };

@@ -1584,7 +1584,7 @@ in
     #        Range:       0-11
     #        Default:     2
 
-    MaxPrimaryTradeSkill = 2
+    MaxPrimaryTradeSkill = 11
 
     #
     #    MinPetitionSigns
@@ -1592,7 +1592,7 @@ in
     #        Range:       0-9
     #        Default:     9
 
-    MinPetitionSigns = 9
+    MinPetitionSigns = 2
 
     #
     #    MaxGroupXPDistance
@@ -1643,7 +1643,7 @@ in
     #        Description: Time (in seconds) mail delivery is delayed when sending items.
     #        Default:     3600 - (1 hour)
 
-    MailDeliveryDelay = 3600
+    MailDeliveryDelay = 0
 
     #
     #    CleanOldMailTime
@@ -2792,9 +2792,9 @@ in
     #                     1 - (Rate.XP.Quest)
     #                     1 - (Rate.XP.Explore)
 
-    Rate.XP.Kill    = 3
-    Rate.XP.Quest   = 3
-    Rate.XP.Explore = 3
+    Rate.XP.Kill    = 2
+    Rate.XP.Quest   = 2
+    Rate.XP.Explore = 2
 
     #
     #    Rate.XP.BattlegroundKill
@@ -2802,7 +2802,7 @@ in
     #                     it works when Battleground.GiveXPForKills = 1
     #        Default:     1
 
-    Rate.XP.BattlegroundKill = 3
+    Rate.XP.BattlegroundKill = 2
 
     #
     #    Rate.Quest.Money.Reward
@@ -2829,9 +2829,9 @@ in
     #                     1 - (Rate.Rest.Offline.InTavernOrCity)
     #                     1 - (Rate.Rest.Offline.InWilderness)
 
-    Rate.Rest.InGame                 = 3
-    Rate.Rest.Offline.InTavernOrCity = 3
-    Rate.Rest.Offline.InWilderness   = 3
+    Rate.Rest.InGame                 = 2
+    Rate.Rest.Offline.InTavernOrCity = 2
+    Rate.Rest.Offline.InWilderness   = 2
 
     #
     #    Rate.Damage.Fall
@@ -2880,7 +2880,7 @@ in
     #        Description: Reputation gain rate.
     #        Default:     1
 
-    Rate.Reputation.Gain = 3
+    Rate.Reputation.Gain = 2
 
     #
     #    Rate.Reputation.LowLevel.Kill
@@ -3657,7 +3657,7 @@ in
     #        Default:     0 - (Disabled)
     #                     1 - (Enabled)
 
-    AlwaysMaxWeaponSkill = 0
+    AlwaysMaxWeaponSkill = 1
 
     #
     #    PvPToken.Enable
@@ -3902,13 +3902,13 @@ in
     AuctionHouseBot.Class.Armor.Allow.Zero = 0
     AuctionHouseBot.Class.Reagent.Allow.Zero = 0
     AuctionHouseBot.Class.Projectile.Allow.Zero = 0
-    AuctionHouseBot.Class.TradeGood.Allow.Zero = 0
+    AuctionHouseBot.Class.TradeGood.Allow.Zero = 1
     AuctionHouseBot.Class.Recipe.Allow.Zero = 0
     AuctionHouseBot.Class.Quiver.Allow.Zero = 0
     AuctionHouseBot.Class.Quest.Allow.Zero = 0
     AuctionHouseBot.Class.Key.Allow.Zero = 0
     AuctionHouseBot.Class.Misc.Allow.Zero = 0
-    AuctionHouseBot.Class.Glyph.Allow.Zero = 0
+    AuctionHouseBot.Class.Glyph.Allow.Zero = 1
 
     #
     #    AuctionHouseBot.Items.Vendor
@@ -3916,7 +3916,7 @@ in
     #       Default:     0 - (Disabled)
     #                    1 - (Enabled)
 
-    AuctionHouseBot.Items.Vendor = 0
+    AuctionHouseBot.Items.Vendor = 1
 
     #
     #    AuctionHouseBot.Items.Loot
@@ -4080,7 +4080,7 @@ in
     #       Default:     0, 2000, 2500, 1500, 1000, 0, 0 (Gray, white, green, blue, purple, orange, yellow)
 
     AuctionHouseBot.Items.Amount.Gray = 0
-    AuctionHouseBot.Items.Amount.White = 2000
+    AuctionHouseBot.Items.Amount.White = 5000
     AuctionHouseBot.Items.Amount.Green = 2500
     AuctionHouseBot.Items.Amount.Blue = 1500
     AuctionHouseBot.Items.Amount.Purple = 1000
@@ -4195,7 +4195,7 @@ in
     #       Default:     ""
     #
 
-    AuctionHouseBot.forceExcludeItems = "6343,6345,6376,7192"
+    AuctionHouseBot.forceExcludeItems = "6343,6345,6376,7192,33865"
 
     #
     #    AuctionHouseBot.Class.RandomStackRatio.*
@@ -4228,7 +4228,7 @@ in
     AuctionHouseBot.Class.RandomStackRatio.Armor = 0
     AuctionHouseBot.Class.RandomStackRatio.Reagent = 100
     AuctionHouseBot.Class.RandomStackRatio.Projectile = 100
-    AuctionHouseBot.Class.RandomStackRatio.TradeGood = 50
+    AuctionHouseBot.Class.RandomStackRatio.TradeGood = 100
     AuctionHouseBot.Class.RandomStackRatio.Generic = 100
     AuctionHouseBot.Class.RandomStackRatio.Recipe = 0
     AuctionHouseBot.Class.RandomStackRatio.Quiver = 0
