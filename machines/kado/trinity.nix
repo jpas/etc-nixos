@@ -6,6 +6,8 @@
 with lib;
 
 let
+  enable = false;
+
   realmlist = {
     id = 1;
     name = "Nowhere";
@@ -13,7 +15,7 @@ let
   };
 in
 
-{
+mkIf enable {
   networking.firewall.allowedTCPPorts = [
     3443
     3724
@@ -99,7 +101,6 @@ in
         WorkingDirectory = "/var/lib/trinity";
       };
     };
-
   };
 
   environment.etc."trinity/authserver.conf".text = ''
