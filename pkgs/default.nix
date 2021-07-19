@@ -62,7 +62,7 @@ let
         (prev.fetchpatch {
           name = "sway-swipe-gestures.patch";
           url = "https://patch-diff.githubusercontent.com/raw/swaywm/sway/pull/4952.patch";
-          sha256 = "sha256-SImHOpkObgHRBYl05oWnv8WK/oapr+TrSZYoOCZTLvI=";
+          sha256 = "sha256-NaZU/FeuvROWrs7ocxn+xncrrOK1sBuh50FWEuctYVE=";
         })
       ];
     });

@@ -17,16 +17,6 @@ with lib;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
 
-  boot.kernelPatches = [
-    {
-      name = "enable-platform-drivers-dell";
-      patch = null;
-      extraConfig = ''
-        X86_PLATFORM_DRIVERS_DELL y
-      '';
-    }
-  ];
-
   # Disables i2c_hid because it makes tons of IRQ/s when touchpad is used,
   # draining battery and wasting cycles as it is unused.
   boot.blacklistedKernelModules = [ "i2c_hid" ];

@@ -36,9 +36,5 @@ in
       ];
       noCheck = true;
     };
-
-    systemd.tmpfiles.rules = [
-      "L+ /home/aleph - - - - /aleph/home"
-    ];
   };
 }
