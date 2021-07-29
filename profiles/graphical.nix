@@ -139,8 +139,10 @@ with lib;
           enable = mkDefault true;
           settings.screencast =
             let
-              clear = "#00000000";
-              selected = "#${config.hole.colors.gruvbox.dark.aqua0}7f";
+              clear = "00000000";
+              selected = "689D6A7F";
+              # TODO: fix character case
+              # selected = "${config.hole.colors.gruvbox.dark.aqua0}7f";
               cmd = concatStringsSep " " [
                 "${pkgs.slurp}/bin/slurp -or -f %o"
                 "-B ${clear}"
