@@ -41,6 +41,17 @@ with lib;
         gtk-application-prefer-dark-theme = true
         gtk-font-name = "sans 10"
       '';
+
+      environment.etc."xdg/user-dirs.defaults".text = ''
+        DESKTOP=system/desktop
+        DOWNLOAD=downloads
+        TEMPLATES=system/templates
+        PUBLICSHARE=system/public
+        DOCUMENTS=documents
+        MUSIC=media/music
+        PICTURES=media/photos
+        VIDEOS=media/video
+      '';
     }
 
     {
