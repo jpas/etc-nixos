@@ -10,7 +10,8 @@ with lib;
 {
   imports = [
     ./base.nix
-    ./graphical.nix
+    ./desktop.nix
+    ./games.nix
     ./laptop.nix
   ];
 

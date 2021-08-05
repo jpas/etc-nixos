@@ -12,6 +12,7 @@
   hole = {
     profiles = {
       graphical = true;
+      games = true;
     };
     aleph.enable = true;
   };
