@@ -15,5 +15,5 @@ with lib;
       "A /opt/games -    -    -    - default:group:users:rwx"
       "Z /opt/games 0755 root root - -"
     ];
-  }
+  };
 }
