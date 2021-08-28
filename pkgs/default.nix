@@ -21,6 +21,7 @@ let
         paths = [ wrapped pkg ];
       });
 
+    swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { inherit libliftoff; };
     libliftoff = callPackage ./libliftoff { };

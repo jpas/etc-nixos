@@ -300,24 +300,24 @@ mkMerge [
     packages = [ pkgs.brightnessctl ];
   })
 
-  (mkConfig {
-    sway = {
-      keybindings = mkOptionDefault {
-        "Mod4+p" = "exec 1password";
-      };
-      window.commands = [
-        {
-          criteria = { class = "1Password"; };
-          command = "floating enable, sticky enable";
-        }
-        {
-          criteria = { app_id = "1Password"; };
-          command = "floating enable, sticky enable";
-        }
-      ];
-    };
-    packages = [ pkgs._1password-gui ];
-  })
+  # (mkConfig {
+  #   sway = {
+  #     keybindings = mkOptionDefault {
+  #       "Mod4+p" = "exec 1password";
+  #     };
+  #     window.commands = [
+  #       {
+  #         criteria = { class = "1Password"; };
+  #         command = "floating enable, sticky enable";
+  #       }
+  #       {
+  #         criteria = { app_id = "1Password"; };
+  #         command = "floating enable, sticky enable";
+  #       }
+  #     ];
+  #   };
+  #   packages = [ pkgs._1password-gui ];
+  # })
 
   # TODO: only enable if needed
   (mkSessionConfig {
