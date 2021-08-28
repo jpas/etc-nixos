@@ -30,13 +30,13 @@ let
     trinity = callPackage ./trinity { stdenv = final.clang11Stdenv; };
     xplr = callPackage ./xplr { };
 
-    signal-desktop = makeOzoneWrapper {
-      pkg = prev.signal-desktop;
-      bin = "signal-desktop";
-      postBuild = ''
-        rm $out/bin/signal-desktop-unwrapped
-      '';
-    };
+    #signal-desktop = makeOzoneWrapper {
+    #  pkg = prev.signal-desktop;
+    #  bin = "signal-desktop";
+    #  postBuild = ''
+    #    rm $out/bin/signal-desktop-unwrapped
+    #  '';
+    #};
 
     discord = prev.discord.overrideAttrs (old: {
       installPhase = (old.installPhase or "") + ''
