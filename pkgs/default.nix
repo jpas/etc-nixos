@@ -58,15 +58,15 @@ let
       p.standard-library
     ]);
 
-    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (o: {
-      patches = (o.patches or []) ++ [
-        (prev.fetchpatch {
-          name = "sway-swipe-gestures.patch";
-          url = "https://patch-diff.githubusercontent.com/raw/swaywm/sway/pull/4952.patch";
-          sha256 = "sha256-g/0RNqtwM9dQVDIHHpnS7QeVDi/weYnOe9Rq0giIhmw=";
-        })
-      ];
-    });
+    #sway-unwrapped = prev.sway-unwrapped.overrideAttrs (o: {
+    #  patches = (o.patches or []) ++ [
+    #    (prev.fetchpatch {
+    #      name = "sway-swipe-gestures.patch";
+    #      url = "https://patch-diff.githubusercontent.com/raw/swaywm/sway/pull/4952.patch";
+    #      sha256 = "sha256-g/0RNqtwM9dQVDIHHpnS7QeVDi/weYnOe9Rq0giIhmw=";
+    #    })
+    #  ];
+    #});
   };
 in
 hole // { inherit hole; }
