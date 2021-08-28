@@ -113,13 +113,7 @@ with lib;
     }
 
     {
-      programs.htop = {
-        enable = true;
-        hideKernelThreads = true;
-        hideUserlandThreads = true;
-        showProgramPath = false;
-        treeView = true;
-      };
+      programs.htop.enable = true;
     }
 
     {
