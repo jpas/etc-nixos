@@ -24,7 +24,7 @@ mkMerge [
 
       profileExtra = ''
         export PATH="$HOME/.local/bin:$PATH"
-        export LEDGER_FILE="$HOME/life/finance/combined.journal"
+        export LEDGER_FILE="$HOME/documents/finance/current.journal"
       '';
 
       initExtra =

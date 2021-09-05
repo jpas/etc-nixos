@@ -22,6 +22,8 @@ with lib;
       ;
   };
 
+  boot.supportedFilesystems = [ "ntfs" "btrfs" ];
+
   boot.loader = {
     timeout = mkDefault 1;
     systemd-boot = {
