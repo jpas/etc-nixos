@@ -9,7 +9,7 @@ with lib;
 {
   i18n.defaultLocale = mkDefault "en_CA.UTF-8";
 
-  time.timeZone = mkDefault "America/Regina";
+  time.timeZone = mkDefault "America/Toronto";
 
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
 
