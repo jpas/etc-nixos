@@ -30,6 +30,10 @@ let
     trinity = callPackage ./trinity { stdenv = final.clang11Stdenv; };
     xplr = callPackage ./xplr { };
 
+    steam = prev.steam.override {
+      extraPkgs = pkgs: [ pkgs.libunwind ];
+    };
+
     #signal-desktop = makeOzoneWrapper {
     #  pkg = prev.signal-desktop;
     #  bin = "signal-desktop";

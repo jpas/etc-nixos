@@ -44,11 +44,32 @@ with lib;
     layout = mkDefault "us";
   };
 
-  # This will become the default eventually, but it isn't at the moment.
   networking = {
-    useDHCP = mkDefault false;
+    useNetworkd = mkDefault true;
+    useDHCP = mkDefault false; # This will become the default eventually.
     networkmanager.wifi.backend = mkDefault "iwd";
   };
+
+  systemd.network.networks =
+    let
+      networkConfig = {
+        DHCP = "yes";
+      };
+    in
+    {
+      "40-wired" = {
+        enable = true;
+        name = "en*";
+        inherit networkConfig;
+        dhcpV4Config.RouteMetric = 1024;
+      };
+      "40-wireless" = {
+        enable = true;
+        name = "wlan*";
+        inherit networkConfig;
+        dhcpV4Config.RouteMetric = 2048;
+      };
+    };
 
   services.upower.enable = mkDefault config.powerManagement.enable;
 

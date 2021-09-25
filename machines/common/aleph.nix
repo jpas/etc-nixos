@@ -24,17 +24,17 @@ in
   config = mkIf cfg.enable {
     services.tailscale.enable = true;
 
-    #fileSystems."/aleph" = {
-    #  device = "${cfg.hostname}:/aleph";
-    #  fsType = "nfs4";
-    #  options = [
-    #    "noatime"
-    #    "nodiratime"
-    #    "x-systemd.automount"
-    #    "x-systemd.idle-timeout=10m"
-    #    "x-systemd.requires=tailscale-peer@${cfg.hostname}.service"
-    #  ];
-    #  noCheck = true;
-    #};
+    fileSystems."/aleph" = {
+      device = "${cfg.hostname}:/aleph";
+      fsType = "nfs4";
+      options = [
+        "noatime"
+        "nodiratime"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=10m"
+        "x-systemd.requires=tailscale-peer@${cfg.hostname}.service"
+      ];
+      noCheck = true;
+    };
   };
 }
