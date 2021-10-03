@@ -8,6 +8,9 @@
 , libXcomposite
 , libXdamage
 , libXext
+, xcbutil
+, xcbutilerrors
+, xcbutilwm
 , libXfixes
 , libXi
 , libXrender
@@ -20,6 +23,7 @@
 , libliftoff
 , libudev
 , libxkbcommon
+, pipewire
 , mesa
 , meson
 , ninja
@@ -31,22 +35,37 @@
 , xinput
 , xlibsWrapper
 , xwayland
+, stb
+, cmake
+, libseat
 }:
 
 stdenv.mkDerivation rec {
   pname = "gamescope";
-  version = "unstable-2021-05-01";
+  version = "unstable-2021-09-28";
 
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
-    rev = "9d40b616456e6f1d5085c9431e40f20783ebeace";
-    hash = "sha256-D2Amibvhm7p9ZRC87bH2X9JKAf13ozWZPxO/JUvxbaw=";
+    rev = "f55106a344617e97399e25962e6277a175f2893b";
+    sha256 = "sha256-JE4IYpUOSt0kMq7jQguG+sO6+UefFR+W4u9K84aKBjc=";
+    fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ meson ninja pkg-config wayland-protocols ];
+  nativeBuildInputs = [ meson cmake pkg-config wayland-protocols ];
+
+  preConfigure = ''
+    mkdir -p subprojects/stb
+    ln -s ${stb}/include/stb/stb_image.h subprojects/stb
+    ln -s ../packagefiles/stb/meson.build subprojects/stb
+
+    sed -i 's/>=0.58.1/>=0.56.0/' subprojects/wlroots/meson.build
+    sed -i 's/global_build_root/build_root/' subprojects/wlroots/meson.build
+  '';
 
   buildInputs = [
+    libseat
+    pipewire
     SDL2
     glslang
     libXcomposite
@@ -61,14 +80,14 @@ stdenv.mkDerivation rec {
     libcap
     libdrm
     libinput
-    libliftoff
     libudev
+    xcbutilerrors
+    xcbutilwm
     libxkbcommon
     mesa
     pixman
     vulkan-loader
     wayland
-    wlroots
     xlibsWrapper
     xwayland
   ];

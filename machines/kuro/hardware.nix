@@ -19,6 +19,10 @@ with lib;
     device = "/dev/disk/by-uuid/8692bc12-d653-405a-9968-353e50b79556";
   };
 
+  boot.kernel.sysctl = {
+    "dev.i915.perf_stream_paranoid" = 0;
+  };
+
   fileSystems =
     let
       vessel = {

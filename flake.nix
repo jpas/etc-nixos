@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -27,6 +27,12 @@
         });
 
       overlay = import ./pkgs;
+
+      legacyPackages = lib.genAttrs [ "x86_64-linux" ]
+        (system: import nixpkgs {
+          inherit system;
+          overlays = [ self.overlay ];
+        });
 
       hmModule = { imports = lib.attrValues self.hmModules; };
       hmModules = import ./modules/home;
