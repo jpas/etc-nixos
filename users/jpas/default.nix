@@ -165,8 +165,8 @@ with lib;
       xdg.mimeApps.enable = true;
 
       home.packages = with pkgs; [
-        desmume
         discord
+        teams
       ];
     })
   ];
