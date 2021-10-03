@@ -32,11 +32,14 @@ with lib;
     inherit (pkgs)
       curl
       htop
+      ltrace
       manpages
-      nix-output-monitor
+      pciutils
+      restic
       rsync
       strace
       tmux
+      usbutils
       wget
       ;
   });

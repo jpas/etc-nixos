@@ -28,15 +28,16 @@ with lib;
         duf
         fd
         file
-        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
         gnumake
+        hledger
+        hledger-web
+        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
         nixpkgs-fmt
         p7zip
         papis
         python3
         ripgrep
         rmapi
-        s-tui
         tmux
       ];
 
