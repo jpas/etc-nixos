@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 let
   laptop = "Sharp Corporation 0x14CC 0x00000000";
@@ -7,7 +7,7 @@ let
 in
 {
   home-manager.sharedModules = [
-    ({ pkgs, ... }: {
+    ({ ... }: {
 
       xdg.configFile."kanshi/config".text = ''
         profile docked {
