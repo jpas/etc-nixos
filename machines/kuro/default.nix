@@ -11,6 +11,7 @@
 
   hole = {
     profiles = {
+      laptop = true;
       graphical = true;
       games = true;
     };
@@ -23,8 +24,12 @@
     wlan0.useDHCP = true;
   };
 
+  networking.firewall.allowedTCPPorts = [
+    48080
+  ];
+
   programs.steam = {
-    enable = true;
+    enable = false;
     remotePlay.openFirewall = true;
   };
 
