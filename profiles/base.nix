@@ -32,7 +32,6 @@ with lib;
     inherit (pkgs)
       curl
       htop
-      ltrace
       manpages
       pciutils
       restic
