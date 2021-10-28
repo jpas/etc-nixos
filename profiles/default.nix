@@ -59,13 +59,17 @@ with lib;
     {
       "40-ether" = {
         enable = true;
-        type = "ether";
+        matchConfig = {
+          Type = "ether";
+        };
         inherit networkConfig;
         dhcpV4Config.RouteMetric = 1024;
       };
       "41-wlan" = {
         enable = true;
-        type = "wlan";
+        matchConfig = {
+          Type = "wlan";
+        };
         inherit networkConfig;
         dhcpV4Config.RouteMetric = 2048;
       };
