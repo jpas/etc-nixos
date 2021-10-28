@@ -39,4 +39,6 @@
     (mkLink "/etc/machine-id")
     (mkLink "/etc/nixos")
   ];
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }

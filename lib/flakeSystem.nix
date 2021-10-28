@@ -9,7 +9,7 @@ let
 
       nix = {
         package = pkgs.nixUnstable;
-        extraOptions = lib.mkDefault ''
+        extraOptions = ''
           experimental-features = ca-references flakes nix-command
         '';
         nixPath = lib.mkDefault [

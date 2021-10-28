@@ -57,15 +57,15 @@ with lib;
       };
     in
     {
-      "40-wired" = {
+      "40-ether" = {
         enable = true;
-        name = "en*";
+        type = "ether";
         inherit networkConfig;
         dhcpV4Config.RouteMetric = 1024;
       };
-      "40-wireless" = {
+      "41-wlan" = {
         enable = true;
-        name = "wlan*";
+        type = "wlan";
         inherit networkConfig;
         dhcpV4Config.RouteMetric = 2048;
       };

@@ -17,7 +17,5 @@ with lib;
   networking.interfaces = {
     wlan0.useDHCP = true;
   };
-
-  networking.wireless.iwd.enable = true;
 }
 
