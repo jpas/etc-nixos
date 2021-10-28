@@ -11,6 +11,7 @@ let
     kado = "100.65.152.104";
     kuro = "100.116.4.62";
     shiro = "100.69.65.63";
+    beri = "100.104.46.24";
   };
 
   mkHosts = hosts: domain:
