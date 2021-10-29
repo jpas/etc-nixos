@@ -58,7 +58,6 @@ with lib;
     in
     {
       "40-ether" = {
-        enable = true;
         matchConfig = {
           Type = "ether";
         };
@@ -66,12 +65,20 @@ with lib;
         dhcpV4Config.RouteMetric = 1024;
       };
       "41-wlan" = {
-        enable = true;
         matchConfig = {
           Type = "wlan";
         };
         inherit networkConfig;
         dhcpV4Config.RouteMetric = 2048;
+      };
+      "98-persistent-names" = {
+        matchConfig = {
+          Name = "*";
+        };
+        linkConfig = {
+          NamePolicy = "keep kernel database onboard slot path mac";
+          AlternativeNamesPolicy = "database onboard slot path mac";
+        };
       };
     };
 
