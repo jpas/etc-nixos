@@ -45,8 +45,15 @@ with lib;
   };
 
   networking = {
-    useNetworkd = mkDefault true;
     useDHCP = mkDefault false; # This will become the default eventually.
+
+    useNetworkd = mkDefault true;
+
+    wireless.iwd.settings = {
+      General = {
+        EnableNetworkConfiguration = true;
+      };
+    };
     networkmanager.wifi.backend = mkDefault "iwd";
   };
 
@@ -61,15 +68,10 @@ with lib;
   };
 
   systemd.network.networks = {
-    "40-dhcp-ether" = {
+    "40-ether-dhcp" = {
       matchConfig.Type = "ether";
       networkConfig.DHCP = "yes";
       dhcpV4Config.RouteMetric = 1024;
-    };
-    "40-dhcp-wlan" = {
-      matchConfig.Type = "wlan";
-      networkConfig.DHCP = "yes";
-      dhcpV4Config.RouteMetric = 2048;
     };
   };
 
