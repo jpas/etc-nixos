@@ -53,6 +53,10 @@ with lib;
       General = {
         EnableNetworkConfiguration = true;
       };
+      Network = {
+        EnableIPv6 = true;
+        RoutePriorityOffset = 2048;
+      };
     };
     networkmanager.wifi.backend = mkDefault "iwd";
   };
