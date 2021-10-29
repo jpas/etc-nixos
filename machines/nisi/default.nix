@@ -13,9 +13,5 @@ with lib;
   hole.profiles = {
     minimal = true;
   };
-
-  networking.interfaces = {
-    wlan0.useDHCP = true;
-  };
 }
 

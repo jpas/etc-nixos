@@ -20,10 +20,6 @@
 
   programs.sway.enable = true;
 
-  networking.interfaces = {
-    wlan0.useDHCP = true;
-  };
-
   networking.firewall.allowedTCPPorts = [
     48080
   ];
