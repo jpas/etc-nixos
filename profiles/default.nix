@@ -50,37 +50,28 @@ with lib;
     networkmanager.wifi.backend = mkDefault "iwd";
   };
 
-  systemd.network.networks =
-    let
-      networkConfig = {
-        DHCP = "yes";
-      };
-    in
-    {
-      "40-ether" = {
-        matchConfig = {
-          Type = "ether";
-        };
-        inherit networkConfig;
-        dhcpV4Config.RouteMetric = 1024;
-      };
-      "41-wlan" = {
-        matchConfig = {
-          Type = "wlan";
-        };
-        inherit networkConfig;
-        dhcpV4Config.RouteMetric = 2048;
-      };
-      "98-persistent-names" = {
-        matchConfig = {
-          Name = "*";
-        };
-        linkConfig = {
-          NamePolicy = "keep kernel database onboard slot path mac";
-          AlternativeNamesPolicy = "database onboard slot path mac";
-        };
+  systemd.network.links = {
+    "98-persistent-names" = {
+      matchConfig.Name = "*";
+      linkConfig = {
+        NamePolicy = "keep kernel database onboard slot path mac";
+        AlternativeNamesPolicy = "database onboard slot path mac";
       };
     };
+  };
+
+  systemd.network.networks = {
+    "40-dhcp-ether" = {
+      matchConfig.Type = "ether";
+      networkConfig.DHCP = "yes";
+      dhcpV4Config.RouteMetric = 1024;
+    };
+    "40-dhcp-wlan" = {
+      matchConfig.Type = "wlan";
+      networkConfig.DHCP = "yes";
+      dhcpV4Config.RouteMetric = 2048;
+    };
+  };
 
   services.upower.enable = mkDefault config.powerManagement.enable;
 
