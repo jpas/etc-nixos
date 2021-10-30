@@ -51,11 +51,11 @@ with lib;
 
     wireless.iwd.settings = {
       General = {
-        EnableNetworkConfiguration = true;
+        EnableNetworkConfiguration = mkDefault true;
       };
       Network = {
-        EnableIPv6 = true;
-        RoutePriorityOffset = 2048;
+        EnableIPv6 = mkDefault true;
+        RoutePriorityOffset = mkDefault 2048;
       };
     };
     networkmanager.wifi.backend = mkDefault "iwd";

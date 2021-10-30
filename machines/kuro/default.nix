@@ -9,6 +9,8 @@
     ./kanshi.nix
   ];
 
+  boot.kernelParams = [ "intel_pstate=active" ];
+
   hole = {
     profiles = {
       laptop = true;
