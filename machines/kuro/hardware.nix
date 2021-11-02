@@ -7,8 +7,6 @@ with lib;
 
 {
   imports = [
-    ../hardware/wifi.nix
-    ../hardware/bluetooth.nix
     ../hardware/dell-u2720q.nix
     ../hardware/dell-xps-13-9300.nix
     ../hardware/keychron-k3.nix

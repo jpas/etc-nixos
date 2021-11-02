@@ -1,12 +1,17 @@
 { lib
+, config
 , ...
 }:
 
 with lib;
 
+let
+  enable = config.hole.profiles ? bluetooth;
+in
 {
   hardware.bluetooth = {
-    enable = mkDefault true;
+    inherit enable;
+
     settings = {
       General = {
         FastConnectable = mkDefault true;

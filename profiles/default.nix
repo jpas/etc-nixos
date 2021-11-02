@@ -10,9 +10,11 @@ with lib;
 {
   imports = [
     ./base.nix
+    ./bluetooth.nix
     ./desktop.nix
     ./games.nix
     ./laptop.nix
+    ./wireless.nix
   ];
 
   # Essential packages.
@@ -45,20 +47,8 @@ with lib;
   };
 
   networking = {
-    useDHCP = mkDefault false; # This will become the default eventually.
-
     useNetworkd = mkDefault true;
-
-    wireless.iwd.settings = {
-      General = {
-        EnableNetworkConfiguration = mkDefault true;
-      };
-      Network = {
-        EnableIPv6 = mkDefault true;
-        RoutePriorityOffset = mkDefault 2048;
-      };
-    };
-    networkmanager.wifi.backend = mkDefault "iwd";
+    useDHCP = mkIf config.networking.useNetworkd false;
   };
 
   systemd.network.links = {
@@ -79,8 +69,6 @@ with lib;
     };
   };
 
-  services.upower.enable = mkDefault config.powerManagement.enable;
-
   users = {
     mutableUsers = false;
     users.root.passwordFile = "/etc/nixos/secrets/passwd.d/root";
@@ -94,8 +82,6 @@ with lib;
       options = "--delete-older-than 30d";
     };
   };
-
-  system.autoUpgrade.enable = false;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

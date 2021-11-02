@@ -9,13 +9,13 @@
     ./kanshi.nix
   ];
 
-  boot.kernelParams = [ "intel_pstate=active" ];
-
   hole = {
     profiles = {
-      laptop = true;
-      graphical = true;
+      bluetooth = true;
       games = true;
+      graphical = true;
+      laptop = true;
+      wireless = true;
     };
     aleph.enable = true;
   };

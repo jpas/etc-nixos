@@ -8,11 +8,8 @@ with lib;
 
 {
   imports = [
-    ./bluetooth.nix
     ./intel-cpu.nix
     ./intel-gpu.nix
-    ./laptop.nix
-    ./wifi.nix
   ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
