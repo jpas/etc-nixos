@@ -7,7 +7,8 @@
 with lib;
 
 {
-  boot.kernelModules = [ "kvm-intel" "intel_pstate=active" ];
+  boot.kernelParams = [ "intel_pstate=active" ];
+  boot.kernelModules = [ "kvm-intel" ];
 
   hardware.cpu.intel.updateMicrocode =
     mkDefault config.hardware.enableRedistributableFirmware;
