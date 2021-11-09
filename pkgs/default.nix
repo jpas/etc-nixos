@@ -71,19 +71,6 @@ let
     #    })
     #  ];
     #});
-
-    libfprint-tod = prev.libfprint-tod.overrideAttrs (_: let
-      version = "1.94.1+tod1";
-    in {
-      inherit version;
-      src = final.fetchFromGitLab {
-        domain = "gitlab.freedesktop.org";
-        owner = "3v1n0";
-        repo = "libfprint";
-        rev = "v${version}";
-        sha256 = "sha256-IVeTQlZjea4xgbG/N7OTHAj6RT4WutfvQhV8qFEvkKo=";
-      };
-    });
   };
 in
 hole // { inherit hole; }
