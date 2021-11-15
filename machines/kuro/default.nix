@@ -17,7 +17,7 @@
       laptop = true;
       wireless = true;
     };
-    aleph.enable = true;
+    aleph.enable = false;
   };
 
   programs.sway.enable = true;

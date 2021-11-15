@@ -279,11 +279,11 @@ mkMerge [
     sway = {
       window.commands = [
         {
-          criteria = { app_id = "Signal"; };
-          command = "border pixel, floating enable, move scratchpad, scratchpad show";
+          criteria = { app_id = "Signal|discord"; };
+          command = "border pixel, move scratchpad, scratchpad show";
         }
         {
-          criteria = { class = "discord"; };
+          criteria = { class = "Signal|discord"; };
           command = "border pixel, move scratchpad, scratchpad show";
         }
       ];

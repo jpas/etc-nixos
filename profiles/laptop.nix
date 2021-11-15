@@ -21,7 +21,6 @@ with lib;
       systemd.sleep.extraConfig = ''
         [Sleep]
         SuspendMode=suspend
-        SuspendState=disk
         HibernateMode=suspend
         HibernateState=disk
       '';
