@@ -11,7 +11,7 @@ with lib;
 
   time.timeZone = mkDefault "America/Toronto";
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+  boot.kernelPackages = mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
 
   console.colors = mkDefault config.hole.colors.gruvbox.dark-no-hash.console;
 

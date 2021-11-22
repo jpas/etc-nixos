@@ -7,7 +7,7 @@
 with lib;
 
 {
-  config = mkIf (config.hole.profiles ? graphical) (mkMerge [
+  config = mkIf (config.hole.profiles ? desktop) (mkMerge [
     {
       hardware.opengl = {
         enable = mkDefault true;

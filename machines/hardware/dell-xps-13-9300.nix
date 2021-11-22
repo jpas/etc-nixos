@@ -35,9 +35,43 @@ with lib;
 
   services.hardware.bolt.enable = mkDefault true;
 
-  services.pipewire.config.pipewire-pulse = {
-    context.modules = {
-      # TODO: see https://gitlab.freedesktop.org/pipewire/pipewire/-/blob/master/src/modules/module-protocol-pulse/modules/module-echo-cancel.c
+  services.pipewire = {
+    media-session.config = {
+      v4l2-monitor.rules = [
+        {
+          matches = [
+            {
+              "node.name" = "~v4l2_input.*";
+            }
+            {
+              "node.name" = "~v4l2_output.*";
+            }
+          ];
+          actions.update-props = {
+            "node.pause-on-idle" = false;
+          };
+        }
+        {
+          matches = [
+            {
+              "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.0";
+            }
+          ];
+          actions.update-props = {
+            "node.description" = "Integrated Webcam";
+          };
+        }
+        {
+          matches = [
+            {
+              "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.2";
+            }
+          ];
+          actions.update-props = {
+            "node.description" = "Integrated Webcam - IR";
+          };
+        }
+      ];
     };
   };
 

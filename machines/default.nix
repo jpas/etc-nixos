@@ -1,7 +1,7 @@
 {
-  kuro = ./kuro;
-  kado = ./kado;
-  shiro = ./shiro;
   beri = ./beri;
-  iso = ./iso.nix;
+  iso = ./iso;
+  kado = ./kado;
+  kuro = ./kuro;
+  shiro = ./shiro;
 }
