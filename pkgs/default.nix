@@ -16,7 +16,10 @@ let
 
     swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
-    gamescope = callPackage ./gamescope { inherit libliftoff; };
+    gamescope = callPackage ./gamescope {
+      inherit libliftoff;
+      meson = meson_0_59_1;
+    };
     libliftoff = callPackage ./libliftoff { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
@@ -60,6 +63,47 @@ let
     #    })
     #  ];
     #});
+
+    meson_0_59_1 = prev.meson.overrideAttrs (old: rec {
+      pname = "meson";
+      version = "0.59.1";
+      name = "${pname}-${version}";
+      src = prev.python3.pkgs.fetchPypi {
+        inherit pname version;
+        sha256 = "sha256-21hqRRZQ1Gu+EJhKh7edm83ByuvzjY4Yn4hI+NUCNW0=";
+      };
+      patches =
+        (lib.flip lib.filter old.patches
+          (patch: ! lib.hasSuffix "gir-fallback-path.patch" patch)
+        ) ++ [
+          (prev.fetchpatch {
+            name = "git-fallback-path.patch";
+            url = "https://raw.githubusercontent.com/NixOS/nixpkgs/3c9014a761ba5a8af56e04035cb1a20c706d814a/pkgs/development/tools/build-managers/meson/gir-fallback-path.patch";
+            sha256 = "sha256-QfkS6pAmF+D51qgIyOTMvGvlAtn4S4dIe+h3GG1GHkA=";
+          })
+        ];
+    });
+
+    wine64Wayland = prev.wine64.overrideAttrs (old: rec {
+      pname = "wine64";
+      version = "6.21+wayland";
+      name = "${pname}-${version}";
+      src = final.fetchFromGitLab {
+        domain = "gitlab.collabora.com";
+        owner = "alf";
+        repo = "wine";
+        rev = "f4824e92776dcb7efa217c5845460bc82184274a";
+        sha256 = "sha256-jJisQ3EuaZhqtgEINvqVhSLgBwFCxahjRC4N4xwFN/0=";
+      };
+      buildInputs = old.buildInputs ++ [
+        final.wayland
+        final.egl-wayland
+        final.libxkbcommon
+        final.libGL
+      ];
+      patches = [ ];
+      configureFlags = old.configureFlags ++ [ "--with-x=no" "--with-wayland" ];
+    });
   };
 in
 hole // { inherit hole; }

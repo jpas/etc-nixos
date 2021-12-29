@@ -18,6 +18,9 @@ in
 {
   boot.initrd.kernelModules = [ "amdgpu" ];
 
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
+
   hardware.opengl = {
     extraPackages = (multiPkgs pkgs) ++ (attrValues {
       inherit (pkgs)

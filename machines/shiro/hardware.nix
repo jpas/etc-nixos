@@ -27,8 +27,13 @@
     in
     {
       "/boot" = {
-        device = "/dev/disk/by-uuid/4549-DE62";
+        device = "/dev/disk/by-uuid/434E-DE49";
         fsType = "vfat";
+      };
+
+      "/opt/games-drive" = {
+        device = "/dev/disk/by-uuid/03d02868-9ae5-4318-8589-7cda38811352";
+        fsType = "btrfs";
       };
 
       "/" = vessel {

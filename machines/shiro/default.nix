@@ -10,9 +10,11 @@
 
   hole.profiles = {
     bluetooth = true;
-    #games = true;
-    desktop = true;
+    games = true;
+    graphical = true;
   };
 
   programs.sway.enable = true;
+
+  virtualisation.docker.enable = true;
 }
