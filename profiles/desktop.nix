@@ -7,14 +7,8 @@
 with lib;
 
 {
-  imports = [
-    ./sound.nix
-  ];
-
   config = mkIf (config.hole.profiles ? desktop) (mkMerge [
     {
-      hole.profiles.sound = true;
-
       hardware.opengl = {
         enable = mkDefault true;
         driSupport = mkDefault config.hardware.opengl.enable;

@@ -1,7 +1,6 @@
 {
+  networking.hostName = "shiro";
   nixpkgs.system = "x86_64-linux";
-
-  networking.hostName = "shiro"; # Define your hostname.
 
   imports = [
     ../common
@@ -12,6 +11,7 @@
     bluetooth = true;
     games = true;
     graphical = true;
+    sound = true;
   };
 
   programs.sway.enable = true;

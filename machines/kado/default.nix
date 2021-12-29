@@ -1,15 +1,12 @@
 {
   networking.hostName = "kado";
-
   nixpkgs.system = "x86_64-linux";
 
   hardware.cpu.intel.updateMicrocode = true;
 
   imports = [
-    ./hardware.nix
-
     ../common
-
+    ./hardware.nix
     ./aleph.nix
     ./trinity.nix
     ./factorio.nix
@@ -19,13 +16,6 @@
     #./samba.nix
     #./croc.nix
   ];
-
-  networking.interfaces = {
-    enp0s20f0.useDHCP = true;
-    enp0s20f1.useDHCP = true;
-    enp0s20f2.useDHCP = true;
-    enp0s20f3.useDHCP = true;
-  };
 
   networking.firewall.allowedTCPPorts = [
     80

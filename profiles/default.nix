@@ -14,6 +14,7 @@ with lib;
     ./desktop.nix
     ./games.nix
     ./laptop.nix
+    ./sound.nix
     ./wireless.nix
   ];
 

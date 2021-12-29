@@ -1,7 +1,6 @@
 {
-  nixpkgs.system = "x86_64-linux";
-
   networking.hostName = "kuro";
+  nixpkgs.system = "x86_64-linux";
 
   imports = [
     ../common
@@ -12,10 +11,11 @@
   hole = {
     profiles = {
       bluetooth = true;
-      games = true;
       desktop = true;
+      games = true;
       graphical = true;
       laptop = true;
+      sound = true;
       wireless = true;
     };
     aleph.enable = false;
