@@ -12,23 +12,23 @@ with lib;
         lidSwitch = mkDefault "suspend";
         lidSwitchDocked = mkDefault "ignore";
         lidSwitchExternalPower = mkDefault "lock";
-        extraConfig = ''
-          HandlePowerKey=suspend
-          HandleSuspendKey=suspend
-        '';
+      #  extraConfig = ''
+      #    HandlePowerKey=suspend
+      #    HandleSuspendKey=suspend
+      #  '';
       };
 
-      systemd.sleep.extraConfig = ''
-        [Sleep]
-        SuspendMode=suspend
-        HibernateMode=suspend
-        HibernateState=disk
-      '';
+      #systemd.sleep.extraConfig = ''
+      #  [Sleep]
+      #  SuspendMode=suspend
+      #  HibernateMode=suspend
+      #  HibernateState=disk
+      #'';
 
-      services.upower = {
-        enable = mkDefault true;
-        criticalPowerAction = mkDefault "HybridSleep";
-      };
+      #services.upower = {
+      #  enable = mkDefault true;
+      #  criticalPowerAction = mkDefault "HybridSleep";
+      #};
     }
 
     {

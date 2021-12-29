@@ -12,6 +12,8 @@ in
   networking = {
     networkmanager.wifi.backend = "iwd";
 
+    wireless.enable = !enable;
+
     wireless.iwd = {
       inherit enable;
 

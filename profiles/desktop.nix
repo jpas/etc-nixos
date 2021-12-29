@@ -7,8 +7,14 @@
 with lib;
 
 {
+  imports = [
+    ./sound.nix
+  ];
+
   config = mkIf (config.hole.profiles ? desktop) (mkMerge [
     {
+      config.hole.profiles.sound = true;
+
       hardware.opengl = {
         enable = mkDefault true;
         driSupport = mkDefault config.hardware.opengl.enable;
@@ -76,23 +82,6 @@ with lib;
       };
     }
 
-    {
-      services.pipewire = {
-        enable = mkDefault true;
-
-        alsa.enable = mkDefault true;
-        alsa.support32Bit = mkDefault true;
-
-        # TODO: complain if pipewire and pulseaudio are enabled
-        pulse.enable = mkDefault true;
-      };
-
-      security.rtkit.enable = mkDefault config.services.pipewire.enable;
-
-      hardware.opengl.extraPackages32 = mkIf config.services.pipewire.enable
-        [ pkgs.pkgsi686Linux.pipewire ];
-    }
-
     (mkIf config.programs.sway.enable {
       programs.sway = {
         wrapperFeatures = {
@@ -151,11 +140,10 @@ with lib;
           settings.screencast =
             let
               clear = "00000000";
-              selected = "689D6A7F";
-              # TODO: fix character case
-              # selected = "${config.hole.colors.gruvbox.dark.aqua0}7f";
+              selected = "${config.hole.colors.gruvbox.dark.aqua0}7f";
               cmd = concatStringsSep " " [
-                "${pkgs.slurp}/bin/slurp -or -f %o"
+                "${pkgs.slurp}/bin/slurp -or"
+                "-f %o"
                 "-B ${clear}"
                 "-b ${clear}"
                 "-s ${selected}"

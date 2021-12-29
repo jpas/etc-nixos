@@ -37,14 +37,14 @@
           let g:lightline = { 'colorscheme': 'gruvbox' }
         '';
       }
-      {
-        plugin = fzf-vim;
-        config = ''
-          noremap <C-p> :FZF<cr>
-        '';
+      #{
+      #  plugin = fzf-vim;
+      #  config = ''
+      #    noremap <C-p> :FZF<cr>
+      #  '';
 
-        # TODO: change colours to work with gruvbox
-      }
+      #  # TODO: change colours to work with gruvbox
+      #}
       pkgs.fzf
       supertab
       {

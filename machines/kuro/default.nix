@@ -13,6 +13,7 @@
     profiles = {
       bluetooth = true;
       games = true;
+      desktop = true;
       graphical = true;
       laptop = true;
       wireless = true;
