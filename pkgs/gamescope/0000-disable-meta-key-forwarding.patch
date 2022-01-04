@@ -1,0 +1,14 @@
+diff --git a/src/sdlwindow.cpp b/src/sdlwindow.cpp
+index cb0f7c3..3f967e1 100644
+--- a/src/sdlwindow.cpp
++++ b/src/sdlwindow.cpp
+@@ -164,6 +164,9 @@ void inputSDLThreadRun( void )
+ 					}
+ 				}
+ 
++				if ( key == KEY_RIGHTMETA || key == KEY_LEFTMETA )
++					break;
++
+ 				// On Wayland, clients handle key repetition
+ 				if ( event.key.repeat )
+ 					break;

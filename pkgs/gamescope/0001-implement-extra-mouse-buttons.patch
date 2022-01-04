@@ -1,0 +1,43 @@
+diff --git a/src/sdlwindow.cpp b/src/sdlwindow.cpp
+index 3f967e1..e92b554 100644
+--- a/src/sdlwindow.cpp
++++ b/src/sdlwindow.cpp
+@@ -50,8 +50,8 @@ static inline int SDLButtonToLinuxButton( int SDLButton )
+ 		case SDL_BUTTON_LEFT: return BTN_LEFT;
+ 		case SDL_BUTTON_MIDDLE: return BTN_MIDDLE;
+ 		case SDL_BUTTON_RIGHT: return BTN_RIGHT;
+-		case SDL_BUTTON_X1: return BTN_FORWARD;
+-		case SDL_BUTTON_X2: return BTN_BACK;
++		case SDL_BUTTON_X1: return BTN_EXTRA;
++		case SDL_BUTTON_X2: return BTN_SIDE;
+ 		default: return 0;
+ 	}
+ }
+diff --git a/src/wlserver.cpp b/src/wlserver.cpp
+index bc249ad..73e8245 100644
+--- a/src/wlserver.cpp
++++ b/src/wlserver.cpp
+@@ -228,6 +228,10 @@ static inline uint32_t steamcompmgr_button_to_wlserver_button( int button )
+ 			return BTN_RIGHT;
+ 		case 3:
+ 			return BTN_MIDDLE;
++		case 4:
++			return BTN_EXTRA;
++		case 5:
++			return BTN_SIDE;
+ 	}
+ }
+ 
+diff --git a/src/wlserver.hpp b/src/wlserver.hpp
+index c46946a..7a65ec6 100644
+--- a/src/wlserver.hpp
++++ b/src/wlserver.hpp
+@@ -5,7 +5,7 @@
+ #include <wayland-server-core.h>
+ #include <atomic>
+ 
+-#define WLSERVER_BUTTON_COUNT 4
++#define WLSERVER_BUTTON_COUNT 5
+ #define WLSERVER_TOUCH_COUNT 11 // Ten fingers + nose ought to be enough for anyone
+ 
+ struct wlserver_t {

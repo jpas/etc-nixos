@@ -20,16 +20,20 @@
 
 stdenv.mkDerivation rec {
   pname = "gamescope";
-  version = "3.9.5";
+  version = "3.10.3";
 
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
     rev = version;
-    sha256 = "sha256-Ih+baHP13IcSaKM7Et9QaLNgZFRiapPPf44YpTgoG1c=";
+    sha256 = "sha256-Kg+VhAWrQhOiEHqEJVI9M0Ku//wI5IHD+nNnb/DWHas=";
     fetchSubmodules = true;
   };
 
+  patches = [
+    ./0000-disable-meta-key-forwarding.patch
+    ./0001-implement-extra-mouse-buttons.patch
+  ];
   nativeBuildInputs = [
     meson
     ninja
