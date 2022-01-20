@@ -107,7 +107,15 @@ let
         separator_symbol "|"
       '';
 
-      statusCommand = "~/src/bar/bar"; #while date +'%Y-%m-%d %l:%M:%S %p '; do sleep 1; done";
+      statusCommand = "${pkgs.writeShellScript "sway-status" ''
+        status() {
+          date '+%m-%d %H:%M'
+        }
+
+        while status; do
+          sleep 1;
+        done
+      ''}";
 
       colors = with colors.dark; rec {
         background = bg;
