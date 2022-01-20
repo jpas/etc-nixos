@@ -33,6 +33,7 @@ stdenv.mkDerivation rec {
   patches = [
     ./0000-disable-meta-key-forwarding.patch
     ./0001-implement-extra-mouse-buttons.patch
+    ./0002-show-cursor-on-focus-lost.patch
   ];
   nativeBuildInputs = [
     meson

@@ -1,14 +1,16 @@
 diff --git a/src/sdlwindow.cpp b/src/sdlwindow.cpp
-index cb0f7c3..3f967e1 100644
+index 8986e02..ca616d6 100644
 --- a/src/sdlwindow.cpp
 +++ b/src/sdlwindow.cpp
-@@ -164,6 +164,9 @@ void inputSDLThreadRun( void )
- 					}
- 				}
+@@ -134,7 +134,10 @@ void inputSDLThreadRun( void )
+ 			case SDL_KEYUP:
+ 				key = SDLScancodeToLinuxKey( event.key.keysym.scancode );
  
+-				if ( event.type == SDL_KEYUP && ( event.key.keysym.mod & KMOD_LGUI ) )
 +				if ( key == KEY_RIGHTMETA || key == KEY_LEFTMETA )
 +					break;
 +
- 				// On Wayland, clients handle key repetition
- 				if ( event.key.repeat )
- 					break;
++				if ( event.type == SDL_KEYUP && ( event.key.keysym.mod & KMOD_RALT ) )
+ 				{
+ 					bool handled = true;
+ 					switch ( key )

@@ -1,0 +1,17 @@
+diff --git a/src/sdlwindow.cpp b/src/sdlwindow.cpp
+index cb09f82..4ec4e10 100644
+--- a/src/sdlwindow.cpp
++++ b/src/sdlwindow.cpp
+@@ -186,10 +186,12 @@ void inputSDLThreadRun( void )
+ 
+ 						break;
+ 					case SDL_WINDOWEVENT_FOCUS_LOST:
++						SDL_ShowCursor(SDL_ENABLE);
+ 						g_nNestedRefresh = g_nNestedUnfocusedRefresh;
+ 						g_bWindowFocused = false;
+ 						break;
+ 					case SDL_WINDOWEVENT_FOCUS_GAINED:
++						SDL_ShowCursor(SDL_DISABLE);
+ 						g_nNestedRefresh = g_nOldNestedRefresh;
+ 						g_bWindowFocused = true;
+ 						break;

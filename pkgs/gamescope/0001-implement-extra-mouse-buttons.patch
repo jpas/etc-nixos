@@ -1,8 +1,8 @@
 diff --git a/src/sdlwindow.cpp b/src/sdlwindow.cpp
-index 3f967e1..e92b554 100644
+index ca616d6..cb09f82 100644
 --- a/src/sdlwindow.cpp
 +++ b/src/sdlwindow.cpp
-@@ -50,8 +50,8 @@ static inline int SDLButtonToLinuxButton( int SDLButton )
+@@ -44,8 +44,8 @@ static inline int SDLButtonToLinuxButton( int SDLButton )
  		case SDL_BUTTON_LEFT: return BTN_LEFT;
  		case SDL_BUTTON_MIDDLE: return BTN_MIDDLE;
  		case SDL_BUTTON_RIGHT: return BTN_RIGHT;
@@ -14,10 +14,10 @@ index 3f967e1..e92b554 100644
  	}
  }
 diff --git a/src/wlserver.cpp b/src/wlserver.cpp
-index bc249ad..73e8245 100644
+index d405b47..dd591f3 100644
 --- a/src/wlserver.cpp
 +++ b/src/wlserver.cpp
-@@ -228,6 +228,10 @@ static inline uint32_t steamcompmgr_button_to_wlserver_button( int button )
+@@ -229,6 +229,10 @@ static inline uint32_t steamcompmgr_button_to_wlserver_button( int button )
  			return BTN_RIGHT;
  		case 3:
  			return BTN_MIDDLE;
@@ -29,7 +29,7 @@ index bc249ad..73e8245 100644
  }
  
 diff --git a/src/wlserver.hpp b/src/wlserver.hpp
-index c46946a..7a65ec6 100644
+index 9928636..b7bc84d 100644
 --- a/src/wlserver.hpp
 +++ b/src/wlserver.hpp
 @@ -5,7 +5,7 @@
