@@ -147,7 +147,7 @@ with lib;
       ];
     })
 
-    (mkIf (config.hole.profiles ? graphical) {
+    (mkIf (config.hole.profiles ? desktop) {
       wayland.windowManager.sway.enable = true;
 
       #services.spotifyd.enable = true;

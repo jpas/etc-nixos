@@ -13,7 +13,6 @@
       bluetooth = true;
       desktop = true;
       games = true;
-      graphical = true;
       laptop = true;
       sound = true;
       wireless = true;

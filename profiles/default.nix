@@ -12,7 +12,6 @@ with lib;
     ./base.nix
     ./bluetooth.nix
     ./desktop.nix
-    ./games.nix
     ./laptop.nix
     ./sound.nix
     ./wireless.nix
