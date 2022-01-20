@@ -10,7 +10,7 @@ let
       nix = {
         package = pkgs.nixUnstable;
         extraOptions = ''
-          experimental-features = ca-references flakes nix-command
+          experimental-features = flakes nix-command
         '';
         nixPath = lib.mkDefault [
           "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
