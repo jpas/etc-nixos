@@ -22,7 +22,7 @@ in
           EnableNetworkConfiguration = mkDefault true;
         };
         Network = {
-          EnableIPv6 = mkDefault true;
+          EnableIPv6 = mkDefault false;
           RoutePriorityOffset = mkDefault 2048;
         };
       };

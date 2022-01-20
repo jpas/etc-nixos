@@ -34,7 +34,6 @@ with lib;
         (hunspellWithDicts [ hunspellDicts.en_CA-large ])
         nixpkgs-fmt
         p7zip
-        papis
         python3
         ripgrep
         rmapi
@@ -93,8 +92,8 @@ with lib;
 
     {
       xdg.configFile."go/env".text = ''
-        GOPATH=${config.xdg.dataHome}/go
-        GOMODCACHE=${config.xdg.cacheHome}/go-mod
+        GOPATH=$XDG_DATA_HOME/go
+        GOMODCACHE=$XDG_CACHE_HOME/go/mod
       '';
     }
 
