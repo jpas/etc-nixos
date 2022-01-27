@@ -24,7 +24,7 @@ with lib;
   nix.trustedUsers = [ "root" "@wheel" ];
   nix.allowedUsers = [ "@users" ];
 
-  nixpkgs.config = lib.mkDefault {
+  nixpkgs.config = {
     allowUnfree = true;
   };
 
