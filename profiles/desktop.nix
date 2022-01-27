@@ -59,7 +59,8 @@ with lib;
         inherit (pkgs)
           jetbrains-mono
           noto-fonts
-          noto-fonts-cjk
+          #noto-fonts-cjk
+          #mplus-outline-fonts
           noto-fonts-emoji
           noto-fonts-extra
           ;
@@ -68,7 +69,7 @@ with lib;
       fonts.fontconfig = {
         defaultFonts = {
           emoji = mkDefault [ "Noto Color Emoji" ];
-          monospace = mkDefault [ "JetBrains Mono" "Noto Sans Mono" ];
+          monospace = mkDefault [ "JetBrains Mono" ];
           sansSerif = mkDefault [ "Noto Sans" ];
           serif = mkDefault [ "Noto Serif" ];
         };

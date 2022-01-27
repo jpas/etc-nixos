@@ -7,23 +7,30 @@
 with lib;
 
 {
-  config = mkIf (config.hole.profiles ? sound) {
-    services.pipewire = {
-      enable = mkDefault true;
+  config = mkIf (config.hole.profiles ? sound) (mkMerge [
+    {
+      services.pipewire = {
+        enable = mkDefault true;
 
-      alsa.enable = mkDefault true;
-      alsa.support32Bit = mkDefault true;
+        alsa.enable = mkDefault true;
+        alsa.support32Bit = mkDefault true;
 
-      # TODO: complain if pipewire and pulseaudio are enabled
-      pulse.enable = mkDefault true;
-    };
+        # TODO: complain if pipewire and pulseaudio are enabled
+        pulse.enable = mkDefault true;
 
-    security.rtkit.enable = mkDefault config.services.pipewire.enable;
+        media-session.enable = mkDefault false;
+        wireplumber.enable = mkDefault true;
+      };
+    }
+    (mkIf config.services.pipewire.enable {
+      security.rtkit.enable = mkDefault true;
 
-    hardware.opengl.extraPackages =
-      mkIf config.services.pipewire.enable [ pkgs.pipewire ];
+      hardware.pulseaudio.enable = mkForce false;
 
-    hardware.opengl.extraPackages32 =
-      mkIf config.services.pipewire.enable [ pkgs.pkgsi686Linux.pipewire ];
-  };
+      hardware.opengl = {
+        extraPackages = [ pkgs.pipewire ];
+        extraPackages32 = [ pkgs.pkgsi686Linux.pipewire ];
+      };
+    })
+  ]);
 }
