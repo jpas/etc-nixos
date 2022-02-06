@@ -52,6 +52,10 @@ let
             ln -sfn ${flake-channels} /nix/var/nix/profiles/per-user/root/channels
           '';
         };
+
+      system.extraSystemBuilderCmds = ''
+        ln -s ${flake.outPath} $out/flake
+      '';
     };
   };
 
