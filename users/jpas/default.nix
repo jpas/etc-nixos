@@ -118,10 +118,10 @@ with lib;
     }
 
     {
-      programs.readline = {
-        enable = true;
-        variables = { editing-mode = "vi"; };
-      };
+      #programs.readline = {
+      #  enable = true;
+      #  variables = { editing-mode = "vi"; };
+      #};
     }
 
     {

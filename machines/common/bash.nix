@@ -1,11 +1,19 @@
 { lib
 , config
+, flake
 , ...
 }:
 
 with lib;
 
 {
+  environment.etc.inputrc.text = ''
+    ${builtins.readFile "${flake.inputs.nixpkgs.outPath}/nixos/modules/programs/bash/inputrc"}
+    # inputrc from nixos configuration
+
+    set editing-mode vi
+  '';
+
   programs.bash = {
     promptInit = ''
       declare -A __pr_c_cache
