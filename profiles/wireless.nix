@@ -5,17 +5,10 @@
 
 with lib;
 
-let
-  enable = config.hole.profiles ? wireless;
-in
 {
-  networking = {
-    networkmanager.wifi.backend = "iwd";
-
-    wireless.enable = !enable;
-
+  networking = mkIf (config.hole.profiles ? wireless) {
     wireless.iwd = {
-      inherit enable;
+      enable = mkDefault true;
 
       settings = {
         General = {
@@ -27,5 +20,8 @@ in
         };
       };
     };
+
+    wireless.enable = !config.networking.wireless.iwd.enable;
+    networkmanager.wifi.backend = mkIf config.wireless.iwd.enable "iwd";
   };
 }
