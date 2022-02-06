@@ -14,11 +14,6 @@ let
         exec "${target}" "''${args[@]}" "$@"
       '';
 
-    pipewire = prev.pipewire.overrideAttrs (o: {
-      patches = (o.patches or []) ++ [
-        ./pipewire-fix-port-priority.patch
-      ];
-    });
     swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope {
