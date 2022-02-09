@@ -21,8 +21,10 @@ with lib;
     kitty-terminfo = pkgs.kitty.terminfo;
   };
 
-  nix.trustedUsers = [ "root" "@wheel" ];
-  nix.allowedUsers = [ "@users" ];
+  nix.settings = {
+    trusted-users = [ "root" "@wheel" ];
+    allowed-users = [ "@users" ];
+  };
 
   nixpkgs.config = {
     allowUnfree = true;

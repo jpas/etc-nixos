@@ -10,7 +10,7 @@ in
     enable = true;
 
     passwordAuthentication = false;
-    challengeResponseAuthentication = false;
+    kbdInteractiveAuthentication = false;
 
     permitRootLogin = "no";
 
