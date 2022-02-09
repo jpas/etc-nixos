@@ -21,6 +21,10 @@ with lib;
         media-session.enable = mkDefault true;
         #wireplumber.enable = mkDefault true;
       };
+
+      systemd.user.services.pipewire-pulse = {
+        bindsTo = [ "pipewire.service" ];
+      };
     }
     (mkIf config.services.pipewire.enable {
       security.rtkit.enable = mkDefault true;
