@@ -246,9 +246,11 @@ mkMerge [
   (mkConfig {
     sway = {
       keybindings = mkOptionDefault {
-        "XF86AudioLowerVolume" = "exec pulsemixer --change-volume -5";
         "XF86AudioMute" = "exec pulsemixer --toggle-mute";
-        "XF86AudioRaiseVolume" = "exec pulsemixer --change-volume +5";
+        "XF86AudioLowerVolume" = "exec pulsemixer --change-volume -1";
+        "Shift+XF86AudioLowerVolume" = "exec pulsemixer --change-volume -5";
+        "XF86AudioRaiseVolume" = "exec pulsemixer --change-volume +1";
+        "Shift+XF86AudioRaiseVolume" = "exec pulsemixer --change-volume +5";
 
         "Mod4+XF86AudioLowerVolume" = "exec kitty-pulsemixer";
         "Mod4+XF86AudioMute" = "exec kitty-pulsemixer";
