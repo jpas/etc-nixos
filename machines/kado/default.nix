@@ -1,6 +1,7 @@
 {
   networking.hostName = "kado";
   nixpkgs.system = "x86_64-linux";
+  boot.loader.systemd-boot.enable = true;
 
   hardware.cpu.intel.updateMicrocode = true;
 

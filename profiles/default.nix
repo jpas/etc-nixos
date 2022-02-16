@@ -17,25 +17,28 @@ with lib;
     ./wireless.nix
   ];
 
-  # Essential packages.
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs)
-      cachix
-      ;
-  };
-
+  boot.tmpOnTmpfs = mkDefault true;
   boot.supportedFilesystems = [ "ntfs" "btrfs" ];
 
   boot.loader = {
     timeout = mkDefault 1;
-    systemd-boot = {
-      enable = mkDefault true;
-      configurationLimit = 7;
-    };
     efi.canTouchEfiVariables = mkDefault true;
-  };
 
-  boot.tmpOnTmpfs = mkDefault true;
+    grub = {
+      enable = mkDefault false;
+    };
+
+    systemd-boot = {
+      enable = mkDefault false;
+      configurationLimit = mkDefault 10;
+      editor = false;
+    };
+
+    generic-extlinux-compatible = {
+      enable = mkDefault false;
+      configurationLimit = mkDefault 10;
+    };
+  };
 
   console = {
     useXkbConfig = mkDefault true;

@@ -8,16 +8,14 @@ with lib;
 
 {
   networking.hostName = "beri";
-  nixpkgs.system = lib.mkForce "aarch64-linux";
+  nixpkgs.system = "aarch64-linux";
+  boot.loader.generic-extlinux-compatible.enable = true;
 
   imports = [ ../common ];
 
   hole.profiles = {
     minimal = true;
   };
-
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
 
   fileSystems = {
     "/" = {
