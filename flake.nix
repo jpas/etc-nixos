@@ -28,11 +28,16 @@
 
       overlay = import ./pkgs;
 
-      legacyPackages = lib.genAttrs [ "x86_64-linux" ]
-        (system: import nixpkgs {
-          inherit system;
-          overlays = [ self.overlay ];
-        });
+      packages = lib.genAttrs [ "x86_64-linux" ] (system:
+        let
+          install-iso = self.nixosConfigurations.iso.config.system.build.isoImage;
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlay ];
+          };
+        in
+        pkgs.hole // { inherit install-iso; }
+      );
 
       hmModule = { imports = lib.attrValues self.hmModules; };
       hmModules = import ./modules/home;

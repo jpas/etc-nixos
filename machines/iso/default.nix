@@ -18,5 +18,5 @@
     wireless = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_5_14;
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
 }
