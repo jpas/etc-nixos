@@ -1,10 +1,29 @@
+{ lib
+, pkgs
+, ...
+}:
+
 {
   networking.hostName = "doko";
   nixpkgs.system = "x86_64-linux";
   boot.loader.systemd-boot.enable = true;
 
+
   imports = [
     ../common
     ./hardware.nix
+    ./srht.nix
   ];
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  security.acme = {
+    acceptTerms = true;
+
+    defaults = {
+      email = "root@pas.sh";
+      dnsProvider = "cloudflare";
+      credentialsFile = "/etc/nixos/secrets/pas.sh-cloudflare-api-token";
+    };
+  };
 }

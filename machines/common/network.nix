@@ -6,29 +6,19 @@
 
 with lib;
 
-let
-  hole = {
-    kado = "100.65.152.104";
-    kuro = "100.116.4.62";
-    shiro = "100.69.65.63";
-    beri = "100.104.46.24";
-  };
-
-  mkHosts = hosts: domain:
-    mapAttrs'
-      (host: ip: {
-        name = ip;
-        value = [ (host + domain) ];
-      })
-      hosts;
-in
 {
 
   config = mkMerge [
     {
       services.tailscale.enable = true;
       networking.firewall.trustedInterfaces = [ "tailscale0" ];
-      networking.hosts = mkHosts hole ".o";
+      networking.hosts = {
+        "100.65.152.104" = [ "kado.o" ];
+        "100.116.4.62" = [ "kuro.o" ];
+        "100.69.65.63" = [ "shiro.o" ];
+        "100.104.46.24" = [ "beri.o" ];
+        "100.68.33.127" = [ "doko.o" "ht.pas.sh" "git.ht.pas.sh" "meta.ht.pas.sh" "paste.ht.pas.sh" ];
+      };
     }
 
     (mkIf config.services.tailscale.enable {
