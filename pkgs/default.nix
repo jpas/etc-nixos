@@ -16,10 +16,7 @@ let
 
     swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
-    gamescope = callPackage ./gamescope {
-      inherit libliftoff;
-      meson = meson_0_59_1;
-    };
+    gamescope = callPackage ./gamescope { };
     libliftoff = callPackage ./libliftoff { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };

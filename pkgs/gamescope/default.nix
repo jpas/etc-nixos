@@ -15,25 +15,24 @@
 , wlroots
 , xorg
 , libseat
-, libliftoff
 }:
 
 stdenv.mkDerivation rec {
   pname = "gamescope";
-  version = "3.10.3";
+  version = "3.11.23";
 
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
     rev = version;
-    sha256 = "sha256-Kg+VhAWrQhOiEHqEJVI9M0Ku//wI5IHD+nNnb/DWHas=";
+    sha256 = "sha256-o9LQHyTVOp5WseMHZKX1Gh6UmHFYJWVhkIiGEhOfv8w=";
     fetchSubmodules = true;
   };
 
   patches = [
     ./0000-disable-meta-key-forwarding.patch
     ./0001-implement-extra-mouse-buttons.patch
-    ./0002-show-cursor-on-focus-lost.patch
+    #./0002-show-cursor-on-focus-lost.patch
   ];
   nativeBuildInputs = [
     meson
