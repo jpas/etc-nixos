@@ -18,8 +18,8 @@ with lib;
         # TODO: complain if pipewire and pulseaudio are enabled
         pulse.enable = mkDefault true;
 
-        media-session.enable = mkDefault true;
-        #wireplumber.enable = mkDefault true;
+        media-session.enable = mkDefault false;
+        wireplumber.enable = mkDefault true;
       };
 
       systemd.user.services.pipewire-pulse = {
