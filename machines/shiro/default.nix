@@ -1,3 +1,10 @@
+{ lib
+, pkgs
+, ...
+}:
+
+with lib;
+
 {
   networking.hostName = "shiro";
   nixpkgs.system = "x86_64-linux";
@@ -15,4 +22,10 @@
   };
 
   programs.sway.enable = true;
+
+  environment.systemPackages = attrValues {
+    inherit (pkgs)
+      gamescope
+      ;
+  };
 }
