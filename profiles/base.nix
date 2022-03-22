@@ -34,7 +34,7 @@ with lib;
     inherit (pkgs)
       curl
       htop
-      manpages
+      man-pages
       pciutils
       restic
       rsync
