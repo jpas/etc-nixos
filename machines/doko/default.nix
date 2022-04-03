@@ -14,6 +14,7 @@
     ./hardware.nix
     ./srht.nix
     ./factorio.nix
+    ./dl.nix
   ];
 
   networking.firewall.allowedTCPPorts = [
