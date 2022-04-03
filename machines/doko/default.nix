@@ -16,6 +16,11 @@
     ./factorio.nix
   ];
 
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   security.acme = {
