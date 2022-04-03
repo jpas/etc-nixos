@@ -13,6 +13,7 @@
     ../common
     ./hardware.nix
     ./srht.nix
+    ./factorio.nix
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

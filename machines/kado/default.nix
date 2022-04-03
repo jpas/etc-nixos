@@ -10,7 +10,7 @@
     ./hardware.nix
     ./aleph.nix
     ./trinity.nix
-    ./factorio.nix
+    #./factorio.nix
     ./nfs.nix
     ./print-and-scan.nix
     ./unbound.nix
