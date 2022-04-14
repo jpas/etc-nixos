@@ -19,19 +19,19 @@
 
 stdenv.mkDerivation rec {
   pname = "gamescope";
-  version = "3.11.23";
+  version = "3.11.28-beta4";
 
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
     rev = version;
-    sha256 = "sha256-o9LQHyTVOp5WseMHZKX1Gh6UmHFYJWVhkIiGEhOfv8w=";
+    sha256 = "sha256-Yj5KdENAG6zstDMa5BkuqO2ykb8RO03ysEzoTaNxS9g=";
     fetchSubmodules = true;
   };
 
   patches = [
     ./0000-disable-meta-key-forwarding.patch
-    ./0001-implement-extra-mouse-buttons.patch
+    #./0001-implement-extra-mouse-buttons.patch
     #./0002-show-cursor-on-focus-lost.patch
   ];
   nativeBuildInputs = [
