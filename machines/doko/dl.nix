@@ -1,15 +1,26 @@
-{
-  security.acme.certs."dl.pas.sh" = {
-    group = "nginx";
-  };
+{ lib
+, ...
+}:
 
+with lib;
+
+let
+  enable = false;
+in
+mkIf enable {
   services.nginx.virtualHosts = {
     "dl.pas.sh" = {
+      enableACME = true;
+      forceSSL = true;
+
       extraConfig = ''
         autoindex on;
         autoindex_exact_size off;
-        root /srv/dl
       '';
+
+      locations."/" = {
+        root = "/srv/dl";
+      };
     };
-  }
+  };
 }
