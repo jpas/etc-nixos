@@ -17,6 +17,7 @@ mkMerge [
     services.sourcehut = {
       meta.enable = true;
       git.enable = true;
+      paste.enable = true;
 
       redis.enable = true;
 
@@ -78,6 +79,19 @@ mkMerge [
     };
 
     systemd.services.gitsrht-webhooks.enable = false;
+  }
+
+  {
+    services.sourcehut = {
+      paste = {
+        enable = true;
+      };
+
+      settings."paste.sr.ht" = {
+        oauth-client-id = "</etc/nixos/secrets/srht/paste-oauth-client-id";
+        oauth-client-secret = "/etc/nixos/secrets/srht/paste-oauth-client-secret";
+      };
+    };
   }
 
   {
