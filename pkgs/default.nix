@@ -101,6 +101,14 @@ let
       patches = [ ];
       configureFlags = old.configureFlags ++ [ "--with-x=no" "--with-wayland" ];
     });
+
+    factorio-headless = prev.factorio-headless.overrideAttrs (old: {
+      src = prev.fetchurl {
+        name = "factorio_headless_x64-1.1.57.tar.xz";
+        url = "https://factorio.com/get-download/1.1.57/headless/linux64";
+        sha256 = "sha256-tWHdy+T2mj5WURHfFmALB+vUskat7Wmeaeq67+7lxfg=";
+      };
+    });
   };
 in
 hole // { inherit hole; }
