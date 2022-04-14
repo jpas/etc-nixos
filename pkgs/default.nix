@@ -26,6 +26,7 @@ let
     libliftoff = callPackage ./libliftoff { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
+    proton-ge = callPackage ./proton-ge { };
     trinity = callPackage ./trinity { stdenv = final.clang11Stdenv; };
     xplr = callPackage ./xplr { };
 
