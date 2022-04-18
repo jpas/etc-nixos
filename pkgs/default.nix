@@ -33,7 +33,24 @@ let
       extraPkgs = pkgs: [ pkgs.libunwind ];
     };
 
+    pipewire = updateDerivation prev.pipewire (old: rec {
+      version = "0.3.50";
 
+      src = prev.fetchFromGitLab {
+        domain = "gitlab.freedesktop.org";
+        owner = "pipewire";
+        repo = "pipewire";
+        rev = version;
+        sha256 = "sha256-OMFtHduvSQNeEzQP+PlwfhWC09Jb8HN4SI42Z9KpZHE=";
+      };
+
+      patches = old.patches ++ [
+        (prev.fetchpatch {
+          url = "https://gitlab.freedesktop.org/pipewire/pipewire/-/commit/d3ea3142e1a4de206e616bc18f63a529e6b4986a.patch";
+          sha256 = "sha256-2MTCOwQEA7UAm/eigHDHA+8oFs4JgQfoMHnfzNBjqvI=";
+        })
+      ];
+    });
 
     #kanshi = prev.kanshi.overrideAttrs (_: {
     #  version = "2021-02-02-unstable";
