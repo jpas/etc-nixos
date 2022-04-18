@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, fetchFromGitHub
+, fetchFromGitLab
 , meson
 , ninja
 , pkg-config

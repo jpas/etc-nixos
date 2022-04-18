@@ -2,6 +2,12 @@ final: prev:
 let
   inherit (prev) lib callPackage;
 
+  updateDerivation = der: f: der.overrideAttrs (old: let new = f old; in
+    assert lib.versionOlder old.version new.version;
+    new // {
+      name = "${old.pname}-${new.version}";
+    });
+
   hole = rec {
     lib = prev.lib.extend (import ../lib);
 
@@ -14,7 +20,7 @@ let
         exec "${target}" "''${args[@]}" "$@"
       '';
 
-    swaynagmode = callPackage ./swaynagmode { };
+    #swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
     libliftoff = callPackage ./libliftoff { };
@@ -27,15 +33,7 @@ let
       extraPkgs = pkgs: [ pkgs.libunwind ];
     };
 
-    signal-desktop = makeOzoneWrapper {
-      bin = "signal";
-      target = "${prev.signal-desktop}/bin/signal-desktop";
-    };
 
-    discord = makeOzoneWrapper {
-      bin = "discord";
-      target = "${prev.discord}/bin/Discord";
-    };
 
     #kanshi = prev.kanshi.overrideAttrs (_: {
     #  version = "2021-02-02-unstable";
@@ -61,12 +59,12 @@ let
     #  ];
     #});
 
-    meson_0_59_1 = prev.meson.overrideAttrs (old: rec {
-      pname = "meson";
+    meson_0_59_1 = updateDerivation prev.meson (old: rec {
       version = "0.59.1";
-      name = "${pname}-${version}";
+
       src = prev.python3.pkgs.fetchPypi {
-        inherit pname version;
+        inherit (old) pname;
+        inherit version;
         sha256 = "sha256-21hqRRZQ1Gu+EJhKh7edm83ByuvzjY4Yn4hI+NUCNW0=";
       };
       patches =
@@ -82,9 +80,8 @@ let
     });
 
     wine64Wayland = prev.wine64.overrideAttrs (old: rec {
-      pname = "wine64";
-      version = "6.21+wayland";
-      name = "${pname}-${version}";
+      name = "wine64+wayland-${version}";
+      version = "6.21";
       src = final.fetchFromGitLab {
         domain = "gitlab.collabora.com";
         owner = "alf";
