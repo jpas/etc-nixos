@@ -9,7 +9,7 @@ with lib;
 
 {
   imports = [
-    ./base.nix
+    ./base
     ./bluetooth.nix
     ./desktop.nix
     ./laptop.nix

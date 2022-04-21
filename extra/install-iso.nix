@@ -11,7 +11,7 @@ with lib;
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
-    ../profiles/base.nix
+    ../profiles/base
   ];
 
   hardware.enableRedistributableFirmware = true;
