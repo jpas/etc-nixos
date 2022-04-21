@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
     libva
     pango
   ] ++ gst_all_1.gst-plugins-good.buildInputs
-    ++ winePackages.unstable.buildInputs
-    ;
+  ++ winePackages.unstable.buildInputs
+  ;
 
   beforePatchPhase = ''
     ls -l

@@ -2,7 +2,8 @@ final: prev:
 let
   inherit (prev) lib callPackage;
 
-  updateDerivation = der: f: der.overrideAttrs (old: let new = f old; in
+  updateDerivation = der: f: der.overrideAttrs (old:
+    let new = f old; in
     assert lib.versionOlder old.version new.version;
     new // {
       name = "${old.pname}-${new.version}";

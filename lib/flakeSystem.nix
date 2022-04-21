@@ -66,4 +66,4 @@ let
         ++ [ flakeModule (flake.nixosModule or { }) ];
     });
 in
-  flakeSystem
+flakeSystem

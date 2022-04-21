@@ -28,7 +28,10 @@ in
 {
   networking.firewall.allowedTCPPorts = [
     2121
-    2122 2123 2124 2125
+    2122
+    2123
+    2124
+    2125
   ];
 
   systemd.tmpfiles.rules = [

@@ -6,7 +6,7 @@
 with lib;
 
 let
-  acp-paths = pkgs.runCommand "acp-paths" {}
+  acp-paths = pkgs.runCommand "acp-paths" { }
     ''
       mkdir -p $out
       for f in ${pkgs.pipewire.lib}/share/alsa-card-profile/mixer/paths/*; do
@@ -54,18 +54,18 @@ in
 
   fileSystems =
     let
-      vessel = {
-        subvol,
-        # XXX: compression cannot actually be set per subvol like this.
-        # see: https://btrfs.wiki.kernel.org/index.php/Compression
-        compress ? "zstd",
-        options ? [ ]
-      }: {
-        device = "/dev/disk/by-uuid/288cb025-d7f9-43e2-bde4-265d92e7c036";
-        fsType = "btrfs";
-        options = [ "subvol=${subvol}" "compress=${compress}" "space_cache=v2" ] ++ options;
-        neededForBoot = true;
-      };
+      vessel =
+        { subvol
+        , # XXX: compression cannot actually be set per subvol like this.
+          # see: https://btrfs.wiki.kernel.org/index.php/Compression
+          compress ? "zstd"
+        , options ? [ ]
+        }: {
+          device = "/dev/disk/by-uuid/288cb025-d7f9-43e2-bde4-265d92e7c036";
+          fsType = "btrfs";
+          options = [ "subvol=${subvol}" "compress=${compress}" "space_cache=v2" ] ++ options;
+          neededForBoot = true;
+        };
     in
     {
       "/boot" = {

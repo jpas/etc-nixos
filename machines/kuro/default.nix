@@ -32,12 +32,14 @@
     remotePlay.openFirewall = true;
   };
 
-  systemd.tmpfiles.rules = let
-    mkLink = path: "L+ ${path} - - - - /persist${path}";
-  in [
-    (mkLink "/etc/machine-id")
-    (mkLink "/etc/nixos")
-  ];
+  systemd.tmpfiles.rules =
+    let
+      mkLink = path: "L+ ${path} - - - - /persist${path}";
+    in
+    [
+      (mkLink "/etc/machine-id")
+      (mkLink "/etc/nixos")
+    ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

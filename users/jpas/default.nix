@@ -6,13 +6,13 @@
 
 with lib;
 
+let
+  isWorkstation = true;
+in
 {
   imports = [
-    ./bash.nix
-    ./email.nix
     ./firefox.nix
     ./imv.nix
-    ./kitty.nix
     ./neovim.nix
     ./spotifyd.nix
     ./sway.nix
@@ -23,48 +23,9 @@ with lib;
 
   config = mkMerge [
     {
-      home.packages = with pkgs; [
-        coreutils
-        duf
-        fd
-        file
-        gnumake
-        hledger
-        hledger-web
-        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
-        nixpkgs-fmt
-        p7zip
-        python3
-        ripgrep
-        rmapi
-        tmux
-      ];
-
-      programs.bash.enable = true;
-
-      #programs.doom-emacs = {
-      #  enable = true;
-      #  extraPackages = [ pkgs.agda ];
-      #  doomPrivateDir = ./doom.d;
-      #};
-
-      programs.jq.enable = true;
-
-      programs.bat = {
-        enable = true;
-        catAlias = true;
-        config = { theme = "gruvbox-dark"; };
-      };
-
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
-      };
-    }
-
-    {
-      programs.exa = {
-        enable = true;
       };
     }
 
@@ -110,42 +71,8 @@ with lib;
     }
 
     {
-      programs.htop.enable = true;
-    }
-
-    {
       programs.neovim.enable = true;
     }
-
-    {
-      #programs.readline = {
-      #  enable = true;
-      #  variables = { editing-mode = "vi"; };
-      #};
-    }
-
-    {
-      xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
-      xdg = {
-        enable = true;
-        userDirs = {
-          desktop = "$HOME/opt";
-          documents = "$HOME/documents";
-          download = "$HOME/download";
-          music = "$HOME/music";
-          pictures = "$HOME/pictures";
-          publicShare = "$HOME/opt";
-          templates = "$HOME/opt";
-          videos = "$HOME/opt";
-        };
-      };
-    }
-
-    (mkIf (! (config.hole.profiles ? minimal)) {
-      home.packages = with pkgs; [
-        #sage # XXX: forces compile (2021-03-08)
-      ];
-    })
 
     (mkIf (config.hole.profiles ? desktop) {
       wayland.windowManager.sway.enable = true;
@@ -163,7 +90,102 @@ with lib;
       home.packages = with pkgs; [
         discord
         teams
+        hledger
+        hledger-web
+        python3
+        rmapi
+        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
       ];
     })
-  ];
-}
+
+    (mkIf config.programs.imv.enable {
+      programs.imv = let colors = config.hole.colors.gruvbox.dark-no-hash; in
+        {
+          settings = {
+            options = {
+              background = colors.bg;
+
+              overlay_font = "monospace:14";
+
+              overlay_text_color = colors.fg;
+              overlay_text_alpha = "ff";
+
+              overlay_background_color = colors.bg1;
+              overlay_background_alpha = "ff";
+            };
+          };
+        };
+
+      wayland.windowManager.sway.config = {
+        floating.criteria = [{ app_id = "imv"; }];
+
+        window.commands = [{
+          criteria = { app_id = "imv"; };
+          command = "border normal";
+        }];
+      };
+    })
+
+    (mkIf config.programs.kitty.enable {
+      programs.kitty = let colors = config.hole.colors.gruvbox.dark; in
+        {
+          font.name = "monospace";
+
+          settings = {
+            font_size = 10;
+
+            enable_audio_bell = false;
+            visual_bell_duration = 0;
+
+            remember_window_size = false;
+            initial_window_width = 800;
+            initial_window_height = 600;
+            window_padding_width = 3;
+            placement_strategy = "center";
+
+            background = colors.bg;
+            foreground = colors.fg;
+
+            cursor = colors.fg;
+            cursor_text_color = "background";
+
+            color0 = elemAt colors.console 0;
+            color1 = elemAt colors.console 1;
+            color2 = elemAt colors.console 2;
+            color3 = elemAt colors.console 3;
+            color4 = elemAt colors.console 4;
+            color5 = elemAt colors.console 5;
+            color6 = elemAt colors.console 6;
+            color7 = elemAt colors.console 7;
+
+            color8 = elemAt colors.console 8;
+            color9 = elemAt colors.console 9;
+            color10 = elemAt colors.console 10;
+            color11 = elemAt colors.console 11;
+            color12 = elemAt colors.console 12;
+            color13 = elemAt colors.console 13;
+            color14 = elemAt colors.console 14;
+            color15 = elemAt colors.console 15;
+
+            linux_display_server = "auto";
+          };
+        };
+      ];
+      })
+
+      (mkIf config.programs.mako.enable {
+      programs.mako = let colors = config.hole.colors.gruvbox.dark; in
+        {
+          font = "monospace 10";
+
+          anchor = "bottom-right";
+
+          textColor = colors.fg;
+          backgroundColor = colors.bg;
+          borderColor = colors.bg2;
+          borderSize = 2;
+
+          icons = false;
+        };
+    })
+    }

@@ -12,10 +12,10 @@ with lib;
         lidSwitch = mkDefault "suspend";
         lidSwitchDocked = mkDefault "ignore";
         lidSwitchExternalPower = mkDefault "lock";
-      #  extraConfig = ''
-      #    HandlePowerKey=suspend
-      #    HandleSuspendKey=suspend
-      #  '';
+        #  extraConfig = ''
+        #    HandlePowerKey=suspend
+        #    HandleSuspendKey=suspend
+        #  '';
       };
 
       #systemd.sleep.extraConfig = ''

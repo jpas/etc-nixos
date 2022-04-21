@@ -12,18 +12,18 @@
 
   fileSystems =
     let
-      vessel = {
-        subvol,
-        # XXX: compression cannot actually be set per subvol like this.
-        # see: https://btrfs.wiki.kernel.org/index.php/Compression
-        compress ? "zstd",
-        options ? [ ]
-      }: {
-        device = "/dev/disk/by-uuid/ebf76c7b-14f1-4c23-8eb5-7931388c83e3";
-        fsType = "btrfs";
-        options = [ "subvol=${subvol}" "compress=${compress}" "space_cache=v2" ] ++ options;
-        neededForBoot = true;
-      };
+      vessel =
+        { subvol
+        , # XXX: compression cannot actually be set per subvol like this.
+          # see: https://btrfs.wiki.kernel.org/index.php/Compression
+          compress ? "zstd"
+        , options ? [ ]
+        }: {
+          device = "/dev/disk/by-uuid/ebf76c7b-14f1-4c23-8eb5-7931388c83e3";
+          fsType = "btrfs";
+          options = [ "subvol=${subvol}" "compress=${compress}" "space_cache=v2" ] ++ options;
+          neededForBoot = true;
+        };
     in
     {
       "/boot" = {

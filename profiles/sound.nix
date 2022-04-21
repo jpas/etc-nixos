@@ -26,6 +26,7 @@ with lib;
         bindsTo = [ "pipewire.service" ];
       };
     }
+
     (mkIf config.services.pipewire.enable {
       security.rtkit.enable = mkDefault true;
 
@@ -35,6 +36,11 @@ with lib;
         extraPackages = [ pkgs.pipewire ];
         extraPackages32 = [ pkgs.pkgsi686Linux.pipewire ];
       };
+
+      environment.defaultPackages = [
+        pkgs.pulseaudio # needed for pactl
+        pkgs.pulsemixer
+      ];
     })
   ]);
 }

@@ -78,7 +78,7 @@ let
 
           systemd.services.syncthing = {
             serviceConfig = {
-              StateDirectory="syncthing";
+              StateDirectory = "syncthing";
             };
           };
 

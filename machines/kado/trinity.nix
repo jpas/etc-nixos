@@ -50,7 +50,7 @@ mkIf enable {
       isSystemUser = true;
       group = "trinity";
     };
-    groups.trinity = {};
+    groups.trinity = { };
   };
 
   systemd.services = {
