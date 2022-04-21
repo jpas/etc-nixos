@@ -1,5 +1,6 @@
 { lib
 , config
+, flake
 , pkgs
 , ...
 }:
@@ -31,10 +32,6 @@ with lib;
   };
 
   environment.systemPackages = attrValues {
-    kitty-terminfo = pkgs.kitty.terminfo;
-  };
-
-  environment.defaultPackages = mkDefault (attrValues {
     inherit (pkgs)
       bat
       coreutils
@@ -53,7 +50,8 @@ with lib;
       usbutils
       wget
       ;
-  });
+    kitty-terminfo = pkgs.kitty.terminfo;
+  };
 
   programs.htop = {
     enable = mkDefault true;
@@ -80,6 +78,13 @@ with lib;
     '';
   };
 
+  environment.shellAliases = {
+    cat = "bat --theme=gruvbox-dark";
+    ls = "exa --git";
+    la = "ls -la";
+    l = "ls -l";
+    ll = "ls -l";
+  };
   environment.localBinInPath = true;
 
   environment.etc.inputrc.text = ''
@@ -95,14 +100,6 @@ with lib;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-  };
-
-  shellAliases = {
-    cat = "bat --theme=gruvbox-dark";
-    ls = "exa --git";
-    la = "ls -la";
-    l = "ls -l";
-    ll = "ls -l";
   };
 
   # This value determines the NixOS release with which your system is to be

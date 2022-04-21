@@ -11,10 +11,8 @@ let
 in
 {
   imports = [
-    ./firefox.nix
     ./imv.nix
     ./neovim.nix
-    ./spotifyd.nix
     ./sway.nix
     ./tmux.nix
     #./xplr.nix
@@ -170,10 +168,9 @@ in
             linux_display_server = "auto";
           };
         };
-      ];
-      })
+    })
 
-      (mkIf config.programs.mako.enable {
+    (mkIf config.programs.mako.enable {
       programs.mako = let colors = config.hole.colors.gruvbox.dark; in
         {
           font = "monospace 10";
@@ -188,4 +185,5 @@ in
           icons = false;
         };
     })
-    }
+  ];
+}

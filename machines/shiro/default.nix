@@ -26,6 +26,8 @@ with lib;
   environment.systemPackages = attrValues {
     inherit (pkgs)
       gamescope
+      steam
+      steam-run
       ;
   };
 }

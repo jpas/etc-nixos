@@ -1,14 +1,14 @@
 declare -A __pr_c_cache
 __pr_c() {
-  __pr_c_eval "$1" && printf "%s" "''${__pr_c_cache["$1"]}"
+  __pr_c_eval "$1" && printf "%s" "${__pr_c_cache["$1"]}"
 }
 
 __pr_c_tput() {
-  local v = $(tput "$@") && printf "\[%s\]" "$v"
+  local v=$(tput "$@") && printf "\[%s\]" "$v"
 }
 
 __pr_c_eval() {
-  [[ ''${__pr_c_cache["$1"]+1} ]] && return
+  [[ ${__pr_c_cache["$1"]+1} ]] && return
 
   local v=""
   case "$1" in

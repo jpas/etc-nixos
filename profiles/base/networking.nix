@@ -26,7 +26,6 @@ with lib;
       matchConfig.Type = "ether";
       networkConfig.DHCP = "yes";
       dhcpV4Config.RouteMetric = 1024;
-      linkConfig.RequiredForOnline = "no";
     };
   };
 }

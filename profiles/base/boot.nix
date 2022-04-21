@@ -4,6 +4,8 @@
 , ...
 }:
 
+with lib;
+
 let
   loaderCommon = {
     enable = mkDefault false;

@@ -13,7 +13,6 @@ with lib;
     ./network.nix
     ./nfs.nix
     ./ssh.nix
-    ./bash.nix
     #./users.nix
     #./steam.nix
   ];
