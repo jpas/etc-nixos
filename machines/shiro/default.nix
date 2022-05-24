@@ -23,6 +23,11 @@ with lib;
 
   programs.sway.enable = true;
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
+
   environment.systemPackages = attrValues {
     inherit (pkgs)
       gamescope
