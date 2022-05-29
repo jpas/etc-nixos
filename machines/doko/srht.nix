@@ -10,8 +10,9 @@ let
   cfg = config.services.sourcehut;
   fqdn = "ht.pas.sh";
   secrets-root = "/etc/nixos/secrets/srht";
+  enable = false;
 in
-mkMerge [
+mkIf enable (mkMerge [
   {
     services.sourcehut.enable = true;
     services.sourcehut = {
@@ -122,4 +123,4 @@ mkMerge [
       recommendedProxySettings = true;
     };
   }
-]
+])
