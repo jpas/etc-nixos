@@ -22,6 +22,13 @@ with lib;
     }
 
     (mkIf config.services.tailscale.enable {
+      systemd.network.networks = {
+        "00-unmanage-tailscale" = {
+          matchConfig.Name = [ "tailscale*" ];
+          linkConfig.Unmanaged = true;
+        };
+      };
+
       systemd.services = {
         "iwd" = {
           requires = [ "dbus.service" ];
