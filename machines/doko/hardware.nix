@@ -56,11 +56,19 @@ with lib;
         "enp8s0"
         "enp11s0f0"
         "enp11s0f1"
-        "enp11s0f2"
+        # "enp11s0f2"
         "enp11s0f3"
         "enp4s0f0"
         "enp4s0f1"
       ];
+    };
+
+    "00-wan" = {
+      matchConfig.Name = [
+        "enp11s0f2"
+      ];
+      networkConfig.DHCP = "yes";
+      dhcpV4Config.RouteMetric = 512;
     };
   };
 }
