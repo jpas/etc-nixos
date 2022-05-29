@@ -46,9 +46,10 @@ with lib;
   ];
 
   systemd.network.networks = {
-    "00-unmanaged" = {
+    "01-unmanaged" = {
       linkConfig = {
         Unmanaged = true;
+        RequiredForOnline = "no";
       };
 
       matchConfig.Name = [
@@ -63,12 +64,11 @@ with lib;
       ];
     };
 
-    "00-wan" = {
-      matchConfig.Name = [
-        "enp11s0f2"
-      ];
-      networkConfig.DHCP = "yes";
-      dhcpV4Config.RouteMetric = 512;
+    "81-wan" = {
+      matchConfig.Name = "enp11s0f2";
+      dhcpV4Config = {
+        RouteMetric = 512;
+      };
     };
   };
 }

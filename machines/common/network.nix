@@ -23,21 +23,22 @@ with lib;
 
     (mkIf config.services.tailscale.enable {
       systemd.network.networks = {
-        "00-unmanage-tailscale" = {
-          matchConfig.Name = [ "tailscale*" ];
-          linkConfig.Unmanaged = true;
+        "81-tailscale" = {
+          matchConfig.Name = "tailscale*";
+          linkConfig = {
+            RequiredForOnline = "no";
+          };
+          networkConfig = {
+            LinkLocalAddressing = "no";
+          };
         };
       };
 
       systemd.services = {
-        "iwd" = {
-          requires = [ "dbus.service" ];
-          after = [ "dbus.service" ];
-        };
-
         "tailscaled" = {
           requires = [ "network-online.target" ];
           after = [ "network-online.target" ];
+          bindsTo = [ "systemd-networkd.service" ];
         };
 
         "tailscale-peer@" = {

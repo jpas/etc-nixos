@@ -12,7 +12,7 @@ with lib;
   };
 
   systemd.network.links = {
-    "98-persistent-names" = {
+    "00-persistent-names" = {
       matchConfig.Name = "*";
       linkConfig = {
         NamePolicy = "keep kernel database onboard slot path mac";
@@ -22,10 +22,17 @@ with lib;
   };
 
   systemd.network.networks = {
-    "40-ether-dhcp" = {
+    "81-ethernet" = {
       matchConfig.Type = "ether";
-      networkConfig.DHCP = "yes";
-      dhcpV4Config.RouteMetric = 1024;
+      linkConfig = {
+        RequiredForOnline = "routable";
+      };
+      networkConfig = {
+        DHCP = "yes";
+      };
+      dhcpV4Config = {
+        RouteMetric = 1024;
+      };
     };
   };
 }
