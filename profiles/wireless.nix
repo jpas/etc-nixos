@@ -5,6 +5,9 @@
 
 with lib;
 
+let
+  iwd-cfg = config.networking.wireless.iwd;
+in
 {
   config = mkIf (config.hole.profiles ? wireless) {
     networking = {
@@ -16,32 +19,29 @@ with lib;
             EnableNetworkConfiguration = mkDefault true;
           };
           Network = {
+            NameResolvingService = mkDefault "systemd";
             EnableIPv6 = mkDefault false;
             RoutePriorityOffset = mkDefault 2048;
           };
         };
       };
 
-      wireless.enable = !config.networking.wireless.iwd.enable;
-      networkmanager.wifi.backend = mkIf config.wireless.iwd.enable "iwd";
+      wireless.enable = !iwd-cfg.enable;
+      networkmanager.wifi.backend = mkIf iwd-cfg.enable "iwd";
     };
 
-    systemd.network.networks = {
-      "81-wlan" = {
-        matchConfig = {
-          Type = "wlan";
-        };
-        linkConfig = {
-          RequiredForOnline = "routable";
+    systemd.network.networks =
+      mkIf iwd-cfg.settings.General.EnableNetworkConfiguration {
+        "80-iwd" = {
+          matchConfig.Type = "wlan";
+          linkConfig.Unmanaged = true;
         };
       };
-    };
 
     systemd.services = {
       "iwd" = {
         requires = [ "dbus.service" ];
         after = [ "dbus.service" ];
-        bindsTo = [ "systemd-networkd.service" ];
       };
     };
   };
