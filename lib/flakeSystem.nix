@@ -5,7 +5,7 @@ let
     key = ./flakeSystem.nix;
 
     config = {
-      nixpkgs.overlays = [ flake.overlay ];
+      nixpkgs.overlays = [ flake.overlays.default ];
 
       nix = {
         package = pkgs.nixUnstable;

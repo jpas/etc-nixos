@@ -26,14 +26,14 @@
           ];
         });
 
-      overlay = import ./pkgs;
+      overlays.default = import ./pkgs;
 
       packages = lib.genAttrs [ "x86_64-linux" ] (system:
         let
           install-iso = self.nixosConfigurations.iso.config.system.build.isoImage;
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlay ];
+            overlays = [ self.overlays.default ];
           };
         in
         pkgs.hole // { inherit install-iso; }

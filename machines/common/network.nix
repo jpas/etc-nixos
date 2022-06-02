@@ -30,6 +30,10 @@ with lib;
       };
 
       systemd.services = {
+        "tailscaled" = {
+          after = [ "systemd-networkd.service" ];
+        };
+
         "tailscale-peer@" = {
           scriptArgs = "%I";
           script =
