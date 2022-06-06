@@ -30,7 +30,7 @@
   ];
 
   services.fail2ban.enable = true;
-
+  services.unbound.enable = true;
   virtualisation.docker.enable = true;
 
   systemd.network.networks = {
@@ -45,6 +45,7 @@
         "enp0s20f1"
         "enp0s20f2"
         "enp0s20f3"
+        "veth*" # docker-compose veth
       ];
     };
   };
