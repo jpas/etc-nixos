@@ -1,27 +1,28 @@
 { lib
 , config
+, pkgs
 , ...
 }:
 
 with lib;
 
 let
-  cfg = config.hole.wireless;
+  cfg = config.hole.hardware.wireless;
   iwd-cfg = config.networking.wireless.iwd;
 in
 {
-  options.hole.wireless = {
-    enable = mkEnableOption "wireless";
-  };
+  options.hole.hardware.wifi.enable = mkEnableOption "wifi";
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.iw ];
+
     networking = {
       wireless.iwd = {
         enable = mkDefault true;
 
         settings = {
           General = {
-            EnableNetworkConfiguration = mkDefault true;
+            EnableNetworkConfiguration = config.hole.networking.dhcp;
           };
           Network = {
             NameResolvingService = mkDefault "systemd";
@@ -36,7 +37,7 @@ in
     };
 
     systemd.network.networks =
-      mkIf iwd-cfg.settings.General.EnableNetworkConfiguration {
+      mkIf config.hole.networking.dhcp {
         "80-iwd" = {
           matchConfig.Type = "wlan";
           linkConfig.Unmanaged = true;
