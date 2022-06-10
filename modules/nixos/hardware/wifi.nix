@@ -7,7 +7,7 @@
 with lib;
 
 let
-  cfg = config.hole.hardware.wireless;
+  cfg = config.hole.hardware.wifi;
   iwd-cfg = config.networking.wireless.iwd;
 in
 {

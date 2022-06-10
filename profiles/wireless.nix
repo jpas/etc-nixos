@@ -1,3 +1,3 @@
 {
-  hole.hardware.wifi.enable = mkDefault true;
+  hole.hardware.wifi.enable = true;
 }

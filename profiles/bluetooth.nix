@@ -1,3 +1,3 @@
 {
-  hole.hardware.bluetooth.enable = mkDefault true;
+  hole.hardware.bluetooth.enable = true;
 }

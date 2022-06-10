@@ -4,7 +4,10 @@
   secrets = ./secrets.nix;
   thermald = ./thermald.nix;
 
-  bluetooth = ./bluetooth.nix;
+  hardware = ./hardware;
   networking = ./networking.nix;
+
+  bluetooth = ./bluetooth.nix;
   wifi = ./wifi.nix;
+  laptop = ./laptop.nix;
 }
