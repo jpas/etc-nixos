@@ -17,6 +17,33 @@
     ./dl.nix
   ];
 
+  systemd.network.networks = {
+    "20-lan" = {
+      matchConfig.Name = "enp7s0";
+      linkConfig = {
+        RequiredForOnline = "routable";
+      };
+      networkConfig = {
+        DHCP = "yes";
+      };
+    };
+    "20-wan" = {
+      matchConfig.Name = "enp11s0f2";
+      linkConfig = {
+        RequiredForOnline = "routable";
+      };
+      networkConfig = {
+        DHCP = "yes";
+      };
+      dhcpV4Config = {
+        RouteMetric = 512;
+      };
+      dhcpV6Config = {
+        RouteMetric = 512;
+      };
+    };
+  };
+
   networking.firewall.allowedTCPPorts = [
     80
     443

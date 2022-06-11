@@ -44,31 +44,4 @@ with lib;
   swapDevices = [
     { device = "/dev/disk/by-uuid/b022d055-04e1-4ce6-ab01-6b66d47fd35a"; }
   ];
-
-  systemd.network.networks = {
-    "01-unmanaged" = {
-      linkConfig = {
-        Unmanaged = true;
-        RequiredForOnline = "no";
-      };
-
-      matchConfig.Name = [
-        # "enp7s0"
-        "enp8s0"
-        "enp11s0f0"
-        "enp11s0f1"
-        # "enp11s0f2"
-        "enp11s0f3"
-        "enp4s0f0"
-        "enp4s0f1"
-      ];
-    };
-
-    "20-wan" = {
-      matchConfig.Name = "enp11s0f2";
-      dhcpV4Config = {
-        RouteMetric = 512;
-      };
-    };
-  };
 }
