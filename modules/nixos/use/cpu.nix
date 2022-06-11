@@ -28,6 +28,7 @@ in
 
     (mkIf cfg.arm-cpu {
       boot.loader.generic-extlinux-compatible.enable = true;
+      grub.enable = false;
     })
 
     (mkIf cfg.efi {
