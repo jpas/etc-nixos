@@ -6,10 +6,12 @@
 with lib;
 
 let
-  cfg = config.hole.hardware.laptop;
+
+  cfg = config.hole.profile.laptop;
+
 in
 {
-  options.hole.hardware.laptop.enable = mkEnableOption "laptop";
+  options.hole.profile.laptop = mkEnableOption "laptop";
 
   config = mkIf cfg.enable {
     services.logind = {
@@ -34,8 +36,17 @@ in
     #   criticalPowerAction = mkDefault "HybridSleep";
     # };
 
-    services.thermald.enable = mkDefault true;
     services.tlp.enable = mkDefault true;
     services.xserver.libinput.enable = mkDefault true;
+
+    services.thermald = mkIf config.hole.hardware.cpu.intel {
+      enable = mkDefault true;
+      # Empty config to remove example config from logs
+      configFile = mkDefault (builtins.toFile "thermal-conf.xml.empty" ''
+        <?xml version="1.0"?>
+        <ThermalConfiguration>
+        </ThermalConfiguration>
+      '');
+    };
   };
 }

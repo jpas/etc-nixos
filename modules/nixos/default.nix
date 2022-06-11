@@ -3,8 +3,7 @@
   hole = ./hole.nix;
   secrets = ./secrets.nix;
 
-  base = ./base;
-  graphical = ./graphical.nix;
+  profile = ./profile;
   hardware = ./hardware;
   network = ./network.nix;
   security = ./security.nix;

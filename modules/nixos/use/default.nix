@@ -1,4 +1,4 @@
-{ config, options, lib, ... }:
+{ config, lib, ... }:
 
 let
 
@@ -10,14 +10,19 @@ in
 
 {
   imports = [
-    ../hole
-    #../hole/secrets.nix
+    ../../hole
+    ./base.nix
+    ./bluetooth.nix
+    ./cpu.nix
+    ./graphical.nix
+    ./laptop.nix
+    ./sound.nix
   ];
 
   home-manager.sharedModules = [
     ({ ... }: {
-      options = options.hole.profile;
-      hole.profile = lib.mapAttrs mkPropagate config.hole.profile;
+      options = options.hole.use;
+      hole.use = mapAttrs mkPropagate config.hole.use;
     })
   ];
 }

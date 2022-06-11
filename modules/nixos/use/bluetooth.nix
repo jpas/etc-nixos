@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.hole.hardware.bluetooth;
+  cfg = config.hole.use.bluetooth;
 in
 {
-  options.hole.hardware.bluetooth.enable = mkEnableOption "bluetooth";
+  options.hole.use.bluetooth = mkEnableOption "bluetooth";
 
   config = mkIf cfg.enable {
     hardware.bluetooth = {
