@@ -65,7 +65,7 @@ with lib;
       # TODO: garbage from electron apps in ~/.config/*
     }
 
-    (mkIf !config.hole.use.minimal {
+    (mkIf (!config.hole.use.minimal) {
       programs.neovim.enable = true;
     })
 
