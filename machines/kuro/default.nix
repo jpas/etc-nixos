@@ -9,15 +9,18 @@
     ./kanshi.nix
   ];
 
+  hole.hardware = {
+    laptop.enable = true;
+    bluetooth.enable = true;
+    wifi.enable = true;
+    sound.enable = true;
+  };
+
+  hole.profile = {
+    graphical.enable = true;
+  };
+
   hole = {
-    profiles = {
-      bluetooth = true;
-      desktop = true;
-      games = true;
-      laptop = true;
-      sound = true;
-      wireless = true;
-    };
     aleph.enable = false;
   };
 

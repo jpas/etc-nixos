@@ -6,13 +6,20 @@
 
 with lib;
 
+let
+  cfg = options.hole.profile;
+in
 {
-  config = mkIf (config.hole.profiles ? desktop) (mkMerge [
+  options = {
+    hole.profile.graphical = mkEnableOption "graphical profile";
+  };
+
+  config = lib.mkIf cfg.graphical (mkMerge [
     {
       hardware.opengl = {
         enable = mkDefault true;
-        driSupport = mkDefault config.hardware.opengl.enable;
-        driSupport32Bit = mkDefault config.hardware.opengl.driSupport;
+        driSupport = mkDefault true;
+        driSupport32Bit = mkDefault true;
       };
 
       environment.systemPackages = builtins.attrValues {

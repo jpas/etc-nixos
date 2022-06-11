@@ -2,12 +2,10 @@
   docker = ./docker.nix;
   hole = ./hole.nix;
   secrets = ./secrets.nix;
-  thermald = ./thermald.nix;
 
+  base = ./base;
+  graphical = ./graphical.nix;
   hardware = ./hardware;
-  networking = ./networking.nix;
-
-  bluetooth = ./bluetooth.nix;
-  wifi = ./wifi.nix;
-  laptop = ./laptop.nix;
+  network = ./network.nix;
+  security = ./security.nix;
 }

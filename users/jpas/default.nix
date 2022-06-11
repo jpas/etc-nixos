@@ -6,9 +6,6 @@
 
 with lib;
 
-let
-  isWorkstation = true;
-in
 {
   imports = [
     ./imv.nix
@@ -72,7 +69,7 @@ in
       programs.neovim.enable = true;
     }
 
-    (mkIf (config.hole.profiles ? desktop) {
+    (mkIf config.hole.profile.graphical {
       wayland.windowManager.sway.enable = true;
 
       #services.spotifyd.enable = true;

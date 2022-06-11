@@ -13,10 +13,8 @@
     ../../profiles/wireless.nix
   ];
 
-  hole.profiles = {
-    sound = true;
-    wireless = true;
-  };
+  hole.hardware.wifi = true;
+  hole.hardware.sound = true;
 
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux;
 }

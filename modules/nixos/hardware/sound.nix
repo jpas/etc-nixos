@@ -6,8 +6,13 @@
 
 with lib;
 
+let
+  cfg = config.hole.hardware.sound;
+in
 {
-  config = mkIf (config.hole.profiles ? sound) (mkMerge [
+  options.hole.hardware.sound.enable = mkEnableOption "sound";
+
+  config = mkIf cfg.enable (mkMerge [
     {
       services.pipewire = {
         enable = mkDefault true;
@@ -37,7 +42,7 @@ with lib;
         extraPackages32 = [ pkgs.pkgsi686Linux.pipewire ];
       };
 
-      environment.defaultPackages = [
+      environment.systemPackages = [
         pkgs.pulseaudio # needed for pactl
         pkgs.pulsemixer
       ];

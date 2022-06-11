@@ -13,9 +13,7 @@ with lib;
 
   imports = [ ../common ];
 
-  hole.profiles = {
-    minimal = true;
-  };
+  hole.profile.minimal = true;
 
   fileSystems = {
     "/" = {

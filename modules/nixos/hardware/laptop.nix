@@ -5,6 +5,9 @@
 
 with lib;
 
+let
+  cfg = config.hole.hardware.laptop;
+in
 {
   options.hole.hardware.laptop.enable = mkEnableOption "laptop";
 

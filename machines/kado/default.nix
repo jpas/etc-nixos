@@ -23,10 +23,20 @@
     443
     5201
     9091 # TODO: transmission
+    # jellyfin docker
+    8096
+    8920
+    # sonarr docker
+    7878
+    # radarr docker
+    8989
   ];
 
   networking.firewall.allowedUDPPorts = [
     5201
+    # jellyfin docker
+    1900
+    7359
   ];
 
   services.fail2ban.enable = true;

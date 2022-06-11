@@ -15,11 +15,17 @@ with lib;
     ./hardware.nix
   ];
 
-  hole.profiles = {
-    bluetooth = true;
-    desktop = true;
-    sound = true;
+  hole.hardware = {
+    bluetooth.enable = true;
+    sound.enable = true;
   };
+
+  hole.profile = {
+    graphical.enable = true;
+    desktop.enable = true;
+  };
+
+  hole.profiles.desktop = true;
 
   programs.sway.enable = true;
 
