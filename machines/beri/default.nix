@@ -21,6 +21,18 @@ with lib;
     };
   };
 
+  systemd.network.networks = {
+    "20-lan" = {
+      matchConfig.Name = "enx*";
+      linkConfig = {
+        RequiredForOnline = "routable";
+      };
+      networkConfig = {
+        DHCP = "yes";
+      };
+    };
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
