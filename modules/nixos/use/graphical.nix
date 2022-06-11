@@ -12,6 +12,8 @@ in
 
   config = mkIf cfg.graphical (mkMerge [
     {
+      services.xserver.libinput.enable = mkDefault true;
+
       hardware.opengl = {
         enable = mkDefault true;
         driSupport = mkDefault true;

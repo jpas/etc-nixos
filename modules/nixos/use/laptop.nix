@@ -34,9 +34,8 @@ in
     # };
 
     services.tlp.enable = mkDefault true;
-    services.xserver.libinput.enable = mkDefault true;
 
-    services.thermald = mkIf config.hole.hardware.cpu.intel {
+    services.thermald = mkIf config.hole.use.intel-cpu {
       enable = mkDefault true;
       # Empty config to remove example config from logs
       configFile = mkDefault (builtins.toFile "thermal-conf.xml.empty" ''

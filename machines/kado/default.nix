@@ -1,15 +1,14 @@
 {
   networking.hostName = "kado";
   nixpkgs.system = "x86_64-linux";
-  boot.loader.systemd-boot.enable = true;
 
-  hardware.cpu.intel.updateMicrocode = true;
+  hole.use.intel-cpu = true;
 
   imports = [
     ../common
     ./hardware.nix
     ./aleph.nix
-    ./trinity.nix
+    #./trinity.nix
     #./factorio.nix
     ./nfs.nix
     ./print-and-scan.nix
@@ -44,19 +43,14 @@
   virtualisation.docker.enable = true;
 
   systemd.network.networks = {
-    "01-unmanaged" = {
+    "20-lan" = {
+      matchConfig.Name = "enp0s20f0";
       linkConfig = {
-        Unmanaged = true;
-        RequiredForOnline = "no";
+        RequiredForOnline = "routable";
       };
-
-      matchConfig.Name = [
-        # "enp0s20f0"
-        "enp0s20f1"
-        "enp0s20f2"
-        "enp0s20f3"
-        "veth*" # docker-compose veth
-      ];
+      networkConfig = {
+        DHCP = "yes";
+      };
     };
   };
 }

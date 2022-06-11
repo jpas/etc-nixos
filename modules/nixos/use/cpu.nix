@@ -23,6 +23,7 @@ in
 
     (mkIf cfg.intel-cpu {
       hole.use.efi = mkDefault true;
+      hardware.cpu.intel.updateMicrocode = true;
     })
 
     (mkIf cfg.arm-cpu {

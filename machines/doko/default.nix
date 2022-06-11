@@ -6,8 +6,8 @@
 {
   networking.hostName = "doko";
   nixpkgs.system = "x86_64-linux";
-  boot.loader.systemd-boot.enable = true;
 
+  hole.use.intel-cpu = true;
 
   imports = [
     ../common

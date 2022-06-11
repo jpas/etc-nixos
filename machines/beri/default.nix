@@ -12,9 +12,7 @@ with lib;
 
   imports = [ ../common ];
 
-  hole.use = {
-    arm-cpu = true;
-  };
+  hole.use.arm-cpu = true;
 
   fileSystems = {
     "/" = {
