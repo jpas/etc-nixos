@@ -88,6 +88,8 @@ let
             home = "/var/empty";
             shell = "/run/current-system/sw/bin/nologin";
           };
+
+          system.stateVersion = config.system.stateVersion;
         };
       };
     };
