@@ -1,18 +1,21 @@
-{ lib
-, config
-}:
+{ config, lib, ... }:
 
 let
+
   cfg = config.hole.security;
+
 in
+
 {
-  options.hole.security.enable = mkOption {
-    description = "Whether to enable security config.";
-    default = true;
-    type = types.bool;
+  options = {
+    hole.security.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to enable security config.";
+    };
   };
 
-  config = mkIf cfg.enable {
-    boot.loader.systemd-boot.editor = mkDefault false;
+  config = lib.mkIf cfg.enable {
+    boot.loader.systemd-boot.editor = false;
   };
 }

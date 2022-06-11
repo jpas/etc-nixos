@@ -1,19 +1,16 @@
-{ lib
-, config
-, ...
-}:
+{ config, lib, ... }:
 
 with lib;
 
 let
 
-  cfg = config.hole.profile.laptop;
+  cfg = config.hole.use;
 
 in
 {
-  options.hole.profile.laptop = mkEnableOption "laptop";
+  options.hole.use.laptop = mkEnableOption "laptop";
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.laptop {
     services.logind = {
       lidSwitch = mkDefault "suspend";
       lidSwitchDocked = mkDefault "ignore";

@@ -14,7 +14,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
     {
       environment.systemPackages = [ pkgs.iw ];
 
@@ -50,6 +50,6 @@ in
           RoutePriorityOffset = 1025; # should be just lower than wired
         };
       };
-    });
-  ])
+    })
+  ]);
 }

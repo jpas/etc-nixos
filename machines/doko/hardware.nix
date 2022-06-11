@@ -64,7 +64,7 @@ with lib;
       ];
     };
 
-    "81-wan" = {
+    "20-wan" = {
       matchConfig.Name = "enp11s0f2";
       dhcpV4Config = {
         RouteMetric = 512;

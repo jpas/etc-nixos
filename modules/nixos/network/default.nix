@@ -25,19 +25,22 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    networking.useDHCP = false;
+    networking.useNetworkd = true;
+
     systemd.network.links = {
-      "99-default" = {
+      "98-default" = {
         matchConfig.OriginalName = "*";
         linkConfig = {
           NamePolicy = "keep kernel database onboard slot path mac";
           AlternativeNamesPolicy = "database onboard slot path mac";
-          MACAddressPolicy = "persistent"
+          MACAddressPolicy = "persistent";
         };
       };
     };
 
     systemd.network.networks = {
-      "99-default" = {
+      "98-default" = {
         matchConfig.OriginalName = "*";
         linkConfig.Unmanaged = true;
       };

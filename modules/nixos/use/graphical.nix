@@ -1,20 +1,16 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
+{ config,  lib, pkgs, ... }:
 
 with lib;
 
 let
-  cfg = options.hole.profile;
+  cfg = config.hole.use;
 in
 {
   options = {
-    hole.profile.graphical = mkEnableOption "graphical profile";
+    hole.use.graphical = mkEnableOption "graphical config";
   };
 
-  config = lib.mkIf cfg.graphical (mkMerge [
+  config = mkIf cfg.graphical (mkMerge [
     {
       hardware.opengl = {
         enable = mkDefault true;

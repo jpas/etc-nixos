@@ -69,7 +69,7 @@ with lib;
       programs.neovim.enable = true;
     }
 
-    (mkIf config.hole.profile.graphical {
+    (mkIf config.hole.use.graphical {
       wayland.windowManager.sway.enable = true;
 
       #services.spotifyd.enable = true;

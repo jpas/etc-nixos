@@ -1,18 +1,16 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
 let
-  cfg = config.hole.hardware.sound;
+  cfg = config.hole.use;
 in
 {
-  options.hole.hardware.sound.enable = mkEnableOption "sound";
+  options = {
+    hole.use.sound = mkEnableOption "sound";
+  };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf cfg.sound (mkMerge [
     {
       services.pipewire = {
         enable = mkDefault true;

@@ -9,11 +9,12 @@ with lib;
 {
   networking.hostName = "beri";
   nixpkgs.system = "aarch64-linux";
-  boot.loader.generic-extlinux-compatible.enable = true;
 
   imports = [ ../common ];
 
-  hole.profile.minimal = true;
+  hole.use = {
+    arm-cpu = true;
+  };
 
   fileSystems = {
     "/" = {

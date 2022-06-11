@@ -1,10 +1,8 @@
 {
   docker = ./docker.nix;
-  hole = ./hole.nix;
   secrets = ./secrets.nix;
 
-  profile = ./profile;
-  hardware = ./hardware;
-  network = ./network.nix;
+  use = ./use;
+  network = ./network;
   security = ./security.nix;
 }

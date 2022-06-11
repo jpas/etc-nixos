@@ -1,17 +1,16 @@
-{ lib
-, config
-, ...
-}:
+{ config, lib, ... }:
 
 with lib;
 
 let
-  cfg = config.hole.use.bluetooth;
+
+  cfg = config.hole.use;
+
 in
 {
   options.hole.use.bluetooth = mkEnableOption "bluetooth";
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.bluetooth {
     hardware.bluetooth = {
       enable = true;
 

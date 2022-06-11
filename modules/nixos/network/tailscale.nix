@@ -14,11 +14,11 @@ in
         default = config.hole.network.enable;
         description = ''
           Whether to enable tailscale networking.
-        ''
+        '';
       };
 
       hosts = lib.mkOption {
-        type = lib.types.attrsOf types.str;
+        type = lib.types.attrsOf lib.types.str;
         default = {
           "kado.o" = "100.65.152.104";
           "kuro.o" = "100.116.4.62";
@@ -34,7 +34,7 @@ in
     services.tailscale.enable = true;
 
     networking.firewall.trustedInterfaces = [ "tailscale0" ];
-    networking.hosts = lib.mapAttrs' (hosts: addr: { name = addr; value = [ host ]; }) cfg.hosts;
+    networking.hosts = lib.mapAttrs' (host: addr: { name = addr; value = [ host ]; }) cfg.hosts;
 
     systemd.network.networks = {
       "01-tailscale" = {
