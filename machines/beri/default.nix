@@ -13,6 +13,7 @@ with lib;
   imports = [ ../common ];
 
   hole.use.arm-cpu = true;
+  hole.use.minimal = true;
 
   fileSystems = {
     "/" = {
