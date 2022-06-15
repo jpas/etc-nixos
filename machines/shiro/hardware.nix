@@ -45,7 +45,14 @@
         subvol = "@nix";
         options = [ "noatime" ];
       };
+
+      "/var/swap" = vessel {
+        subvol = "@swap";
+        options = [ "noatime" ];
+      };
     };
 
-  swapDevices = [ ];
+    swapDevices = [
+      { device = "/var/swap/swapfile"; }
+    ];
 }
