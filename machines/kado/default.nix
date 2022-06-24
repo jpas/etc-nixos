@@ -14,6 +14,7 @@
     ./nfs.nix
     ./print-and-scan.nix
     ./unbound.nix
+    ./kresd.nix
     #./samba.nix
     #./croc.nix
   ];
