@@ -28,6 +28,15 @@ with lib;
     remotePlay.openFirewall = true;
   };
 
+  networking.firewall = {
+    allowedTCPPorts = [ ];
+    allowedUDPPorts = [
+      # don't starve together
+      10999
+      10998
+    ];
+  };
+
   environment.systemPackages = attrValues {
     inherit (pkgs)
       gamescope
