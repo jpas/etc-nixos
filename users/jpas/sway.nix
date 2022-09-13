@@ -349,7 +349,7 @@ mkMerge [
                     unlock unlock-session \
               before-sleep lock-session \
               timeout  300 lock-session \
-              timeout 3600 "swaymsg output '*' dpms off" \
+              timeout  600 "swaymsg output '*' dpms off" \
                     resume "swaymsg output '*' dpms on"
     '';
 
