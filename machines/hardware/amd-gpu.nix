@@ -35,9 +35,5 @@ in
     # Use modesetting since intel is outdated and not recommended.
     # See: https://nixos.org/manual/nixos/stable/index.html#sec-x11--graphics-cards-intel
     videoDrivers = mkDefault [ "amdgpu" ];
-
-    # The modesetting driver supports "Glamor" which accelerates 2D graphics
-    # using OpenGL.
-    useGlamor = mkDefault true;
   };
 }
