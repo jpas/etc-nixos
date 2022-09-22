@@ -133,7 +133,6 @@ in
           # required to get gtk apps to find the correct theme
           xdg-desktop-portal-gtk
         ];
-        gtkUsePortal = mkDefault true;
 
         wlr = {
           enable = mkDefault true;
