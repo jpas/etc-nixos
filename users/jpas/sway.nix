@@ -235,8 +235,8 @@ mkMerge [
   (mkConfig {
     sway = {
       keybindings = mkOptionDefault {
-        "Print" = "exec grimshot copy area";
-        "Shift+Print" = "exec grimshot save area";
+        "Print" = "exec ${run-unique} screenshot grimshot copy area";
+        "Shift+Print" = "exec ${run-unique} screenshot grimshot save area";
       };
     };
     packages = [ pkgs.sway-contrib.grimshot ];
