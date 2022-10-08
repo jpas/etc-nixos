@@ -34,9 +34,15 @@
 
   programs.sway.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
-    48080
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      48080 # for random http servers
+    ];
+    allowedUDPPorts = [
+      10999 # don't starve together forest
+      10998 # don't starve together caves
+    ];
+  };
 
   programs.steam = {
     enable = false;

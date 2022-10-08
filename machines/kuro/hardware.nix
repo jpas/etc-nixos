@@ -136,4 +136,7 @@ in
     temp = 93;
     coreOffset = -68;
   };
+
+  services.upower.enable = true;
+  services.udisks2.enable = true;
 }
