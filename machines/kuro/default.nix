@@ -26,12 +26,6 @@
     aleph.enable = false;
   };
 
-  systemd.services = {
-    # networkd does not manage any of the devices available at boot, thus if
-    # enabled it will always timeout.
-    "systemd-networkd-wait-online".enable = false;
-  };
-
   programs.sway.enable = true;
 
   networking.firewall = {

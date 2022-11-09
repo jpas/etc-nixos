@@ -45,6 +45,7 @@ in
 
     systemd.services = {
       "tailscaled" = {
+        bindsTo = [ "systemd-networkd.service" ];
         after = [ "systemd-networkd.service" ];
       };
 

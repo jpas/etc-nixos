@@ -28,6 +28,8 @@ in
     networking.useDHCP = false;
     networking.useNetworkd = true;
 
+    systemd.services.systemd-networkd-wait-online.enable = mkDefault false;
+
     systemd.network.links = {
       "98-default" = {
         matchConfig.OriginalName = "*";
