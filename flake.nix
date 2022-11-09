@@ -44,15 +44,17 @@
       );
 
       deploy = {
+        sshUser = "root";
+
         nodes = lib.flip lib.mapAttrs self.nixosConfigurations
           (name: configuration: {
             hostname = "${name}.o";
             profiles.system = {
               user = "root";
+              # TODO: lookup system from configuration
               path = deploy-rs.lib.x86_64-linux.activate.nixos configuration;
             };
           });
-        sshUser = "root";
       };
 
       hmModules = let modules = import ./modules/home; in

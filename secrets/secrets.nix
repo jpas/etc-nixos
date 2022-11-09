@@ -23,4 +23,6 @@ let
   systems = concatAttrValues system;
 in {
   "passwd-root.age".publicKeys = admins ++ systems;
+  "passwd-jpas.age".publicKeys = admins ++ systems;
+  "passwd-kbell.age".publicKeys = admins ++ systems;
 }
