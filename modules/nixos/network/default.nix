@@ -28,7 +28,7 @@ in
     networking.useDHCP = false;
     networking.useNetworkd = true;
 
-    systemd.services.systemd-networkd-wait-online.enable = mkDefault false;
+    systemd.services.systemd-networkd-wait-online.enable = lib.mkDefault false;
 
     systemd.network.links = {
       "98-default" = {
