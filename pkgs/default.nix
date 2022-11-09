@@ -9,31 +9,30 @@ let
       name = "${old.pname}-${new.version}";
     });
 
-  hole = rec {
-    lib = prev.lib.extend (import ../lib);
+  makeOzoneWrapper = { bin, target, ... }:
+    final.writeShellScriptBin bin ''
+      declare -a args
+      if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+        args+=(--enable-features=UseOzonePlatform --ozone-platform=wayland)
+      fi
+      exec "${target}" "''${args[@]}" "$@"
+    '';
 
-    makeOzoneWrapper = { bin, target, ... }:
-      final.writeShellScriptBin bin ''
-        declare -a args
-        if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
-          args+=(--enable-features=UseOzonePlatform --ozone-platform=wayland)
-        fi
-        exec "${target}" "''${args[@]}" "$@"
-      '';
+  hole = rec {
 
     #swaynagmode = callPackage ./swaynagmode { };
     ftpserver = callPackage ./ftpserver { };
-    gamescope = callPackage ./gamescope { };
-    libliftoff = callPackage ./libliftoff { };
-    oauth2ms = callPackage ./oauth2ms { };
-    oauth2token = callPackage ./oauth2token { };
-    proton-ge = callPackage ./proton-ge { };
-    trinity = callPackage ./trinity { stdenv = final.clang11Stdenv; };
-    xplr = callPackage ./xplr { };
+    #gamescope = callPackage ./gamescope { };
+    #libliftoff = callPackage ./libliftoff { };
+    #oauth2ms = callPackage ./oauth2ms { };
+    #oauth2token = callPackage ./oauth2token { };
+    #proton-ge = callPackage ./proton-ge { };
+    #trinity = callPackage ./trinity { stdenv = final.clang11Stdenv; };
+    #xplr = callPackage ./xplr { };
 
-    steam = prev.steam.override {
-      extraPkgs = pkgs: [ pkgs.libunwind ];
-    };
+    #steam = prev.steam.override {
+    #  extraPkgs = pkgs: [ pkgs.libunwind ];
+    #};
 
     #kanshi = prev.kanshi.overrideAttrs (_: {
     #  version = "2021-02-02-unstable";
@@ -45,9 +44,9 @@ let
     #  };
     #});
 
-    agda = prev.agda.withPackages (p: [
-      p.standard-library
-    ]);
+    #agda = prev.agda.withPackages (p: [
+    #  p.standard-library
+    #]);
 
     #sway-unwrapped = prev.sway-unwrapped.overrideAttrs (o: {
     #  patches = (o.patches or []) ++ [
@@ -59,45 +58,25 @@ let
     #  ];
     #});
 
-    meson_0_59_1 = updateDerivation prev.meson (old: rec {
-      version = "0.59.1";
-
-      src = prev.python3.pkgs.fetchPypi {
-        inherit (old) pname;
-        inherit version;
-        sha256 = "sha256-21hqRRZQ1Gu+EJhKh7edm83ByuvzjY4Yn4hI+NUCNW0=";
-      };
-      patches =
-        (lib.flip lib.filter old.patches
-          (patch: ! lib.hasSuffix "gir-fallback-path.patch" patch)
-        ) ++ [
-          (prev.fetchpatch {
-            name = "git-fallback-path.patch";
-            url = "https://raw.githubusercontent.com/NixOS/nixpkgs/3c9014a761ba5a8af56e04035cb1a20c706d814a/pkgs/development/tools/build-managers/meson/gir-fallback-path.patch";
-            sha256 = "sha256-QfkS6pAmF+D51qgIyOTMvGvlAtn4S4dIe+h3GG1GHkA=";
-          })
-        ];
-    });
-
-    wine64Wayland = prev.wine64.overrideAttrs (old: rec {
-      name = "wine64+wayland-${version}";
-      version = "6.21";
-      src = final.fetchFromGitLab {
-        domain = "gitlab.collabora.com";
-        owner = "alf";
-        repo = "wine";
-        rev = "f4824e92776dcb7efa217c5845460bc82184274a";
-        sha256 = "sha256-jJisQ3EuaZhqtgEINvqVhSLgBwFCxahjRC4N4xwFN/0=";
-      };
-      buildInputs = old.buildInputs ++ [
-        final.wayland
-        final.egl-wayland
-        final.libxkbcommon
-        final.libGL
-      ];
-      patches = [ ];
-      configureFlags = old.configureFlags ++ [ "--with-x=no" "--with-wayland" ];
-    });
+    #wine64Wayland = prev.wine64.overrideAttrs (old: rec {
+    #  name = "wine64+wayland-${version}";
+    #  version = "6.21";
+    #  src = final.fetchFromGitLab {
+    #    domain = "gitlab.collabora.com";
+    #    owner = "alf";
+    #    repo = "wine";
+    #    rev = "f4824e92776dcb7efa217c5845460bc82184274a";
+    #    sha256 = "sha256-jJisQ3EuaZhqtgEINvqVhSLgBwFCxahjRC4N4xwFN/0=";
+    #  };
+    #  buildInputs = old.buildInputs ++ [
+    #    final.wayland
+    #    final.egl-wayland
+    #    final.libxkbcommon
+    #    final.libGL
+    #  ];
+    #  patches = [ ];
+    #  configureFlags = old.configureFlags ++ [ "--with-x=no" "--with-wayland" ];
+    #});
   };
 in
 hole // { inherit hole; }

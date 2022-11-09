@@ -1,4 +1,4 @@
-{
+builtins.mapAttrs (_: p: import p) {
   bat = ./bat.nix;
   hole = ./hole.nix;
   imv = ./imv.nix;

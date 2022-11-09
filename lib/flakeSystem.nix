@@ -21,7 +21,7 @@ let
       home-manager = lib.mkIf (options ? home-manager) {
         useGlobalPkgs = lib.mkForce true;
         useUserPackages = lib.mkForce true;
-        sharedModules = [ (flake.hmModule or { }) ];
+        sharedModules = [ (flake.hmModules.default or { }) ];
       };
 
       system.configurationRevision = lib.mkIf (flake ? rev) flake.rev;
@@ -63,7 +63,7 @@ let
     lib.nixosSystem (builtins.removeAttrs args_ [ "flake" ] // {
       specialArgs = { inherit flake; };
       modules = (args_.modules or [ ])
-        ++ [ flakeModule (flake.nixosModule or { }) ];
+        ++ [ flakeModule (flake.nixosModules.default or { }) ];
     });
 in
 flakeSystem
