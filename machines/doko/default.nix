@@ -51,13 +51,15 @@
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  age.secrets."cloudflare-acme-pas.sh".file = ../../secrets/cloudflare-acme-pas.sh.age;
+
   security.acme = {
     acceptTerms = true;
 
     defaults = {
       email = "root@pas.sh";
       dnsProvider = "cloudflare";
-      credentialsFile = "/etc/nixos/secrets/pas.sh-cloudflare-api-token";
+      credentialsFile = config.age.secrets."cloudflare-acme-pas.sh".path;
     };
   };
 

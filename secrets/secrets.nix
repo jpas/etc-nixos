@@ -25,4 +25,6 @@ in {
   "passwd-root.age".publicKeys = admins ++ systems;
   "passwd-jpas.age".publicKeys = admins ++ systems;
   "passwd-kbell.age".publicKeys = admins ++ systems;
+
+  "cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
 }
