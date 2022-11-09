@@ -30,7 +30,7 @@
     "20-wan" = {
       matchConfig.Name = "enp11s0f2";
       linkConfig = {
-        RequiredForOnline = "routable";
+        RequiredForOnline = "no";
       };
       networkConfig = {
         DHCP = "yes";
