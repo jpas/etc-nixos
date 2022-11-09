@@ -12,8 +12,6 @@ in
     passwordAuthentication = false;
     kbdInteractiveAuthentication = false;
 
-    permitRootLogin = "no";
-
     extraConfig = ''
       AuthenticationMethods publickey
     '';

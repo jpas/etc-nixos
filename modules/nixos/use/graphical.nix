@@ -136,23 +136,23 @@ in
 
         wlr = {
           enable = mkDefault true;
-          settings.screencast =
-            let
-              clear = "00000000";
-              selected = "${config.hole.colors.gruvbox.dark.aqua0}7f";
-              cmd = concatStringsSep " " [
-                "${pkgs.slurp}/bin/slurp -or"
-                "-f %o"
-                "-B ${clear}"
-                "-b ${clear}"
-                "-s ${selected}"
-                "-w 0"
-              ];
-            in
-            {
-              chooser_type = mkDefault "simple";
-              chooser_cmd = mkDefault cmd;
-            };
+          #settings.screencast =
+          #  let
+          #    clear = "00000000";
+          #    selected = "${config.hole.colors.gruvbox.dark-no-hash.aqua0}7f";
+          #    cmd = concatStringsSep " " [
+          #      "${pkgs.slurp}/bin/slurp -or"
+          #      "-f %o"
+          #      "-B ${clear}"
+          #      "-b ${clear}"
+          #      "-s ${selected}"
+          #      "-w 0"
+          #    ];
+          #  in
+          #  {
+          #    chooser_type = mkDefault "simple";
+          #    chooser_cmd = mkDefault cmd;
+          #  };
         };
       };
     })

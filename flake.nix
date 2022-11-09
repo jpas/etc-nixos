@@ -3,8 +3,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
     deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, ... } @ inputs:
@@ -47,8 +52,7 @@
               path = deploy-rs.lib.x86_64-linux.activate.nixos configuration;
             };
           });
-
-        user = "jpas";
+        sshUser = "root";
       };
 
       hmModules = let modules = import ./modules/home; in

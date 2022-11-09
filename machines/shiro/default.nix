@@ -29,13 +29,22 @@ with lib;
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ ];
+    allowedTCPPorts = [
+      8554
+      48080
+    ];
     allowedUDPPorts = [
       # don't starve together
       10999
       10998
+      8000
+      8001
     ];
   };
+
+  services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
 
   environment.systemPackages = attrValues {
     inherit (pkgs)

@@ -1,6 +1,6 @@
 {
-  beri = ./beri;
-  iso = ./iso;
+  #beri = ./beri;
+  #iso = ./iso;
   kado = ./kado;
   kuro = ./kuro;
   shiro = ./shiro;
