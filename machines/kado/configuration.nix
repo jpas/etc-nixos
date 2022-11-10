@@ -7,8 +7,6 @@
 
   imports = [
     ../common
-    ./configuration.nix
-    ./hardware-configuration.nix
     ./aleph.nix
     ./print-and-scan.nix
     ./unbound.nix
