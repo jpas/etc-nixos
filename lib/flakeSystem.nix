@@ -25,24 +25,28 @@ let
       };
 
       system.configurationRevision = lib.mkIf (flake ? rev) flake.rev;
+
       system.activationScripts =
         let
-          configuration = pkgs.writeText "flake-configuration" ''
-            let
-              flake = builtins.getFlake "${flake.outPath}";
-              hostname = flake.inputs.nixpkgs.lib.fileContents /proc/sys/kernel/hostname;
-            in
-              flake.nixosConfigurations."''${hostname}"
-          '';
-
           flake-channels = pkgs.symlinkJoin {
             name = "flake-channels";
             paths = [
-              (pkgs.writeTextDir "nixos/default.nix" ''
-                { ... } @ _: (import ${configuration}).pkgs
+              (pkgs.writeTextDir "/nixos/nixos/default.nix" ''
+                let
+                  flake = builtins.getFlake "${flake.outPath}";
+                  hostname = flake.inputs.nixpkgs.lib.fileContents /proc/sys/kernel/hostname;
+                  eval = flake.nixosConfigurations."''${hostname}";
+                in
+                { ... }: {
+                  inherit (eval) pkgs config options;
+
+                  system = eval.config.system.build.toplevel;
+
+                  inherit (eval.config.system.build) vm vmWithBootLoader;
+                }
               '')
-              (pkgs.writeTextDir "nixos/nixos/default.nix" ''
-                { ... } @ _: (import ${configuration})
+              (pkgs.writeTextDir "/nixos/default.nix" ''
+                { ... }: (import ./nixos {}).pkgs
               '')
             ];
           };
