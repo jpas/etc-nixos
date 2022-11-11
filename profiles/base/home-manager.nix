@@ -1,6 +1,6 @@
 { lib, flakes, ... }:
 
-lib.mkIf (flakes ? home-manager) {
+{
   imports = [ flakes.home-manager.nixosModules.default ];
 
   home-manager = {

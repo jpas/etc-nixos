@@ -19,7 +19,6 @@ in
     ./graphical.nix
     ./laptop.nix
     ./sound.nix
-    ./agenix.nix
   ];
 
   home-manager.sharedModules = [

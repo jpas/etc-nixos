@@ -53,6 +53,7 @@ in
       nixpkgs.flake = flakes.nixpkgs;
     };
 
+    # Removes nixos-config from NIX_PATH as there isn't a configuration.nix.
     nixPath = lib.mkOptionDefault [
       "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
       "/nix/var/nix/profiles/per-user/root/channels/nixos"

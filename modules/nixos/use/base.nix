@@ -1,4 +1,4 @@
-{ config, flake, lib, pkgs, ... }:
+{ config, flakes, lib, pkgs, ... }:
 
 with lib;
 
@@ -47,7 +47,7 @@ in
       ];
 
       environment.etc.inputrc.text = ''
-        ${builtins.readFile "${flake.inputs.nixpkgs.outPath}/nixos/modules/programs/bash/inputrc"}
+        ${builtins.readFile "${flakes.nixpkgs.outPath}/nixos/modules/programs/bash/inputrc"}
         # inputrc from configuration.nix
 
         set editing-mode vi
