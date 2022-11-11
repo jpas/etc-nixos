@@ -1,11 +1,13 @@
-{ lib, flake, pkgs, ... }:
+{ lib, config, flakes, pkgs, ... }:
 let
+  inherit (flakes) self;
+
   flake-channels = pkgs.symlinkJoin {
     name = "flake-channels";
     paths = [
       (pkgs.writeTextDir "/nixos/nixos/default.nix" ''
         let
-          flake = builtins.getFlake "${flake.outPath}";
+          flake = builtins.getFlake "${self.outPath}";
           hostname = flake.inputs.nixpkgs.lib.fileContents /proc/sys/kernel/hostname;
           eval = flake.nixosConfigurations."''${hostname}";
         in
@@ -22,30 +24,33 @@ let
   };
 in
 {
-  imports = [ flake.nixosModules.default or { }) ];
+  imports = [ self.nixosModules.default or { } ];
 
-  nixpkgs.overlays = [ (flake.overlays.default or { }) ];
+  system = {
+    configurationRevision = self.rev or "dirty";
 
-  system.configurationRevision = flake.rev or "dirty";
+    extraSystemBuilderCmds = ''
+      ln -s ${self.outPath} $out/flake
+    '';
+
+    activationScripts = {
+      flake-channels.text = ''
+        ln -sfn ${flake-channels} /nix/var/nix/profiles/per-user/root/channels
+      '';
+    };
+  };
+
   services.getty.greetingLine =
     "<<< Welcome to NixOS ${config.system.nixos.label} @ ${config.system.configurationRevision} - \\l >>>";
 
-  system.extraSystemBuilderCmds = ''
-    ln -s ${flake.outPath} $out/flake
-  '';
-
-  system.activationScripts = {
-    flake-channels.text = ''
-      ln -sfn ${flake-channels} /nix/var/nix/profiles/per-user/root/channels
-    '';
-  };
+  nixpkgs.overlays = [ self.overlays.default or { } ];
 
   nix = {
     package = pkgs.nixUnstable;
     settings.experimental-features = [ "flakes" "nix-command" ];
 
     registry = {
-      nixpkgs.flake = flake.inputs.nixpkgs;
+      nixpkgs.flake = flakes.nixpkgs;
     };
 
     nixPath = lib.mkOptionDefault [

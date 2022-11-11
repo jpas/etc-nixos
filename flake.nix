@@ -23,31 +23,43 @@
 
   outputs = { self, nixpkgs, utils, ... } @ inputs: let
     inherit (inputs) deploy-rs home-manager;
-
-    lib = nixpkgs.lib.extend (import ./lib);
+    inherit (nixpkgs) lib;
 
     eachDefaultSystem = f: utils.lib.eachDefaultSystem
       (system: f system (import nixpkgs {
         inherit system;
         overlays = [ self.overlays.default ];
       }));
+
+    mkSystem = { system, profiles ? [] }: lib.nixosSystem {
+      inherit system;
+      modules = map import profiles;
+      specialArgs = {
+        flakes = self.inputs // { inherit self; };
+      };
+    };
   in
   with lib;
   {
-    inherit lib;
-
     overlays.default = import ./pkgs;
 
-    nixosConfigurations = flip mapAttrs (import ./machines)
-      (name: configuration: flakeSystem {
-        flake = self;
-        # XXX: Assume the system, but we can set it via `nixpkgs.system`
+    nixosConfigurations = {
+      shiro = mkSystem {
         system = "x86_64-linux";
-        modules = [
-          configuration
-          home-manager.nixosModules.default
+        profiles = [
+          ./machines/shiro
+          ./profiles/base
         ];
-      });
+      };
+
+      kuro = mkSystem {
+        system = "x86_64-linux";
+        profiles = [
+          ./machines/kuro
+          ./profiles/base
+        ];
+      };
+    };
 
     deploy = {
       sshUser = "root";

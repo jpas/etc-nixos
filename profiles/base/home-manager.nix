@@ -1,11 +1,11 @@
-{ lib, flake, ... }:
+{ lib, flakes, ... }:
 
-lib.mkIf (flake.inputs ? home-manager) {
-  imports = [ flake.inputs.home-manager.nixosModules.default ];
+lib.mkIf (flakes ? home-manager) {
+  imports = [ flakes.home-manager.nixosModules.default ];
 
   home-manager = {
     useGlobalPkgs = lib.mkForce true;
     useUserPackages = lib.mkForce true;
-    sharedModules = [ (flake.hmModules.default or { }) ];
+    sharedModules = [ flakes.self.hmModules.default or { } ];
   };
 }

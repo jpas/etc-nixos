@@ -36,4 +36,6 @@ in
     # See: https://nixos.org/manual/nixos/stable/index.html#sec-x11--graphics-cards-intel
     videoDrivers = mkDefault [ "amdgpu" ];
   };
+
+  environment.systemPackages = [ pkgs.radeontop ];
 }
