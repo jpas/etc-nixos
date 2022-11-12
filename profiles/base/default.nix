@@ -6,6 +6,7 @@ with lib;
   imports = [
     ../../users
     ./networking
+    ./nfs.nix
     ./agenix.nix
     ./bluetooth.nix
     ./boot.nix
