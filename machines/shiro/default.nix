@@ -14,12 +14,7 @@ with lib;
     ./hardware.nix
   ];
 
-  hole.use = {
-    intel-cpu = true;
-    bluetooth = true;
-    sound = true;
-    graphical = true;
-  };
+  hole.use.intel-cpu = true;
 
   programs.sway.enable = true;
 

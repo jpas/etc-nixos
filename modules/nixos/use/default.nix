@@ -14,11 +14,7 @@ in
   imports = [
     ../../hole
     ./base.nix
-    ./bluetooth.nix
     ./cpu.nix
-    ./graphical.nix
-    ./laptop.nix
-    ./sound.nix
   ];
 
   home-manager.sharedModules = [

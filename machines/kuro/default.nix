@@ -11,13 +11,7 @@
 
   networking.wireless.iwd.enable = true;
 
-  hole.use = {
-    bluetooth = true;
-    graphical = true;
-    intel-cpu = true;
-    laptop = true;
-    sound = true;
-  };
+  hole.use.intel-cpu = true;
 
   hole = {
     aleph.enable = false;
