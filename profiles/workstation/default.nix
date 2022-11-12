@@ -21,4 +21,11 @@ with lib;
     driSupport = mkDefault true;
     driSupport32Bit = mkDefault true;
   };
+
+  environment.systemPackages = [
+    kitty
+    firefox
+    zathura
+    imv
+  ];
 }

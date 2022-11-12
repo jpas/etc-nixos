@@ -22,6 +22,8 @@ in
     # recommendations accessed on 2021-03-18.
     # https://infosec.mozilla.org/guidelines/openssh#modern
     extraConfig = ''
+      SendEnv COLORTERM
+
       HashKnownHosts yes
 
       Host *

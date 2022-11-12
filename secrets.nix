@@ -23,9 +23,9 @@ let
   systems = concatAttrValues system;
 in
 {
-  "passwd-root.age".publicKeys = admins ++ systems;
-  "passwd-jpas.age".publicKeys = admins ++ systems;
-  "passwd-kbell.age".publicKeys = admins ++ systems;
+  "users/root/passwd.age".publicKeys = admins ++ systems;
+  "users/jpas/passwd.age".publicKeys = admins ++ systems;
+  "users/kbell/passwd.age".publicKeys = admins ++ systems;
 
-  "cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
+  "secrets/cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
 }
