@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+{ lib, pkgs, ... }:
 
 {
   programs.neovim = {

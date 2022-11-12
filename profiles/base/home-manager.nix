@@ -6,6 +6,9 @@
   home-manager = {
     useGlobalPkgs = lib.mkForce true;
     useUserPackages = lib.mkForce true;
-    sharedModules = [ flakes.self.hmModules.default or { } ];
+    sharedModules = [
+      (flakes.self.hmModules.default or { })
+      ./home-manager
+    ];
   };
 }

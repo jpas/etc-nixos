@@ -10,7 +10,7 @@ with lib;
 let
   cfg = config.wayland.windowManager.sway;
 
-  colors = config.hole.colors.gruvbox;
+  colours = nixosConfig.hole.colours.fmt (c: "#${c}");
 
   swayConfig = {
     fonts = {
@@ -108,18 +108,18 @@ let
       '';
 
       statusCommand = "${pkgs.writeShellScript "sway-status" ''
-        status() {
-          date '+%m-%d %H:%M'
-        }
+          status() {
+            date '+%m-%d %H:%M'
+          }
 
-        while status; do
-          sleep 1;
-        done
-      ''}";
+          while status; do
+            sleep 1;
+          done
+        ''}";
 
       colors = with colors.dark; rec {
         background = bg;
-        separator = bg2;
+        separator = bg5;
         statusline = fg;
 
         activeWorkspace = focusedWorkspace;
@@ -406,34 +406,6 @@ mkMerge [
         {
           text = concatStringsSep "\n" (mapAttrsToList fmt cfg);
         };
-    };
-  })
-
-  (mkIf config.programs.mako.enable {
-    home.packages = [ pkgs.libnotify ];
-
-    programs.mako = with colors.dark; {
-      font = "monospace 10";
-      anchor = "bottom-right";
-
-      textColor = fg;
-      backgroundColor = bg;
-      borderColor = bg2;
-      borderSize = 2;
-
-      icons = false;
-
-      defaultTimeout = 2000;
-      extraConfig = ''
-        ignore-timeout=1
-
-        [urgency=low]
-        border-color=${bg1}
-
-        [urgency=critical]
-        default-timeout=0
-        border-color=${red0}
-      '';
     };
   })
 

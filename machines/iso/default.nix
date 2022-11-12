@@ -1,7 +1,4 @@
-{ flake
-, pkgs
-, ...
-}:
+{ flake, pkgs, ... }:
 
 {
   # install iso

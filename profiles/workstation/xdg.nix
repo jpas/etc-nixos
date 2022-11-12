@@ -46,5 +46,4 @@ with lib;
     #    chooser_cmd = mkDefault cmd;
     #  };
   };
-};
 }

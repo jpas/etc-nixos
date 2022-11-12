@@ -1,17 +1,18 @@
-{ lib, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
 let
-  gruvbox-dark = rec {
+  fmt = f: mapAttrsRecursive (_: c: f c) config.hole.colours;
+
+  gruvbox = rec {
     bg = bg0;
     bg0 = "282828";
     bg1 = "3c3836";
     bg2 = "504945";
     bg3 = "665c54";
     bg4 = "7c6f64";
-
-    gray = "928374";
+    bg5 = "928374";
 
     fg = fg1;
     fg0 = "fbf1c7";
@@ -19,14 +20,17 @@ let
     fg2 = "d5c4a1";
     fg3 = "bdae93";
     fg4 = "a89984";
+    fg5 = bg5;
 
-    red = "cc241d";
-    green = "98971a";
-    yellow = "d799d1";
-    blue = "458588";
-    purple = "b16286";
-    aqua = "689d6a";
-    orange = "d65d0e";
+    regular = {
+      red = "cc241d";
+      green = "98971a";
+      yellow = "d799d1";
+      blue = "458588";
+      purple = "b16286";
+      aqua = "689d6a";
+      orange = "d65d0e";
+    };
 
     bright = {
       red = "fb4934";
@@ -49,15 +53,15 @@ let
     };
 
     vt0 = bg;
-    vt1 = red;
-    vt2 = green;
-    vt3 = yellow;
-    vt4 = blue;
-    vt5 = purple;
-    vt6 = aqua;
+    vt1 = regular.red;
+    vt2 = regular.green;
+    vt3 = regular.yellow;
+    vt4 = regular.blue;
+    vt5 = regular.purple;
+    vt6 = regular.aqua;
     vt7 = fg4;
 
-    vt8 = gray;
+    vt8 = fg5;
     vt9 = bright.red;
     vt10 = bright.green;
     vt11 = bright.yellow;
@@ -69,15 +73,18 @@ let
 in
 {
   options = {
-    hole.colours = mkOption {
-      type = types.anything;
-      default = gruvbox-dark;
-      readOnly = true;
-    };
+    hole.colours = mkOption
+      {
+        type = types.anything;
+        default = gruvbox;
+        apply = a: a // {
+          inherit fmt;
+        };
+      };
   };
 
   config = {
-    console.colors = mkDefault (with colors; [
+    console. colors = mkDefault (with config.hole.colours; [
       vt0
       vt1
       vt2
@@ -97,15 +104,15 @@ in
     ]);
 
     # fixes truecolor detection through ssh and sudo.
-    security.sudo.extraConfig = ''
+    security.sudo.extraConfig = mkAfter ''
       Defaults env_keep+=COLORTERM
     '';
 
-    services.openssh.extraConfig = ''
+    services.openssh.extraConfig = mkAfter ''
       AcceptEnv COLORTERM
     '';
 
-    programs.ssh.extraConfig = ''
+    programs.ssh.extraConfig = mkAfter ''
       SendEnv COLORTERM
     '';
 

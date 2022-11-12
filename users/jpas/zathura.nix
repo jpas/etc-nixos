@@ -7,12 +7,12 @@ with lib;
 
 let
   cfg = config.programs.zathura;
-  colors = config.hole.colors.gruvbox.dark;
+  colours = config.hole.colours;
 in
 mkMerge [
   {
     programs.zathura = {
-      options = with colors; rec {
+      options = rec {
         font = "monospace 10";
 
         selection-clipboard = "clipboard";
@@ -20,48 +20,48 @@ mkMerge [
         window-title-home-tilde = true;
         window-title-page = true;
 
-        default-bg = colors.bg;
-        default-fg = colors.fg;
+        default-bg = colours.bg;
+        default-fg = colours.fg;
 
-        notification-error-bg = colors.bg;
-        notification-error-fg = colors.red0;
-        notification-warning-bg = colors.bg;
-        notification-warning-fg = colors.yellow0;
-        notification-bg = colors.bg;
-        notification-fg = colors.fg;
+        notification-error-bg = colours.bg;
+        notification-error-fg = colours.red;
+        notification-warning-bg = colours.bg;
+        notification-warning-fg = colours.yellow;
+        notification-bg = colours.bg;
+        notification-fg = colours.fg;
 
-        completion-bg = colors.bg2;
-        completion-fg = colors.fg;
-        completion-group-bg = colors.bg1;
-        completion-group-fg = colors.fg;
-        completion-highlight-bg = colors.aqua1;
-        completion-highlight-fg = colors.bg;
+        completion-bg = colours.bg2;
+        completion-fg = colours.fg;
+        completion-group-bg = colours.bg1;
+        completion-group-fg = colours.fg;
+        completion-highlight-bg = colours.bright.aqua;
+        completion-highlight-fg = colours.bg;
 
-        index-bg = colors.bg2;
-        index-fg = colors.fg;
-        index-active-bg = colors.aqua1;
-        index-active-fg = colors.bg;
+        index-bg = colours.bg2;
+        index-fg = colours.fg;
+        index-active-bg = colours.bright.aqua;
+        index-active-fg = colours.bg;
 
-        inputbar-bg = colors.bg;
-        inputbar-fg = colors.fg;
+        inputbar-bg = colours.bg;
+        inputbar-fg = colours.fg;
 
-        statusbar-bg = colors.bg1;
-        statusbar-fg = colors.fg;
+        statusbar-bg = colours.bg1;
+        statusbar-fg = colours.fg;
 
         statusbar-h-padding = 10;
         statusbar-v-padding = 4;
 
-        highlight-color = colors.yellow0;
-        highlight-active-color = colors.orange0;
+        highlight-color = colours.yellow;
+        highlight-active-color = colours.orange;
 
         render-loading = true;
-        render-loading-bg = colors.bg;
-        render-loading-fg = colors.fg;
+        render-loading-bg = colours.bg;
+        render-loading-fg = colours.fg;
 
         recolor = true;
         # swapped since lightcolor is usually white and dark is prefered.
-        recolor-lightcolor = colors.bg;
-        recolor-darkcolor = colors.fg;
+        recolor-lightcolor = colours.bg;
+        recolor-darkcolor = colours.fg;
       };
     };
   }

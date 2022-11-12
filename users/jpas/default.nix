@@ -23,21 +23,6 @@ with lib;
     }
 
     {
-      programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-    }
-
-    {
-      programs.fzf = {
-        enable = true;
-        defaultCommand = "fd --type f --follow";
-        defaultOptions = [ "--layout=reverse" "--inline-info" "--color=16" ];
-      };
-    }
-
-    {
       programs.git = {
         enable = true;
         lfs.enable = true;
@@ -49,25 +34,6 @@ with lib;
           submodule = { recurse = true; };
         };
       };
-    }
-
-    {
-      xdg.configFile."go/env".text = ''
-        GOPATH=$XDG_DATA_HOME/go
-        GOMODCACHE=$XDG_CACHE_HOME/go/mod
-      '';
-    }
-
-    {
-      # TODO: import ~/.config/op?
-    }
-
-    {
-      # TODO: https://doc.rust-lang.org/cargo/guide/cargo-home.html
-    }
-
-    {
-      # TODO: garbage from electron apps in ~/.config/*
     }
 
     {
@@ -89,18 +55,18 @@ with lib;
     })
 
     (mkIf config.programs.imv.enable {
-      programs.imv = let colors = nixosConfig.hole.colours; in
+      programs.imv = let inherit (nixosConfig.hole) colours; in
         {
           settings = {
             options = {
-              background = colors.bg;
+              background = colours.bg;
 
               overlay_font = "monospace:14";
 
-              overlay_text_color = colors.fg;
+              overlay_text_color = colours.fg;
               overlay_text_alpha = "ff";
 
-              overlay_background_color = colors.bg1;
+              overlay_background_color = colours.bg1;
               overlay_background_alpha = "ff";
             };
           };
@@ -117,7 +83,7 @@ with lib;
     })
 
     (mkIf config.programs.kitty.enable {
-      programs.kitty = let colors = config.hole.colors.gruvbox.dark; in
+      programs.kitty = let inherit (nixosConfig.hole) colours; in
         {
           font.name = "monospace";
 
@@ -133,48 +99,32 @@ with lib;
             window_padding_width = 3;
             placement_strategy = "center";
 
-            background = colors.bg;
-            foreground = colors.fg;
+            background = colours.bg;
+            foreground = colours.fg;
 
-            cursor = colors.fg;
+            cursor = colours.fg;
             cursor_text_color = "background";
 
-            color0 = elemAt colors.console 0;
-            color1 = elemAt colors.console 1;
-            color2 = elemAt colors.console 2;
-            color3 = elemAt colors.console 3;
-            color4 = elemAt colors.console 4;
-            color5 = elemAt colors.console 5;
-            color6 = elemAt colors.console 6;
-            color7 = elemAt colors.console 7;
+            color0 = colours.vt0;
+            color1 = colours.vt1;
+            color2 = colours.vt2;
+            color3 = colours.vt3;
+            color4 = colours.vt4;
+            color5 = colours.vt5;
+            color6 = colours.vt6;
+            color7 = colours.vt7;
 
-            color8 = elemAt colors.console 8;
-            color9 = elemAt colors.console 9;
-            color10 = elemAt colors.console 10;
-            color11 = elemAt colors.console 11;
-            color12 = elemAt colors.console 12;
-            color13 = elemAt colors.console 13;
-            color14 = elemAt colors.console 14;
-            color15 = elemAt colors.console 15;
+            color8 = colours.vt8;
+            color9 = colours.vt9;
+            color10 = colours.vt10;
+            color11 = colours.vt11;
+            color12 = colours.vt12;
+            color13 = colours.vt13;
+            color14 = colours.vt14;
+            color15 = colours.vt15;
 
             linux_display_server = "auto";
           };
-        };
-    })
-
-    (mkIf config.programs.mako.enable {
-      programs.mako = let colors = config.hole.colors.gruvbox.dark; in
-        {
-          font = "monospace 10";
-
-          anchor = "bottom-right";
-
-          textColor = colors.fg;
-          backgroundColor = colors.bg;
-          borderColor = colors.bg2;
-          borderSize = 2;
-
-          icons = false;
         };
     })
   ];
