@@ -5,13 +5,13 @@ with lib;
 {
   imports = [
     ../../users
-    ./home-manager
     ./networking
     ./agenix.nix
     ./bluetooth.nix
     ./boot.nix
     ./colours.nix
     ./flakes.nix
+    ./home-manager.nix
     ./microcode.nix
     ./nfs.nix
     ./nix.nix
