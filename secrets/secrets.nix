@@ -21,7 +21,8 @@ let
     shiro = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0" ];
   };
   systems = concatAttrValues system;
-in {
+in
+{
   "passwd-root.age".publicKeys = admins ++ systems;
   "passwd-jpas.age".publicKeys = admins ++ systems;
   "passwd-kbell.age".publicKeys = admins ++ systems;

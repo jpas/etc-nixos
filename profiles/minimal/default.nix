@@ -14,14 +14,16 @@ with lib;
 
   boot.kernelPackages = mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
   boot.tmpOnTmpfs = mkDefault true;
-  boot.loader = let
-    common = { configurationLimit = mkDefault 10; };
-  in {
-    timeout = mkDefault 1;
-    grub = common;
-    systemd-boot = common // { editor = false; };
-    generic-extlinux-compatible = common;
-  };
+  boot.loader =
+    let
+      common = { configurationLimit = mkDefault 10; };
+    in
+    {
+      timeout = mkDefault 1;
+      grub = common;
+      systemd-boot = common // { editor = false; };
+      generic-extlinux-compatible = common;
+    };
 
   time.timeZone = mkDefault "America/Toronto";
   i18n.defaultLocale = mkDefault "en_CA.UTF-8";

@@ -25,10 +25,8 @@ in
   };
 
   config = mkMerge [
-    (mkIf cfg.base {
-    })
+    (mkIf cfg.base { })
 
-    (mkIf (!cfg.minimal && cfg.base) {
-    })
+    (mkIf (!cfg.minimal && cfg.base) { })
   ];
 }

@@ -52,12 +52,12 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   /*
-  nix.distributedBuilds = true;
-  nix.settings = {
+    nix.distributedBuilds = true;
+    nix.settings = {
     builders-use-substitutes = true;
-  };
+    };
 
-  nix.buildMachines = [
+    nix.buildMachines = [
     {
       hostName = "doko.o";
       maxJobs = 8;
@@ -68,7 +68,7 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpJREFGOU9Za2Y0MmQ2VkIyMU1kM2lQK1ZhU04wQzFsaWpOb1lmcEdWOW0gcm9vdEBkb2tvCg==";
     }
-  ];
+    ];
   */
 
   # This value determines the NixOS release with which your system is to be

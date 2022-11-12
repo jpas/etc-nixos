@@ -52,7 +52,7 @@
       };
     };
 
-    swapDevices = [
-      { device = "/var/swap/swapfile"; }
-    ];
+  swapDevices = [
+    { device = "/var/swap/swapfile"; }
+  ];
 }
