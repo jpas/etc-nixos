@@ -1,7 +1,9 @@
+{ lib, config, pkgs, ... }:
+
+with lib;
+
 {
-  imports = [
-    ../base
-  ];
+  imports = [ ../base ];
 
   documentation.dev.enable = mkDefault true;
 
