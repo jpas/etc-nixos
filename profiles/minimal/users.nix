@@ -5,7 +5,7 @@ with lib;
 {
   users.mutableUsers = false;
 
-  age.secrets.passwd-root.file = ../../../secrets/passwd-root.age;
+  age.secrets.passwd-root.file = ../../secrets/passwd-root.age;
   users.users.root.passwordFile = config.age.secrets.passwd-root.path;
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP+fz+lNCysrW7pTGGq72oVgF7HLF9cnUvPHTYJtmOxG jpas@doko"

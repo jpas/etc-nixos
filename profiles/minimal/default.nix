@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, flakes, pkgs, ... }:
 
 with lib;
 
@@ -12,9 +12,11 @@ with lib;
     ./users.nix
   ];
 
-  boot.tmpOnTmpfs = mkDefault true;
   boot.kernelPackages = mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
-  boot.loader = let common = { configurationLimit = mkDefault 10; }; in {
+  boot.tmpOnTmpfs = mkDefault true;
+  boot.loader = let
+    common = { configurationLimit = mkDefault 10; };
+  in {
     timeout = mkDefault 1;
     grub = common;
     systemd-boot = common // { editor = false; };
@@ -72,5 +74,45 @@ with lib;
     envVariables = {
       LESSHIST = mkDefault "/dev/null";
     };
+  };
+
+  services.journald.extraConfig = ''
+    SystemMaxUse=100M
+    MaxFileSec=7day
+  '';
+
+  environment.systemPackages = attrValues {
+    inherit (pkgs)
+      bat
+      file
+      coreutils
+      curl
+      exa
+      fd
+      p7zip
+      rclone
+      restic
+      rsync
+      jq
+      ripgrep
+      tmux
+      wget
+      nixpkgs-fmt
+      nix-diff
+      nix-tree
+
+      dig
+
+      # linux utilities
+      lsof
+      strace
+      pciutils
+      usbutils
+      ;
+  };
+
+  programs = {
+    iotop.enable = true;
+    iftop.enable = true;
   };
 }

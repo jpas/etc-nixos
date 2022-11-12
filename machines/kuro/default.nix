@@ -9,10 +9,7 @@
     ./kanshi.nix
   ];
 
-  hole.network.wifi = {
-    enable = true;
-    dhcp = true;
-  };
+  networking.wireless.iwd.enable = true;
 
   hole.use = {
     bluetooth = true;
