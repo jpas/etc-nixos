@@ -1,17 +1,24 @@
-{ lib, config, pkgs, ... }:
+{ lib, ... }:
 
 with lib;
 
 {
-  imports = [ ../base ];
+  imports = [
+    ../base
+    ./dev.nix
+    ./fonts.nix
+    ./gtk.nix
+    ./qt.nix
+    ./sound.nix
+    ./sway.nix
+    ./xdg.nix
+  ];
 
-  documentation.dev.enable = mkDefault true;
+  services.xserver.libinput.enable = mkDefault true;
 
-  environment.systemPackages = attrValues {
-    inherit (pkgs)
-      nix-diff
-      nix-tree
-      nixpkgs-fmt
-      ;
+  hardware.opengl = {
+    enable = mkDefault true;
+    driSupport = mkDefault true;
+    driSupport32Bit = mkDefault true;
   };
 }
