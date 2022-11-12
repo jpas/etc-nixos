@@ -6,6 +6,7 @@ with lib;
   services.tailscale.enable = mkDefault true;
 
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
+  networking.firewall.checkReversePath = "loose";
 
   systemd.network.networks."01-tailscale" = {
     matchConfig.name = "tailscale*";
@@ -17,7 +18,7 @@ with lib;
     after = [ "systemd-networkd.service" ];
   };
 
-  systemd.service."tailscale-peer@" = {
+  systemd.services."tailscale-peer@" = {
     scriptArgs = "%I";
     script = let tailscale = config.services.tailscale.package; in ''
       until ${tailscale}/bin/tailscale ping "''$1" > /dev/null; do

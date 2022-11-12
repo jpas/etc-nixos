@@ -1,4 +1,4 @@
-{ lib, , ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -25,9 +25,8 @@ mkIf config.networking.wireless.iwd.enable {
   };
 
   systemd.network.networks."60-iwd" = {
-      matchConfig.Type = "wlan";
-      linkConfig.Unmanaged = true;
-    };
+    matchConfig.Type = "wlan";
+    linkConfig.Unmanaged = true;
   };
 }
 
