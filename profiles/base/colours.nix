@@ -57,7 +57,7 @@ let
     vt6 = aqua;
     vt7 = fg4;
 
-    vt8 = bright.gray;
+    vt8 = gray;
     vt9 = bright.red;
     vt10 = bright.green;
     vt11 = bright.yellow;

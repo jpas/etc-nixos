@@ -1,6 +1,7 @@
 { lib
 , config
 , pkgs
+, nixosConfig
 , ...
 }:
 
@@ -69,11 +70,11 @@ with lib;
       # TODO: garbage from electron apps in ~/.config/*
     }
 
-    (mkIf (!config.hole.use.minimal) {
+    {
       programs.neovim.enable = true;
-    })
+    }
 
-    (mkIf config.hole.use.graphical {
+    (mkIf nixosConfig.programs.sway.enable {
       wayland.windowManager.sway.enable = true;
 
       #services.spotifyd.enable = true;
@@ -85,20 +86,10 @@ with lib;
       programs.zathura.enable = true;
 
       xdg.mimeApps.enable = true;
-
-      home.packages = with pkgs; [
-        discord
-        teams
-        hledger
-        hledger-web
-        python3
-        rmapi
-        (hunspellWithDicts [ hunspellDicts.en_CA-large ])
-      ];
     })
 
     (mkIf config.programs.imv.enable {
-      programs.imv = let colors = config.hole.colors.gruvbox.dark-no-hash; in
+      programs.imv = let colors = nixosConfig.hole.colours; in
         {
           settings = {
             options = {

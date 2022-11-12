@@ -3,18 +3,19 @@
 with lib;
 
 let
-  mkUser { name, ... } @ args: {
+  mkUser = name: user: {
     users.mutableUsers = false;
 
-    users.users."${name}" = args // {
+    age.secrets."passwd-${name}".file = ./. + "/${name}/passwd.age";
+    users.users."${name}" = user // {
       passwordFile = config.age.secrets."passwd-${name}".path;
     };
-    age.secrets."passwd-name".file = ./. + "${name}/passwd.age";
 
-    home-manager.users."${name}" = import (./. + "${name}") or { };
+    home-manager.users."${name}" =
+      let path = ./. + "/${name}/default.nix"; in mkIf (pathExists path) (import path);
   };
 
-  mkUsers = flip mapAttrs (name: args: mkUser (args // { inherit name; }));
+  mkUsers = users: mkMerge (mapAttrsToList mkUser users);
 in
 mkUsers {
   root = {
