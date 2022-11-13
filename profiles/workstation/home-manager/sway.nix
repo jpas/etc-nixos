@@ -306,15 +306,6 @@ mkMerge [
     packages = [ pkgs.brightnessctl ];
   })
 
-  (mkConfig {
-    sway = {
-      keybindings = mkOptionDefault {
-        "Mod4+d" = "exec fuzzel";
-      };
-    };
-    packages = [ pkgs.fuzzel ];
-  })
-
   # (mkConfig {
   #   sway = {
   #     keybindings = mkOptionDefault {
