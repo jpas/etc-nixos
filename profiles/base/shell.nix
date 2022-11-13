@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, flakes, pkgs, ... }:
 
 with lib;
 

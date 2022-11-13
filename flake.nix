@@ -49,7 +49,7 @@
           system = "x86_64-linux";
           profiles = [
             ./machines/shiro
-            ./profiles/base
+            ./profiles/workstation
           ];
         };
 
@@ -57,7 +57,7 @@
           system = "x86_64-linux";
           profiles = [
             ./machines/kuro
-            ./profiles/base
+            ./profiles/laptop
           ];
         };
       };

@@ -197,9 +197,10 @@ in
 mkMerge [
   (mkConfig {
     sway = swayConfig;
-    config.wayland.windowManager.sway.extraConfig = ''
+    config.wayland.windowManager.sway.extraConfig = mkAfter ''
       focus_on_window_activation none
-      include local
+      include /etc/sway/config.d/*
+      include config.d/*
     '';
   })
 
@@ -369,7 +370,7 @@ mkMerge [
     config.xdg.configFile = {
       "swaylock/config" =
         let
-          inherit (colors.dark-no-hash) fg bg yellow0 orange0 red0 blue0;
+          inherit (colors.dark-no-hash) fg bg yellow0  red0 blue0;
           hide = "00000000";
 
           cfg = {
@@ -384,7 +385,7 @@ mkMerge [
           // (genColors "line" bg)
           // {
             key-hl-color = fg;
-            caps-lock-key-hl-color = orange0;
+            caps-lock-key-hl-color = ;
 
             bs-hl-color = yellow0;
             caps-lock-bs-hl-color = yellow0;
@@ -410,6 +411,8 @@ mkMerge [
   })
 
   (mkIf nixosConfig.programs.sway.enable {
+    
+    wayland.windowManager.sway.enable = true;
     wayland.windowManager.sway.package = null;
   })
 ]

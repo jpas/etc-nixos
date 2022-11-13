@@ -5,6 +5,7 @@ with lib;
 {
   imports = [
     ../base
+    ./home-manager.nix
     ./dev.nix
     ./fonts.nix
     ./gtk.nix
@@ -12,6 +13,8 @@ with lib;
     ./sound.nix
     ./sway.nix
     ./xdg.nix
+    ./zathura.nix
+    ./imv.nix
   ];
 
   services.xserver.libinput.enable = mkDefault true;
@@ -25,7 +28,8 @@ with lib;
   environment.systemPackages = [
     kitty
     firefox
-    zathura
     imv
   ];
+
+  services.udisks2.enable = true;
 }
