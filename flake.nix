@@ -60,6 +60,22 @@
             ./profiles/laptop
           ];
         };
+
+        kado = mkSystem {
+          system = "x86_64-linux";
+          profiles = [
+            ./machines/kado
+            ./profiles/base
+          ];
+        };
+
+        #doko = mkSystem {
+        #  system = "x86_64-linux";
+        #  profiles = [
+        #    ./machines/doko
+        #    ./profiles/base
+        #  ];
+        #};
       };
 
       deploy = {
