@@ -8,6 +8,13 @@ with lib;
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
   networking.firewall.checkReversePath = "loose";
 
+  networking.extraHosts = ''
+    100.69.65.63    shiro.o
+    100.68.33.127   doko.o
+    100.65.152.104  kado.o
+    100.116.4.62    kuro.o
+  '';
+
   systemd.network.networks."01-tailscale" = {
     matchConfig.name = "tailscale*";
     linkConfig.Unmanaged = true;
