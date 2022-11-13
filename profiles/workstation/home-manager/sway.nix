@@ -73,6 +73,8 @@ let
         # is released Mod4 will be released.
         #"Mod4+p" = "";
 
+        "${modifier}+d" = "tofi-run | xargs swaymsg exec --";
+
         # TODO
         #"${modifier}+o" = ''
         #  exec ${menu} \
@@ -307,7 +309,7 @@ mkMerge [
   (mkConfig {
     sway = {
       keybindings = mkOptionDefault {
-        "$Mod4+d" = "exec fuzzel";
+        "Mod4+d" = "exec fuzzel";
       };
     };
     packages = [ pkgs.fuzzel ];
