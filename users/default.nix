@@ -36,5 +36,8 @@ mkUsers {
   kbell = {
     uid = 1001;
     isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZMekygQJMxKhePxDob/tKFwhXDShe7OZ5EnEa6OXWn kbell@DESKTOP-H4OF685-WSL"
+    ];
   };
 }
