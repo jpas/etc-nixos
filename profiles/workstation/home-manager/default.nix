@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  home-manager.sharedModules = [
+  imports = [
     ./imv.nix
     ./kitty.nix
     ./mako.nix

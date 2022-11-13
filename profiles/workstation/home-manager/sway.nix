@@ -89,13 +89,13 @@ let
         '';
       };
 
-    colors = with colors.dark; rec {
+    colors = with colours; rec {
       background = bg;
-      focused = mkClientColor fg aqua0 bg2;
+      focused = mkClientColor fg regular.aqua bg2;
       focusedInactive = unfocused;
       placeholder = unfocused;
       unfocused = mkClientColor fg2 bg1 bg1;
-      urgent = mkClientColor fg red0 red0;
+      urgent = mkClientColor fg regular.red regular.red;
     };
 
     bars = [{
@@ -117,16 +117,16 @@ let
           done
         ''}";
 
-      colors = with colors.dark; rec {
+      colors = with colours; rec {
         background = bg;
         separator = bg5;
         statusline = fg;
 
         activeWorkspace = focusedWorkspace;
-        bindingMode = mkBarColor bg0 yellow0;
+        bindingMode = mkBarColor bg0 regular.yellow;
         focusedWorkspace = mkBarColor fg bg2;
         inactiveWorkspace = mkBarColor fg2 bg1;
-        urgentWorkspace = mkBarColor fg red0;
+        urgentWorkspace = mkBarColor fg regular.red;
       };
     }];
   };
@@ -369,8 +369,8 @@ mkMerge [
 
     config.xdg.configFile = {
       "swaylock/config" =
+        with colours;
         let
-          inherit (colors.dark-no-hash) fg bg yellow0  red0 blue0;
           hide = "00000000";
 
           cfg = {
@@ -385,17 +385,17 @@ mkMerge [
           // (genColors "line" bg)
           // {
             key-hl-color = fg;
-            caps-lock-key-hl-color = ;
+            caps-lock-key-hl-color = regular.yellow;
 
-            bs-hl-color = yellow0;
-            caps-lock-bs-hl-color = yellow0;
+            bs-hl-color = regular.yellow;
+            caps-lock-bs-hl-color = regular.yellow;
 
             ring-color = bg;
             ring-caps-lock-color = bg;
 
-            ring-clear-color = yellow0;
-            ring-ver-color = blue0;
-            ring-wrong-color = red0;
+            ring-clear-color = regular.yellow;
+            ring-ver-color = regular.blue;
+            ring-wrong-color = regular.red;
           };
 
           fmt = n: v: if isBool v then n else "${n}=${toString v}";
@@ -411,7 +411,6 @@ mkMerge [
   })
 
   (mkIf nixosConfig.programs.sway.enable {
-    
     wayland.windowManager.sway.enable = true;
     wayland.windowManager.sway.package = null;
   })

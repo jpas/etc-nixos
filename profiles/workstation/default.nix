@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 
@@ -25,11 +25,13 @@ with lib;
     driSupport32Bit = mkDefault true;
   };
 
-  environment.systemPackages = [
+  environment.systemPackages = attrValues {
+    inherit (pkgs)
     kitty
     firefox
     imv
-  ];
+    ;
+  };
 
   services.udisks2.enable = true;
 }

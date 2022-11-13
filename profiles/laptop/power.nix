@@ -22,7 +22,7 @@ with lib;
 
   services.upower = {
     enable = mkDefault true;
-    criticalPowerAction = mkDefault "Suspend";
+    #criticalPowerAction = mkDefault "Suspend";
   };
 
   services.tlp.enable = mkDefault true;
