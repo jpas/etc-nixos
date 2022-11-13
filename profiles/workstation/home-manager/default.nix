@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./fuzzel.nix
     ./imv.nix
     ./kitty.nix
     ./mako.nix

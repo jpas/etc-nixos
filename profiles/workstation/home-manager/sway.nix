@@ -12,19 +12,6 @@ let
 
   colours = nixosConfig.hole.colours.fmt (c: "#${c}");
 
-  menu = pkgs.writeShellScript "menu" ''
-    exec kitty \
-      --single-instance \
-      --class menu \
-      bash -c "$1 | ${pkgs.fzf}/bin/fzf --info hidden $3 | $2"
-  '';
-
-  menu-path = pkgs.writeShellScript "menu-path" ''
-    builtin compgen -c \
-    | grep -v '\(fzf\|^[^A-Za-z0-9]\)' \
-    | sort -u
-  '';
-
   swayConfig = {
     fonts = {
       names = [ "monospace" ];
@@ -51,11 +38,6 @@ let
 
     window.titlebar = true;
     window.commands = [
-      {
-        criteria = { app_id = "menu"; };
-        command = "floating enable; border pixel; sticky enable";
-      }
-
       { criteria = { title = "."; }; command = "inhibit_idle fullscreen"; }
       { criteria = { shell = "xwayland"; }; command = "title_format \"[xwayland] %title\""; }
 
@@ -91,15 +73,13 @@ let
         # is released Mod4 will be released.
         #"Mod4+p" = "";
 
-        "${modifier}+d" =
-          "exec ${menu} ${menu-path} 'xargs -r swaymsg -t command exec --'";
-
-        "${modifier}+o" = ''
-          exec ${menu} \
-            menu-pdfs \
-            "xargs -r swaymsg -t command exec zathura --" \
-            "--delimiter / --with-nth -1"
-        '';
+        # TODO
+        #"${modifier}+o" = ''
+        #  exec ${menu} \
+        #    menu-pdfs \
+        #    "xargs -r swaymsg -t command exec zathura --" \
+        #    "--delimiter / --with-nth -1"
+        #'';
       };
 
     colors = with colours; rec {
@@ -322,6 +302,15 @@ mkMerge [
       };
     };
     packages = [ pkgs.brightnessctl ];
+  })
+
+  (mkConfig {
+    sway = {
+      keybindings = mkOptionDefault {
+        "$Mod4+d" = "exec fuzzel";
+      };
+    };
+    packages = [ pkgs.fuzzel ];
   })
 
   # (mkConfig {
