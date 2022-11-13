@@ -12,6 +12,19 @@ let
 
   colours = nixosConfig.hole.colours.fmt (c: "#${c}");
 
+  menu = pkgs.writeShellScript "menu" ''
+    exec ${pkgs.kitty}/bin/kitty \
+      --single-instance \
+      --class menu \
+      bash -c "$1 | ${pkgs.fzf}/bin/fzf --info hidden $3 | $2"
+  '';
+
+  menu-path = pkgs.writeShellScript "menu-path" ''
+    compgen -c \
+    | grep -v '\(fzf\|^[^A-Za-z0-9]\)' \
+    | sort -u
+  '';
+
   swayConfig = {
     fonts = {
       names = [ "monospace" ];
@@ -79,10 +92,10 @@ let
         #"Mod4+p" = "";
 
         "${modifier}+d" =
-          "exec menu menu-path 'xargs -r swaymsg -t command exec --'";
+          "exec ${menu} ${menu-path} 'xargs -r swaymsg -t command exec --'";
 
         "${modifier}+o" = ''
-          exec menu \
+          exec ${menu} \
             menu-pdfs \
             "xargs -r swaymsg -t command exec zathura --" \
             "--delimiter / --with-nth -1"
