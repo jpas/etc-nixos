@@ -73,7 +73,9 @@ let
         # is released Mod4 will be released.
         #"Mod4+p" = "";
 
-        "${modifier}+d" = "tofi-run | xargs swaymsg exec --";
+        "${modifier}+d" = ''
+          exec "tofi-run | xargs swaymsg exec --"
+        '';
 
         # TODO
         #"${modifier}+o" = ''
