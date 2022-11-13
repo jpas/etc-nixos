@@ -22,7 +22,8 @@ let
     fg4 = "a89984";
     fg5 = bg5;
 
-    regular = {
+    normal = {
+      black = bg;
       red = "cc241d";
       green = "98971a";
       yellow = "d79921";
@@ -30,9 +31,11 @@ let
       purple = "b16286";
       aqua = "689d6a";
       orange = "d65d0e";
+      white = fg4;
     };
 
     bright = {
+      black = fg5;
       red = "fb4934";
       green = "b8bb26";
       yellow = "fabd2f";
@@ -40,9 +43,11 @@ let
       purple = "d3869b";
       aqua = "8ec07c";
       orange = "fe8019";
+      white = fg;
     };
 
     dim = {
+      black = fg5;
       red = "9d0006";
       green = "79740e";
       yellow = "b57614";
@@ -50,25 +55,26 @@ let
       purple = "8f3f71";
       aqua = "427b58";
       orange = "af3a03";
+      white = bg4;
     };
 
-    vt0 = bg;
-    vt1 = regular.red;
-    vt2 = regular.green;
-    vt3 = regular.yellow;
-    vt4 = regular.blue;
-    vt5 = regular.purple;
-    vt6 = regular.aqua;
-    vt7 = fg4;
+    vt0 = normal.black;
+    vt1 = normal.red;
+    vt2 = normal.green;
+    vt3 = normal.yellow;
+    vt4 = normal.blue;
+    vt5 = normal.purple;
+    vt6 = normal.aqua;
+    vt7 = normal.white;
 
-    vt8 = fg5;
+    vt8 = bright.black;
     vt9 = bright.red;
     vt10 = bright.green;
     vt11 = bright.yellow;
     vt12 = bright.blue;
     vt13 = bright.purple;
     vt14 = bright.aqua;
-    vt15 = fg;
+    vt15 = bright.white;
   };
 in
 {
