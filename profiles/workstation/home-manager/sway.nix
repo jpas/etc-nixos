@@ -13,7 +13,7 @@ let
   colours = nixosConfig.hole.colours.fmt (c: "#${c}");
 
   menu = pkgs.writeShellScript "menu" ''
-    exec ${pkgs.kitty}/bin/kitty \
+    exec kitty \
       --single-instance \
       --class menu \
       bash -c "$1 | ${pkgs.fzf}/bin/fzf --info hidden $3 | $2"
