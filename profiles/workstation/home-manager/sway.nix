@@ -20,7 +20,7 @@ let
   '';
 
   menu-path = pkgs.writeShellScript "menu-path" ''
-    compgen -c \
+    builtin compgen -c \
     | grep -v '\(fzf\|^[^A-Za-z0-9]\)' \
     | sort -u
   '';
