@@ -126,6 +126,7 @@ in
     "w /sys/bus/usb/devices/usb4/power/wakeup - - - - enabled"
   ];
 
+  services.thermald.enable = true;
   services.undervolt = {
     enable = mkDefault true;
     # *** WARNING *** these were tweaked specifically for my machine, using
