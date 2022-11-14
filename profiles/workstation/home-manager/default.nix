@@ -1,5 +1,7 @@
 { lib, ... }:
 
+with lib;
+
 {
   imports = [
     ./tofi.nix

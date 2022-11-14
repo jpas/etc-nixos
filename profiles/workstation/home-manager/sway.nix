@@ -88,11 +88,11 @@ let
 
     colors = with colours; rec {
       background = bg;
-      focused = mkClientColor fg normal.aqua bg2;
+      focused = mkClientColor fg neutral.aqua bg2;
       focusedInactive = unfocused;
       placeholder = unfocused;
       unfocused = mkClientColor fg2 bg1 bg1;
-      urgent = mkClientColor fg normal.red normal.red;
+      urgent = mkClientColor fg neutral.red normal.red;
     };
 
     bars = [{
@@ -120,10 +120,10 @@ let
         statusline = fg;
 
         activeWorkspace = focusedWorkspace;
-        bindingMode = mkBarColor bg0 normal.yellow;
+        bindingMode = mkBarColor bg0 neutral.yellow;
         focusedWorkspace = mkBarColor fg bg2;
         inactiveWorkspace = mkBarColor fg2 bg1;
-        urgentWorkspace = mkBarColor fg normal.red;
+        urgentWorkspace = mkBarColor fg neutral.red;
       };
     }];
   };
@@ -382,17 +382,17 @@ mkMerge [
           // (genColors "line" bg)
           // {
             key-hl-color = fg;
-            caps-lock-key-hl-color = normal.yellow;
+            caps-lock-key-hl-color = neutral.yellow;
 
-            bs-hl-color = normal.yellow;
-            caps-lock-bs-hl-color = normal.yellow;
+            bs-hl-color = neutral.yellow;
+            caps-lock-bs-hl-color = neutral.yellow;
 
             ring-color = bg;
             ring-caps-lock-color = bg;
 
-            ring-clear-color = normal.yellow;
-            ring-ver-color = normal.blue;
-            ring-wrong-color = normal.red;
+            ring-clear-color = neutral.yellow;
+            ring-ver-color = neutral.blue;
+            ring-wrong-color = neutral.red;
           };
 
           fmt = n: v: if isBool v then n else "${n}=${toString v}";
