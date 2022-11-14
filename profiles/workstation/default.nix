@@ -5,16 +5,17 @@ with lib;
 {
   imports = [
     ../base
-    ./home-manager.nix
     ./dev.nix
     ./fonts.nix
     ./gtk.nix
+    ./home-manager.nix
+    ./imv.nix
+    ./kitty.nix
     ./qt.nix
     ./sound.nix
     ./sway.nix
     ./xdg.nix
     ./zathura.nix
-    ./imv.nix
   ];
 
   services.xserver.libinput.enable = mkDefault true;

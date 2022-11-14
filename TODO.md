@@ -15,6 +15,9 @@
 - [ ] tui email
 - [ ] declarative syncthing
 
+- signal desktop
+- zathura
+
 # multiheaded wayland
 
 idea: 

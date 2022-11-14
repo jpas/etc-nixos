@@ -3,111 +3,112 @@
 with lib;
 
 let
-  fmt = f: mapAttrsRecursive (_: c: f c) config.hole.colours;
+  mkColour = path: hex: ansi: [
+    (setAttrByPath path hex)
+    (setAttrByPath [ "ansi" "c${toString ansi}" ] hex)
+  ];
 
-  gruvbox = rec {
+  # see: https://github.com/gruvbox-community/gruvbox-contrib/blob/master/color.table
+  gruvbox' = foldl recursiveUpdate {} (concatLists [
+    (mkColour [ "dark0_hard" ] "1d2021" 234)
+    (mkColour [ "dark0" ] "282828" 235)
+    (mkColour [ "dark0_soft" ] "32302f" 236)
+    (mkColour [ "dark1" ] "3c3836" 237)
+    (mkColour [ "dark2" ] "504945" 239)
+    (mkColour [ "dark3" ] "665c54" 241)
+    (mkColour [ "dark4" ] "7c6f64" 243)
+
+    (mkColour [ "gray_245" ] "928374" 245)
+    (mkColour [ "gray_244" ] "928374" 244)
+
+    (mkColour [ "light0_hard" ] "f9f5d7" 230)
+    (mkColour [ "light0" ] "fbf1c7" 229)
+    (mkColour [ "light0_soft" ] "f2e5bc" 228)
+    (mkColour [ "light1" ] "ebdbb2" 223)
+    (mkColour [ "light2" ] "d5c4a1" 250)
+    (mkColour [ "light3" ] "bdae93" 248)
+    (mkColour [ "light4" ] "a89984" 246)
+
+    (mkColour [ "bright" "red" ] "fb4934" 167)
+    (mkColour [ "bright" "green" ] "b8bb26" 142)
+    (mkColour [ "bright" "yellow" ] "fabd2f" 214)
+    (mkColour [ "bright" "blue" ] "83a598" 109)
+    (mkColour [ "bright" "purple" ] "d3869b" 175)
+    (mkColour [ "bright" "aqua" ] "8ec07c" 108)
+    (mkColour [ "bright" "orange" ] "fe8019" 208)
+
+    (mkColour [ "neutral" "red" ] "cc241d" 124)
+    (mkColour [ "neutral" "green" ] "98971a" 106)
+    (mkColour [ "neutral" "yellow" ] "d79921" 172)
+    (mkColour [ "neutral" "blue" ] "458588" 66)
+    (mkColour [ "neutral" "purple" ] "b16286" 132)
+    (mkColour [ "neutral" "aqua" ] "689d6a" 72)
+    (mkColour [ "neutral" "orange" ] "d65d0e" 166)
+
+    (mkColour [ "faded" "red" ] "9d0006" 88)
+    (mkColour [ "faded" "green" ] "79740e" 100)
+    (mkColour [ "faded" "yellow" ] "b57614" 136)
+    (mkColour [ "faded" "blue" ] "076678" 24)
+    (mkColour [ "faded" "purple" ] "8f3f71" 96)
+    (mkColour [ "faded" "aqua" ] "427b58" 65)
+    (mkColour [ "faded" "orange" ] "af3a03" 130)
+  ]);
+
+  fmt' = prev: f:
+    let self = mapAttrsRecursive (_: v: f v) prev; in self // { fmt = fmt' self; };
+
+  gruvbox-dark = recursiveUpdate gruvbox' (with gruvbox'; rec {
     bg = bg0;
-    bg0 = "282828";
-    bg1 = "3c3836";
-    bg2 = "504945";
-    bg3 = "665c54";
-    bg4 = "7c6f64";
-    bg5 = "928374";
-
     fg = fg1;
-    fg0 = "fbf1c7";
-    fg1 = "ebdbb2";
-    fg2 = "d5c4a1";
-    fg3 = "bdae93";
-    fg4 = "a89984";
-    fg5 = bg5;
 
-    normal = {
-      black = bg;
-      red = "cc241d";
-      green = "98971a";
-      yellow = "d79921";
-      blue = "458588";
-      purple = "b16286";
-      aqua = "689d6a";
-      orange = "d65d0e";
-      white = fg4;
+    bg0 = dark0;
+    bg1 = dark1;
+    bg2 = dark2;
+    bg3 = dark3;
+    bg4 = dark4;
+
+    gray = gray_245;
+
+    fg0 = light0;
+    fg1 = light1;
+    fg2 = light2;
+    fg3 = light3;
+    fg4 = light4;
+
+    ansi = {
+      c0 = bg;
+      c1 = neutral.red;
+      c2 = neutral.green;
+      c3 = neutral.yellow;
+      c4 = neutral.blue;
+      c5 = neutral.purple;
+      c6 = neutral.aqua;
+      c7 = fg4;
+
+      c8 = gray;
+      c9 = bright.red;
+      c10 = bright.green;
+      c11 = bright.yellow;
+      c12 = bright.blue;
+      c13 = bright.purple;
+      c14 = bright.aqua;
+      c15 = fg1;
     };
-
-    bright = {
-      black = fg5;
-      red = "fb4934";
-      green = "b8bb26";
-      yellow = "fabd2f";
-      blue = "83a598";
-      purple = "d3869b";
-      aqua = "8ec07c";
-      orange = "fe8019";
-      white = fg;
-    };
-
-    dim = {
-      black = fg5;
-      red = "9d0006";
-      green = "79740e";
-      yellow = "b57614";
-      blue = "076678";
-      purple = "8f3f71";
-      aqua = "427b58";
-      orange = "af3a03";
-      white = bg4;
-    };
-
-    vt0 = normal.black;
-    vt1 = normal.red;
-    vt2 = normal.green;
-    vt3 = normal.yellow;
-    vt4 = normal.blue;
-    vt5 = normal.purple;
-    vt6 = normal.aqua;
-    vt7 = normal.white;
-
-    vt8 = bright.black;
-    vt9 = bright.red;
-    vt10 = bright.green;
-    vt11 = bright.yellow;
-    vt12 = bright.blue;
-    vt13 = bright.purple;
-    vt14 = bright.aqua;
-    vt15 = bright.white;
-  };
+  });
 in
 {
   options = {
     hole.colours = mkOption
       {
         type = types.anything;
-        default = gruvbox;
-        apply = a: a // {
-          inherit fmt;
-        };
+        default = gruvbox-dark;
+        apply = a: fmt' a (x: x);
       };
   };
 
   config = {
-    console. colors = mkDefault (with config.hole.colours; [
-      vt0
-      vt1
-      vt2
-      vt3
-      vt4
-      vt5
-      vt6
-      vt7
-      vt8
-      vt9
-      vt10
-      vt11
-      vt12
-      vt13
-      vt14
-      vt15
-    ]);
+    console. colors = mkDefault
+      (map (c: config.hole.colours.ansi."c${toString c}") (range 0 15));
 
     # fixes truecolor detection through ssh and sudo.
     security.sudo.extraConfig = mkAfter ''
@@ -123,7 +124,6 @@ in
     '';
 
     environment.systemPackages = attrValues {
-      foot-terminfo = pkgs.foot.terminfo;
       kitty-terminfo = pkgs.kitty.terminfo;
     };
   };
