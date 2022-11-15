@@ -7,23 +7,23 @@ let
 in
 {
   options = {
-    direnv.enable = mkEnableOption "direnv";
+    programs.direnv.enable = mkEnableOption "direnv";
   };
 
   config = mkIf cfg.enable {
-    programs.bash.interactiveShellInit = ''
+    programs.bash.interactiveShellInit = mkAfter ''
       eval "$(direnv hook bash)"
     '';
 
-    programs.zsh.interactiveShellInit = ''
+    programs.zsh.interactiveShellInit = mkAfter ''
       eval "$(direnv hook zsh)"
     '';
 
-    programs.fish.interactiveShellInit = ''
+    programs.fish.interactiveShellInit = mkAfter ''
       direnv hook fish | source
     '';
 
-    environment.etc."xdg/direnv/lib/nix-direnv.sh".link = "${pkgs.nix-direnv}/share/nix-direnv/direnvrc";
+    environment.etc."xdg/direnv/lib/nix-direnv.sh".source = "${pkgs.nix-direnv}/share/nix-direnv/direnvrc";
 
     nix.settings.keep-outputs = true;
     nix.settings.keep-derivations = true;
