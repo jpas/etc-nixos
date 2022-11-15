@@ -11,6 +11,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.direnv ];
+
     programs.bash.interactiveShellInit = mkAfter ''
       eval "$(direnv hook bash)"
     '';
