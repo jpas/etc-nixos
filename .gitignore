@@ -1,3 +1,4 @@
+.direnv
 /configuration.nix
 /hardware-configuration.nix
 result*

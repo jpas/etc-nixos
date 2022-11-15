@@ -1,5 +1,6 @@
 { lib
 , config
+, nixosConfig
 , ...
 }:
 
@@ -7,7 +8,7 @@ with lib;
 
 let
   cfg = config.programs.zathura;
-  colours = config.hole.colours;
+  colours = nixosConfig.hole.colours;
 in
 mkMerge [
   {
@@ -24,9 +25,9 @@ mkMerge [
         default-fg = colours.fg;
 
         notification-error-bg = colours.bg;
-        notification-error-fg = colours.red;
+        notification-error-fg = colours.neutral.red;
         notification-warning-bg = colours.bg;
-        notification-warning-fg = colours.yellow;
+        notification-warning-fg = colours.neutral.yellow;
         notification-bg = colours.bg;
         notification-fg = colours.fg;
 
@@ -39,7 +40,7 @@ mkMerge [
 
         index-bg = colours.bg2;
         index-fg = colours.fg;
-        index-active-bg = colours.bright.aqua;
+        index-active-bg = colours.neutral.aqua;
         index-active-fg = colours.bg;
 
         inputbar-bg = colours.bg;
@@ -51,8 +52,8 @@ mkMerge [
         statusbar-h-padding = 10;
         statusbar-v-padding = 4;
 
-        highlight-color = colours.yellow;
-        highlight-active-color = colours.orange;
+        highlight-color = colours.neutral.yellow;
+        highlight-active-color = colours.neutral.orange;
 
         render-loading = true;
         render-loading-bg = colours.bg;

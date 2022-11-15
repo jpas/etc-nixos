@@ -6,6 +6,7 @@ let
   colours = nixosConfig.hole.colours.fmt (c: "#${c}");
 in
 {
+  programs.kitty.enable = false;
   programs.kitty.font.name = "monospace";
   programs.kitty.settings = {
     font_size = 10;

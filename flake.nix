@@ -39,9 +39,20 @@
           flakes = self.inputs // { inherit self; };
         };
       };
+
     in
     with lib;
-    {
+    (eachDefaultSystem (system: pkgs: {
+      packages = flip filterAttrs pkgs.hole
+        (_: pkg: meta.availableOn pkgs.stdenv.hostPlatform pkg);
+
+      devShells.default = pkgs.mkShell {
+        buildInputs = [
+          inputs.deploy-rs.packages.${system}.deploy-rs
+          inputs.agenix.packages.${system}.agenix
+        ];
+      };
+    })) // {
       overlays.default = import ./pkgs;
 
       nixosConfigurations = {
@@ -101,8 +112,5 @@
 
       checks = flip mapAttrs deploy-rs.lib
         (system: deployLib: deployLib.deployChecks self.deploy);
-    } // eachDefaultSystem (system: pkgs: {
-      packages = flip filterAttrs pkgs.hole
-        (_: pkg: meta.availableOn pkgs.stdenv.hostPlatform pkg);
-    });
+    };
 }

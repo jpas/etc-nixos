@@ -92,7 +92,7 @@ let
       focusedInactive = unfocused;
       placeholder = unfocused;
       unfocused = mkClientColor fg2 bg1 bg1;
-      urgent = mkClientColor fg neutral.red normal.red;
+      urgent = mkClientColor fg neutral.red neutral.red;
     };
 
     bars = [{
@@ -116,7 +116,7 @@ let
 
       colors = with colours; rec {
         background = bg;
-        separator = bg5;
+        separator = gray;
         statusline = fg;
 
         activeWorkspace = focusedWorkspace;

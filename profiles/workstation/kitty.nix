@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -10,7 +10,7 @@ in
 
   environment.etc."xdg/kitty/kitty.conf".text = ''
     font_family monospace
-    font_size = 10.0
+    font_size 10.0
 
     placement_strategy center
 
@@ -29,7 +29,7 @@ in
 
     enable_audio_bell no
 
-    ${concatMapStringsSep "\n" (mapAttrsToList (c: h: "color${removePrefix "c" n} ${h}") colours.ansi)}
+    ${concatStringsSep "\n" (mapAttrsToList (c: h: "color${removePrefix "c" c} ${h}") colours.ansi)}
 
     linux_display_server auto
   '';
