@@ -20,6 +20,8 @@ with lib;
     ls = "exa --git";
   };
 
+  programs.direnv.enable = true;
+
   environment.systemPackages = attrValues {
     inherit (pkgs)
       bat
