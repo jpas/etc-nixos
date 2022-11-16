@@ -80,13 +80,13 @@
           ];
         };
 
-        #doko = mkSystem {
-        #  system = "x86_64-linux";
-        #  profiles = [
-        #    ./machines/doko
-        #    ./profiles/base
-        #  ];
-        #};
+        doko = mkSystem {
+          system = "x86_64-linux";
+          profiles = [
+            ./machines/doko
+            ./profiles/base
+          ];
+        };
       };
 
       deploy = {
