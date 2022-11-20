@@ -8,12 +8,12 @@ in
   services.traefik.enable = true;
 
   services.traefik.dynamicConfigOptions = mkMerge [
-    {
+    (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
       http.routers.dashboard = {
         rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
         service = "api@internal";
       };
-    }
+    })
 
     {
       http.services.jellyfin.loadBalancer.servers = [
@@ -27,6 +27,8 @@ in
   ];
 
   services.traefik.staticConfigOptions = {
+    api.dashboard = true;
+
     entryPoints.web = {
       address = ":443";
       http.tls = {
@@ -55,6 +57,7 @@ in
         scheme = "https";
       };
     };
+
 
     certificatesResolvers.acme.acme = {
       email = "acme@pas.sh";
