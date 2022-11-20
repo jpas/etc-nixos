@@ -50,18 +50,6 @@
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  age.secrets."cloudflare-acme-pas.sh".file = ../../secrets/cloudflare-acme-pas.sh.age;
-
-  security.acme = {
-    acceptTerms = true;
-
-    defaults = {
-      email = "root@pas.sh";
-      dnsProvider = "cloudflare";
-      credentialsFile = config.age.secrets."cloudflare-acme-pas.sh".path;
-    };
-  };
-
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

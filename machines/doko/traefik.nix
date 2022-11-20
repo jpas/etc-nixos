@@ -56,11 +56,6 @@ in
       };
     };
 
-    api = {
-      dashboard = true;
-      insecure = true;
-    };
-
     certificatesResolvers.acme.acme = {
       email = "acme@pas.sh";
       storage = "/var/lib/traefik/acme.json";
@@ -68,8 +63,9 @@ in
     };
   };
 
-  networking.firewall.interfaces.eno1.allowedTCPPorts = [
-    8080
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
   ];
 
   age.secrets."traefik-tokens" = {
