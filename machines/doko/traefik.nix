@@ -24,7 +24,7 @@ in
         service = "jellyfin@file";
       };
     }
-  };
+  ];
 
   services.traefik.staticConfigOptions = {
     entryPoints.web = {
