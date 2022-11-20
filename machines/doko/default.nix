@@ -35,9 +35,11 @@
       networkConfig = {
         DHCP = "yes";
         IPMasquerade = "ipv4";
-        IPForward = "yes";
       };
       dhcpV4Config = {
+        SendHostname = false;
+        UseHostname = false;
+        UseDNS = false;
         RouteMetric = 512;
       };
       dhcpV6Config = {
@@ -52,7 +54,6 @@
       networkConfig = {
         Address = "10.39.3.1/24";
         DHCPServer = "yes";
-        IPForward = "yes";
       };
       dhcpServerConfig = {
         PoolOffset = 100;
