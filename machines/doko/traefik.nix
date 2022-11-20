@@ -29,10 +29,6 @@ in
         service = "unifi@file";
         entryPoints = [ "web" ];
       };
-      http.serversTransports.unifi = {
-        serverName = "unifi.o.pas.sh";
-        insecureSkipVerify = true;
-      };
     }
 
     {
@@ -49,6 +45,8 @@ in
 
   services.traefik.staticConfigOptions = {
     api.dashboard = true;
+
+    serversTransport.insecureSkipVerify = true;
 
     entryPoints.web = {
       address = ":443";
