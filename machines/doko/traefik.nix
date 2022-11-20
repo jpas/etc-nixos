@@ -8,6 +8,10 @@ in
   services.traefik.enable = true;
 
   services.traefik.dynamicConfigOptions = mkMerge [
+    {
+      http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
+    }
+
     (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
       http.routers.dashboard = {
         rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
@@ -24,6 +28,10 @@ in
         rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
         service = "unifi@file";
         entryPoints = [ "web" ];
+      };
+      http.serversTransports.unifi = {
+        serverName = "10.39.0.2";
+        insecureSkipVerify = true;
       };
     }
 
