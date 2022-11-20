@@ -9,7 +9,7 @@ in
 
   services.traefik.dynamicConfigOptions = {
     http.routers.dashboard = {
-      rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`) && PathPrefix(`/api`, `/dashboard`)";
+      rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
       service = "api@internal";
     };
   };
