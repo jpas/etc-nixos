@@ -53,6 +53,7 @@
       };
       networkConfig = {
         Address = "10.39.3.1/24";
+        ConfigureWithoutCarrier = "yes";
         DHCPServer = "yes";
       };
       dhcpServerConfig = {
