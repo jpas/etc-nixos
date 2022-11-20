@@ -7,11 +7,18 @@ in
 {
   services.traefik.enable = true;
 
+  services.traefik.dynamicConfigOptions = {
+    http.routers.dashboard = {
+      rule = "Host(`traefik.pas.sh`) && PathPrefix(`/api`, `/dashboard`)";
+      service = "api@internal";
+    };
+  };
+
   services.traefik.staticConfigOptions = {
     entryPoints.web = {
       address = ":443";
       http.tls = {
-        certResolver = "acme";
+        certResolver = "le";
         domains = [
           {
             main = "pas.sh";
@@ -29,7 +36,7 @@ in
       };
     };
 
-    entryPoints.web-redirect = {
+    entryPoints.web-insecure = {
       address = ":80";
       http.redirections.entrypoint = {
         to = "web";
@@ -37,12 +44,21 @@ in
       };
     };
 
-    certificateResolvers.acme ={
+    api = {
+      dashboard = true;
+      insecure = true;
+    };
+
+    certificatesResolvers.le.acme = {
       email = "acme@pas.sh";
       storage = "acme.json";
       dnsChallenge.provider = "cloudflare";
     };
   };
+
+  networking.firewall.interfaces.eno1.allowedTCPPorts = [
+    8080
+  ];
 
   age.secrets."traefik-tokens" = {
     file = ./traefik-tokens.age;
