@@ -18,7 +18,7 @@ in
     entryPoints.web = {
       address = ":443";
       http.tls = {
-        certResolver = "le";
+        certResolver = "acme";
         domains = [
           {
             main = "pas.sh";
@@ -49,9 +49,9 @@ in
       insecure = true;
     };
 
-    certificatesResolvers.le.acme = {
+    certificatesResolvers.acme.acme = {
       email = "acme@pas.sh";
-      storage = "acme.json";
+      storage = "./acme.json";
       dnsChallenge.provider = "cloudflare";
     };
   };
