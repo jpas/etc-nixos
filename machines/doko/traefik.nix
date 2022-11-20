@@ -10,17 +10,17 @@ in
   services.traefik.dynamicConfigOptions = mkMerge [
     {
       http.routers.dashboard = {
-        rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
+        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
         service = "api@internal";
       };
     }
 
     {
-      http.services.jellyfin = {
-        loadBalancer.servers = [ { url  = "http://10.39.0.20:8096"; } ];
-      };
+      http.services.jellyfin.loadBalancer.servers = [
+        { url  = "http://10.39.0.20:8096"; }
+      ];
       http.routers.jellyfin = {
-        rule = "ClientIP(`100.0.0.0/8`) && Host(`jellyfin.o.pas.sh`)";
+        rule = "(Host(`jellyfin.o.pas.sh`) && ClientIP(`100.0.0.0/8`)) || Host(`jellyfin.pas.sh`)";
         service = "jellyfin@file";
       };
     }
