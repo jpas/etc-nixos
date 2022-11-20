@@ -8,6 +8,7 @@
 
   imports = [
     ../common
+    ./router.nix
     ./coredns.nix
     ./dl.nix
     ./factorio.nix
@@ -27,18 +28,30 @@
       };
     };
     "20-wan" = {
-      matchConfig.Name = "enp11s0f2";
+      matchConfig.Name = "enp11s0f3";
       linkConfig = {
-        RequiredForOnline = "no";
+        RequiredForOnline = "routable";
       };
       networkConfig = {
         DHCP = "yes";
+        IPMasquerade = "ipv4";
+        IPForward = "yes";
       };
       dhcpV4Config = {
         RouteMetric = 512;
       };
       dhcpV6Config = {
         RouteMetric = 512;
+      };
+    };
+    "21-lan" = {
+      matchConfig.Name = "enp11s0f2";
+      linkConfig = {
+        RequiredForOnline = "routable";
+      };
+      networkConfig = {
+        Address = "10.39.3.1/24";
+        IPForward = "yes";
       };
     };
   };
