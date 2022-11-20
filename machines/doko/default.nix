@@ -66,9 +66,7 @@
     443
   ];
 
-  networking.firewall.interfaces."enp11s0f2".allowedUDPPorts = [
-    67
-  ];
+  networking.firewall.trustedInterfaces = [ "enp11s0f2" ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
