@@ -53,6 +53,10 @@
         Address = "10.39.3.1/24";
         IPForward = "yes";
       };
+
+      dhcpServer = {
+        ServerAddress = "10.39.3.1/24";
+      };
     };
   };
 
