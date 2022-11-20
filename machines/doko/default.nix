@@ -56,7 +56,8 @@
       };
 
       dhcpServerConfig = {
-        ServerAddress = "10.39.3.1/24";
+        PoolOffset = 100;
+        PoolSize = 100;
       };
     };
   };
