@@ -29,5 +29,7 @@ builtins.trace "./secrets.nix" (
     "users/kbell/passwd.age".publicKeys = admins ++ systems;
 
     "secrets/cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
+
+    "machines/doko/traefik-tokens.age".publicKeys = admins ++ system.doko;
   }
 )

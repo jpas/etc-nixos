@@ -13,6 +13,7 @@
     ./factorio.nix
     ./hardware.nix
     ./srht.nix
+    ./traefik.nix
   ];
 
   systemd.network.networks = {
