@@ -8,10 +8,11 @@
 
   imports = [
     ../common
+    ./coredns.nix
+    ./dl.nix
+    ./factorio.nix
     ./hardware.nix
     ./srht.nix
-    ./factorio.nix
-    ./dl.nix
   ];
 
   systemd.network.networks = {

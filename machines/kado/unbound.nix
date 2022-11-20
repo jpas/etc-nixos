@@ -31,9 +31,9 @@ mkIf cfg.enable {
           "\"jpas.xyz\" transparent"
         ];
         local-data = [
-          "\"sonarr.jpas.xyz A 10.39.0.1\""
-          "\"radarr.jpas.xyz A 10.39.0.1\""
-          "\"jellyfin.jpas.xyz A 10.39.0.1\""
+          "\"sonarr.jpas.xyz A 10.39.0.20\""
+          "\"radarr.jpas.xyz A 10.39.0.20\""
+          "\"jellyfin.jpas.xyz A 10.39.0.20\""
         ];
       };
       forward-zone = [
