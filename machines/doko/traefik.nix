@@ -17,12 +17,12 @@ in
     })
 
     {
-      http.service.unifi.loadBalancer.servers = [
-        { url = "https://10.39.0.2:8443"; }
+      http.services.unifi.loadBalancer.servers = [
+        { url  = "https://10.39.0.2:8443"; }
       ];
       http.routers.unifi = {
         rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
-        service = "unifi@file";
+        service = "jellyfin@file";
         entryPoints = [ "web" ];
       };
     }
