@@ -7,16 +7,23 @@ in
 {
   services.traefik.enable = true;
 
-  services.traefik.dynamicConfigOptions = {
-    http.routers.dashboard = {
-      rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
-      service = "api@internal";
-    };
+  services.traefik.dynamicConfigOptions = foldl recursiveUpdate [
+    {
+      http.routers.dashboard = {
+        rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
+        service = "api@internal";
+      };
+    }
 
-    http.routers.jellyfin = {
-      rule = "ClientIP(`100.0.0.0/8`) && Host(`jellyfin.o.pas.sh`)";
-      service = "http://10.39.0.20:8096";
-    };
+    {
+      http.services.jellyfin = {
+        loadBalancer.servers = [ { url  = "http://10.39.0.20:8096"; } ];
+      };
+      http.routers.jellyfin = {
+        rule = "ClientIP(`100.0.0.0/8`) && Host(`jellyfin.o.pas.sh`)";
+        service = "jellyfin@file";
+      };
+    }
   };
 
   services.traefik.staticConfigOptions = {
