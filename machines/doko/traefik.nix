@@ -7,7 +7,7 @@ in
 {
   services.traefik.enable = true;
 
-  services.traefik.dynamicConfigOptions = foldl recursiveUpdate [
+  services.traefik.dynamicConfigOptions = mkMerge [
     {
       http.routers.dashboard = {
         rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
