@@ -54,7 +54,7 @@
         IPForward = "yes";
       };
 
-      dhcpServer = {
+      dhcpServerConfig = {
         ServerAddress = "10.39.3.1/24";
       };
     };
