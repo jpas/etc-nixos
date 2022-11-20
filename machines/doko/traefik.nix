@@ -30,7 +30,7 @@ in
         entryPoints = [ "web" ];
       };
       http.serversTransports.unifi = {
-        serverName = "10.39.0.2";
+        serverName = "unifi.o.pas.sh";
         insecureSkipVerify = true;
       };
     }
