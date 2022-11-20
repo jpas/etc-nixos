@@ -10,20 +10,31 @@ in
   services.traefik.dynamicConfigOptions = mkMerge [
     (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
       http.routers.dashboard = {
-        entryPoints = [ "web" ];
         rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
         service = "api@internal";
+        entryPoints = [ "web" ];
       };
     })
+
+    {
+      http.service.unifi.loadBalancer.servers = [
+        { url = "https://10.39.0.2:8443"; }
+      ];
+      http.routers.unifi = {
+        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
+        service = "unifi@file";
+        entryPoints = [ "web" ];
+      };
+    }
 
     {
       http.services.jellyfin.loadBalancer.servers = [
         { url  = "http://10.39.0.20:8096"; }
       ];
       http.routers.jellyfin = {
-        entryPoints = [ "web" ];
         rule = "(Host(`jellyfin.o.pas.sh`) && ClientIP(`100.0.0.0/8`)) || Host(`jellyfin.pas.sh`)";
         service = "jellyfin@file";
+        entryPoints = [ "web" ];
       };
     }
   ];
