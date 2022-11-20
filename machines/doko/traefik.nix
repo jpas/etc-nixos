@@ -7,7 +7,7 @@ in
 {
   services.traefik.enable = true;
 
-  services.traefik.staticConfiguration = {
+  services.traefik.staticConfigOptions = {
     entryPoints.web = {
       address = ":443";
       http.tls = {
