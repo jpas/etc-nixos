@@ -51,7 +51,7 @@ in
 
     certificatesResolvers.acme.acme = {
       email = "acme@pas.sh";
-      storage = "./acme.json";
+      storage = "/var/lib/traefik/acme.json";
       dnsChallenge.provider = "cloudflare";
     };
   };
@@ -65,7 +65,10 @@ in
     owner = "traefik";
   };
 
-  systemd.services."traefik".serviceConfig = {
-    EnvironmentFile = config.age.secrets."traefik-tokens".path;
+  systemd.services."traefik" = {
+    preStart = ''
+      [[ -e ${
+    '';
+    serviceConfig.EnvironmentFile = config.age.secrets."traefik-tokens".path;
   };
 }
