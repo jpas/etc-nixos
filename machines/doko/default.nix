@@ -54,7 +54,6 @@
         DHCPServer = "yes";
         IPForward = "yes";
       };
-
       dhcpServerConfig = {
         PoolOffset = 100;
         PoolSize = 100;
@@ -65,6 +64,10 @@
   networking.firewall.allowedTCPPorts = [
     80
     443
+  ];
+
+  networking.firewall.interfaces."enp11s0f2".allowedUDPPorts = [
+    67
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
