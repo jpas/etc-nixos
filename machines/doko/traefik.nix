@@ -9,7 +9,7 @@ in
 
   services.traefik.dynamicConfigOptions = {
     http.routers.dashboard = {
-      rule = "Host(`traefik.pas.sh`) && PathPrefix(`/api`, `/dashboard`)";
+      rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`) && PathPrefix(`/api`, `/dashboard`)";
       service = "api@internal";
     };
   };
@@ -66,9 +66,6 @@ in
   };
 
   systemd.services."traefik" = {
-    preStart = ''
-      [[ -e ${
-    '';
     serviceConfig.EnvironmentFile = config.age.secrets."traefik-tokens".path;
   };
 }
