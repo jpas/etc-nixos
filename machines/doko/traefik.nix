@@ -12,6 +12,11 @@ in
       rule = "ClientIP(`100.0.0.0/8`) && Host(`traefik.o.pas.sh`)";
       service = "api@internal";
     };
+
+    http.routers.jellyfin = {
+      rule = "ClientIP(`100.0.0.0/8`) && Host(`jellyfin.o.pas.sh`)";
+      service = "http://10.39.0.20:8096";
+    };
   };
 
   services.traefik.staticConfigOptions = {
