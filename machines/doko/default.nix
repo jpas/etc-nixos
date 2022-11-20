@@ -51,6 +51,7 @@
       };
       networkConfig = {
         Address = "10.39.3.1/24";
+        DHCPServer = "yes";
         IPForward = "yes";
       };
 
