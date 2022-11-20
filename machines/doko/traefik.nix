@@ -22,7 +22,7 @@ in
       ];
       http.routers.unifi = {
         rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.0.0.0/8`)";
-        service = "jellyfin@file";
+        service = "unifi@file";
         entryPoints = [ "web" ];
       };
     }
