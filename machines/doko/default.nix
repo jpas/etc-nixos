@@ -17,18 +17,6 @@
     ./traefik.nix
   ];
 
-  systemd.network.networks = {
-    "20-lan" = {
-      matchConfig.Name = "enp7s0";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        DHCP = "yes";
-      };
-    };
-  };
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # This value determines the NixOS release with which your system is to be

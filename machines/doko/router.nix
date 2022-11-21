@@ -18,7 +18,7 @@ mkIf true {
 
   systemd.network.networks = {
     "20-wan" = {
-      matchConfig.Name = "eno6";
+      matchConfig.Name = "eno1";
       linkConfig = {
         RequiredForOnline = "routable";
       };
@@ -43,22 +43,38 @@ mkIf true {
         #UseDNS = false;
       };
     };
-    "21-lan" = {
-      matchConfig.Name = "eno5";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        Address = "10.39.0.1/24";
-        ConfigureWithoutCarrier = "yes";
-        DHCPServer = "yes";
-        IPForward = true;
-      };
-      dhcpServerConfig = {
-        PoolOffset = 100;
-        PoolSize = 100;
-      };
-    };
+    #"20-mgmt" = {
+    #  matchConfig.Name = "eno2";
+    #  linkConfig = {
+    #    RequiredForOnline = "routable";
+    #  };
+    #  networkConfig = {
+    #    Address = "10.39.0.1/23";
+    #    ConfigureWithoutCarrier = "yes";
+    #    DHCPServer = "yes";
+    #    IPForward = true;
+    #  };
+    #  dhcpServerConfig = {
+    #    PoolOffset = 256;
+    #    PoolSize = 254;
+    #  };
+    #};
+    #"20-lan" = {
+    #  matchConfig.Name = "eno3";
+    #  linkConfig = {
+    #    RequiredForOnline = "routable";
+    #  };
+    #  networkConfig = {
+    #    Address = "10.39.2.1/24";
+    #    ConfigureWithoutCarrier = "yes";
+    #    DHCPServer = "yes";
+    #    IPForward = true;
+    #  };
+    #  dhcpServerConfig = {
+    #    PoolOffset = 100;
+    #    PoolSize = 100;
+    #  };
+    #};
   };
 
   networking.firewall.interfaces."eno5".allowedUDPPorts = [ 67 ];
