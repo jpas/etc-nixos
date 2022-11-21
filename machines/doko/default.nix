@@ -27,48 +27,12 @@
         DHCP = "yes";
       };
     };
-    "20-wan" = {
-      matchConfig.Name = "enp11s0f3";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        DHCP = "yes";
-        IPMasquerade = "ipv4";
-      };
-      dhcpV4Config = {
-        SendHostname = false;
-        UseHostname = false;
-        UseDNS = false;
-        RouteMetric = 512;
-      };
-      dhcpV6Config = {
-        RouteMetric = 512;
-      };
-    };
-    "21-lan" = {
-      matchConfig.Name = "enp11s0f2";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        Address = "10.39.3.1/24";
-        ConfigureWithoutCarrier = "yes";
-        DHCPServer = "yes";
-      };
-      dhcpServerConfig = {
-        PoolOffset = 100;
-        PoolSize = 100;
-      };
-    };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  # systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
-  networking.firewall.trustedInterfaces = [ "enp11s0f2" ];
+
+  # networking.nat.enable = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

@@ -7,6 +7,11 @@ in
 {
   services.traefik.enable = true;
 
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
   services.traefik.dynamicConfigOptions = mkMerge [
     {
       http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
@@ -84,11 +89,6 @@ in
       dnsChallenge.provider = "cloudflare";
     };
   };
-
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
 
   age.secrets."traefik-tokens" = {
     file = ./traefik-tokens.age;
