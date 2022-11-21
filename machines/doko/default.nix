@@ -29,11 +29,6 @@
     };
   };
 
-  # systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
-
-
-  # networking.nat.enable = true;
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # This value determines the NixOS release with which your system is to be
