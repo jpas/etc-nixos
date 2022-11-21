@@ -49,7 +49,7 @@ mkIf true {
         RequiredForOnline = "routable";
       };
       networkConfig = {
-        Address = "10.39.3.1/24";
+        Address = "10.39.0.1/24";
         ConfigureWithoutCarrier = "yes";
         DHCPServer = "yes";
         IPForward = true;
