@@ -4,10 +4,6 @@
 
 # TODO
 
-- [x] ensure kado.o is routable before trying to do NFS
-- [ ] allow wireless to fail during boot
-- [ ] apply smbios-thermal-blah quiet mode on boot
-
 - [ ] remarkable: sync papers library
 - [ ] remarkable: sync notes
 - [ ] file watcher for ~/tmp/
@@ -15,8 +11,7 @@
 - [ ] tui email
 - [ ] declarative syncthing
 
-- signal desktop
-- zathura
+- zathura, fix colours globally
 
 # multiheaded wayland
 
