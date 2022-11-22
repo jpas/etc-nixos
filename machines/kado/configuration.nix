@@ -39,7 +39,7 @@
 
   systemd.network.networks = {
     "20-lan" = {
-      matchConfig.Name = "enp0s20f0";
+      matchConfig.Name = "eno1";
       linkConfig = {
         RequiredForOnline = "routable";
       };
