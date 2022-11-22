@@ -10,38 +10,6 @@ let
   };
 in
 {
-  # TODO: https://www.jjpdev.com/posts/home-router-nixos/
-  # SEE ALSO: https://github.com/tailscale/tailscale/issues/391#issuecomment-1311918712
-  systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
-
-  # systemd-networkd doesn't set up masquerade properly
-  networking.firewall.enable = false;
-  networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
-    table ip nat {
-      chain postrouting {
-        type nat hook postrouting priority srcnat; policy accept;
-        oifname ${interfaces.wan} masquerade
-      }
-    }
-  '';
-
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.default.forwarding" = 0;
-    "net.ipv4.conf.${interfaces.wan}.forwarding" = 1;
-    "net.ipv4.conf.${interfaces.mgmt}.forwarding" = 1;
-
-    "net.ipv6.conf.default.forwarding" = 0;
-    "net.ipv6.conf.default.accept_ra" = 0;
-    "net.ipv6.conf.default.use_tempaddr" = 0;
-
-    "net.ipv6.conf.${interfaces.wan}.accept_ra" = 2;
-    "net.ipv6.conf.${interfaces.wan}.autoconf" = 1;
-    "net.ipv6.conf.${interfaces.wan}.forwarding" = 1;
-
-    "net.ipv6.conf.${interfaces.mgmt}.forwarding" = 1;
-  };
-
   systemd.network.networks."20-wan" = {
     matchConfig.Name = interfaces.wan;
     linkConfig = {
@@ -55,22 +23,14 @@ in
         "2606:4700:4700::1111#cloudflare-dns.com"
         "2606:4700:4700::1001#cloudflare-dns.com"
       ];
-      #IPv6AcceptRA = true;
-      #IPMasquerade = true;
-      #IPForward = true;
     };
     dhcpV4Config = {
       SendHostname = false;
-      UseHostname = false;
-      UseDNS = false;
-    };
-    dhcpV6Config = {
-      #UseHostname = false;
-      #UseDNS = false;
     };
     extraConfig = ''
       [Link]
       MACAddress=e0:db:d1:27:5e:bd
+      #MACAddress=0c:c4:7a:93:a5:5e
 
       [DHCPv4]
       IAID=0xd1275ebd
@@ -79,6 +39,20 @@ in
       #VendorClassIdentifier=eRouter1.0
       #SendVendorOption=43:string:\x02\x07\x45\x52\x4f\x55\x54\x45\x52\x03\x0c\x45\x52\x4f\x55\x54\x45\x52\x3a\x45\x44\x56\x41
       #SendOption=125:string:\x00\x00\x11\x8b\x07\x01\x02\x7b\x7c\x7c\x01\x07
+
+      UseDNS=false
+      UseDomains=false
+      UseHostname=false
+      UseNTP=false
+
+      [DHCPv6]
+      IAID=0x01
+      DUIDType=link-layer
+
+      UseDNS=false
+      UseDomains=false
+      UseHostname=false
+      UseNTP=false
     '';
   };
 
@@ -90,8 +64,11 @@ in
       RequiredForOnline = "routable";
     };
     networkConfig = {
+      IPMasquerade = "both";
       Address = "10.39.0.254/24";
       DHCPServer = "yes";
+      IPv6SendRA = true;
+      DHCPPrefixDelegation = true;
     };
     dhcpServerConfig = {
       PoolOffset = 100;
