@@ -43,11 +43,11 @@ mkIf true {
         #UseDNS = false;
       };
     };
+
     "21-wan" = {
       matchConfig.Name = "eno3";
       linkConfig = {
         RequiredForOnline = "routable";
-        MACAddress = "e0:db:d1:27:5e:bd";
       };
       networkConfig = {
         DHCP = "yes";
@@ -67,7 +67,19 @@ mkIf true {
         #UseHostname = false;
         #UseDNS = false;
       };
+      extraConfig = ''
+        [Link]
+        MACAddress=e0:db:d1:27:5e:bd
+        [DHCPv4]
+	IAID=0xd1275ebd
+	DUIDType=link-layer
+        #RequestOptions=1 2 3 6 12 15 28 42 122 125
+        #VendorClassIdentifier=eRouter1.0
+        #SendVendorOption=43:string:\x02\x07\x45\x52\x4f\x55\x54\x45\x52\x03\x0c\x45\x52\x4f\x55\x54\x45\x52\x3a\x45\x44\x56\x41
+        #SendOption=125:string:\x00\x00\x11\x8b\x07\x01\x02\x7b\x7c\x7c\x01\x07
+      '';
     };
+
     #"20-mgmt" = {
     #  matchConfig.Name = "eno2";
     #  linkConfig = {
