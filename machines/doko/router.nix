@@ -43,7 +43,7 @@ mkIf true {
         #UseDNS = false;
       };
     };
-    "20-wan" = {
+    "21-wan" = {
       matchConfig.Name = "eno3";
       linkConfig = {
         RequiredForOnline = "routable";
