@@ -14,22 +14,33 @@ in
   # SEE ALSO: https://github.com/tailscale/tailscale/issues/391#issuecomment-1311918712
   systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
+  # systemd-networkd doesn't set up masquerade properly
   networking.firewall.enable = false;
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
-    # systemd-networkd sets up masquerade wrong
     table ip nat {
+      chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        oifname ${interfaces.wan} masquerade
+      }
     }
   '';
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 0;
-
     "net.ipv4.conf.${interfaces.wan}.forwarding" = 1;
-    
+    "net.ipv4.conf.${interfaces.mgmt}.forwarding" = 1;
+
+    "net.ipv6.conf.all.forwarding" = 0;
     "net.ipv6.conf.all.accept_ra" = 0;
     "net.ipv6.conf.all.autoconf" = 0;
     "net.ipv6.conf.all.use_tempaddr" = 0;
+
+    "net.ipv6.conf.${interfaces.wan}.forwarding" = 1;
+    "net.ipv6.conf.${interfaces.wan}.accept_ra" = 2;
+    "net.ipv6.conf.${interfaces.wan}.autoconf" = 1;
+
+    "net.ipv6.conf.${interfaces.mgmt}.forwarding" = 1;
   };
 
   systemd.network.networks."20-wan" = {
