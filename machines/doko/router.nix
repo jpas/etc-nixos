@@ -14,6 +14,8 @@ in
   # SEE ALSO: https://github.com/tailscale/tailscale/issues/391#issuecomment-1311918712
   systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
+  networking.firewall.enable = false;
+
   systemd.network.networks."20-wan" = {
     matchConfig.Name = interfaces.wan;
     linkConfig = {
