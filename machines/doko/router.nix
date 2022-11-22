@@ -15,6 +15,22 @@ in
   systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
   networking.firewall.enable = false;
+  networking.nftables.enable = true;
+  networking.nftables.ruleset = ''
+    # systemd-networkd sets up masquerade wrong
+    table ip nat {
+    }
+  '';
+
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = 0;
+
+    "net.ipv4.conf.${interfaces.wan}.forwarding" = 1;
+    
+    "net.ipv6.conf.all.accept_ra" = 0;
+    "net.ipv6.conf.all.autoconf" = 0;
+    "net.ipv6.conf.all.use_tempaddr" = 0;
+  };
 
   systemd.network.networks."20-wan" = {
     matchConfig.Name = interfaces.wan;
@@ -29,8 +45,9 @@ in
         "2606:4700:4700::1111#cloudflare-dns.com"
         "2606:4700:4700::1001#cloudflare-dns.com"
       ];
-      IPv6AcceptRA = true;
-      IPMasquerade = true;
+      #IPv6AcceptRA = true;
+      #IPMasquerade = true;
+      #IPForward = true;
     };
     dhcpV4Config = {
       SendHostname = false;
@@ -65,7 +82,6 @@ in
     networkConfig = {
       Address = "10.39.0.254/24";
       DHCPServer = "yes";
-      IPForward = true;
     };
     dhcpServerConfig = {
       PoolOffset = 100;
