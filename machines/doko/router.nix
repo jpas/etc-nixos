@@ -27,18 +27,17 @@ in
   '';
 
   boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = 0;
+    "net.ipv4.conf.default.forwarding" = 0;
     "net.ipv4.conf.${interfaces.wan}.forwarding" = 1;
     "net.ipv4.conf.${interfaces.mgmt}.forwarding" = 1;
 
-    "net.ipv6.conf.all.forwarding" = 0;
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.all.autoconf" = 0;
-    "net.ipv6.conf.all.use_tempaddr" = 0;
+    "net.ipv6.conf.default.forwarding" = 0;
+    "net.ipv6.conf.default.accept_ra" = 0;
+    "net.ipv6.conf.default.use_tempaddr" = 0;
 
-    "net.ipv6.conf.${interfaces.wan}.forwarding" = 1;
     "net.ipv6.conf.${interfaces.wan}.accept_ra" = 2;
     "net.ipv6.conf.${interfaces.wan}.autoconf" = 1;
+    "net.ipv6.conf.${interfaces.wan}.forwarding" = 1;
 
     "net.ipv6.conf.${interfaces.mgmt}.forwarding" = 1;
   };
