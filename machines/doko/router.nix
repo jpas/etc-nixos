@@ -43,6 +43,31 @@ mkIf true {
         #UseDNS = false;
       };
     };
+    "20-wan" = {
+      matchConfig.Name = "eno3";
+      linkConfig = {
+        RequiredForOnline = "routable";
+        MACAddress = "e0:db:d1:27:5e:bd";
+      };
+      networkConfig = {
+        DHCP = "yes";
+        DNS = [
+          "1.1.1.1#cloudflare-dns.com"
+          "1.0.0.1#cloudflare-dns.com"
+          "2606:4700:4700::1111#cloudflare-dns.com"
+          "2606:4700:4700::1001#cloudflare-dns.com"
+        ];
+      };
+      dhcpV4Config = {
+        SendHostname = false;
+        UseHostname = false;
+        UseDNS = false;
+      };
+      dhcpV6Config = {
+        #UseHostname = false;
+        #UseDNS = false;
+      };
+    };
     #"20-mgmt" = {
     #  matchConfig.Name = "eno2";
     #  linkConfig = {
