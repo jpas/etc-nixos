@@ -92,4 +92,6 @@ in
       haiiro = { Address = "10.39.0.60"; MACAddress = "68:54:5a:94:4e:e0"; };
     };
   };
+
+  networking.firewall.interfaces.${interfaces.lan}.allowedUDPPorts = [ 67 ];
 }
