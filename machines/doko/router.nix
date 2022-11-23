@@ -14,6 +14,10 @@ let
     wan = "eno1";
     lan = "eno2";
   };
+
+  mkStaticLeases = mapAttrsToList (_: config: {
+    dhcpServerStaticLeaseConfig = config;
+  });
 in
 {
   systemd.network.networks."20-wan" = {
@@ -74,7 +78,7 @@ in
       PoolOffset = 100;
       PoolSize = 100;
     };
-    dhcpServerStaticLeases = attrValues {
+    dhcpServerStaticLeases = mkStaticLeases {
       uck = { Address = "10.39.0.2"; MACAddress = "fc:ec:da:d0:eb:a3"; };
       usw = { Address = "10.39.0.5"; MACAddress = "b4:fb:e4:19:bd:87"; };
       uap = { Address = "10.39.0.10"; MACAddress = "80:2a:a8:43:89:72"; };
