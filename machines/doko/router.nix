@@ -94,7 +94,6 @@ in
       Address = "10.39.0.254/24";
       DNS = dns;
       DHCPServer = "yes";
-      IPMasquerade = "both";
       IPv6SendRA = true;
       DHCPPrefixDelegation = true;
     };
@@ -123,4 +122,10 @@ in
   networking.firewall.interfaces.${interfaces.lan0}.allowedUDPPorts = [
     67 # dhcp server
   ];
+
+  networking.nat.enable = true;
+  networking.nat = {
+    externalInterface = interfaces.wan0;
+    internalInterfaces = [ interfaces.lan0 ];
+  };
 }
