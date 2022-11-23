@@ -53,6 +53,8 @@ in
 
     serversTransport.insecureSkipVerify = true;
 
+    accessLog = {}
+
     entryPoints.web = {
       address = ":443";
       http.tls = {
