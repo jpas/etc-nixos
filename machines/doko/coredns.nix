@@ -15,10 +15,8 @@ in
 
   services.coredns.config = ''
     . {
+      forward . 1.1.1.1 1.0.0.1
       cache
-      unbound {
-        option qname-minimisation yes
-      }
     }
   '';
 }

@@ -9,7 +9,6 @@
     ../common
     ./aleph.nix
     ./print-and-scan.nix
-    ./unbound.nix
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -34,7 +33,6 @@
   ];
 
   services.fail2ban.enable = true;
-  services.unbound.enable = true;
   virtualisation.docker.enable = true;
 
   systemd.network.networks = {

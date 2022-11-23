@@ -3,6 +3,8 @@
 with lib;
 
 let
+  quoted = s: "\"${s}\"";
+
   cfg = config.systemd.network;
 
   dns = [
@@ -18,9 +20,28 @@ let
     lan0 = "eno2";
   };
 
-  mkStaticLeases = mapAttrsToList (_: config: {
-    dhcpServerStaticLeaseConfig = config;
-  });
+  hosts = [
+    { name = "uck.lo"; ipv4 = "10.39.0.2"; mac = "fc:ec:da:d0:eb:a3"; }
+    { name = "usw.lo"; ipv4 = "10.39.0.5"; mac = "b4:fb:e4:19:bd:87"; }
+    { name = "uap.lo"; ipv4 = "10.39.0.10"; mac = "80:2a:a8:43:89:72"; }
+
+    { name = "kado.lo"; ipv4 = "10.39.0.20"; mac = "0c:c4:7a:6a:cd:04"; }
+    { name = "kado.o"; ipv4 = "100.65.152.104"; }
+    { name = "ipmi.kado.lo"; ipv4 = "10.39.0.30"; mac = "0c:c4:7a:6e:1c:33"; }
+
+    { name = "doko.lo"; ipv4 = "10.39.0.254"; mac = "0c:c4:7a:93:9d:11"; }
+    { name = "doko.o"; ipv4 = "100.68.33.127"; }
+    { name = "ipmi.doko.lo"; ipv4 = "10.39.0.31"; mac = "0c:c4:7a:93:9d:11"; }
+
+    { name = "haiiro.lo"; ipv4 = "10.39.0.60"; mac = "68:54:5a:94:4e:e0"; }
+    { name = "haiiro.o"; ipv4 = "100.91.221.11"; }
+
+    { name = "kuro.lo"; ipv4 = "10.39.0.50"; mac = "34:2e:b7:de:f9:09"; }
+    { name = "kuro.o"; ipv4 = "100.116.4.62"; }
+
+    { name = "shiro.lo"; ipv4 = "10.39.0.51"; mac = "54:04:a6:0a:57:0e"; }
+    { name = "shiro.o"; ipv4 = "100.69.65.63"; }
+  ];
 in
 {
   systemd.network.networks."20-wan0" = {
@@ -104,19 +125,15 @@ in
     dhcpPrefixDelegationConfig = {
       UplinkInterface = interfaces.wan0;
     };
-    dhcpServerStaticLeases = mkStaticLeases {
-      uck = { Address = "10.39.0.2"; MACAddress = "fc:ec:da:d0:eb:a3"; };
-      usw = { Address = "10.39.0.5"; MACAddress = "b4:fb:e4:19:bd:87"; };
-      uap = { Address = "10.39.0.10"; MACAddress = "80:2a:a8:43:89:72"; };
-
-      kado-ipmi = { Address = "10.39.0.30"; MACAddress = "0c:c4:7a:6e:1c:33"; };
-      doko-ipmi = { Address = "10.39.0.31"; MACAddress = "0c:c4:7a:93:9d:11"; };
-
-      kado = { Address = "10.39.0.20"; MACAddress = "0c:c4:7a:6a:cd:04"; };
-      kuro = { Address = "10.39.0.50"; MACAddress = "34:2e:b7:de:f9:09"; };
-      shiro = { Address = "10.39.0.51"; MACAddress = "54:04:a6:0a:57:0e"; };
-      haiiro = { Address = "10.39.0.60"; MACAddress = "68:54:5a:94:4e:e0"; };
-    };
+    dhcpServerStaticLeases = pipe hosts [
+      (filter (host: host ? mac))
+      (map (host: {
+        dhcpServerStaticLeaseConfig = {
+          Address = host.ipv4;
+          MACAddress = host.mac;
+        };
+      }))
+    ];
   };
 
   networking.firewall.interfaces.${interfaces.lan0}.allowedUDPPorts = [
@@ -129,4 +146,46 @@ in
     externalInterface = interfaces.wan0;
     internalInterfaces = [ interfaces.lan0 ];
   };
+
+  services.unbound.enable = true;
+  services.unbound = {
+    settings = {
+      server = {
+        interface = [ "0.0.0.0" "::1" ];
+        interface-action = [
+          "${interfaces.lan0} allow"
+        ];
+      };
+      local-zone = [
+        "${quoted "lo."} static"
+        "${quoted "o."} static"
+      ];
+      local-data = pipe hosts [
+        (filter (host: (hasSuffix ".lo" || hasSuffix ".o") host.name))
+        (map (host: quoted "${host.name}. IN A ${host.ipv4}"))
+      ];
+      local-data-ptr = pipe hosts [
+        (filter (host: hasSuffix "lo" host.name))
+        (map (host: quoted "${host.ipv4} ${host.name}"))
+      ];
+      forward-zone = [
+        {
+          name = ".";
+          forward-addr = [
+            "1.1.1.1"
+            "1.0.0.1"
+            "2606:4700:4700::1111"
+            "2606:4700:4700::1001"
+          ];
+        }
+      ];
+    };
+  };
+
+  services.resolved.extraConfig = mkIf config.services.unbound.enable ''
+    [Resolve]
+    DNS=127.0.0.1
+    DNSStubListener=no
+  '';
+
 }
