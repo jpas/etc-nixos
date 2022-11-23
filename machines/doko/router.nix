@@ -14,8 +14,8 @@ let
 
   interfaces = {
     wan0 = "eno1";
-    wan1 = "eno2";
-    lan0 = "eno3";
+    wan1 = "eno4";
+    lan0 = "eno2";
   };
 
   mkStaticLeases = mapAttrsToList (_: config: {
