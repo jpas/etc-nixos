@@ -3,35 +3,36 @@
 with lib;
 
 let
+  dns = [
+    "1.1.1.1#cloudflare-dns.com"
+    "1.0.0.1#cloudflare-dns.com"
+    "2606:4700:4700::1111#cloudflare-dns.com"
+    "2606:4700:4700::1001#cloudflare-dns.com"
+  ];
+
   interfaces = {
     wan = "eno1";
-    mgmt = "eno3";
-    lan = "eno4";
+    lan = "eno2";
   };
 in
 {
   systemd.network.networks."20-wan" = {
     matchConfig.Name = interfaces.wan;
     linkConfig = {
+      MACAddress = "e0:db:d1:27:5e:bd";
       RequiredForOnline = "routable";
     };
     networkConfig = {
+      DNS = dns;
       DHCP = "yes";
-      DNS = [
-        "1.1.1.1#cloudflare-dns.com"
-        "1.0.0.1#cloudflare-dns.com"
-        "2606:4700:4700::1111#cloudflare-dns.com"
-        "2606:4700:4700::1001#cloudflare-dns.com"
-      ];
     };
     dhcpV4Config = {
       SendHostname = false;
     };
+    dhcpV6Config = {
+      WithoutRA = "solicit";
+    };
     extraConfig = ''
-      [Link]
-      MACAddress=e0:db:d1:27:5e:bd
-      #MACAddress=0c:c4:7a:93:a5:5e
-
       [DHCPv4]
       IAID=0xd1275ebd
       DUIDType=link-layer
@@ -56,17 +57,16 @@ in
     '';
   };
 
-  networking.firewall.interfaces.${interfaces.mgmt}.allowedUDPPorts = [ 67 ];
-
-  systemd.network.networks."20-mgmt" = {
-    matchConfig.Name = interfaces.mgmt;
+  systemd.network.networks."20-lan" = {
+    matchConfig.Name = interfaces.lan;
     linkConfig = {
       RequiredForOnline = "routable";
     };
     networkConfig = {
-      IPMasquerade = "both";
       Address = "10.39.0.254/24";
+      DNS = dns;
       DHCPServer = "yes";
+      IPMasquerade = "both";
       IPv6SendRA = true;
       DHCPPrefixDelegation = true;
     };
@@ -74,15 +74,18 @@ in
       PoolOffset = 100;
       PoolSize = 100;
     };
-  };
+    dhcpServerStaticLeases = attrValues {
+      uck = { Address = "10.39.0.2"; MACAddress = "fc:ec:da:d0:eb:a3"; };
+      usw = { Address = "10.39.0.5"; MACAddress = "b4:fb:e4:19:bd:87"; };
+      uap = { Address = "10.39.0.10"; MACAddress = "80:2a:a8:43:89:72"; };
 
-  systemd.network.networks."20-lan" = {
-    matchConfig.Name = interfaces.lan;
-    linkConfig = {
-      RequiredForOnline = "routable";
-    };
-    networkConfig = {
-      Address = "10.39.0.21/24";
+      kado-ipmi = { Address = "10.39.0.30"; MACAddress = "0c:c4:7a:6e:1c:33"; };
+      doko-ipmi = { Address = "10.39.0.31"; MACAddress = "0c:c4:7a:93:9d:11"; };
+
+      kado = { Address = "10.39.0.20"; MACAddress = "0c:c4:7a:6a:cd:04"; };
+      kuro = { Address = "10.39.0.50"; MACAddress = "34:2e:b7:de:f9:09"; };
+      shiro = { Address = "10.39.0.51"; MACAddress = "54:04:a6:0a:57:0e"; };
+      haiiro = { Address = "10.39.0.60"; MACAddress = "68:54:5a:94:4e:e0"; };
     };
   };
 }
