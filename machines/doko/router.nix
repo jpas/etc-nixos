@@ -3,6 +3,8 @@
 with lib;
 
 let
+  cfg = systemd.network;
+
   dns = [
     "1.1.1.1#cloudflare-dns.com"
     "1.0.0.1#cloudflare-dns.com"
@@ -11,8 +13,9 @@ let
   ];
 
   interfaces = {
-    wan = "eno1";
-    lan = "eno2";
+    wan0 = "eno1";
+    wan1 = "eno2";
+    lan0 = "eno3";
   };
 
   mkStaticLeases = mapAttrsToList (_: config: {
@@ -20,8 +23,8 @@ let
   });
 in
 {
-  systemd.network.networks."20-wan" = {
-    matchConfig.Name = interfaces.wan;
+  systemd.network.networks."20-wan0" = {
+    matchConfig.Name = interfaces.wan0;
     linkConfig = {
       MACAddress = "e0:db:d1:27:5e:bd";
       RequiredForOnline = "routable";
@@ -32,6 +35,7 @@ in
     };
     dhcpV4Config = {
       SendHostname = false;
+      RouteMetric = 1024;
     };
     dhcpV6Config = {
       WithoutRA = "solicit";
@@ -61,8 +65,28 @@ in
     '';
   };
 
+  systemd.network.networks."20-wan1" = {
+    matchConfig.Name = interfaces.wan1;
+    linkConfig = {
+      RequiredForOnline = "no";
+    };
+    networkConfig = {
+      DNS = dns;
+      DHCP = "ipv4";
+      IPv6AcceptRA = false;
+    };
+    dhcpV4Config = {
+      SendHostname = false;
+      UseDNS = false;
+      UseDomains = false;
+      UseHostname = false;
+      UseNTP = false;
+      RouteMetric = cfg.networks."20-wan0".dhcpV4Config.RouteMetric + 1;
+    };
+  };
+
   systemd.network.networks."20-lan" = {
-    matchConfig.Name = interfaces.lan;
+    matchConfig.Name = interfaces.lan0;
     linkConfig = {
       RequiredForOnline = "routable";
     };
@@ -77,6 +101,9 @@ in
     dhcpServerConfig = {
       PoolOffset = 100;
       PoolSize = 100;
+    };
+    dhcpPrefixDelegationConfig = {
+      UplinkInterface = interfaces.wan0;
     };
     dhcpServerStaticLeases = mkStaticLeases {
       uck = { Address = "10.39.0.2"; MACAddress = "fc:ec:da:d0:eb:a3"; };
@@ -93,5 +120,7 @@ in
     };
   };
 
-  networking.firewall.interfaces.${interfaces.lan}.allowedUDPPorts = [ 67 ];
+  networking.firewall.interfaces.${interfaces.lan0}.allowedUDPPorts = [
+    67 # dhcp server
+  ];
 }
