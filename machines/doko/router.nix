@@ -120,6 +120,7 @@ in
   };
 
   networking.firewall.interfaces.${interfaces.lan0}.allowedUDPPorts = [
+    53 # dns server
     67 # dhcp server
   ];
 
