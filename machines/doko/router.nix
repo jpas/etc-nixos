@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = systemd.network;
+  cfg = config.systemd.network;
 
   dns = [
     "1.1.1.1#cloudflare-dns.com"
