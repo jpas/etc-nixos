@@ -52,7 +52,7 @@
     };
   };
 
-  networking.firewall.trustedInterfaces = [ interfaces.enp0s20f1 ];
+  networking.firewall.trustedInterfaces = [ "enp0s20f1" ];
 
   fileSystems = {
     "/" = {
