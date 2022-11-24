@@ -18,6 +18,7 @@ let
     wan0 = "eno1";
     wan1 = "eno4";
     lan0 = "eno2";
+    lan1 = "eno3";
   };
 
   hosts = [
@@ -106,7 +107,7 @@ in
     };
   };
 
-  systemd.network.networks."20-lan" = {
+  systemd.network.networks."20-lan0" = {
     matchConfig.Name = interfaces.lan0;
     linkConfig = {
       RequiredForOnline = "routable";
@@ -145,6 +146,14 @@ in
     53 # dns server
     67 # dhcp server
   ];
+
+  systemd.network.networks."20-lan1" = {
+    matchConfig.Name = interfaces.lan1;
+    networkConfig = {
+      Address = "10.39.1.254/24";
+    };
+  };
+  networking.firewall.trustedInterfaces = [ interfaces.lan1 ];
 
   networking.nat.enable = true;
   networking.nat = {

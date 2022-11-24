@@ -30,8 +30,8 @@ let
       server = {
         enable = true;
         exports = ''
-          /srv/exports        *.o(insecure,rw,async,no_subtree_check,crossmnt,fsid=root)
-          /srv/exports/aleph  *.o(insecure,rw,async,no_subtree_check)
+          /srv/exports        10.39.1.1 *.o(insecure,rw,async,no_subtree_check,crossmnt,fsid=root)
+          /srv/exports/aleph  10.39.1.1 *.o(insecure,rw,async,no_subtree_check)
         '';
       };
     };

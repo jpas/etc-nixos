@@ -21,7 +21,7 @@ with lib;
     };
   };
 
-  systemd.network.networks."20-lan" = {
+  systemd.network.networks."20-lan0" = {
     dhcpV4Config.ClientIdentifier = mkDefault "mac";
   };
 

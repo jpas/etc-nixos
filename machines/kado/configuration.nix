@@ -35,17 +35,24 @@
   services.fail2ban.enable = true;
   virtualisation.docker.enable = true;
 
-  systemd.network.networks = {
-    "20-lan" = {
-      matchConfig.Name = "enp0s20f0";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        DHCP = "yes";
-      };
+  systemd.network.networks."20-lan0" = {
+    matchConfig.Name = "enp0s20f0";
+    linkConfig = {
+      RequiredForOnline = "routable";
+    };
+    networkConfig = {
+      DHCP = "yes";
     };
   };
+
+  systemd.network.networks."20-lan1" = {
+    matchConfig.Name = "enp0s20f1";
+    networkConfig = {
+      Address = "10.39.1.20/24";
+    };
+  };
+
+  networking.firewall.trustedInterfaces = [ interfaces.enp0s20f1 ];
 
   fileSystems = {
     "/" = {
