@@ -44,15 +44,13 @@ with lib;
       ;
   };
 
-  systemd.network.networks = {
-    "20-lan" = {
-      matchConfig.Name = "enp0s25";
-      linkConfig = {
-        RequiredForOnline = "routable";
-      };
-      networkConfig = {
-        DHCP = "yes";
-      };
+  systemd.network.networks."20-lan0" = {
+    matchConfig.Name = "enp0s25";
+    linkConfig = {
+      RequiredForOnline = "routable";
+    };
+    networkConfig = {
+      DHCP = "yes";
     };
   };
 
