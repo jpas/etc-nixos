@@ -1,69 +1,42 @@
 {
   networking.hostName = "kuro";
-  nixpkgs.system = "x86_64-linux";
-  boot.loader.systemd-boot.enable = true;
+
 
   imports = [
     ../common
+    ../hardware/dell-u2720q.nix
+    ../hardware/dell-xps-13-9300.nix
+    ../hardware/keychron-k3.nix
+    ../hardware/logitech-mx-master-3.nix
     ./hardware.nix
-    ./kanshi.nix
+    ./fs.nix
+    ./pipewire-acp-paths.nix
   ];
 
-  networking.wireless.iwd.enable = true;
-
-  hole.use.intel-cpu = true;
-
-  hole = {
-    aleph.enable = false;
+  boot.kernel.sysctl = {
+    "dev.i915.perf_stream_paranoid" = 0;
   };
-
-  programs.sway.enable = true;
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      48080 # for random http servers
-    ];
-    allowedUDPPorts = [
-      10999 # don't starve together forest
-      10998 # don't starve together caves
-    ];
-  };
-
-  programs.steam = {
-    enable = false;
-    remotePlay.openFirewall = true;
-  };
-
-  systemd.tmpfiles.rules =
-    let
-      mkLink = path: "L+ ${path} - - - - /persist${path}";
-    in
-    [
-      (mkLink "/etc/machine-id")
-      (mkLink "/etc/nixos")
-    ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  /*
-      nix.distributedBuilds = true;
-      nix.settings = {
-      builders-use-substitutes = true;
-      };
+  systemd.tmpfiles.rules = [
+    # Allow usb devices to wake from sleep.
+    # This enables pluging in a monitor to wake the system in clamshell mode.
+    "w /sys/bus/usb/devices/usb1/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb2/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb3/power/wakeup - - - - enabled"
+    "w /sys/bus/usb/devices/usb4/power/wakeup - - - - enabled"
+  ];
 
-      nix.buildMachines = [
-      {
-      hostName = "doko.o";
-      maxJobs = 8;
-      sshUser = "jpas";
-      sshKey = "/home/jpas/.ssh/id_ed25519";
-      supportedFeatures = [ "-" ];
-      mandatoryFeatures = [ "-" ];
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpJREFGOU9Za2Y0MmQ2VkIyMU1kM2lQK1ZhU04wQzFsaWpOb1lmcEdWOW0gcm9vdEBkb2tvCg==";
-      }
-      ];
-    */
+  services.thermald.enable = true;
+
+  services.undervolt.enable = true;
+  services.undervolt = {
+    # *** WARNING *** these were tweaked specifically for my machine, using
+    # them on your own machine may result in instability
+    temp = 93;
+    coreOffset = -68;
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

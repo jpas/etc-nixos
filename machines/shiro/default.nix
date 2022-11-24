@@ -4,14 +4,16 @@ with lib;
 
 {
   networking.hostName = "shiro";
-  nixpkgs.system = "x86_64-linux";
 
   imports = [
     ../common
+    ../hardware/keychron-k3.nix
+    ../hardware/logitech-mx-master-3.nix
+    ../hardware/amd-gpu.nix
+    ../hardware/intel-cpu.nix
     ./hardware.nix
+    ./fs.nix
   ];
-
-  hole.use.intel-cpu = true;
 
   programs.sway.enable = true;
 
@@ -34,14 +36,8 @@ with lib;
     ];
   };
 
-  services.printing.enable = true;
-
   environment.systemPackages = attrValues {
-    inherit (pkgs)
-      gamescope
-      steam
-      steam-run
-      ;
+    inherit (pkgs) steam steam-run ;
   };
 
   systemd.network.networks."20-lan0" = {

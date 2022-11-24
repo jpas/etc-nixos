@@ -45,6 +45,8 @@ let
   ];
 in
 {
+  services.fail2ban.enable = true;
+
   systemd.network.networks."20-wan0" = {
     matchConfig.Name = interfaces.wan0;
     linkConfig = {

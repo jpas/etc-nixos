@@ -2,22 +2,20 @@
 
 {
   networking.hostName = "doko";
-  nixpkgs.system = "x86_64-linux";
-
-  hole.use.intel-cpu = true;
 
   imports = [
     ../common
-    ./router.nix
-    ./coredns.nix
-    ./dl.nix
     ./factorio.nix
+    ./fs.nix
     ./hardware.nix
-    ./srht.nix
+    ./networking.nix
     ./traefik.nix
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  # TODO: fan control via ipmi?
+  # https://github.com/missmah/ipmi_tools/blob/master/ipmi_fancontrol.pl
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
