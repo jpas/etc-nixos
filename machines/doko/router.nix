@@ -29,7 +29,7 @@ let
     { name = "kado.o"; ipv4 = "100.65.152.104"; }
     { name = "ipmi.kado.lo"; ipv4 = "10.39.0.30"; mac = "0c:c4:7a:6e:1c:33"; }
 
-    { name = "doko.lo"; ipv4 = "10.39.0.254"; mac = "0c:c4:7a:93:9d:11"; }
+    { name = "doko.lo"; ipv4 = "10.39.0.254"; mac = "0c:c4:7a:93:a5:5f"; }
     { name = "doko.o"; ipv4 = "100.68.33.127"; }
     { name = "ipmi.doko.lo"; ipv4 = "10.39.0.31"; mac = "0c:c4:7a:93:9d:11"; }
 
@@ -121,6 +121,11 @@ in
     dhcpServerConfig = {
       PoolOffset = 100;
       PoolSize = 100;
+      DNS = [
+        "10.39.0.254"
+        "1.1.1.1#cloudflare-dns.com"
+        "1.0.0.1#cloudflare-dns.com"
+      ];
     };
     dhcpPrefixDelegationConfig = {
       UplinkInterface = interfaces.wan0;
@@ -152,22 +157,20 @@ in
     settings = {
       server = {
         interface = [ "0.0.0.0" "::1" ];
-        interface-action = [
-          "${interfaces.lan0} allow"
+        access-control = [ "10.0.0.0/8 allow" ];
+        local-zone = [
+          "${quoted "lo."} static"
+          "${quoted "o."} static"
+        ];
+        local-data = pipe hosts [
+          (filter (host: (hasSuffix ".lo" host.name) || (hasSuffix ".o" host.name)))
+          (map (host: quoted "${host.name}. IN A ${host.ipv4}"))
+        ];
+        local-data-ptr = pipe hosts [
+          (filter (host: hasSuffix "lo" host.name))
+          (map (host: quoted "${host.ipv4} ${host.name}"))
         ];
       };
-      local-zone = [
-        "${quoted "lo."} static"
-        "${quoted "o."} static"
-      ];
-      local-data = pipe hosts [
-        (filter (host: (hasSuffix ".lo" || hasSuffix ".o") host.name))
-        (map (host: quoted "${host.name}. IN A ${host.ipv4}"))
-      ];
-      local-data-ptr = pipe hosts [
-        (filter (host: hasSuffix "lo" host.name))
-        (map (host: quoted "${host.ipv4} ${host.name}"))
-      ];
       forward-zone = [
         {
           name = ".";
@@ -187,5 +190,4 @@ in
     DNS=127.0.0.1
     DNSStubListener=no
   '';
-
 }

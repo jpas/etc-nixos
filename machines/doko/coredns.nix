@@ -5,7 +5,7 @@ with lib;
 let
 in
 {
-  services.coredns.enable = true;
+  services.coredns.enable = false;
 
   services.resolved.extraConfig = mkIf config.services.coredns.enable ''
     [Resolve]
