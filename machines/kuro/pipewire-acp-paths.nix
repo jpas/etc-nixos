@@ -1,5 +1,7 @@
 { lib, config, pkgs, ... }:
 
+with lib;
+
 let
   acp-paths = pkgs.runCommand "acp-paths" { } ''
     mkdir -p $out
