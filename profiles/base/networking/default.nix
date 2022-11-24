@@ -8,8 +8,8 @@ with lib;
     ./wireless.nix
   ];
 
-  networking.useDHCP = mkDefault false;
-  networking.useNetworkd = mkDefault true;
+  networking.useDHCP = false;
+  networking.useNetworkd = true;
   systemd.services.systemd-networkd-wait-online.enable = mkDefault false;
 
   systemd.network.links."98-default" = {

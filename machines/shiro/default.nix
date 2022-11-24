@@ -5,6 +5,8 @@ with lib;
 {
   networking.hostName = "shiro";
 
+  hole.use.intel-cpu = true;
+
   imports = [
     ../common
     ../hardware/keychron-k3.nix

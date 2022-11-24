@@ -1,6 +1,7 @@
 {
   networking.hostName = "kuro";
 
+  hole.use.intel-cpu = true;
 
   imports = [
     ../common

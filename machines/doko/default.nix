@@ -3,6 +3,8 @@
 {
   networking.hostName = "doko";
 
+  hole.use.intel-cpu = true;
+
   imports = [
     ../common
     ./factorio.nix

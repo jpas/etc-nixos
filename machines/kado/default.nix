@@ -1,6 +1,8 @@
 {
   networking.hostName = "kado";
 
+  hole.use.intel-cpu = true;
+
   imports = [
     ../common
     ./fs.nix
