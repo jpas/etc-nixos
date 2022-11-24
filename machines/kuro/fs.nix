@@ -33,7 +33,7 @@ in
     options = [ "subvol=/local/nix" "noatime" "compress=zstd" "space_cache=v2" ];
   };
 
-  fileSystems."/home" = vessel {
+  fileSystems."/home" = {
     device = by-uuid.decrypted;
     fsType = "btrfs";
     options = [ "subvol=/user/home" "relatime" "compress=zstd" "space_cache=v2" ];
@@ -47,7 +47,7 @@ in
     neededForBoot = true;
   };
 
-  fileSystems."/var/swap" = vessel {
+  fileSystems."/var/swap" = {
     device = by-uuid.decrypted;
     fsType = "btrfs";
     options = [ "subvol=/local/swap" "noatime" "compress=no" "space_cache=v2" ];
