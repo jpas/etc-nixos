@@ -12,6 +12,8 @@
     ./hardware.nix
     ./networking.nix
     ./traefik.nix
+    ./jellfin.nix
+    ./influx.nix
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
