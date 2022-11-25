@@ -12,37 +12,12 @@ in
     443
   ];
 
-  services.traefik.dynamicConfigOptions = mkMerge [
-    {
-      http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
-    }
-
-    (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
-      http.routers.dashboard = {
-        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
-        service = "api@internal";
-        entryPoints = [ "web" ];
-      };
-    })
-
-    {
-      http.services.unifi.loadBalancer.servers = [
-        { url  = "https://10.39.0.2:8443"; }
-      ];
-      http.routers.unifi = {
-        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
-        service = "unifi@file";
-        entryPoints = [ "web" ];
-      };
-    }
-  ];
-
   services.traefik.staticConfigOptions = {
     api.dashboard = true;
 
     serversTransport.insecureSkipVerify = true;
 
-    accessLog = {};
+    accessLog.format = "json";
 
     entryPoints.web = {
       address = ":443";
@@ -80,6 +55,32 @@ in
       dnsChallenge.provider = "cloudflare";
     };
   };
+
+  services.traefik.dynamicConfigOptions = mkMerge [
+    {
+      http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
+    }
+
+    (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
+      http.routers.dashboard = {
+        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
+        service = "api@internal";
+        entryPoints = [ "web" ];
+      };
+    })
+
+    {
+      http.services.unifi.loadBalancer.servers = [
+        { url  = "https://10.39.0.2:8443"; }
+      ];
+      http.routers.unifi = {
+        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
+        service = "unifi@file";
+        entryPoints = [ "web" ];
+      };
+    }
+  ];
+
 
   age.secrets."traefik-tokens" = {
     file = ./traefik-tokens.age;
