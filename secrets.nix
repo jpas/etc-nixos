@@ -32,4 +32,5 @@ in
 
   "machines/doko/authelia/jwt-secret.age".publicKeys = admins ++ system.doko;
   "machines/doko/authelia/storage-encryption-key.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/notifier-smtp-password.age".publicKeys = admins ++ system.doko;
 }

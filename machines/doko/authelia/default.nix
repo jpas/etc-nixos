@@ -62,21 +62,35 @@ in
       storage.local = {
         path = "/var/lib/authelia/db.sqlite3";
       };
+      access_control = {
+        default_policy = "one_factor";
+      };
+      notifier.smtp = rec {
+        host = "smtp.fastmail.com";
+        username = "jarrod@jarrodpas.com";
+        sender = "no-reply@auth.pas.sh";
+        startup_check_address = sender;
+      };
     };
   };
 
+  services.authelia.jwtSecretFile = config.age.secrets."authelia-jwt-secret".path;
   age.secrets."authelia-jwt-secret" = {
     file = ./jwt-secret.age;
     owner = "authelia";
   };
 
+  services.authelia.storageEncryptionKeyFile = config.age.secrets."authelia-storage-encryption-key".path;
   age.secrets."authelia-storage-encryption-key" = {
     file = ./storage-encryption-key.age;
     owner = "authelia";
   };
 
-  services.authelia = {
-    jwtSecretFile = config.age.secrets."authelia-jwt-secret".path;
-    storageEncryptionKeyFile = config.age.secrets."authelia-storage-encryption-key".path;
+  systemd.services.authelia.Environment = {
+    AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.path.age.secrets."authelia-notifier-smtp-password".path;
+  };
+  age.secrets."authelia-notifier-smtp-password" = {
+    file = ./notifier-smtp-password.age;
+    owner = "authelia";
   };
 }
