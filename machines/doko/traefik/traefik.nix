@@ -89,15 +89,14 @@ in
   ];
 
   age.secrets."traefik-env" = {
-    file = ./traefik-env.age;
+    file = ./env.age;
     owner = "traefik";
   };
 
   age.secrets."traefik-config.json" = {
-    file = ./traefik-config.json.age;
+    file = ./config.json.age;
     owner = "traefik";
   };
-
 
   systemd.services."traefik" = {
     serviceConfig.EnvironmentFile = config.age.secrets."traefik-env".path;

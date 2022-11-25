@@ -27,8 +27,9 @@ in
   "users/jpas/passwd.age".publicKeys = admins ++ systems;
   "users/kbell/passwd.age".publicKeys = admins ++ systems;
 
-  "secrets/cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
+  "machines/doko/traefik/env.age".publicKeys = admins ++ system.doko;
+  "machines/doko/traefik/config.json.age".publicKeys = admins ++ system.doko;
 
-  "machines/doko/traefik-env.age".publicKeys = admins ++ system.doko;
-  "machines/doko/traefik-config.json.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/jwt-secret.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/storage-encryption-key.age".publicKeys = admins ++ system.doko;
 }

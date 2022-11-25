@@ -9,11 +9,12 @@
     ../common
     ./factorio.nix
     ./fs.nix
+    ./authelia
     ./hardware.nix
-    ./networking.nix
-    ./traefik.nix
-    ./jellyfin.nix
     ./influx.nix
+    ./jellyfin.nix
+    ./networking.nix
+    ./traefik
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
