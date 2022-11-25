@@ -12,7 +12,7 @@
     ./hardware.nix
     ./networking.nix
     ./traefik.nix
-    ./jellfin.nix
+    ./jellyfin.nix
     ./influx.nix
   ];
 
