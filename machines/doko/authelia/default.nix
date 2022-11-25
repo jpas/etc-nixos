@@ -95,4 +95,8 @@ in
     file = ./notifier-smtp-password.age;
     owner = "authelia";
   };
+
+  systemd.tmpfiles.rules = [
+    "f /var/lib/authelia 600 authelia authelia -"
+  ];
 }
