@@ -10,7 +10,7 @@ in
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  services.traefik.staticConfigFile = "/var/lib/traefik/config.json";
+  services.traefik.staticConfigFile = "/var/lib/traefik/config.yml";
 
   systemd.services.traefik.preStart = ''
     ${pkgs.jq}/bin/jq --slurp '.[0] * .[1]' \
@@ -21,7 +21,7 @@ in
 
   services.traefik.staticConfigOptions = {
     providers.file.filename =
-      pkgs.writeText "config.json" (builtins.toJSON cfg.dynamicConfigOptions);
+      pkgs.writeText "config.yml" (builtins.toJSON cfg.dynamicConfigOptions);
 
     api.dashboard = true;
 
