@@ -67,9 +67,11 @@ in
       };
       notifier.smtp = rec {
         host = "smtp.fastmail.com";
+        port = 587;
         username = "jarrod@jarrodpas.com";
         sender = "no-reply@auth.pas.sh";
         startup_check_address = sender;
+        disable_html_emails = true;
       };
     };
   };
@@ -86,7 +88,7 @@ in
     owner = "authelia";
   };
 
-  systemd.services.authelia.Environment = {
+  systemd.services.authelia.environment = {
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets."authelia-notifier-smtp-password".path;
   };
   age.secrets."authelia-notifier-smtp-password" = {
