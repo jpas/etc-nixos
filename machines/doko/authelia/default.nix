@@ -87,7 +87,7 @@ in
   };
 
   systemd.services.authelia.Environment = {
-    AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.path.age.secrets."authelia-notifier-smtp-password".path;
+    AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets."authelia-notifier-smtp-password".path;
   };
   age.secrets."authelia-notifier-smtp-password" = {
     file = ./notifier-smtp-password.age;
