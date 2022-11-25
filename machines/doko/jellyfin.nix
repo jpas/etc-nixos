@@ -1,5 +1,7 @@
 { lib, ... }:
 
+with lib;
+
 {
   services.traefik.dynamicConfigOptions = {
     http.services.jellyfin.loadBalancer.servers = [
