@@ -12,8 +12,6 @@ with lib;
 
     serversTransport.insecureSkipVerify = true;
 
-    accessLog.format = "json";
-
     entryPoints.web = {
       address = ":443";
       http.tls = {
