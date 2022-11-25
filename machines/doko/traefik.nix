@@ -43,6 +43,7 @@ with lib;
       };
     };
 
+    metrics.influxDB2.address = "http://localhost:8086";
 
     certificatesResolvers.acme.acme = {
       email = "acme@pas.sh";
