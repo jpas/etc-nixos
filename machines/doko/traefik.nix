@@ -1,11 +1,9 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
 let
   cfg = config.services.traefik;
-
-  staticConfigFile = pkgs.writeText "config.json" (toJSON cfg.staticConfigOptions);
 in
 {
   services.traefik.enable = true;
@@ -14,9 +12,16 @@ in
 
   services.traefik.staticConfigFile = "/var/lib/traefik/config.json";
 
+  systemd.services.traefik.preStart = ''
+    ${pkgs.jq}/bin/jq --slurp '.[0] * .[1]' \
+      ${pkgs.writeText "config.json" (builtins.toJSON cfg.staticConfigOptions)} \
+      ${config.age.secrets."traefik-config.json".path} \
+      > ${cfg.staticConfigFile}
+  '';
+
   services.traefik.staticConfigOptions = {
     providers.file.filename =
-      pkgs.writeText "config.json" (toJSON cfg.dynamicConfigOptions);
+      pkgs.writeText "config.json" (builtins.toJSON cfg.dynamicConfigOptions);
 
     api.dashboard = true;
 
@@ -60,18 +65,6 @@ in
     };
   };
 
-  age.secrets."traefik-config.json" = {
-    file = ./traefik-config.json.age;
-    owner = "traefik";
-  };
-
-  systemd.services.traefik.preStart = ''
-    ${pkgs.jq}/bin/jq '.[0]*.[1]' \
-      ${pkgs.writeText "config.json" (toJSON cfg.staticConfigOptions)} \
-      ${config.age.secrets."traefik-config.json"} \
-      > ${cfg.staticConfigFile}
-  '';
-
   services.traefik.dynamicConfigOptions = mkMerge [
     {
       http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
@@ -101,6 +94,12 @@ in
     file = ./traefik-env.age;
     owner = "traefik";
   };
+
+  age.secrets."traefik-config.json" = {
+    file = ./traefik-config.json.age;
+    owner = "traefik";
+  };
+
 
   systemd.services."traefik" = {
     serviceConfig.EnvironmentFile = config.age.secrets."traefik-env".path;
