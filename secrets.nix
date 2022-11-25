@@ -29,5 +29,6 @@ in
 
   "secrets/cloudflare-acme-pas.sh.age".publicKeys = admins ++ system.doko;
 
-  "machines/doko/traefik-tokens.age".publicKeys = admins ++ system.doko;
+  "machines/doko/traefik-env.age".publicKeys = admins ++ system.doko;
+  "machines/doko/traefik-config.json.age".publicKeys = admins ++ system.doko;
 }

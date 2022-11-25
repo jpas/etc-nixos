@@ -2,12 +2,22 @@
 
 with lib;
 
+let
+  cfg = config.services.traefik;
+
+  staticConfigFile = pkgs.writeText "config.json" (toJSON cfg.staticConfigOptions);
+in
 {
   services.traefik.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  services.traefik.staticConfigFile = "/var/lib/traefik/config.json";
+
   services.traefik.staticConfigOptions = {
+    providers.file.filename =
+      pkgs.writeText "config.json" (toJSON cfg.dynamicConfigOptions);
+
     api.dashboard = true;
 
     serversTransport.insecureSkipVerify = true;
@@ -50,6 +60,18 @@ with lib;
     };
   };
 
+  age.secrets."traefik-config.json" = {
+    file = ./traefik-config.json.age;
+    owner = "traefik";
+  };
+
+  systemd.services.traefik.preStart = ''
+    ${pkgs.jq}/bin/jq '.[0]*.[1]' \
+      ${pkgs.writeText "config.json" (toJSON cfg.staticConfigOptions)} \
+      ${config.age.secrets."traefik-config.json"} \
+      > ${cfg.staticConfigFile}
+  '';
+
   services.traefik.dynamicConfigOptions = mkMerge [
     {
       http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
@@ -75,13 +97,12 @@ with lib;
     }
   ];
 
-
-  age.secrets."traefik-tokens" = {
-    file = ./traefik-tokens.age;
+  age.secrets."traefik-env" = {
+    file = ./traefik-env.age;
     owner = "traefik";
   };
 
   systemd.services."traefik" = {
-    serviceConfig.EnvironmentFile = config.age.secrets."traefik-tokens".path;
+    serviceConfig.EnvironmentFile = config.age.secrets."traefik-env".path;
   };
 }
