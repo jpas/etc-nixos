@@ -6,7 +6,7 @@ let
   cfg = config.services.authelia;
 
   frontend = "auth.pas.sh";
-  backend = "${cfg.settings.server.host}:${cfg.settings.server.port}";
+  backend = "${cfg.settings.server.host}:${toString cfg.settings.server.port}";
 in
 {
   imports = [ ./module.nix ];
@@ -17,15 +17,14 @@ in
     ];
 
     http.routers.authelia = {
-      rule = "Host(`${host}`)";
+      rule = "Host(`${frontend}`)";
       service = "authelia@file";
       entryPoints = [ "web" ];
     };
 
-    http.routers.dashboard =
-      mkIf config.services.traefik.staticConfigOptions.api.dashboard {
-        middlewares = [ "authelia@file" ];
-      }
+    http.routers.dashboard.middlewares =
+      mkIf config.services.traefik.staticConfigOptions.api.dashboard
+        [ "authelia@file" ];
 
     http.middlewares.authelia.forwardAuth =  {
       address = "http://${backend}/api/verify?rd=https%3A%2F%2F${frontend}%2F";
@@ -50,7 +49,7 @@ in
       };
       server = {
         host = "127.0.0.1";
-        port = "9091";
+        port = 9091;
       };
       session = {
         name = "session";

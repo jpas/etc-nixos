@@ -10,17 +10,16 @@ buildGoModule rec {
     owner = "authelia";
     repo = "authelia";
     rev = "v${version}";
-    sha256 = "sha256-HA6FDws0e2JNQZi78LC7EG9bZRBHj/X5udVG9qiDhSU=";
+    sha256 = "sha256-zNMZkIUEsOX+z1YnGnYC1OKUanUj4sLvRQ8zjhK98jg=";
   };
-  vendorSha256 = "sha256-L/twPG+Vf9znNeY3rNXeu9ww+vjLyrkfatFAC8E84tc=";
+  vendorSha256 = "sha256-RodWMeHdlu7WeWmg415giL9Nfw2OoIIOABwgwzegULE=";
 
   nativeBuildInputs = [ installShellFiles ];
 
   ui = fetchurl {
     url = "https://github.com/authelia/authelia/releases/download/v${version}/authelia-v${version}-public_html.tar.gz";
-    sha256 = "sha256-ODIkUEDepRIbZ6G7lED1TpRqgc/38k8/7wjECrsYQUg=";
+    sha256 = "sha256-M0sp5uSNGDoHaSg1Et8pYqT3oP59R9VOIFSFoYL58pg=";
   };
-
 
   postPatch = ''
     rm -r internal/server/public_html
