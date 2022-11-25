@@ -2,7 +2,7 @@
 
 with lib;
 
-{}
+{ }
 #flip pipe config.users.users [
 #  attrValues
 #  (filter (user: user.isNormalUser))

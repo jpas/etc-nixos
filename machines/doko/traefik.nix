@@ -2,15 +2,10 @@
 
 with lib;
 
-let
-in
 {
   services.traefik.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.traefik.staticConfigOptions = {
     api.dashboard = true;
@@ -63,7 +58,7 @@ in
 
     (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
       http.routers.dashboard = {
-        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
+        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/10`, fd7a:115c:a1e0:ab12::/64`)";
         service = "api@internal";
         entryPoints = [ "web" ];
       };
@@ -71,10 +66,10 @@ in
 
     {
       http.services.unifi.loadBalancer.servers = [
-        { url  = "https://10.39.0.2:8443"; }
+        { url = "https://10.39.0.2:8443"; }
       ];
       http.routers.unifi = {
-        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.64.0.0/16`)";
+        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.64.0.0/10`, fd7a:115c:a1e0:ab12::/64`)";
         service = "unifi@file";
         entryPoints = [ "web" ];
       };

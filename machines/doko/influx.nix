@@ -5,16 +5,13 @@ let
 in
 {
   services.influxdb2.enable = true;
-  services.influxdb2.settings = {
-    http-bind-address = "127.0.0.1:8086";
-  };
 
   services.traefik.dynamicConfigOptions = {
     http.services.influx.loadBalancer.servers = [
-      { url = "http://${cfg.settings.http-bind-address}"; }
+      { url = "http://localhost:8086"; }
     ];
     http.routers.influx = {
-      rule = "(Host(`influx.o.pas.sh`) && ClientIP(`100.64.0.0/16`))";
+      rule = "Host(`influx.o.pas.sh`) && ClientIP(`100.64.0.0/10`, fd7a:115c:a1e0:ab12::/64`)";
       service = "influx@file";
       entryPoints = [ "web" ];
     };

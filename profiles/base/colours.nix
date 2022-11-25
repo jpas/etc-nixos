@@ -9,7 +9,7 @@ let
   ];
 
   # see: https://github.com/gruvbox-community/gruvbox-contrib/blob/master/color.table
-  gruvbox' = foldl recursiveUpdate {} (concatLists [
+  gruvbox' = foldl recursiveUpdate { } (concatLists [
     (mkColour [ "dark0_hard" ] "1d2021" 234)
     (mkColour [ "dark0" ] "282828" 235)
     (mkColour [ "dark0_soft" ] "32302f" 236)

@@ -28,10 +28,10 @@ with lib;
 
   environment.systemPackages = attrValues {
     inherit (pkgs)
-    kitty
-    firefox
-    imv
-    ;
+      kitty
+      firefox
+      imv
+      ;
   };
 
   services.upower.enable = true;

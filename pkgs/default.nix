@@ -9,7 +9,7 @@ let
     oauth2token = callPackage ./oauth2token { };
 
     direnv = prev.direnv.overrideAttrs (o: {
-      patches = (o.patches or []) ++ [
+      patches = (o.patches or [ ]) ++ [
         # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh
         # see: https://github.com/direnv/direnv/pull/990
         (final.fetchpatch {

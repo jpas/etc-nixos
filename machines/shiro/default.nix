@@ -39,7 +39,7 @@ with lib;
   };
 
   environment.systemPackages = attrValues {
-    inherit (pkgs) steam steam-run ;
+    inherit (pkgs) steam steam-run;
   };
 
   systemd.network.networks."20-lan0" = {
