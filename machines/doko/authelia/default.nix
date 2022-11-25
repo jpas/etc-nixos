@@ -97,6 +97,6 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "f /var/lib/authelia 600 authelia authelia -"
+    "f /var/lib/authelia/users.yml 600 authelia authelia -"
   ];
 }
