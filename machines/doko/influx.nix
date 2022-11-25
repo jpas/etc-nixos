@@ -4,7 +4,7 @@ let
   cfg = config.services.influxdb2;
 in
 {
-  services.influxdb2.enable = true;
+  services.influxdb2.enable = false;
 
   services.traefik.dynamicConfigOptions = {
     http.services.influx.loadBalancer.servers = [
