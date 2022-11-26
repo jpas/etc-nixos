@@ -15,7 +15,7 @@ with lib;
     };
   };
 
-  services.authelia.settings.identity_provider.oidc.clients = [{
+  services.authelia.settings.identity_providers.oidc.clients = [{
     id = "jellyfin";
     secret = "$file$" + config.age.secrets.authelia-identity-provider-oidc-clients-jellyfin-secret.path;
     authorization_policy = "one_factor";
