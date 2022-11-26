@@ -5,7 +5,6 @@ with lib;
 let
   cfg = config.services.authelia;
 
-  frontend = "auth.pas.sh";
   backend = "${cfg.settings.server.host}:${toString cfg.settings.server.port}";
 in
 {
@@ -17,7 +16,7 @@ in
     ];
 
     http.routers.authelia = {
-      rule = "Host(`${frontend}`)";
+      rule = "Host(`auth.pas.sh`)";
       service = "authelia@file";
       entryPoints = [ "web" ];
     };
@@ -27,7 +26,7 @@ in
         [ "authelia@file" ];
 
     http.middlewares.authelia.forwardAuth =  {
-      address = "http://${backend}/api/verify?rd=https%3A%2F%2F${frontend}%2F";
+      address = "http://${backend}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
       trustForwardHeader = true;
       authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
     };
@@ -44,7 +43,7 @@ in
     settings = {
       theme = "dark";
       log = {
-        level = "info";
+        level = "debug";
         format = "text";
       };
       server = {
@@ -53,7 +52,7 @@ in
       };
       session = {
         name = "session";
-        domain = "${frontend}";
+        domain = "pas.sh";
       };
       authentication_backend.file = {
         path = "/var/lib/authelia/users.yml";
@@ -88,15 +87,41 @@ in
     owner = "authelia";
   };
 
+  systemd.tmpfiles.rules = [ "d /var/lib/authelia 0700 authelia authelia - -" ];
+
+  systemd.services.authelia = {
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      Restart = "on-failure";
+      AmbientCapabilities = "cap_net_bind_service";
+      CapabilityBoundingSet = "cap_net_bind_service";
+      NoNewPrivileges = true;
+      LimitNPROC = 64;
+      LimitNOFILE = 1048576;
+      PrivateTmp = true;
+      PrivateDevices = true;
+      ProtectHome = true;
+      ProtectSystem = "full";
+      ReadWriteDirectories = "/var/lib/authelia";
+    };
+  };
+
+  users.users.authelia = {
+    group = "authelia";
+    home = "/var/lib/authelia";
+    createHome = true;
+    isSystemUser = true;
+  };
+
   systemd.services.authelia.environment = {
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets."authelia-notifier-smtp-password".path;
   };
+
   age.secrets."authelia-notifier-smtp-password" = {
     file = ./notifier-smtp-password.age;
     owner = "authelia";
   };
 
-  systemd.tmpfiles.rules = [
-    "f /var/lib/authelia/users.yml 600 authelia authelia -"
-  ];
 }
