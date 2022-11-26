@@ -1,5 +1,7 @@
 { lib, config, pkgs, ... }:
 
+with lib;
+
 let
   cfg = config.services.influxdb2;
 in
