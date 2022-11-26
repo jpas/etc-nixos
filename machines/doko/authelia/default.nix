@@ -11,27 +11,27 @@ in
   imports = [ ./module.nix ];
 
   services.traefik.dynamicConfigOptions = {
-    http.services.authelia.loadBalancer.servers = [
+    http.services.auth.loadBalancer.servers = [
       { url = "http://${backend}"; }
     ];
 
-    http.routers.authelia = {
+    http.routers.auth = {
       rule = "Host(`auth.pas.sh`)";
-      service = "authelia@file";
+      service = "auth@file";
       entryPoints = [ "web" ];
     };
 
     http.routers.dashboard.middlewares =
       mkIf config.services.traefik.staticConfigOptions.api.dashboard
-        [ "authelia@file" ];
+        [ "auth@file" ];
 
-    http.middlewares.authelia.forwardAuth =  {
+    http.middlewares.auth.forwardAuth =  {
       address = "http://${backend}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
       trustForwardHeader = true;
       authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
     };
 
-    http.middlewares.authelia-basic.forwardAuth = {
+    http.middlewares.auth-basic.forwardAuth = {
       address = "http://${backend}/api/verify?auth=basic";
       trustForwardHeader = true;
       authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
