@@ -2,9 +2,6 @@
 
 with lib;
 
-let
-  cfg = config.services.traefik;
-in
 {
   services.traefik.dynamicConfigOptions = {
     http.routers.dashboard = {
