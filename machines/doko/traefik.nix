@@ -6,14 +6,6 @@ let
   cfg = config.services.traefik;
 in
 {
-  imports = [
-    ./dashboard.nix
-    ./jellyfin.nix
-    ./radarr.nix
-    ./sonarr.nix
-    ./unifi.nix
-  ];
-
   services.traefik.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
