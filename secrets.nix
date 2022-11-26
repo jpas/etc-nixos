@@ -24,7 +24,7 @@ let
 
   listToAttrsMap = f: list: builtins.listToAttrs (map f list);
 
-  mkSecrets =  listToAttrsMap ({ path, systems ? [ ], users ? [ ] }: {
+  mkSecrets = listToAttrsMap ({ path, systems ? [ ], users ? [ ] }: {
     name = path;
     value.publicKeys = admins ++ systems ++ users;
   });
