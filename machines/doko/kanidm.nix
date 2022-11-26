@@ -10,8 +10,8 @@ with lib;
     bindaddress = "127.0.0.1:8443";
     ldapbindaddress = "0.0.0.0:636";
 
-    tls_chain = "${config.acme.certs."idm.pas.sh".dir}/fullchain.pem";
-    tls_key = "${config.acme.certs."idm.pas.sh".dir}/key.pem";
+    tls_chain = "${config.security.acme.certs."idm.pas.sh".dir}/fullchain.pem";
+    tls_key = "${config.security.acme.certs."idm.pas.sh".dir}/key.pem";
   };
 
   services.traefik.dynamicConfigOptions.http = {
