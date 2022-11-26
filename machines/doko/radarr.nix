@@ -17,6 +17,6 @@ with lib;
   };
 
   services.authelia.settings.access_control.rules = [
-    { domain = "radarr.o.pas.sh"; subject = [ "group:wheel" ]; }
+    { domain = "radarr.o.pas.sh"; subject = [ "group:wheel" ]; policy = "one_factor"; }
   ];
 }

@@ -77,7 +77,7 @@ in
   };
 
   services.authelia.settings.access_control.rules = [
-    { domain = "traefik.o.pas.sh"; policy = "one_factor"; subject = [ "group:wheel" ]; }
+    { domain = "traefik.o.pas.sh"; subject = [ "group:wheel" ]; policy = "one_factor"; }
   ];
 
   systemd.services.traefik = {
