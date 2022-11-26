@@ -11,6 +11,7 @@
     ./fs.nix
     ./authelia
     ./hardware.nix
+    ./jellyfin
     ./networking.nix
     ./traefik
   ];

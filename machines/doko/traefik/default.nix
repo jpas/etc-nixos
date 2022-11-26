@@ -9,8 +9,8 @@ in
   imports = [
     ./dashboard.nix
     ./jellyfin.nix
-    ./sonarr.nix
     ./radarr.nix
+    ./sonarr.nix
     ./unifi.nix
   ];
 

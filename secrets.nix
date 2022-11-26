@@ -30,7 +30,9 @@ in
   "machines/doko/traefik/env.age".publicKeys = admins ++ system.doko;
   "machines/doko/traefik/config.json.age".publicKeys = admins ++ system.doko;
 
-  "machines/doko/authelia/jwt-secret.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/storage-encryption-key.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/notifier-smtp-password.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/secrets/jwt-secret.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/secrets/storage-encryption-key.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/secrets/notifier-smtp-password.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/secrets/oidc-hmac-secret.age".publicKeys = admins ++ system.doko;
+  "machines/doko/authelia/secrets/oidc-issuer-private-key.age".publicKeys = admins ++ system.doko;
 }

@@ -8,35 +8,7 @@ let
   backend = "${cfg.settings.server.host}:${toString cfg.settings.server.port}";
 in
 {
-  imports = [ ./module.nix ];
-
-  services.traefik.dynamicConfigOptions = {
-    http.services.auth.loadBalancer.servers = [
-      { url = "http://${backend}"; }
-    ];
-
-    http.routers.auth = {
-      rule = "Host(`auth.pas.sh`)";
-      service = "auth@file";
-      entryPoints = [ "web" ];
-    };
-
-    http.routers.dashboard.middlewares =
-      mkIf config.services.traefik.staticConfigOptions.api.dashboard
-        [ "auth@file" ];
-
-    http.middlewares.auth.forwardAuth =  {
-      address = "http://${backend}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
-      trustForwardHeader = true;
-      authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
-    };
-
-    #http.middlewares.auth-basic.forwardAuth = {
-    #  address = "http://${backend}/api/verify?auth=basic";
-    #  trustForwardHeader = true;
-    #  authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
-    #};
-  };
+  imports = [ ./module.nix ./secrets ];
 
   services.authelia.enable = true;
   services.authelia = {
@@ -67,26 +39,21 @@ in
         host = "smtp.fastmail.com";
         port = 587;
         username = "jarrod@jarrodpas.com";
-        sender = "no-reply@auth.pas.sh";
+        sender = "noreply@auth.pas.sh";
         startup_check_address = sender;
         disable_html_emails = true;
       };
     };
   };
 
-  services.authelia.jwtSecretFile = config.age.secrets."authelia-jwt-secret".path;
-  age.secrets."authelia-jwt-secret" = {
-    file = ./jwt-secret.age;
-    owner = "authelia";
-  };
-
-  services.authelia.storageEncryptionKeyFile = config.age.secrets."authelia-storage-encryption-key".path;
-  age.secrets."authelia-storage-encryption-key" = {
-    file = ./storage-encryption-key.age;
-    owner = "authelia";
-  };
-
   systemd.tmpfiles.rules = [ "d /var/lib/authelia 0700 authelia authelia - -" ];
+
+  users.users.authelia = {
+    group = "authelia";
+    home = "/var/lib/authelia";
+    createHome = true;
+    isSystemUser = true;
+  };
 
   systemd.services.authelia = {
     after = [ "network-online.target" ];
@@ -107,20 +74,36 @@ in
     };
   };
 
-  users.users.authelia = {
-    group = "authelia";
-    home = "/var/lib/authelia";
-    createHome = true;
-    isSystemUser = true;
+  services.authelia = {
+    jwtSecretFile = config.age.secrets."authelia-jwt-secret".path;
+    storageEncryptionKeyFile = config.age.secrets."authelia-storage-encryption-key".path;
+    oidcHmacSecretFile = config.age.secrets."authelia-oidc-hmac-secret".path;
+    oidcIssuerPrivateKeyFile = config.age.secrets."authelia-oidc-issuer-private-key".path;
   };
 
   systemd.services.authelia.environment = {
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets."authelia-notifier-smtp-password".path;
   };
 
-  age.secrets."authelia-notifier-smtp-password" = {
-    file = ./notifier-smtp-password.age;
-    owner = "authelia";
-  };
+  services.traefik.dynamicConfigOptions = {
+    http.services.auth.loadBalancer.servers = [
+      { url = "http://${backend}"; }
+    ];
 
+    http.routers.auth = {
+      rule = "Host(`auth.pas.sh`)";
+      service = "auth@file";
+      entryPoints = [ "web" ];
+    };
+
+    http.routers.dashboard.middlewares =
+      mkIf config.services.traefik.staticConfigOptions.api.dashboard
+        [ "auth@file" ];
+
+    http.middlewares.auth.forwardAuth =  {
+      address = "http://${backend}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
+      trustForwardHeader = true;
+      authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
+    };
+  };
 }
