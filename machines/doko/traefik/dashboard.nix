@@ -1,5 +1,7 @@
 { lib, config, ... }:
 
+with lib;
+
 let
   cfg = config.services.traefik;
 in
