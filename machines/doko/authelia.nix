@@ -12,7 +12,7 @@ in
     settings = {
       theme = "dark";
       log = {
-        level = "info";
+        level = "debug";
         format = "text";
       };
       server = {
