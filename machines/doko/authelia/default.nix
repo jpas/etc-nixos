@@ -31,11 +31,11 @@ in
       authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
     };
 
-    http.middlewares.auth-basic.forwardAuth = {
-      address = "http://${backend}/api/verify?auth=basic";
-      trustForwardHeader = true;
-      authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
-    };
+    #http.middlewares.auth-basic.forwardAuth = {
+    #  address = "http://${backend}/api/verify?auth=basic";
+    #  trustForwardHeader = true;
+    #  authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
+    #};
   };
 
   services.authelia.enable = true;
@@ -61,7 +61,7 @@ in
         path = "/var/lib/authelia/db.sqlite3";
       };
       access_control = {
-        default_policy = "one_factor";
+        default_policy = "deny";
       };
       notifier.smtp = rec {
         host = "smtp.fastmail.com";

@@ -16,9 +16,6 @@ with lib;
   };
 
   services.authelia.settings.access_control.rules = [
-    {
-      domain = "sonarr.o.pas.sh";
-      subject = [ "group:wheel" ];
-    }
+    { domain = "sonarr.o.pas.sh"; policy = "one_factor"; subject = [ "group:wheel" ]; }
   ];
 }
