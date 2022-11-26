@@ -71,7 +71,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ pkg ];
+    environment.systemPackages = [ pkgs.authelia ];
 
     systemd.services.authelia = {
       description = "Authelia authentication and authorization server";
