@@ -33,7 +33,7 @@ with lib;
 
   services.traefik.dynamicConfigOptions.http = {
     services.kanidm = {
-      loadBalancer.servers = [{ url = "http://127.0.0.1:8443"; }];
+      loadBalancer.servers = [{ url = "https://127.0.0.1:8443"; }];
     };
 
     routers.kanidm = {
