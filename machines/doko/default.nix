@@ -7,12 +7,17 @@
 
   imports = [
     ../common
+    ./authelia.nix
     ./factorio.nix
     ./fs.nix
-    ./authelia
     ./hardware.nix
+    ./influx.nix
+    ./jellyfin.nix
     ./networking.nix
-    ./traefik
+    ./radarr.nix
+    ./sonarr.nix
+    ./traefik.nix
+    ./unifi.nix
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

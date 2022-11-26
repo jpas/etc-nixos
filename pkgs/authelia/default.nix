@@ -21,6 +21,10 @@ buildGoModule rec {
     sha256 = "sha256-M0sp5uSNGDoHaSg1Et8pYqT3oP59R9VOIFSFoYL58pg=";
   };
 
+  patches = [
+    ./0000-load-password-digest-from-file.patch
+  ];
+
   postPatch = ''
     rm -r internal/server/public_html
     tar -C internal/server -xzf ${ui}

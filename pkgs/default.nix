@@ -3,6 +3,7 @@ let
   inherit (prev) lib callPackage;
 
   hole = rec {
+    authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
     oauth2ms = callPackage ./oauth2ms { };

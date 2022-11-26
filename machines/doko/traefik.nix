@@ -71,23 +71,29 @@ in
     };
   };
 
-  services.traefik.dynamicConfigOptions = {
-    http.serversTransports = {
+  services.traefik.dynamicConfigOptions.http = {
+    serversTransports = {
       insecure-skip-verify.insecureSkipVerify = true;
+    };
+
+    routers.dashboard = {
+      rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/10`, `fd7a:115c:a1e0:ab12::/64`)";
+      service = "api@internal";
+      entryPoints = [ "web" ];
+      middlewares = [ "auth" ];
     };
   };
 
-  age.secrets."traefik-env" = {
-    file = ./env.age;
-    owner = "traefik";
-  };
+  services.authelia.settings.access_control.rules = [
+    { domain = "traefik.o.pas.sh"; policy = "one_factor"; subject = [ "group:wheel" ]; }
+  ];
 
-  age.secrets."traefik-config.json" = {
-    file = ./config.json.age;
-    owner = "traefik";
-  };
-
-  systemd.services."traefik" = {
+  systemd.services.traefik = {
     serviceConfig.EnvironmentFile = config.age.secrets."traefik-env".path;
+  };
+
+  age.secrets = {
+    "traefik-env" = { owner = "traefik"; file = ./.traefik-env.age; };
+    "traefik-config.json" = { owner = "traefik"; file = ./.traefik-config.json.age; };
   };
 }

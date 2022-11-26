@@ -21,18 +21,25 @@ let
     shiro = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0" ];
   };
   systems = concatAttrValues system;
+
+  listToAttrsMap = f: list: builtins.listToAttrs (map f list);
+
+  mkSecrets =  listToAttrsMap ({ path, systems ? [ ], users ? [ ] }: {
+    name = path;
+    value.publicKeys = admins ++ systems ++ users;
+  });
 in
-{
-  "users/root/passwd.age".publicKeys = admins ++ systems;
-  "users/jpas/passwd.age".publicKeys = admins ++ systems;
-  "users/kbell/passwd.age".publicKeys = admins ++ systems;
-
-  "machines/doko/traefik/env.age".publicKeys = admins ++ system.doko;
-  "machines/doko/traefik/config.json.age".publicKeys = admins ++ system.doko;
-
-  "machines/doko/authelia/secrets/jwt-secret.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/secrets/storage-encryption-key.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/secrets/notifier-smtp-password.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/secrets/oidc-hmac-secret.age".publicKeys = admins ++ system.doko;
-  "machines/doko/authelia/secrets/oidc-issuer-private-key.age".publicKeys = admins ++ system.doko;
-}
+mkSecrets [
+  { path = "machines/doko/.authelia-identity-provider-oidc-clients-jellyfin-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-identity-provider-oidc-hmac-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-identity-provider-oidc-issuer-private-key.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-jwt-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-notifier-smtp-password.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-storage-encryption-key.age"; systems = system.doko; }
+  { path = "machines/doko/.jellyfin-oidc-client-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.traefik-config.json.age"; systems = system.doko; }
+  { path = "machines/doko/.traefik-env.age"; systems = system.doko; }
+  { path = "users/jpas/.passwd.age"; systems = systems; }
+  { path = "users/kbell/.passwd.age"; systems = systems; }
+  { path = "users/root/.passwd.age"; systems = systems; }
+]
