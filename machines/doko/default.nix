@@ -14,6 +14,7 @@
     ./hardware.nix
     ./influx.nix
     ./jellyfin.nix
+    ./kanidm.nix
     ./networking.nix
     ./radarr.nix
     ./sonarr.nix
