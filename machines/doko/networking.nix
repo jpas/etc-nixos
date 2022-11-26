@@ -54,15 +54,15 @@ in
       RequiredForOnline = "routable";
     };
     networkConfig = {
-      DNS = dns;
       DHCP = "yes";
+      IPv6AcceptRA = false;
     };
     dhcpV4Config = {
       SendHostname = false;
       RouteMetric = 1024;
     };
     dhcpV6Config = {
-      WithoutRA = "solicit";
+      #WithoutRA = "solicit";
     };
     extraConfig = ''
       [DHCPv4]
@@ -97,7 +97,7 @@ in
     networkConfig = {
       DNS = dns;
       DHCP = "ipv4";
-      IPv6AcceptRA = false;
+      #IPv6AcceptRA = false;
     };
     dhcpV4Config = {
       SendHostname = false;
@@ -118,21 +118,21 @@ in
       Address = "10.39.0.254/24";
       DNS = dns;
       DHCPServer = "yes";
-      IPv6SendRA = true;
-      DHCPPrefixDelegation = true;
+      #IPv6SendRA = true;
+      #DHCPPrefixDelegation = true;
     };
     dhcpServerConfig = {
       PoolOffset = 100;
       PoolSize = 100;
       DNS = [
         "10.39.0.254"
-        "1.1.1.1#cloudflare-dns.com"
-        "1.0.0.1#cloudflare-dns.com"
+        #"1.1.1.1#cloudflare-dns.com"
+        #"1.0.0.1#cloudflare-dns.com"
       ];
     };
-    dhcpPrefixDelegationConfig = {
-      UplinkInterface = interfaces.wan0;
-    };
+    #dhcpPrefixDelegationConfig = {
+    #  UplinkInterface = interfaces.wan0;
+    #};
     dhcpServerStaticLeases = pipe hosts [
       (filter (host: host ? mac))
       (map (host: {
@@ -167,7 +167,7 @@ in
   services.unbound = {
     settings = {
       server = {
-        interface = [ "0.0.0.0" "::1" ];
+        interface = [ "0.0.0.0" ];
         access-control = [ "10.0.0.0/8 allow" ];
         local-zone = [
           "${quoted "lo."} static"
@@ -188,8 +188,8 @@ in
           forward-addr = [
             "1.1.1.1"
             "1.0.0.1"
-            "2606:4700:4700::1111"
-            "2606:4700:4700::1001"
+            #"2606:4700:4700::1111"
+            #"2606:4700:4700::1001"
           ];
         }
       ];

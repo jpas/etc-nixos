@@ -6,6 +6,13 @@ let
   cfg = config.services.traefik;
 in
 {
+  imports = [
+    ./dashboard.nix
+    ./jellyfin.nix
+    ./sonarr.nix
+    ./unifi.nix
+  ];
+
   services.traefik.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -63,30 +70,11 @@ in
     };
   };
 
-  services.traefik.dynamicConfigOptions = mkMerge [
-    {
-      http.serversTransports.insecure-skip-verify.insecureSkipVerify = true;
-    }
-
-    (mkIf config.services.traefik.staticConfigOptions.api.dashboard {
-      http.routers.dashboard = {
-        rule = "Host(`traefik.o.pas.sh`) && ClientIP(`100.64.0.0/10`, `fd7a:115c:a1e0:ab12::/64`)";
-        service = "api@internal";
-        entryPoints = [ "web" ];
-      };
-    })
-
-    {
-      http.services.unifi.loadBalancer.servers = [
-        { url = "https://10.39.0.2:8443"; }
-      ];
-      http.routers.unifi = {
-        rule = "Host(`unifi.o.pas.sh`) && ClientIP(`100.64.0.0/10`, `fd7a:115c:a1e0:ab12::/64`)";
-        service = "unifi@file";
-        entryPoints = [ "web" ];
-      };
-    }
-  ];
+  services.traefik.dynamicConfigOptions = {
+    http.serversTransports = {
+      insecure-skip-verify.insecureSkipVerify = true;
+    };
+  };
 
   age.secrets."traefik-env" = {
     file = ./env.age;
