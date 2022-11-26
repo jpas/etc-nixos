@@ -43,7 +43,7 @@ in
     settings = {
       theme = "dark";
       log = {
-        level = "debug";
+        level = "info";
         format = "text";
       };
       server = {
