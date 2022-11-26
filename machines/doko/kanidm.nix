@@ -5,8 +5,8 @@ with lib;
 {
   services.kanidm.enableServer = true;
   services.kanidm.serverSettings = {
-    domain = "https://idm.pas.sh";
-    origin = "pas.sh";
+    origin = "https://idm.pas.sh";
+    domain = "idm.pas.sh";
     bindaddress = "127.0.0.1:8443";
     ldapbindaddress = "0.0.0.0:636";
 
