@@ -9,8 +9,6 @@ let
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
 
-    lldap = callPackage ./lldap { };
-
     direnv = prev.direnv.overrideAttrs (o: {
       patches = (o.patches or [ ]) ++ [
         # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh

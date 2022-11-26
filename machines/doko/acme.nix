@@ -3,11 +3,13 @@
 with lib;
 
 {
-  security.acme.defaults = {
+  security.acme = {
     acceptTerms = true;
-    email = "acme@pas.sh";
-    dnsProvider = "cloudflare";
-    credentialsFile = config.age.secrets.acme-credentials.path;
+    defaults = {
+      email = "acme@pas.sh";
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.acme-credentials.path;
+    };
   };
 
   age.secrets = {

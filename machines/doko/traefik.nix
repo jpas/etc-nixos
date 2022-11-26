@@ -59,8 +59,8 @@ in
 
     certificatesResolvers.acme.acme = {
       email = config.security.acme.defaults.email;
-      keyType = toUpperCase config.security.acme.defaults.keyType;
-      dnsChallenge.provider = config.security.acme.dnsProvider;
+      keyType = toUpper config.security.acme.defaults.keyType;
+      dnsChallenge.provider = config.security.acme.defaults.dnsProvider;
       storage = "/var/lib/traefik/acme.json";
     };
   };

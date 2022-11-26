@@ -7,6 +7,7 @@
 
   imports = [
     ../common
+    ./acme.nix
     ./authelia.nix
     ./factorio.nix
     ./fs.nix
