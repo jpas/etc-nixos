@@ -23,7 +23,7 @@ in
 
     http.routers.dashboard.middlewares =
       mkIf config.services.traefik.staticConfigOptions.api.dashboard
-        [ "authelia@file" ];
+        [ "authelia-basic@file" ];
 
     http.middlewares.authelia.forwardAuth =  {
       address = "http://${backend}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
@@ -56,7 +56,6 @@ in
       };
       authentication_backend.file = {
         path = "/var/lib/authelia/users.yml";
-        watch = true;
       };
       storage.local = {
         path = "/var/lib/authelia/db.sqlite3";
