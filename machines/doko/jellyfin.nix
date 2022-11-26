@@ -24,6 +24,6 @@ with lib;
 
   age.secrets = {
     authelia-identity-provider-oidc-clients-jellyfin-secret = { owner = "authelia"; file = ./.authelia-identity-provider-oidc-clients-jellyfin-secret.age; };
-    jellyfin-oidc-client-secret = { owner = "jellyfin"; file = ./.jellyfin-oidc-client-secret.age; };
+    #jellyfin-oidc-client-secret = { owner = "jellyfin"; file = ./.jellyfin-oidc-client-secret.age; };
   };
 }
