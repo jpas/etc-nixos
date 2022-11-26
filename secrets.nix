@@ -30,6 +30,7 @@ let
   });
 in
 mkSecrets [
+  { path = "machines/doko/.acme-credentials.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-identity-provider-oidc-clients-jellyfin-secret.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-identity-provider-oidc-hmac-secret.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-identity-provider-oidc-issuer-private-key.age"; systems = system.doko; }
@@ -38,7 +39,6 @@ mkSecrets [
   { path = "machines/doko/.authelia-storage-encryption-key.age"; systems = system.doko; }
   { path = "machines/doko/.jellyfin-oidc-client-secret.age"; systems = system.doko; }
   { path = "machines/doko/.traefik-config.json.age"; systems = system.doko; }
-  { path = "machines/doko/.traefik-env.age"; systems = system.doko; }
   { path = "users/jpas/.passwd.age"; systems = systems; }
   { path = "users/kbell/.passwd.age"; systems = systems; }
   { path = "users/root/.passwd.age"; systems = systems; }

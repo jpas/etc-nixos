@@ -58,9 +58,10 @@ in
     };
 
     certificatesResolvers.acme.acme = {
-      email = "acme@pas.sh";
+      email = config.security.acme.defaults.email;
+      keyType = toUpperCase config.security.acme.defaults.keyType;
+      dnsChallenge.provider = config.security.acme.dnsProvider;
       storage = "/var/lib/traefik/acme.json";
-      dnsChallenge.provider = "cloudflare";
     };
   };
 
@@ -82,11 +83,12 @@ in
   ];
 
   systemd.services.traefik = {
-    serviceConfig.EnvironmentFile = config.age.secrets."traefik-env".path;
+    serviceConfig.EnvironmentFile = config.security.acme.defaults.credentialsFile;
   };
 
+  users.users.traefik.extraGroups = [ "acme" ];
+
   age.secrets = {
-    "traefik-env" = { owner = "traefik"; file = ./.traefik-env.age; };
     "traefik-config.json" = { owner = "traefik"; file = ./.traefik-config.json.age; };
   };
 }
