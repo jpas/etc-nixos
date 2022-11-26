@@ -24,7 +24,7 @@ in
       pkgs.writeText "config.yml" (builtins.toJSON cfg.dynamicConfigOptions);
 
     api.dashboard = true;
-    accessLog = { };
+    #accessLog = { };
 
     serversTransport.insecureSkipVerify = true;
 
