@@ -30,5 +30,8 @@ with lib;
 
   users.users.kanidm.extraGroups = [ "acme" ];
 
-  security.acme.certs."idm.pas.sh" = { };
+  systemd.services.kanidm.requires = [ "acme-finished-idm.pas.sh.target" ];
+  security.acme.certs."idm.pas.sh" = {
+    reloadServices = [ "kanidm.service" ];
+  };
 }
