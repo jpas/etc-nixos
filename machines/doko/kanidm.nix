@@ -16,6 +16,9 @@ with lib;
 
   systemd.services.kanidm = {
     requires = [ "acme-finished-idm.pas.sh.target" ];
+    serviceConfig = {
+      BindReadOnlyPaths = [ config.security.acme.certs."idm.pas.sh".directory ];
+    };
   };
 
   users.users.kanidm = {
