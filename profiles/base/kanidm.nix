@@ -17,4 +17,7 @@ with lib;
     uid_attr_map = "name";
     gid_attr_map = "name";
   };
+
+  services.openssh.authorizedKeysCommand =
+    "/run/current-system/sw/bin/kanidm_ssh_authorizedkeys %u";
 }

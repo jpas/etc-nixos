@@ -9,10 +9,10 @@ with lib;
     };
 
     routers.sonarr = {
-      rule = "Host(`sonarr.o.pas.sh`) && ClientIP(`100.64.0.0/10`, `fd7a:115c:a1e0:ab12::/64`)";
-      service = "sonarr@file";
+      rule = "Host(`sonarr.o.pas.sh`)";
+      service = "sonarr";
       entryPoints = [ "web" ];
-      middlewares = [ "auth@file" ];
+      middlewares = [ "tailscale-ips" "auth" ];
     };
   };
 
