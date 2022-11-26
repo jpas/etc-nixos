@@ -14,7 +14,19 @@ with lib;
     tls_key = "${config.security.acme.certs."idm.pas.sh".directory}/key.pem";
   };
 
-  systemd.tmpfiles.rules = [ "d /var/lib/kanidm 0700 kanidm kanidm - -" ];
+  systemd.services.kanidm = {
+    requires = [ "acme-finished-idm.pas.sh.target" ];
+  };
+
+  users.users.kanidm = {
+    extraGroups = [ "acme" ];
+    home = "/var/lib/kanidm";
+    createHome = false;
+  };
+
+  security.acme.certs."idm.pas.sh" = {
+    reloadServices = [ "kanidm.service" ];
+  };
 
   services.traefik.dynamicConfigOptions.http = {
     services.kanidm = {
@@ -28,10 +40,4 @@ with lib;
     };
   };
 
-  users.users.kanidm.extraGroups = [ "acme" ];
-
-  systemd.services.kanidm.requires = [ "acme-finished-idm.pas.sh.target" ];
-  security.acme.certs."idm.pas.sh" = {
-    reloadServices = [ "kanidm.service" ];
-  };
 }
