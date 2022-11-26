@@ -1,7 +1,5 @@
 { lib, config, ... }:
 
-with (lib.extend (import ./lib.nix));
-
 let
   cfg = config.services.traefik;
 in
