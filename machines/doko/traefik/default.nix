@@ -10,6 +10,7 @@ in
     ./dashboard.nix
     ./jellyfin.nix
     ./sonarr.nix
+    ./radarr.nix
     ./unifi.nix
   ];
 
