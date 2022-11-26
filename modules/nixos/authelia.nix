@@ -5,8 +5,6 @@ with lib;
 let
   cfg = config.services.authelia;
 
-  pkg = pkgs.callPackage ./package.nix { };
-
   format = pkgs.formats.yaml { };
 in
 {
@@ -80,7 +78,7 @@ in
       after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${pkg}/bin/authelia --config ${cfg.configFile}";
+        ExecStart = "${pkgs.authelia}/bin/authelia --config ${cfg.configFile}";
         LimitNOFILE = 1048576;
         LimitNPROC = 64;
         NoNewPrivileges = true;
