@@ -18,6 +18,7 @@ with lib;
     ./nix.nix
     ./shell.nix
     ./ssh.nix
+    ./xdg.nix
   ];
 
   time.timeZone = mkDefault "America/Toronto";
