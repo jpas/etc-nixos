@@ -3,9 +3,16 @@
 with lib;
 
 {
+  service.jellyfin.enable = false;
+
   services.traefik.dynamicConfigOptions.http = {
     services.jellyfin = {
-      loadBalancer.servers = [{ url = "http://10.39.1.20:8096"; }];
+      loadBalancer.servers = [{
+        url =
+          if config.services.jellyfin.enable
+          then "http://127.0.0.1:8096"
+          else "http://10.39.1.20:8096";
+      }];
     };
 
     routers.jellyfin = {
