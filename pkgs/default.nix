@@ -9,11 +9,39 @@ let
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
 
+    kanidm = prev.kanidm.overrideAttrs (o: rec {
+      name = "${o.pname}-${version}";
+      version = "1.1.0-alpha.10";
+      src = prev.fetchFromGitHub {
+        owner = o.pname;
+        repo = o.pname;
+        rev = "v${version}";
+        hash = "sha256-ICS7nwgFGbTiobr8Sw/ZHO6jBUfiq8KyE/MiLg8uDUA=";
+      };
+
+      cargoPatches = (o.cargoPatches or [ ]) ++ [
+        (final.fetchpatch {
+          # fixes test_password_from_ipa_nt_hash and test_password_from_samba_nt_hash
+          url = "https://github.com/kanidm/kanidm/commit/546f1c8da7c651aa38c1b627dce58e0acc3b1510.patch";
+          hash = "sha256-c39XzWifgenli0UfSdijQzaVOpednKD9G1iJE37D4xg=";
+        })
+      ];
+
+      patches = (o.patches or [ ]) ++ cargoPatches;
+
+      cargoDeps = o.cargoDeps.overrideAttrs (o: {
+        inherit src;
+        name = "${name}-vendor.tar.gz";
+        outputHash = "sha256-/CcmKYPtBHNdhJnO0OmZtW/39HH58qmCE9hFbIiNsaE=";
+        patches = cargoPatches;
+      });
+    });
+
     direnv = prev.direnv.overrideAttrs (o: {
       patches = (o.patches or [ ]) ++ [
-        # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh
-        # see: https://github.com/direnv/direnv/pull/990
         (final.fetchpatch {
+          # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh
+          # see: https://github.com/direnv/direnv/pull/990
           url = "https://github.com/direnv/direnv/commit/ce1c286eac16e4f5541b3af1231783667bc45cae.patch";
           hash = "sha256-9FwuucyhhFW+uO2oO4kavThig9Y702YJnUUhIFeDDIk=";
         })
