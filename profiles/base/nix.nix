@@ -21,6 +21,6 @@ with lib;
   nixpkgs.config.allowUnfree = true;
 
   # see: https://github.com/NixOS/nixpkgs/issues/54707#issuecomment-1132907191
-  systemd.services.dix-daemon.environment.TMPDIR = "/nix/tmp";
+  systemd.services.nix-daemon.environment.TMPDIR = "/nix/tmp";
   systemd.tmpfiles.rules = [ "d /nix/tmp 0755 root root 1d" ];
 }
