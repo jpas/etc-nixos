@@ -3,7 +3,7 @@
 with lib;
 
 {
-  service.jellyfin.enable = false;
+  services.jellyfin.enable = false;
 
   services.traefik.dynamicConfigOptions.http = {
     services.jellyfin = {
