@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -19,5 +19,11 @@ with lib;
   };
 
   services.openssh.authorizedKeysCommand =
-    "/run/current-system/sw/bin/kanidm_ssh_authorizedkeys %u";
+    "/run/wrappers/bin/kanidm_ssh_authorizedkeys %u";
+
+  security.wrappers.kanidm_ssh_authorizedkeys = {
+    owner = "root";
+    group = "root";
+    source = "${pkgs.kanidm}/bin/kanidm_ssh_authorizedkeys";
+  };
 }
