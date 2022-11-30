@@ -6,6 +6,7 @@ let
     authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
+    lldap = callPackage ./lldap { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
 
