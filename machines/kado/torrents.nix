@@ -5,10 +5,13 @@ with lib;
 {
   containers.torrents = {
     nixpkgs = pkgs;
+    autoStart = true;
     ephemeral = true;
     privateNetwork = true;
 
     config = { config, ... }: {
+      services.transmission.enable = true;
+
       systemd.networks."vpn0" = {
         matchConfig = {
           Name = "vpn0";
