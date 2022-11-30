@@ -41,6 +41,7 @@ mkSecrets [
   { path = "machines/doko/.traefik-config.json.age"; systems = system.doko; }
   { path = "machines/doko/.lldap-jwt-secret.age"; systems = system.doko; }
   { path = "machines/doko/.lldap-private-key.age"; systems = system.doko; }
+  { path = "machines/kado/.torrents-vpn-private-key.age"; systems = system.kado; }
   { path = "users/jpas/.passwd.age"; systems = systems; }
   { path = "users/kbell/.passwd.age"; systems = systems; }
   { path = "users/root/.passwd.age"; systems = systems; }
