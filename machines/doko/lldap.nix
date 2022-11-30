@@ -54,7 +54,7 @@ in
         Group = "lldap";
       };
       environment = {
-        LLDAP_JWT_SECRET_FILE = config.age.secrets.authelia-jwt-secret.path;
+        LLDAP_JWT_SECRET_FILE = config.age.secrets.lldap-jwt-secret.path;
         LLDAP_LDAP_USER_PASS = "dolphins";
       };
     };
