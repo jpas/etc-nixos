@@ -26,4 +26,22 @@ with lib;
     group = "root";
     source = "${pkgs.kanidm}/bin/kanidm_ssh_authorizedkeys";
   };
+
+  security.pam.dag.services = {
+    system-auth.account.kanidm = {
+      control = "sufficient";
+      arguments = [ "ignore_unknown_user" ];
+      path = "${pkgs.kanidm}/lib/pam_kanidm.so";
+      after = [ "unix" ];
+      before = [ "deny" ];
+    };
+
+    system-auth.auth.kanidm = {
+      control = "sufficient";
+      arguments = [ "ignore_unknown_user" ];
+      path = "${pkgs.kanidm}/lib/pam_kanidm.so";
+      after = [ "unix" ];
+      before = [ "deny" ];
+    };
+  };
 }
