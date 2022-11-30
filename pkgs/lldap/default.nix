@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , rustPlatform
 , pkg-config
+, openssl
 , which
 , wasm-pack
 , nodePackages
@@ -15,10 +16,12 @@ rustPlatform.buildRustPackage rec {
     owner = "nitnelave";
     repo = pname;
     rev = "v${version}";
-    sha256 = lib.fakeHash;
+    sha256 = "sha256-J1RFhve4j1IfZ0cEPBpD/rCw9jLNiS7nsvvOzi2ZQLg=";
   };
 
-  cargoSha256 = lib.fakeHash;
+  cargoPatches = [ ./0000-update-cargo-lock.patch ];
+
+  cargoSha256 = "sha256-aJ0mORk0bchyqHp0ma0kEXPs4jR1WXDjsV6RReKHUzo=";
 
   nativeBuildInputs = [ pkg-config which wasm-pack nodePackages.rollup ];
   buildInputs = [ openssl ];
@@ -28,4 +31,4 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; { };
-};
+}
