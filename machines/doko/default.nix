@@ -23,8 +23,6 @@
     ./lldap.nix
   ];
 
-  services.lldap.enable = true;
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # TODO: fan control via ipmi?
