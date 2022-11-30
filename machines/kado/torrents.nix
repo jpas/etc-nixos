@@ -6,7 +6,6 @@ with lib;
   containers.torrents = {
     nixpkgs = pkgs;
     autoStart = true;
-    ephemeral = true;
     privateNetwork = true;
 
     config = { config, ... }: {
