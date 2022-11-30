@@ -73,9 +73,9 @@ __pr_generate() {
     title="$(__pr_c shell) at \h in \w"
   fi
 
-  if [[ -n "$(__pr_c has-title)" ]]; then
-    prompt="$(__pr_c to-title)$title$(__pr_c from-title)$prompt"
-  fi
+  #if [[ -n "$(__pr_c has-title)" ]]; then
+  #  prompt="$(__pr_c to-title)$title$(__pr_c from-title)$prompt"
+  #fi
 
   printf "%s" "$prompt"
 }

@@ -43,5 +43,11 @@ with lib;
       after = [ "unix" ];
       before = [ "deny" ];
     };
+
+    system-login.session.mkhomedir = {
+      control = "optional";
+      arguments = [ "silent" ];
+      after = [ "base" ];
+    };
   };
 }

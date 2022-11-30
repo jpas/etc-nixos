@@ -20,7 +20,10 @@
     ./sonarr.nix
     ./traefik.nix
     ./unifi.nix
+    ./lldap.nix
   ];
+
+  services.lldap.enable = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
