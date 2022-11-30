@@ -13,6 +13,7 @@ with lib;
     tls_chain = "${config.security.acme.certs."idm.pas.sh".directory}/fullchain.pem";
     tls_key = "${config.security.acme.certs."idm.pas.sh".directory}/key.pem";
 
+    role = "WriteReplicaNoUI";
     trust_x_forward_for = true;
   };
 
