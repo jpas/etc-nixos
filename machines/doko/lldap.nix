@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.services.lldap;
-  configFile = pkgs.writeText ''
+  configFile = pkgs.writeText "lldap_config.toml" ''
     ldap_host = "127.0.0.1"
     ldap_port = 3890
 
@@ -19,7 +19,7 @@ let
     ldap_user_email = "root@pas.sh"
 
     database_url = "sqlite:///var/lib/lldap/users.db?mode=rwc"
-    key_file = "/var/lib/lldap/private_key"
+    key_file = "/var/lib/lldap/private-key"
   '';
 in
 {
@@ -34,7 +34,7 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       preStart = ''
-        ln -sf ${pkgs.lldap}/app /var/lib/lldap/app
+        ln -sf ${pkgs.lldap}/app /var/lib/lldap
         ln -sf ${configFile} /var/lib/lldap/lldap_config.toml
       '';
       serviceConfig = {
@@ -55,7 +55,7 @@ in
       };
       environment = {
         LLDAP_JWT_SECRET_FILE = config.age.secrets.authelia-jwt-secret.path;
-        LLDAP_LDAP_USER_PASS_FILE = authelia-notifier-smtp-password.path;
+        LLDAP_LDAP_USER_PASS = "dolphins";
       };
     };
 
@@ -69,7 +69,7 @@ in
 
     services.traefik.dynamicConfigOptions.http = {
       services.lldap = {
-        loadBalancer.lldap = [{ url = "http://127.0.0.1:17170"; }];
+        loadBalancer.servers = [{ url = "http://127.0.0.1:17170"; }];
       };
 
       routers.lldap = {
@@ -78,6 +78,11 @@ in
         entryPoints = [ "web" ];
         middlewares = [ "tailscale-ips" ];
       };
+    };
+
+    age.secrets.lldap-jwt-secret = {
+      file = ./.lldap-jwt-secret.age;
+      owner = "lldap";
     };
   };
 }

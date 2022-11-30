@@ -39,6 +39,8 @@ mkSecrets [
   { path = "machines/doko/.authelia-storage-encryption-key.age"; systems = system.doko; }
   { path = "machines/doko/.jellyfin-oidc-client-secret.age"; systems = system.doko; }
   { path = "machines/doko/.traefik-config.json.age"; systems = system.doko; }
+  { path = "machines/doko/.lldap-jwt-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.lldap-private-key.age"; systems = system.doko; }
   { path = "users/jpas/.passwd.age"; systems = systems; }
   { path = "users/kbell/.passwd.age"; systems = systems; }
   { path = "users/root/.passwd.age"; systems = systems; }
