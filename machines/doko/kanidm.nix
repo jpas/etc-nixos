@@ -9,7 +9,6 @@ with lib;
     domain = "pas.sh";
     bindaddress = "127.0.0.1:8443";
     ldapbindaddress = "0.0.0.0:636";
-    role = "WriteReplicaNoUI";
 
     tls_chain = "${config.security.acme.certs."idm.pas.sh".directory}/fullchain.pem";
     tls_key = "${config.security.acme.certs."idm.pas.sh".directory}/key.pem";
