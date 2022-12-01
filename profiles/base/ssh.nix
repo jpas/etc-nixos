@@ -7,10 +7,10 @@ let
 in
 {
   services.openssh = {
-    enable = true;
+    enable = mkDefault true;
 
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
+    passwordAuthentication = mkDefault false;
+    kbdInteractiveAuthentication = mkDefault false;
 
     extraConfig = ''
       AuthenticationMethods publickey
@@ -22,8 +22,6 @@ in
     # recommendations accessed on 2021-03-18.
     # https://infosec.mozilla.org/guidelines/openssh#modern
     extraConfig = ''
-      SendEnv COLORTERM
-
       HashKnownHosts yes
 
       Host *
