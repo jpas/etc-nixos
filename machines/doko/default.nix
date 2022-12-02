@@ -2,6 +2,7 @@
 
 {
   networking.hostName = "doko";
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   hole.use.intel-cpu = true;
 
@@ -23,7 +24,7 @@
     ./lldap.nix
   ];
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  services.lldap.enable = true;
 
   # TODO: fan control via ipmi?
   # https://github.com/missmah/ipmi_tools/blob/master/ipmi_fancontrol.pl
