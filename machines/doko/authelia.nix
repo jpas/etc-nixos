@@ -78,8 +78,8 @@ in
   };
 
   systemd.services.authelia.environment = with config.age.secrets; {
-    AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE = authelia-identity-provider-oidc-hmac-secret.path;
-    AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE = authelia-identity-provider-oidc-issuer-private-key.path;
+    #AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE = authelia-identity-provider-oidc-hmac-secret.path;
+    #AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE = authelia-identity-provider-oidc-issuer-private-key.path;
     AUTHELIA_JWT_SECRET_FILE = authelia-jwt-secret.path;
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
     AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE = authelia-storage-encryption-key.path;
