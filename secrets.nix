@@ -31,13 +31,12 @@ let
 in
 mkSecrets [
   { path = "machines/doko/.acme-credentials.age"; systems = system.doko; }
-  { path = "machines/doko/.authelia-identity-provider-oidc-clients-jellyfin-secret.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-identity-provider-oidc-hmac-secret.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-identity-provider-oidc-issuer-private-key.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-jwt-secret.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-notifier-smtp-password.age"; systems = system.doko; }
   { path = "machines/doko/.authelia-storage-encryption-key.age"; systems = system.doko; }
-  { path = "machines/doko/.jellyfin-oidc-client-secret.age"; systems = system.doko; }
+  { path = "machines/doko/.authelia-authentication-backend-password.age"; systems = system.doko; }
   { path = "machines/doko/.traefik-config.json.age"; systems = system.doko; }
   { path = "machines/doko/.lldap-jwt-secret.age"; systems = system.doko; }
   { path = "machines/doko/.lldap-private-key.age"; systems = system.doko; }

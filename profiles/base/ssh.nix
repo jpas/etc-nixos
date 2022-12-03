@@ -1,4 +1,6 @@
-{ config, ... }:
+{ lib, config, ... }:
+
+with lib;
 
 let
   # TODO(jpas): remove small moduli for diffie-hellman-group-exchange-sha256

@@ -28,16 +28,16 @@ in
       #};
       authentication_backend.ldap = {
         implementation = "custom";
-        url = "ldap://10.39.1.254";
+        url = "ldap://127.0.0.1:3890";
         base_dn = "dc=pas,dc=sh";
         username_attribute = "uid";
         additional_users_dn = "ou=people";
-        users_filter = "(&({username_attribute}={input})(objectClass=person))";
+        users_filter = "(&({username_attribute}={input})(objectclass=person))";
         additional_groups_dn = "ou=groups";
         groups_filter = "(member={dn})";
         group_name_attribute = "cn";
         mail_attribute = "mail";
-        display_name_attribute = "displayName";
+        display_name_attribute = "uid";
         user = "uid=authelia,ou=people,dc=pas,dc=sh";
       };
       storage.local = {
@@ -64,7 +64,7 @@ in
 
     routers.auth = {
       rule = "Host(`auth.pas.sh`)";
-      service = "auth@file";
+      service = "auth";
       entryPoints = [ "web" ];
     };
 
@@ -83,7 +83,7 @@ in
     AUTHELIA_JWT_SECRET_FILE = authelia-jwt-secret.path;
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
     AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE = authelia-storage-encryption-key.path;
-    AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD = authelia-authentication-backend-password.path;
+    AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = authelia-authentication-backend-password.path;
   };
 
   age.secrets = {

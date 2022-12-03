@@ -28,6 +28,8 @@ with lib;
   services.xserver.layout = mkDefault "us";
   console.useXkbConfig = mkDefault true;
 
+  virtualisation.oci-containers.backend = mkDefault "podman";
+
   services.journald.extraConfig = ''
     SystemMaxUse=100M
     MaxFileSec=7day
