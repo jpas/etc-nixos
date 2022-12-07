@@ -2,14 +2,18 @@
 
 with lib;
 
+let
+  cfg = config.services.kanidm;
+in
 {
-  services.kanidm.enableClient = true;
+  services.kanidm.enableClient = mkDefault false;
 
   services.kanidm.clientSettings = {
     uri = "https://idm.pas.sh";
   };
 
-  services.kanidm.enablePam = true;
+  services.kanidm.enablePam = mkDefault false;
+
   services.kanidm.unixSettings = {
     pam_allowed_login_groups = [ "users" ];
     default_shell = "/run/current-system/sw/bin/bash";
@@ -18,16 +22,16 @@ with lib;
     gid_attr_map = "name";
   };
 
-  services.openssh.authorizedKeysCommand =
+  services.openssh.authorizedKeysCommand = mkIf cfg.enablePam
     "/run/wrappers/bin/kanidm_ssh_authorizedkeys %u";
 
-  security.wrappers.kanidm_ssh_authorizedkeys = {
+  security.wrappers.kanidm_ssh_authorizedkeys = mkIf cfg.enablePam {
     owner = "root";
     group = "root";
     source = "${pkgs.kanidm}/bin/kanidm_ssh_authorizedkeys";
   };
 
-  security.pam.dag.services = {
+  security.pam.dag.services = mkIf cfg.enablePam {
     system-auth.account.kanidm = {
       control = "sufficient";
       arguments = [ "ignore_unknown_user" ];
