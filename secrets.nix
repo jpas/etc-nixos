@@ -4,7 +4,8 @@ let
   user = {
     jpas = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXyVMHbf69zSybXTmyQc/CHjx7j56O/VAl7N/KsMREw" # jpas@kuro
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID74U4vsKLLwJdb050bv0YzvJ8VYgAkF3kkTmkCOJxvQ" # jpas@shiro
+       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID74U4vsKLLwJdb050bv0YzvJ8VYgAkF3kkTmkCOJxvQ" # jpas@shiro
+       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKSqcfQPLEL2lpRxtvVTc6U2Xyyw0b9wpt3nQKr2t7Wi" # jpas@naze
     ];
   };
   users = concatAttrValues user;
