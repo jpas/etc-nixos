@@ -2,8 +2,11 @@
 
 with lib;
 
-{
-  services.kanidm.enableServer = true;
+let
+  enable = false;
+in
+mkIf enable {
+  services.kanidm.enableServer = false;
   services.kanidm.serverSettings = {
     origin = "https://idm.pas.sh";
     domain = "pas.sh";
