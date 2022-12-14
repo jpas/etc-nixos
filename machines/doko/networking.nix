@@ -40,6 +40,9 @@ let
     { name = "kuro.lo"; ipv4 = "10.39.0.50"; mac = "34:2e:b7:de:f9:09"; }
     { name = "kuro.o"; ipv4 = "100.116.4.62"; }
 
+    { name = "naze.lo"; ipv4 = "10.39.0.52"; mac = "58:11:22:a6:15:23"; }
+    { name = "naze.o"; ipv4 = "100.90.165.107"; }
+
     { name = "shiro.lo"; ipv4 = "10.39.0.51"; mac = "54:04:a6:0a:57:0e"; }
     { name = "shiro.o"; ipv4 = "100.69.65.63"; }
   ];
