@@ -10,7 +10,7 @@ with lib;
 
   networking.useDHCP = false;
   networking.useNetworkd = true;
-  systemd.services.systemd-networkd-wait-online.enable = mkDefault false;
+  systemd.services.systemd-networkd-wait-online.enable = false;
 
   systemd.network.links."98-default" = {
     matchConfig.Name = "*";
