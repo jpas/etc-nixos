@@ -18,6 +18,7 @@ let
     doko = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIDAF9OYkf42d6VB21Md3iP+VaSN0C1lijNoYfpGV9m" ];
     kado = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQhgPYR01kB+Vql3cH2pXPeUCW9sXhiQltX5Gfpwfdo" ];
     kuro = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWAg8IMKXHkRkGLmhFH4eWfVtS1qbhHP2Vd3B53JtGL" ];
+    naze = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJONWNtp0yjroR9LRJzEiUj6eWMmFiJ0MHTveY8j/a5M" ];
     shiro = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0" ];
   };
   systems = concatAttrValues system;
