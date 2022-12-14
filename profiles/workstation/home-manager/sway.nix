@@ -31,7 +31,7 @@ let
       };
     };
 
-    output."*".bg = "${flake.outPath}/extra/bg.png fill";
+    output."*".bg = "${./bg.png} fill";
 
     floating.titlebar = true;
 
