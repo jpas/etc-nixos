@@ -1,4 +1,5 @@
 { lib
+, flake
 , config
 , nixosConfig
 , pkgs
@@ -30,7 +31,7 @@ let
       };
     };
 
-    output."*".bg = "~/.config/sway/bg.png fill";
+    output."*".bg = "${flake.outPath}/extra/bg.png fill";
 
     floating.titlebar = true;
 
