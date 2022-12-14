@@ -33,4 +33,10 @@ mkUsers {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID74U4vsKLLwJdb050bv0YzvJ8VYgAkF3kkTmkCOJxvQ jpas@shiro"
     ];
   };
+
+  kbell = {
+    uid = 1001;
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [ ];
+  };
 }
