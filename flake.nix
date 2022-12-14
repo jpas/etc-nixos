@@ -56,6 +56,14 @@
       overlays.default = import ./pkgs;
 
       nixosConfigurations = {
+        naze = mkSystem {
+          system = "x86_64-linux";
+          profiles = [
+            ./machines/naze
+            ./profiles/workstation
+          ];
+        };
+
         shiro = mkSystem {
           system = "x86_64-linux";
           profiles = [
