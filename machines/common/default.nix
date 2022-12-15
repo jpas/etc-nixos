@@ -7,7 +7,7 @@ with lib;
     ./aleph.nix
   ];
 
-  programs.knownHosts = {
+  programs.ssh.knownHosts = {
     doko = {
       extraHostNames = [ "doko.o" "doko.lo" "doko.o.pas.sh" ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIDAF9OYkf42d6VB21Md3iP+VaSN0C1lijNoYfpGV9m";
