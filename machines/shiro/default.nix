@@ -7,6 +7,8 @@ with lib;
 
   hole.use.intel-cpu = true;
 
+  hardware.bluetooth.enable = true;
+
   imports = [
     ../common
     ../hardware/keychron-k3.nix
@@ -37,6 +39,7 @@ with lib;
       8001
     ];
   };
+
 
   environment.systemPackages = attrValues {
     inherit (pkgs) steam steam-run;
