@@ -7,10 +7,6 @@ with lib;
     lidSwitch = mkDefault "suspend";
     lidSwitchDocked = mkDefault "ignore";
     lidSwitchExternalPower = mkDefault "lock";
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandleSuspendKey=suspend
-    '';
   };
 
   #systemd.sleep.extraConfig = ''
@@ -19,8 +15,6 @@ with lib;
   #  HibernateMode=suspend
   #  HibernateState=disk
   #'';
-
-  #services.upower.criticalPowerAction = mkDefault "Suspend";
 
   services.tlp.enable = mkDefault true;
 

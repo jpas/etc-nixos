@@ -11,6 +11,7 @@ with lib;
     ./home-manager.nix
     ./imv.nix
     ./kitty.nix
+    ./power.nix
     ./qt.nix
     ./sound.nix
     ./sway.nix
