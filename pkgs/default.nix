@@ -7,6 +7,7 @@ let
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
     lldap = callPackage ./lldap { };
+    lemurs = callPackage ./lemurs { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
 
@@ -47,6 +48,13 @@ let
           hash = "sha256-9FwuucyhhFW+uO2oO4kavThig9Y702YJnUUhIFeDDIk=";
         })
       ];
+    });
+
+    go-chromecast = prev.go-chromecast.overrideAttrs (o: {
+      doCheck = false;
+      meta = o.meta // {
+        broken = false;
+      };
     });
   };
 in
