@@ -17,11 +17,11 @@ with lib;
   ];
 
   programs.sway.enable = true;
+  programs.steam.enable = true;
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-  };
+  hardware.bluetooth.enable = true;
+
+  networking.wireless.iwd.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [
@@ -36,12 +36,6 @@ with lib;
       8001
     ];
   };
-
-  environment.systemPackages = attrValues {
-    inherit (pkgs) steam steam-run;
-  };
-
-  networking.wireless.iwd.enable = true;
 
   systemd.network.networks."20-lan0" = {
     matchConfig.Name = "enp7s0";

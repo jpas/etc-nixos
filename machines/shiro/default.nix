@@ -7,8 +7,6 @@ with lib;
 
   hole.use.intel-cpu = true;
 
-  hardware.bluetooth.enable = true;
-
   imports = [
     ../common
     ../hardware/keychron-k3.nix
@@ -20,11 +18,9 @@ with lib;
   ];
 
   programs.sway.enable = true;
+  programs.steam.enable = true;
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-  };
+  hardware.bluetooth.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [
@@ -38,11 +34,6 @@ with lib;
       8000
       8001
     ];
-  };
-
-
-  environment.systemPackages = attrValues {
-    inherit (pkgs) steam steam-run;
   };
 
   systemd.network.networks."20-lan0" = {
