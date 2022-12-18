@@ -15,6 +15,7 @@ with lib;
     ./power.nix
     ./qt.nix
     ./sound.nix
+    ./steam.nix
     ./sway.nix
     ./xdg.nix
     ./zathura.nix

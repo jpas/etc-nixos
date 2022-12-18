@@ -41,28 +41,6 @@ let
     window.commands = [
       { criteria = { title = "."; }; command = "inhibit_idle fullscreen"; }
       { criteria = { shell = "xwayland"; }; command = "title_format \"[xwayland] %title\""; }
-
-      {
-        criteria = { class = "Steam"; };
-        # steam is set to open in small mode so a tall thin window is preferred
-        command = "floating enable, border none, resize set 400 800";
-      }
-      {
-        # steam remote play window
-        criteria = { class = "streaming_client"; };
-        # resize accounts for the width of the border
-        command = "fullscreen disable, floating enable, border pixel, resize set 2564 1444";
-      }
-
-      {
-        # wine virtual desktop
-        criteria = { class = "explorer.exe"; };
-        command = "floating enable, border pixel";
-      }
-      {
-        criteria = { class = "steam_proton"; };
-        command = "floating enable, border pixel";
-      }
     ];
 
     keybindings = let inherit (cfg.config) modifier; in
