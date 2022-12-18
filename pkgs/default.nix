@@ -10,6 +10,7 @@ let
     lemurs = callPackage ./lemurs { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
+    wl-gammarelay-rs = callPackage ./wl-gammarelay-rs { };
 
     kanidm = prev.kanidm.overrideAttrs (o: rec {
       name = "${o.pname}-${version}";
