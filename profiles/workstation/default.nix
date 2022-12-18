@@ -6,6 +6,7 @@ with lib;
   imports = [
     ../base
     ./dev.nix
+    ./display-manager.nix
     ./fonts.nix
     ./gtk.nix
     ./home-manager.nix
