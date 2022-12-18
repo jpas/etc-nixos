@@ -376,7 +376,7 @@ mkMerge [
             font-size = 10;
             text-color = fg;
             color = bg;
-            image = "~/.config/sway/bg.png";
+            image = "${./bg.png}";
           }
           // (genColors "inside" hide)
           // (genColors "text" hide)
