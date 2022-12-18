@@ -40,9 +40,6 @@ in
     };
   };
 
-  services.getty.greetingLine =
-    "<<< Welcome to NixOS ${config.system.nixos.label} @ ${config.system.configurationRevision} - \\l >>>";
-
   nixpkgs.overlays = [ self.overlays.default or { } ];
 
   nix = {

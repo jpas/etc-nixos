@@ -24,6 +24,11 @@ with lib;
   time.timeZone = mkDefault "America/Toronto";
   i18n.defaultLocale = mkDefault "en_CA.UTF-8";
 
+  services.getty.greetingLine =
+    "<<< Welcome to NixOS ${config.system.nixos.label} @ ${substring 0 6 config.system.configurationRevision} - \\l >>>";
+
+  services.getty.extraArgs = [ "--nonewline" ];
+
   # Does not enable xserver, but make sure the keymap is in sync
   services.xserver.layout = mkDefault "us";
   console.useXkbConfig = mkDefault true;
