@@ -12,6 +12,12 @@ let
     oauth2token = callPackage ./oauth2token { };
     wl-gammarelay-rs = callPackage ./wl-gammarelay-rs { };
 
+    mako = prev.mako.overrideAttrs (o: {
+      patches = (o.patches or [ ]) ++ [
+        ./mako/0000-check-etc-mako.patch
+      ];
+    });
+
     kanidm = prev.kanidm.overrideAttrs (o: rec {
       name = "${o.pname}-${version}";
       version = "1.1.0-alpha.10";

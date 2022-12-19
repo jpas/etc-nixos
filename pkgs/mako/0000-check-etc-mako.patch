@@ -1,0 +1,12 @@
+diff --git a/config.c b/config.c
+index 50affec..191cb9b 100644
+--- a/config.c
++++ b/config.c
+@@ -694,6 +694,7 @@ static char *get_config_path(void) {
+ 	static const char *config_paths[] = {
+ 		"$HOME/.mako/config",
+ 		"$XDG_CONFIG_HOME/mako/config",
++		"/etc/xdg/mako/config",
+ 	};
+ 
+ 	if (!getenv("XDG_CONFIG_HOME")) {
