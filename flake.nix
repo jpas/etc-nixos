@@ -48,6 +48,7 @@
 
       devShells.default = pkgs.mkShell {
         buildInputs = [
+          pkgs.nixpkgs-fmt
           inputs.deploy-rs.packages.${system}.deploy-rs
           inputs.agenix.packages.${system}.agenix
         ];
