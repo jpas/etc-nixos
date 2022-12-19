@@ -4,5 +4,6 @@ builtins.mapAttrs (_: p: import p) {
   docker = ./docker.nix;
   lemurs = ./lemurs.nix;
   pam = ./pam.nix;
+  sway = ./sway.nix;
   use = ./use;
 }
