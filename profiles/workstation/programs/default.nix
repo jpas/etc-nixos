@@ -9,6 +9,7 @@ with lib;
     ./kitty.nix
     ./mako.nix
     ./steam.nix
+    ./tofi.nix
     ./wl-gammarelay-rs.nix
     ./zathura.nix
   ];
