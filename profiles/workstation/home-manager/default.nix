@@ -7,6 +7,5 @@ with lib;
     ./tofi.nix
     ./neovim.nix
     ./sway.nix
-    ./tmux.nix
   ];
 }
