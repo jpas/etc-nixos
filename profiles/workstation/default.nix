@@ -44,13 +44,13 @@ with lib;
 
     fonts = attrValues {
       inherit (pkgs)
-      jetbrains-mono
-      noto-fonts
-      #noto-fonts-cjk
-      #mplus-outline-fonts
-      noto-fonts-emoji
-      noto-fonts-extra
-      ;
+        jetbrains-mono
+        noto-fonts
+        #noto-fonts-cjk
+        #mplus-outline-fonts
+        noto-fonts-emoji
+        noto-fonts-extra
+        ;
     };
   };
 
