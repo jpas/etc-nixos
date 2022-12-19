@@ -12,6 +12,7 @@ in
 mkIf cfg.enable {
   services.greetd = {
     enable = mkDefault true;
+    vt = 2;
     settings = {
       default_session = {
         command = "${config.services.greetd.package}/bin/agreety --cmd sway-launch";
