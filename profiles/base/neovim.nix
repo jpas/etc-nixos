@@ -1,25 +1,33 @@
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
-{
-  programs.neovim = {
+with lib;
+
+let
+  wrapNeovim = cfg:
+    let config = pkgs.neovimUtils.makeNeovimConfig cfg; in
+    pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
+      (config // { wrapperArgs = escapeShellArgs config.wrapperArgs; });
+
+  neovim = wrapNeovim {
     viAlias = true;
     vimAlias = true;
-    vimdiffAlias = true;
 
+    customRC = ''
+      set guicursor=
+      set encoding=utf-8
+      set fileencoding=utf-8
+      set colorcolumn=80
+      set number
+      set nowrap
+      set list
+      set smartcase
+      set nobackup nowritebackup
+    '';
     plugins = with pkgs.vimPlugins; [
       {
         plugin = gruvbox;
         # FIXME: https://github.com/nix-community/home-manager/pull/1945
         config = ''
-          set guicursor=
-          set encoding=utf-8
-          set fileencoding=utf-8
-          set colorcolumn=80
-          set number
-          set nowrap
-          set list
-          set smartcase
-          set nobackup nowritebackup
         '' + ''
           if &term != "linux"
             set termguicolors
@@ -35,15 +43,6 @@
           let g:lightline = { 'colorscheme': 'gruvbox' }
         '';
       }
-      #{
-      #  plugin = fzf-vim;
-      #  config = ''
-      #    noremap <C-p> :FZF<cr>
-      #  '';
-
-      #  # TODO: change colours to work with gruvbox
-      #}
-      pkgs.fzf
       supertab
       {
         plugin = vim-better-whitespace;
@@ -63,11 +62,13 @@
       vim-unimpaired
     ];
   };
-
-  home.sessionVariables = {
-    VISUAL = "vim";
-    EDITOR = "vim";
+in
+{
+  environment = {
+    systemPackages = [ neovim ];
+    variables = {
+      EDITOR = mkOverride 900 "nvim";
+      VISUAL = mkOverride 900 "nvim";
+    };
   };
-
-  programs.bash.shellAliases = { vim = "vim -p"; };
 }

@@ -73,13 +73,5 @@ with lib;
         LESSHIST = mkDefault "/dev/null";
       };
     };
-
-    neovim = {
-      # TODO gruvbox colors by default
-      enable = mkDefault true;
-      defaultEditor = mkDefault true;
-      viAlias = mkDefault true;
-      vimAlias = mkDefault true;
-    };
   };
 }

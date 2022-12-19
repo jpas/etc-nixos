@@ -9,7 +9,6 @@ in
 {
   imports = [ ./email.nix ];
 
-
   programs.git.enable = true;
   programs.git = {
     userName = name;
@@ -24,8 +23,6 @@ in
       init.defaultBranch = "main";
     };
   };
-
-  programs.neovim.enable = true;
 
   home.stateVersion = "22.11";
 }

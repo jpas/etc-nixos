@@ -12,6 +12,7 @@ with lib;
     ./flakes.nix
     ./home-manager.nix
     ./kanidm.nix
+    ./neovim.nix
     ./networking
     ./nfs.nix
     ./nix.nix
