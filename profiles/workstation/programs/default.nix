@@ -15,6 +15,7 @@ with lib;
 
   environment.systemPackages = attrValues {
     inherit (pkgs)
+      signal-desktop
       git
       mpv
       ;

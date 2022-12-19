@@ -9,6 +9,4 @@ with lib;
     ./sway.nix
     ./tmux.nix
   ];
-
-  home.packages = [ pkgs.signal-desktop ];
 }
