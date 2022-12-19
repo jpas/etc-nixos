@@ -11,7 +11,8 @@ with lib;
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs run";
+      ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs";
+      ExecStartPost = "busctl --user -- set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 5000";
     };
   };
 }
