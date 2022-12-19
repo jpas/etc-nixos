@@ -12,7 +12,6 @@ with lib;
     ./flakes.nix
     ./home-manager.nix
     ./kanidm.nix
-    ./microcode.nix
     ./networking
     ./nfs.nix
     ./nix.nix
