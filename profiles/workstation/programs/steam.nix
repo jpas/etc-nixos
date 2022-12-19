@@ -10,7 +10,7 @@ mkIf cfg.enable {
 
   programs.steam.remotePlay.openFirewall = true;
 
-  environment.etc."sway/config.d/steam.conf".text = ''
+  programs.sway.include."50-steam.conf" = ''
     for_window [class="Steam"] floating enable, border none
     for_window [class="streaming_client"] floating enable, border pixel
     for_window [class="steam_proton"] floating enable, border pixel

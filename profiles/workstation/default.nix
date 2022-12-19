@@ -5,39 +5,58 @@ with lib;
 {
   imports = [
     ../base
-    ./dev.nix
-    ./display-manager.nix
-    ./fonts.nix
-    ./gtk.nix
     ./home-manager.nix
-    ./imv.nix
-    ./kitty.nix
-    ./power.nix
-    ./qt.nix
+    ./programs
     ./sound.nix
-    ./steam.nix
     ./sway.nix
-    ./xdg.nix
-    ./zathura.nix
+    ./theme.nix
   ];
 
-  services.xserver.libinput.enable = mkDefault true;
+  programs.sway.enable = mkDefault true;
 
   hardware.opengl = {
-    enable = mkDefault true;
     driSupport = mkDefault true;
     driSupport32Bit = mkDefault true;
   };
 
-  environment.systemPackages = attrValues {
-    inherit (pkgs)
-      firefox
-      imv
-      kitty
-      mpv
+  documentation.dev.enable = mkDefault true;
+
+  services.upower.enable = mkDefault true;
+  services.udisks2.enable = mkDefault true;
+
+  services.logind.extraConfig = ''
+    HandlePowerKey=suspend
+    HandlePowerKeyLongPress=poweroff
+  '';
+
+  services.xserver.libinput.enable = mkDefault true;
+
+  fonts = {
+    fontconfig = {
+      defaultFonts = {
+        emoji = mkDefault [ "Noto Color Emoji" ];
+        monospace = mkDefault [ "JetBrains Mono" ];
+        sansSerif = mkDefault [ "Noto Sans" ];
+        serif = mkDefault [ "Noto Serif" ];
+      };
+      cache32Bit = mkDefault true;
+    };
+
+    fonts = attrValues {
+      inherit (pkgs)
+      jetbrains-mono
+      noto-fonts
+      #noto-fonts-cjk
+      #mplus-outline-fonts
+      noto-fonts-emoji
+      noto-fonts-extra
       ;
+    };
   };
 
-  services.upower.enable = true;
-  services.udisks2.enable = true;
+  environment.systemPackages = attrValues {
+    inherit (pkgs) xdg-user-dirs xdg-utils;
+  };
+
+  xdg.mime = { };
 }

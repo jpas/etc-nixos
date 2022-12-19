@@ -13,17 +13,10 @@ in
 {
   environment.systemPackages = [ pkgs.zathura ];
 
-  xdg.mime.addedAssociations = {
-    "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+  xdg.mime = {
+    addedAssociations."application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    defaultApplications."application/pdf" = [ "org.pwmt.zathura.desktop" ];
   };
-
-  xdg.mime.defaultApplications = {
-    "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-  };
-
-  environment.etc."sway/config.d/zathura.conf".text = ''
-    for_window [app_id="org.pwmt.zathura"] floating enable
-  '';
 
   environment.etc."zathurarc".text = format (with colours; {
     font = "monospace 10";
@@ -76,4 +69,8 @@ in
     recolor-lightcolor = bg;
     recolor-darkcolor = fg;
   });
+
+  programs.sway.include."50-zathura.conf" = ''
+    for_window [app_id="org.pwmt.zathura"] floating enable
+  '';
 }
