@@ -28,7 +28,6 @@ in
     };
 
     unitConfig = {
-      Slice = "session.slice";
       ConditionEnvironment = "WAYLAND_DISPLAY";
     };
   };

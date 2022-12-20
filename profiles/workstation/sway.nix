@@ -158,7 +158,6 @@ mkIf cfg.enable {
 
   systemd.user.services = {
     swayidle = {
-      partOf = [ "sway-session.target" ];
       wantedBy = [ "sway-session.target" ];
       serviceConfig = {
         Type = "simple";
