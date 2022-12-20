@@ -16,4 +16,14 @@ with lib;
     # open links using the wayland instance when possible
     export MOZ_DBUS_REMOTE=1
   '';
+
+  programs.sway.include."50-firefox.conf" = ''
+    no_focus [title="Firefox — Sharing Indicator"]
+    for_window [title="Firefox — Sharing Indicator"] {
+      border none
+      floating enable
+      move position 50% 20
+      sticky enable
+    }
+  '';
 }
