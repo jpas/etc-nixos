@@ -19,7 +19,6 @@ in
   systemd.user.services.wl-gammarelay-rs = {
     partOf = [ "graphical-session.target" ];
     after = [ "graphical-session.target" ];
-    wantedBy = [ "graphical-session.target" ];
 
     serviceConfig = {
       Type = "dbus";
@@ -29,6 +28,7 @@ in
     };
 
     unitConfig = {
+      Slice = "session.slice";
       ConditionEnvironment = "WAYLAND_DISPLAY";
     };
   };

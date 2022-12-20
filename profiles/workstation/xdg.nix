@@ -7,14 +7,6 @@ with lib;
     inherit (pkgs) xdg-user-dirs xdg-utils;
   };
 
-  xdg.mime = { };
-
-  xdg.portal.enable = mkDefault true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  systemd.user.services."xdg-desktop-portal-gtk" = {
-    after = [ "graphical-session.target" ];
-  };
-
   environment.etc."xdg/user-dirs.defaults".text = ''
     DESKTOP=system/desktop
     DOWNLOAD=downloads
@@ -25,11 +17,27 @@ with lib;
     PICTURES=media/photos
     VIDEOS=media/video
   '';
-  systemd.user.services."xdg-user-dirs-update" = {
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update";
+
+  xdg.mime = { };
+
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  systemd.user.services = {
+    xdg-user-dirs-update = {
+      wantedBy = [ "default.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update";
+      };
+    };
+
+    xdg-desktop-portal-gtk = {
+      partOf = [ "graphical-session.target" ];
+      serviceConfig.Slice = "session.slice";
+    };
+
+    xdg-permission-store = {
+      serviceConfig.Slice = "session.slice";
     };
   };
 }
