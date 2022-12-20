@@ -180,6 +180,13 @@ mkMerge [
     '';
   })
 
+  (mkConfig {
+    sway.startup = [{
+      command = "busctl --user -- set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 5000";
+      always = true;
+    }];
+  })
+
   # terminal
   (mkConfig {
     sway = {
@@ -310,11 +317,6 @@ mkMerge [
   (mkSessionConfig {
     name = "kanshi";
     script = "exec kanshi";
-  })
-
-  (mkSessionConfig {
-    name = "wlsunset";
-    script = "exec wlsunset -t 3000 -T 5000 -l 52.1 -L -106.4";
   })
 
   (mkSessionConfig {

@@ -2,17 +2,34 @@
 
 with lib;
 
+let
+  package = pkgs.wl-gammarelay-rs;
+
+  dbus-service = pkgs.writeTextDir "share/dbus-1/services/rs.wl-gammarelay.service" ''
+    [D-BUS Service]
+    Name=rs.wl-gammarelay
+    Exec=${package}/bin/wl-gammarelay-rs
+    SystemdService=wl-gammarelay-rs.service
+  '';
+in
 {
-  programs.sway.extraPackages = [ pkgs.wl-gammarelay-rs ];
+  environment.systemPackages = [ package ];
+  services.dbus.packages = [ dbus-service ];
 
   systemd.user.services.wl-gammarelay-rs = {
-    partOf = [ "sway-session.target" ];
-    after = [ "sway-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
 
     serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs";
-      ExecStartPost = "busctl --user -- set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 5000";
+      Type = "dbus";
+      BusName = "rs.wl-gammarelay";
+      ExecStart = "${package}/bin/wl-gammarelay-rs";
+      Slice = "session.slice";
+    };
+
+    unitConfig = {
+      ConditionEnvironment = "WAYLAND_DISPLAY";
     };
   };
 }
