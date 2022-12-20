@@ -3,6 +3,13 @@
 with lib;
 
 {
+  environment.sessionVariables = {
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_CACHE_HOME = "$HOME/.cache";
+  };
+
   environment.etc."xdg/user-dirs.defaults".text = ''
     DESKTOP=system/desktop
     DOWNLOAD=downloads

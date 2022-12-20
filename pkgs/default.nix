@@ -2,21 +2,29 @@ final: prev:
 let
   inherit (prev) lib callPackage;
 
+  patchPackage = pkg: patches: pkg.overrideAttrs (o: {
+    patches = (o.patches or [ ]) ++ patches;
+  });
+
   hole = rec {
     authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
-    lldap = callPackage ./lldap { };
     lemurs = callPackage ./lemurs { };
+    lldap = callPackage ./lldap { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
     wl-gammarelay-rs = callPackage ./wl-gammarelay-rs { };
 
-    mako = prev.mako.overrideAttrs (o: {
-      patches = (o.patches or [ ]) ++ [
-        ./mako/0000-check-etc-mako.patch
-      ];
-    });
+    direnv = patchPackage prev.direnv [
+      (final.fetchpatch {
+        # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh
+        # see: https://github.com/direnv/direnv/pull/990
+        url = "https://github.com/direnv/direnv/commit/ce1c286eac16e4f5541b3af1231783667bc45cae.patch";
+        hash = "sha256-9FwuucyhhFW+uO2oO4kavThig9Y702YJnUUhIFeDDIk=";
+      })
+    ];
+    mako = patchPackage prev.mako [ ./patches/mako-check-etc-xdg.patch ];
 
     kanidm = prev.kanidm.overrideAttrs (o: rec {
       name = "${o.pname}-${version}";
@@ -44,17 +52,6 @@ let
         outputHash = "sha256-/CcmKYPtBHNdhJnO0OmZtW/39HH58qmCE9hFbIiNsaE=";
         patches = cargoPatches;
       });
-    });
-
-    direnv = prev.direnv.overrideAttrs (o: {
-      patches = (o.patches or [ ]) ++ [
-        (final.fetchpatch {
-          # supports searching XDG_CONFIG_DIRS for direnv/lib/*.sh
-          # see: https://github.com/direnv/direnv/pull/990
-          url = "https://github.com/direnv/direnv/commit/ce1c286eac16e4f5541b3af1231783667bc45cae.patch";
-          hash = "sha256-9FwuucyhhFW+uO2oO4kavThig9Y702YJnUUhIFeDDIk=";
-        })
-      ];
     });
 
     go-chromecast = prev.go-chromecast.overrideAttrs (o: {
