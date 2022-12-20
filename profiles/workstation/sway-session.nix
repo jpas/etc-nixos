@@ -3,8 +3,6 @@
 with lib;
 
 let
-  cfg = config.programs.sway;
-
   sessionVariables = concatStringsSep " " [
     "DISPLAY"
     "I3SOCK"
@@ -15,8 +13,8 @@ let
     "XDG_SESSION_TYPE"
   ];
 
-  sway-utils = pkgs.symlinkJoin {
-    name = "sway-utils";
+  sway-session = pkgs.symlinkJoin {
+    name = "sway-session";
     paths = mapAttrsToList pkgs.writeShellScriptBin {
       sway-launch = ''
         if systemctl --user --quiet is-active sway-session.target; then
@@ -30,66 +28,8 @@ let
       '';
     };
   };
-
-  sway-lock = pkgs.writeShellScript "sway-lock" ''
-    lock="$XDG_RUNTIME_DIR/swaylock-$XDG_SESSION_ID.lock"
-    exec ${pkgs.util-linux}/bin/flock --nonblock --no-fork "$lock" \
-      ${pkgs.swaylock}/bin/swaylock -f -C ${swaylockConfig}
-  '';
-
-  sway-unlock = pkgs.writeShellScript "sway-unlock" ''
-    lock="$XDG_RUNTIME_DIR/swaylock-$XDG_SESSION_ID.lock"
-    ${pkgs.psmisc}/bin/fuser --kill "$lock"
-  '';
-
-  swayidleConfig = pkgs.writeText "swayidle-config" ''
-    lock         ${sway-lock}
-    unlock       ${sway-unlock}
-
-    before-sleep ${sway-lock}
-    after-resume "swaymsg output '*' dpms on"
-
-    timeout  300 ${sway-lock}
-    timeout  450 "swaymsg output '*' dpms off" resume "swaymsg output '*' dpms on"
-    idlehint 600
-  '';
-
-  swaylockConfig =
-    let
-      fmt = n: v: if isBool v then n else "${n}=${toString v}";
-
-      genColors = prefix: value: genAttrs
-        (map (s: "${prefix}${s}-color") [ "" "-clear" "-caps-lock" "-ver" "-wrong" ])
-        (n: value);
-
-      cfg = with config.hole.colours; ({
-        font = "monospace";
-        font-size = 10;
-        text-color = fg;
-        color = bg;
-      }
-      // (genColors "inside" "00000000")
-      // (genColors "text" "00000000")
-      // (genColors "line" bg)
-      // {
-        key-hl-color = fg;
-        caps-lock-key-hl-color = neutral.yellow;
-
-        bs-hl-color = neutral.yellow;
-        caps-lock-bs-hl-color = neutral.yellow;
-
-        ring-color = bg;
-        ring-caps-lock-color = bg;
-
-        ring-clear-color = neutral.yellow;
-        ring-ver-color = neutral.blue;
-        ring-wrong-color = neutral.red;
-      });
-    in
-    pkgs.writeText "swaylock-config"
-      (concatStringsSep "\n" (mapAttrsToList fmt cfg));
 in
-mkIf cfg.enable {
+mkIf config.programs.sway.enable {
   services.greetd = {
     enable = mkDefault true;
     vt = 2;
@@ -116,15 +56,7 @@ mkIf cfg.enable {
       export SDL_VIDEODRIVER=wayland
     '';
 
-    extraPackages = attrValues {
-      inherit sway-utils;
-      inherit (pkgs)
-        grim
-        kanshi
-        slurp
-        wl-clipboard
-        ;
-    };
+    extraPackages = [ sway-session ];
   };
 
   environment.etc."sway/config.d/nixos.conf".enable = mkForce false;
@@ -157,15 +89,6 @@ mkIf cfg.enable {
   };
 
   systemd.user.services = {
-    swayidle = {
-      wantedBy = [ "sway-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.swayidle}/bin/swayidle -w -C ${swayidleConfig}";
-        Slice = "session.slice";
-      };
-    };
-
     sway-session-unset-environment = {
       wantedBy = [ "sway-session-shutdown.target" ];
       after = [ "sway-session-exit.service" ];
@@ -190,22 +113,7 @@ mkIf cfg.enable {
         RefuseManualStop = true;
       };
     };
-  };
 
-  xdg.portal.wlr.enable = mkDefault true;
-  #xdg.portal.wlr.settings.screencast = {
-  #  chooser_type = mkDefault "simple";
-  #  chooser_cmd = mkDefault (with config.hole.colours; concatStringsSep " " [
-  #    "${pkgs.slurp}/bin/slurp -or"
-  #    "-f %o"
-  #    "-b ${bg}00"
-  #    "-c ${normal.aqua}ff"
-  #    "-s ${normal.aqua}7f"
-  #    "-B ${bg}00"
-  #    "-w 2"
-  #  ]);
-  #};
-  systemd.user.services = {
     xdg-desktop-portal-wlr = {
       serviceConfig.Slice = "session.slice";
     };

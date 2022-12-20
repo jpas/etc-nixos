@@ -9,6 +9,9 @@ with lib;
     ./kitty.nix
     ./mako.nix
     ./steam.nix
+    ./sway.nix
+    ./swayidle.nix
+    ./swaylock.nix
     ./tofi.nix
     ./wl-gammarelay-rs.nix
     ./zathura.nix

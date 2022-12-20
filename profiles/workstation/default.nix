@@ -8,7 +8,7 @@ with lib;
     ./home-manager.nix
     ./programs
     ./sound.nix
-    ./sway.nix
+    ./sway-session.nix
     ./theme.nix
     ./xdg.nix
   ];

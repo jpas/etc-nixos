@@ -5,11 +5,6 @@ with lib;
 let
   cfg = config.programs.sway;
 
-  configFile =
-    if cfg.config == null
-    then { }
-    else { "sway/config".source = pkgs.writeText "config" cfg.config; };
-
   includeFiles = flip mapAttrs' cfg.include (name: text: {
     name = "sway/config.d/${name}";
     value.source = pkgs.writeText "${name}" text;
@@ -17,9 +12,11 @@ let
 in
 {
   options.programs.sway = {
-    config = mkOption {
-      type = with types; nullOr lines;
-      default = null;
+    settings = mkOption {
+      type = types.lines;
+      default = ''
+        include /etc/sway/config.d/*.conf
+      '';
     };
 
     include = mkOption {
@@ -29,6 +26,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.etc = includeFiles // configFile;
+    environment.etc = includeFiles // {
+      "sway/config".text = cfg.settings;
+    };
   };
 }
