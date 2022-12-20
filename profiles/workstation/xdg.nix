@@ -11,6 +11,9 @@ with lib;
 
   xdg.portal.enable = mkDefault true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  systemd.user.services."xdg-desktop-portal-gtk" = {
+    after = [ "graphical-session.target" ];
+  };
 
   environment.etc."xdg/user-dirs.defaults".text = ''
     DESKTOP=system/desktop

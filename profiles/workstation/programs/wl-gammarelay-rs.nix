@@ -6,8 +6,8 @@ with lib;
   programs.sway.extraPackages = [ pkgs.wl-gammarelay-rs ];
 
   systemd.user.services.wl-gammarelay-rs = {
-    partOf = [ "graphical-session.target" ];
-    wantedBy = [ "sway-session.target" ];
+    partOf = [ "sway-session.target" ];
+    after = [ "sway-session.target" ];
 
     serviceConfig = {
       Type = "simple";
