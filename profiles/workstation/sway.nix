@@ -61,9 +61,6 @@ mkIf cfg.enable {
     after = [ "graphical-session-pre.target" ];
   };
 
-  xdg.portal.enable = mkDefault true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
   xdg.portal.wlr.enable = mkDefault true;
   #xdg.portal.wlr.settings.screencast = {
   #  chooser_type = mkDefault "simple";

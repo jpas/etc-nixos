@@ -10,6 +10,7 @@ with lib;
     ./sound.nix
     ./sway.nix
     ./theme.nix
+    ./xdg.nix
   ];
 
   programs.sway.enable = mkDefault true;
@@ -53,10 +54,4 @@ with lib;
         ;
     };
   };
-
-  environment.systemPackages = attrValues {
-    inherit (pkgs) xdg-user-dirs xdg-utils;
-  };
-
-  xdg.mime = { };
 }
