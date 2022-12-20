@@ -5,6 +5,16 @@ with lib;
 let
   cfg = config.programs.sway;
 
+  sessionVariables = concatStringsSep " " [
+    "DISPLAY"
+    "I3SOCK"
+    "SWAYSOCK"
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP"
+    "XDG_SESSION_DESKTOP"
+    "XDG_SESSION_TYPE"
+  ];
+
   sway-utils = pkgs.symlinkJoin {
     name = "sway-utils";
     paths = mapAttrsToList pkgs.writeShellScriptBin {
@@ -21,15 +31,63 @@ let
     };
   };
 
-  sessionVariables = concatStringsSep " " [
-    "DISPLAY"
-    "I3SOCK"
-    "SWAYSOCK"
-    "WAYLAND_DISPLAY"
-    "XDG_CURRENT_DESKTOP"
-    "XDG_SESSION_DESKTOP"
-    "XDG_SESSION_TYPE"
-  ];
+  sway-lock = pkgs.writeShellScript "sway-lock" ''
+    lock="$XDG_RUNTIME_DIR/swaylock-$XDG_SESSION_ID.lock"
+    exec ${pkgs.util-linux}/bin/flock --nonblock --no-fork "$lock" \
+      ${pkgs.swaylock}/bin/swaylock -f -C ${swaylockConfig}
+  '';
+
+  sway-unlock = pkgs.writeShellScript "sway-unlock" ''
+    lock="$XDG_RUNTIME_DIR/swaylock-$XDG_SESSION_ID.lock"
+    ${pkgs.psmisc}/bin/fuser --kill "$lock"
+  '';
+
+  swayidleConfig = pkgs.writeText "swayidle-config" ''
+    lock         ${sway-lock}
+    unlock       ${sway-unlock}
+
+    before-sleep ${sway-lock}
+    after-resume "swaymsg output '*' dpms on"
+
+    timeout  300 ${sway-lock}
+    timeout  450 "swaymsg output '*' dpms off" resume "swaymsg output '*' dpms on"
+    idlehint 600
+  '';
+
+  swaylockConfig =
+    let
+      fmt = n: v: if isBool v then n else "${n}=${toString v}";
+
+      genColors = prefix: value: genAttrs
+        (map (s: "${prefix}${s}-color") [ "" "-clear" "-caps-lock" "-ver" "-wrong" ])
+        (n: value);
+
+      cfg = with config.hole.colours; ({
+        font = "monospace";
+        font-size = 10;
+        text-color = fg;
+        color = bg;
+      }
+      // (genColors "inside" "00000000")
+      // (genColors "text" "00000000")
+      // (genColors "line" bg)
+      // {
+        key-hl-color = fg;
+        caps-lock-key-hl-color = neutral.yellow;
+
+        bs-hl-color = neutral.yellow;
+        caps-lock-bs-hl-color = neutral.yellow;
+
+        ring-color = bg;
+        ring-caps-lock-color = bg;
+
+        ring-clear-color = neutral.yellow;
+        ring-ver-color = neutral.blue;
+        ring-wrong-color = neutral.red;
+      });
+    in
+    pkgs.writeText "swaylock-config"
+      (concatStringsSep "\n" (mapAttrsToList fmt cfg));
 in
 mkIf cfg.enable {
   services.greetd = {
@@ -64,8 +122,6 @@ mkIf cfg.enable {
         grim
         kanshi
         slurp
-        swayidle
-        swaylock
         wl-clipboard
         ;
     };
@@ -101,10 +157,21 @@ mkIf cfg.enable {
   };
 
   systemd.user.services = {
+    swayidle = {
+      partOf = [ "sway-session.target" ];
+      wantedBy = [ "sway-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.swayidle}/bin/swayidle -w -C ${swayidleConfig}";
+        Slice = "session.slice";
+      };
+    };
+
     sway-session-unset-environment = {
       wantedBy = [ "sway-session-shutdown.target" ];
       after = [ "sway-session-exit.service" ];
       serviceConfig = {
+        Type = "oneshot";
         ExecStart = "systemctl --user unset-environment ${sessionVariables}";
       };
       unitConfig = {
@@ -118,6 +185,7 @@ mkIf cfg.enable {
       script = ''
         ${pkgs.sway}/bin/swaymsg exit || true
       '';
+      serviceConfig.Type = "oneshot";
       unitConfig = {
         RefuseManualStart = true;
         RefuseManualStop = true;
