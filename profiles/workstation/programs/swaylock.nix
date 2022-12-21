@@ -11,9 +11,9 @@ let
   ];
 in
 {
-  environment.etc."swaylock/config".text = format (with colours; rec {
+  environment.etc."xdg/swaylock/config".text = format (with colours; rec {
     key-hl-color = fg;
-    caps-lock-key-hl-color = ring-color;
+    caps-lock-key-hl-color = neutral.yellow;
 
     bs-hl-color = neutral.orange;
     caps-lock-bs-hl-color = bs-hl-color;
@@ -27,27 +27,27 @@ in
     disable-caps-lock-text = null;
 
     ring-color = bg;
-    ring-caps-lock-color = key-hl-color;
+    ring-caps-lock-color = bg;
     ring-clear-color = bs-hl-color;
     ring-ver-color = neutral.blue;
     ring-wrong-color = neutral.red;
 
     inside-color = "00000000";
     inside-caps-lock-color = inside-color;
-    inside-caps-ver-color = inside-color;
     inside-clear-color = inside-color;
+    inside-ver-color = inside-color;
     inside-wrong-color = inside-color;
 
     line-color = "00000000";
     line-caps-lock-color = line-color;
-    line-caps-ver-color = line-color;
     line-clear-color = line-color;
+    line-ver-color = line-color;
     line-wrong-color = line-color;
 
     text-color = "00000000";
     text-caps-lock-color = text-color;
-    text-caps-ver-color = text-color;
     text-clear-color = text-color;
+    text-ver-color = text-color;
     text-wrong-color = text-color;
   });
 }

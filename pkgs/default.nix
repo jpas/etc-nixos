@@ -25,6 +25,9 @@ let
       })
     ];
     mako = patchPackage prev.mako [ ./patches/mako-check-etc-xdg.patch ];
+    swayidle = patchPackage prev.swayidle [ ./patches/swayidle-check-etc-xdg.patch ];
+    swaylock = patchPackage prev.swaylock [ ./patches/swaylock-check-etc-xdg.patch ];
+    tofi = patchPackage prev.tofi [ ./patches/tofi-check-etc-xdg.patch ];
 
     kanidm = prev.kanidm.overrideAttrs (o: rec {
       name = "${o.pname}-${version}";

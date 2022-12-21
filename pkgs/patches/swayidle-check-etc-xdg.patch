@@ -1,0 +1,16 @@
+diff --git a/main.c b/main.c
+index 0c86f91..a3325c4 100644
+--- a/main.c
++++ b/main.c
+@@ -975,9 +975,10 @@ static int display_event(int fd, uint32_t mask, void *data) {
+ }
+ 
+ static char *get_config_path(void) {
+-	static char *config_paths[3] = {
++	static char *config_paths[] = {
+ 		"$XDG_CONFIG_HOME/swayidle/config",
+ 		"$HOME/.swayidle/config",
++		"/etc/xdg/swayidle/config",
+ 		SYSCONFDIR "/swayidle/config",
+ 	};
+ 

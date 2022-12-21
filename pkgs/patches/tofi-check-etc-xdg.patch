@@ -1,0 +1,59 @@
+diff --git a/src/config.c b/src/config.c
+index ab1e4e3..8c643fc 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -5,6 +5,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <strings.h>
++#include <wordexp.h>
+ #include "tofi.h"
+ #include "color.h"
+ #include "config.h"
+@@ -894,23 +895,31 @@ void config_fixup_values(struct tofi *tofi)
+ 	}
+ }
+ 
+-char *get_config_path()
+-{
+-	char *base_dir = getenv("XDG_CONFIG_HOME");
+-	char *ext = "";
+-	size_t len = strlen("/tofi/config") + 1;
+-	if (!base_dir) {
+-		base_dir = getenv("HOME");
+-		ext = "/.config";
+-		if (!base_dir) {
+-			log_error("Couldn't find XDG_CONFIG_HOME or HOME envvars\n");
+-			return NULL;
++char *get_config_path(void) {
++	static const char *config_paths[] = {
++		"$XDG_CONFIG_HOME/tofi/config",
++		"/etc/xdg/tofi/config",
++	};
++
++	char *config_home = getenv("XDG_CONFIG_HOME");
++	if (!config_home || config_home[0] == '\0') {
++		config_paths[0] = "$HOME/.config/tofi/config";
++	}
++
++	wordexp_t p;
++	char *path;
++	for (size_t i = 0; i < sizeof(config_paths) / sizeof(char *); ++i) {
++		if (wordexp(config_paths[i], &p, 0) == 0) {
++			path = strdup(p.we_wordv[0]);
++			wordfree(&p);
++			if (path && access(path, R_OK) == 0) {
++				return path;
++			}
++			free(path);
+ 		}
+ 	}
+-	len += strlen(base_dir) + strlen(ext) + 2;
+-	char *name = xcalloc(len, sizeof(*name));
+-	snprintf(name, len, "%s%s%s", base_dir, ext, "/tofi/config");
+-	return name;
++
++	return NULL;
+ }
+ 
+ bool parse_bool(const char *filename, size_t lineno, const char *str, bool *err)

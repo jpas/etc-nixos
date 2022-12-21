@@ -4,21 +4,9 @@ with lib;
 
 let
   colours = config.hole.colours;
-
-  wrapper = pkgs.writeShellScriptBin "tofi-wrapper" ''
-    exec "${pkgs.tofi}/bin/$(basename "$0")" --include /etc/xdg/tofi/config
-  '';
 in
 {
-  environment.systemPackages = [
-    (pkgs.symlinkJoin {
-      name = "tofi";
-      paths = [ pkgs.tofi wrapper ];
-      postBuild = ''
-        mv $out/bin/tofi-wrapper $out/bin/tofi
-      '';
-    })
-  ];
+  environment.systemPackages = [ pkgs.tofi ];
 
   environment.etc."xdg/tofi/config".text = with colours; ''
     font = monospace
