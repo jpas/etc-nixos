@@ -10,7 +10,6 @@ with lib;
     ./boot.nix
     ./colours.nix
     ./flakes.nix
-    ./home-manager.nix
     ./kanidm.nix
     ./neovim.nix
     ./networking

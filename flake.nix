@@ -13,17 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "utils";
     };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "utils";
-    };
   };
 
   outputs = { self, nixpkgs, utils, ... } @ inputs:
     let
-      inherit (inputs) deploy-rs home-manager;
+      inherit (inputs) deploy-rs;
       inherit (nixpkgs) lib;
 
       eachDefaultSystem = f: utils.lib.eachDefaultSystem
@@ -113,10 +107,7 @@
             });
       };
 
-      hmModules = let modules = import ./modules/home; in
-        modules // { default = { imports = attrValues modules; }; };
-
-      nixosModules = let modules = import ./modules/nixos; in
+      nixosModules = let modules = import ./modules; in
         modules // { default = { imports = attrValues modules; }; };
 
       checks = flip mapAttrs deploy-rs.lib

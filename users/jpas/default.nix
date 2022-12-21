@@ -7,8 +7,6 @@ let
   email = "jarrod@jarrodpas.com";
 in
 {
-  imports = [ ./email.nix ];
-
   programs.git.enable = true;
   programs.git = {
     userName = name;

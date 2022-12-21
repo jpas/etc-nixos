@@ -10,9 +10,6 @@ let
     users.users."${name}" = flip recursiveUpdate user {
       passwordFile = config.age.secrets."passwd-${name}".path;
     };
-
-    home-manager.users."${name}" =
-      let path = ./. + "/${name}/default.nix"; in mkIf (pathExists path) (import path);
   };
 
   mkUsers = users: mkMerge (mapAttrsToList mkUser users);
