@@ -16,8 +16,8 @@ in
 
     outline-width = 0
     border-width = 0
-    padding-top = 2
-    padding-bottom = 2
+    padding-top = 3
+    padding-bottom = 1
     padding-left = 4
     padding-right = 4
 
@@ -31,7 +31,7 @@ in
     text-color = ${fg}
     background-color = ${bg}
 
-    selection-color = ${fg}
-    selection-background = ${bg2}
+    selection-color = ${bright.aqua}
+    selection-background = ${bg}
   '';
 }

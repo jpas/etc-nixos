@@ -9,6 +9,10 @@ with lib;
       inherit (pkgs.qt5) qtwayland;
     };
 
+    include."50-xcursor-theme.conf" = ''
+      seat * xcursor_theme Adwaita
+    '';
+
     extraSessionCommands = mkBefore ''
       export GTK_THEME=Adwaita-dark
       export QT_QPA_PLATFORM=wayland-egl

@@ -14,9 +14,7 @@ in
   options.programs.sway = {
     settings = mkOption {
       type = types.lines;
-      default = ''
-        include /etc/sway/config.d/*.conf
-      '';
+      default = "";
     };
 
     include = mkOption {
@@ -29,5 +27,9 @@ in
     environment.etc = includeFiles // {
       "sway/config".text = cfg.settings;
     };
+
+    programs.sway.settings = mkBefore ''
+      include /etc/sway/config.d/*.conf
+    '';
   };
 }

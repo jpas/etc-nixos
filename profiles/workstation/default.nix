@@ -5,7 +5,6 @@ with lib;
 {
   imports = [
     ../base
-    ./home-manager.nix
     ./programs
     ./sound.nix
     ./sway-session.nix
