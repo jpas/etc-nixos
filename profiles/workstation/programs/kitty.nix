@@ -12,11 +12,11 @@ in
     font_family monospace
     font_size 10.0
 
-    placement_strategy center
-
-    remember_window_size no
-    initial_window_width 800
     initial_window_height 600
+    initial_window_width 800
+    placement_strategy center
+    remember_window_size no
+    scrollback_fill_enlarged_window yes
 
     cursor none
 
