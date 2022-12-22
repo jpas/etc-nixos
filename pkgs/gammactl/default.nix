@@ -12,4 +12,8 @@ substituteAll {
   isExecutable = true;
 
   inherit systemd;
+
+  meta = with lib; {
+    platforms = platforms.linux;
+  };
 }

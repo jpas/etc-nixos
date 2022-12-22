@@ -43,5 +43,7 @@ rustPlatform.buildRustPackage rec {
     cp -r ../${pname}-app/release/x86_64/pkg $out/app
   '';
 
-  meta = with lib; { };
+  meta = with lib; {
+    platforms = platforms.linux;
+  };
 }

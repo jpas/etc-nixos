@@ -24,5 +24,7 @@ rustPlatform.buildRustPackage rec {
     install -t $out/etc -Dm644 extra/config.toml
   '';
 
-  meta = with lib; { };
+  meta = with lib; {
+    platforms = platforms.linux;
+  };
 }
