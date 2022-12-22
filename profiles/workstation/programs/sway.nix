@@ -51,12 +51,13 @@ let
 in
 {
   programs.sway.settings = ''
+    # see `man 5 sway` for specifics
+
     set {
       $mod Mod4
       $font pango:monospace 10
       $terminal kitty
     }
-
 
     input type:keyboard xkb_options caps:escape
     input type:touchpad tap enabled
@@ -75,12 +76,17 @@ in
     workspace_auto_back_and_forth yes
 
     bindsym {
-      $mod+Return exec $terminal
+      $mod+Return      exec $terminal
+      $mod+d           exec "tofi-run | xargs --no-run-if-empty -- swaymsg exec --"
+
+      $mod+Print       exec grimshot copy area
+      $mod+Shift+Print exec grimshot save area
 
       $mod+Shift+c reload
       $mod+Shift+q kill
 
-      $mod+space focus mode_toggle
+      $mod+f           fullscreen toggle
+      $mod+space       focus mode_toggle
       $mod+Shift+space floating toggle
 
       $mod+a focus parent
@@ -129,15 +135,10 @@ in
       $mod+minus scratchpad show
       $mod+Shift+minus move scratchpad
 
-      $mod+d exec "tofi-run | xargs swaymsg exec --"
-
-      $mod+e layout toggle split
-      $mod+t layout toggle split tabbed stacking
-      $mod+f fullscreen toggle
-      $mod+b splitt
-
-      $mod+Print       exec grimshot copy area
-      $mod+Shift+Print exec grimshot save area
+      $mod+e       layout toggle split
+      $mod+t       layout toggle split tabbed stacking
+      $mod+Shift+t layout toggle stacking tabbed split
+      $mod+b       splitt
     }
 
     bindsym --locked {
@@ -156,19 +157,20 @@ in
       XF86MonBrightnessUp   exec brightnessctl set 5%+
     }
 
-    set $exit_menu "[e]xit [l]ock [s]uspend [r]eboot [p]oweroff"
+    set $exit_menu "[l]ock [s]uspend [e]xit [r]eboot [p]oweroff"
 
     bindsym $mod+Escape \
       bar main colors binding_mode $bg $bg $bright_orange, \
       mode $exit_menu
 
-    mode $exit_menu {
-      bindsym e      exec systemctl start sway-session-exit.target
-      bindsym l      exec loginctl lock-session
-      bindsym s      exec systemctl suspend --full
-      bindsym r      exec systemctl reboot --full
-      bindsym p      exec systemctl poweroff --full
-      bindsym Escape mode default
+    mode $exit_menu bindsym {
+      l           exec loginctl lock-session, mode default
+      s           exec systemctl suspend --full, mode default
+      e           exec systemctl start sway-session-exit.target, mode default
+      r           exec systemctl reboot --full, mode default
+      p           exec systemctl poweroff --full, mode default
+      Escape      mode default
+      $mod+Escape mode default
     }
 
     bindsym --locked $mod+Escape exec systemctl suspend --full
