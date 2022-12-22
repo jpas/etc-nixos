@@ -206,7 +206,7 @@ in
       binding_mode       $bg         $bg         $fg
     }
 
-    exec busctl --user -- set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 5000
+    exec_always gammactl set temperature 5000
 
     for_window [title="."] inhibit_idle fullscreen
     for_window [shell=xwayland"] title_format "[x11] %title%"

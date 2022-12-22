@@ -13,7 +13,7 @@ let
   '';
 in
 {
-  environment.systemPackages = [ package ];
+  environment.systemPackages = [ package pkgs.gammactl ];
   services.dbus.packages = [ dbus-service ];
 
   systemd.user.services.wl-gammarelay-rs = {
