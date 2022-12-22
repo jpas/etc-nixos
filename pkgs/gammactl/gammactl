@@ -1,0 +1,86 @@
+#! @shell@
+
+set -euo pipefail
+
+_busctl() {
+  op=$1
+  shift
+  @systemd@/bin/busctl \
+    --user --json=short -- "$op" rs.wl-gammarelay / rs.wl.gammarelay "$@"
+}
+
+bus-get() {
+  _busctl get-property "$1" | jq '.data'
+}
+
+bus-set() {
+  declare -I -A signature=(
+    [Temperature]=q
+    [Brightness]=d
+    [Gamma]=d
+    [Inverted]=b
+  )
+  _busctl set-property "$1" "${signature[$1]}" "$2"
+}
+
+bus-call() {
+  declare -I -A signature=(
+    [UpdateTemperature]=n
+    [UpdateBrightness]=d
+    [UpdateGamma]=d
+  )
+  _busctl call "$1" "${signature[$1]}" "$2"
+}
+
+_property() {
+  case "$1" in
+    t|temperature) echo Temperature ;;
+    g|gamma)       echo Gamma ;;
+    b|brightness)  echo Brightness ;;
+    i|inverted)    echo Inverted ;;
+    *)             return 1
+  esac
+}
+
+cmd-get() {
+  bus-get $(_property "$1")
+}
+
+cmd-set() {
+  local property=$(_property "$1")
+  local value=$2
+
+  case "$value" in
+    -*|+*) bus-call "Update$property" "$value" ;;
+    *)     bus-set  "$property" "$value" ;;
+  esac
+}
+
+cmd-invert() {
+  if [[ "$(bus-get Inverted)" == "true" ]]; then
+    bus-set Gamma 1
+    bus-set Inverted false
+  else
+    bus-set Gamma 0.6
+    bus-set Inverted true
+  fi
+}
+
+cmd-reset() {
+  @systemd@/bin/systemctl \
+    --user --quiet restart wl-gammarelay-rs.service
+}
+
+main() {
+  local cmd=$1
+  shift
+  case "$cmd" in
+    g|get)    cmd-get "$@" ;;
+    s|set)    cmd-set "$@" ;;
+    i|invert) cmd-invert   ;;
+    r|reset)  cmd-reset    ;;
+    *)        exit 1    ;;
+  esac
+}
+
+main "$@"

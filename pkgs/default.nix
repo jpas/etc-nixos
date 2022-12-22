@@ -10,6 +10,7 @@ let
     authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
+    gammactl = callPackage ./gammactl { };
     lemurs = callPackage ./lemurs { };
     lldap = callPackage ./lldap { };
     oauth2ms = callPackage ./oauth2ms { };
