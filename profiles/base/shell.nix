@@ -68,8 +68,11 @@ with lib;
     htop = {
       enable = mkDefault true;
       settings = {
+        tree_view = true;
+        show_program_path = false;
         hide_kernel_threads = true;
         hide_userland_threads = true;
+        show_cpu_frequency = true;
       };
     };
 
