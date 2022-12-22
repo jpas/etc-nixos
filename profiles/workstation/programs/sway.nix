@@ -209,7 +209,7 @@ in
     exec_always gammactl set temperature 5000
 
     for_window [title="."] inhibit_idle fullscreen
-    for_window [shell=xwayland"] title_format "[x11] %title%"
+    for_window [shell="xwayland"] title_format "[x11] %title%"
     for_window [app_id="Signal"] border pixel, move scratchpad, scratchpad show
   '';
 
