@@ -164,11 +164,11 @@ in
       mode $exit_menu
 
     mode $exit_menu bindsym {
-      l           exec loginctl lock-session, mode default
-      s           exec systemctl suspend --full, mode default
-      e           exec systemctl start sway-session-exit.target, mode default
-      r           exec systemctl reboot --full, mode default
-      p           exec systemctl poweroff --full, mode default
+      e           mode default, exec sway-logout
+      l           mode default, exec loginctl lock-session
+      p           mode default, exec systemctl poweroff --full
+      r           mode default, exec systemctl reboot --full
+      s           mode default, exec systemctl suspend --full
       Escape      mode default
       $mod+Escape mode default
     }

@@ -16,7 +16,7 @@ let
   sway-session = pkgs.symlinkJoin {
     name = "sway-session";
     paths = mapAttrsToList pkgs.writeShellScriptBin {
-      sway-launch = ''
+      sway-login = ''
         if systemctl --user --quiet is-active sway-session.target; then
           echo "sway is already running, refusing to start." 1>&2
           exit 1
@@ -24,7 +24,7 @@ let
         exec systemd-cat --identifier=sway sway "$@"
       '';
       sway-logout = ''
-        systemctl --user start sway-session-shutdown.target
+        systemctl --user start sway-logout.target
       '';
     };
   };
@@ -35,7 +35,7 @@ mkIf config.programs.sway.enable {
     vt = 2;
     settings = {
       default_session = {
-        command = "${config.services.greetd.package}/bin/agreety --cmd sway-launch";
+        command = "${config.services.greetd.package}/bin/agreety --cmd sway-login";
       };
     };
   };
@@ -79,7 +79,7 @@ mkIf config.programs.sway.enable {
       after = [ "graphical-session-pre.target" ];
     };
 
-    sway-session-shutdown = {
+    sway-logout = {
       conflicts = [ "graphical-session.target" "graphical-session-pre.target" "sway-session.target" ];
       after = [ "graphical-session.target" "graphical-session-pre.target" "sway-session.target" ];
       unitConfig = {
@@ -89,25 +89,16 @@ mkIf config.programs.sway.enable {
   };
 
   systemd.user.services = {
-    sway-session-unset-environment = {
-      wantedBy = [ "sway-session-shutdown.target" ];
-      after = [ "sway-session-exit.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "systemctl --user unset-environment ${sessionVariables}";
-      };
-      unitConfig = {
-        RefuseManualStart = true;
-        RefuseManualStop = true;
-      };
-    };
-
-    sway-session-exit = {
-      wantedBy = [ "sway-session-shutdown.target" ];
+    sway-exit = {
+      wantedBy = [ "sway-logout.target" ];
+      after = [ "sway-logout.target" ];
       script = ''
         ${pkgs.sway}/bin/swaymsg exit || true
+        systemctl --user unset-environment ${sessionVariables}
       '';
-      serviceConfig.Type = "oneshot";
+      serviceConfig = {
+        Type = "oneshot";
+      };
       unitConfig = {
         RefuseManualStart = true;
         RefuseManualStop = true;
