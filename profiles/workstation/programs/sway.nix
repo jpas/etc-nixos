@@ -138,7 +138,7 @@ in
       $mod+e       layout toggle split
       $mod+t       layout toggle split tabbed stacking
       $mod+Shift+t layout toggle stacking tabbed split
-      $mod+b       splitt
+      $mod+v       splitt
     }
 
     bindsym --locked {
