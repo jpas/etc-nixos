@@ -226,6 +226,9 @@ in
       tofi
       wl-clipboard
       ;
+    inherit (pkgs.sway-contrib)
+      grimshot
+      ;
   };
 
   environment.etc."xdg/i3blocks/config".text = ''
