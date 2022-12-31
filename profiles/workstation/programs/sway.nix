@@ -70,7 +70,9 @@ in
 
     focus_wrapping no
     focus_follows_mouse no
-    focus_on_window_activation none
+
+    focus_on_window_activation urgent
+    urgent deny
 
     workspace_layout default
     workspace_auto_back_and_forth yes
@@ -190,23 +192,22 @@ in
     default_floating_border normal 2
 
     client.background        $bg
-    client.focused           $bg3        $bg3 $fg  $bright_aqua  $bg3
-    client.focused_inactive  $bg2        $bg2 $fg1 $neutral_aqua $bg2
-    client.unfocused         $bg1        $bg1 $fg2 $neutral_aqua $bg1
-    client.urgent            $bright_red $bg2 $fg1 $neutral_red  $bright_red
+    client.focused           $bg3 $bg3 $fg  $neutral_aqua
+    client.focused_inactive  $bg1 $bg1 $fg4 $bg1
+    client.unfocused         $bg1 $bg1 $fg4 $bg1
+    client.urgent            $fg4 $fg4 $bg1 $fg4
+
 
     bar main colors {
       background         $bg
       statusline         $fg
       separator          $gray
-      focused_workspace  $bg3        $bg3        $fg
-      active_workspace   $bg2        $bg2        $fg2
-      inactive_workspace $bg1        $bg1        $fg1
-      urgent_workspace   $bright_red $bright_red $fg
-      binding_mode       $bg         $bg         $fg
+      focused_workspace  $bg3 $bg3 $fg
+      active_workspace   $bg2 $bg2 $fg1
+      inactive_workspace $bg1 $bg1 $fg4
+      urgent_workspace   $fg4 $fg4 $bg1
+      binding_mode       $bg  $bg  $fg
     }
-
-    exec_always gammactl set temperature 5000
 
     for_window [title="."] inhibit_idle fullscreen
     for_window [shell="xwayland"] title_format "[x11] %title"

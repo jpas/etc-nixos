@@ -28,8 +28,10 @@ in
       "sway/config".text = cfg.settings;
     };
 
-    programs.sway.settings = mkBefore ''
-      include /etc/sway/config.d/*.conf
-    '';
+    programs.sway.settings = mkMerge [
+      (mkAfter ''
+        include /etc/sway/config.d/*.conf
+      '')
+    ];
   };
 }
