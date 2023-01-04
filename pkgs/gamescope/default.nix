@@ -19,13 +19,13 @@
 
 stdenv.mkDerivation rec {
   pname = "gamescope";
-  version = "3.11.28-beta4";
+  version = "3.11.48.1";
 
   src = fetchFromGitHub {
     owner = "Plagman";
     repo = "gamescope";
     rev = version;
-    sha256 = "sha256-Yj5KdENAG6zstDMa5BkuqO2ykb8RO03ysEzoTaNxS9g=";
+    sha256 = "sha256-QRPMAVExk7f3pgI9PGjK+o/BQzyqNtjBKiZ794Oqg08=";
     fetchSubmodules = true;
   };
 
