@@ -72,7 +72,9 @@ in
     focus_follows_mouse no
 
     focus_on_window_activation urgent
-    urgent deny
+
+    # TODO: does not work on sway 1.8 for some reason
+    # urgent deny
 
     workspace_layout default
     workspace_auto_back_and_forth yes
