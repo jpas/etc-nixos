@@ -22,7 +22,7 @@ with lib;
     };
     naze = {
       extraHostNames = [ "naze.o" "naze.lo" "naze.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJONWNtp0yjroR9LRJzEiUj6eWMmFiJ0MHTveY8j/a5M";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcO1mSZNIY7N+Or+uRxKjr4TzStWYu7AsrALe3SZ4Jb";
     };
     shiro = {
       extraHostNames = [ "shiro.o" "shiro.lo" "shiro.o.pas.sh" ];

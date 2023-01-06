@@ -26,7 +26,7 @@ mkUsers {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP+fz+lNCysrW7pTGGq72oVgF7HLF9cnUvPHTYJtmOxG jpas@doko"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXyVMHbf69zSybXTmyQc/CHjx7j56O/VAl7N/KsMREw jpas@kuro"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKSqcfQPLEL2lpRxtvVTc6U2Xyyw0b9wpt3nQKr2t7Wi jpas@naze"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWZotrVIetC9LgY/KNLteRW/W3noG8+q3ckTyCBwnWE jpas@naze"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID74U4vsKLLwJdb050bv0YzvJ8VYgAkF3kkTmkCOJxvQ jpas@shiro"
     ];
   };
