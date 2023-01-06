@@ -14,7 +14,7 @@ with lib;
   systemd.network.wait-online.enable = mkDefault false;
 
   systemd.network.links."98-default" = {
-    matchConfig.Name = "*";
+    matchConfig.OriginalName = "*";
     linkConfig = {
       NamePolicy = "keep kernel database onboard slot path mac";
       AlternativeNamesPolicy = "database onboard slot path mac";
