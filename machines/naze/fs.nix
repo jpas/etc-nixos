@@ -1,16 +1,32 @@
+{ lib
+, ...
+}:
+
+with lib;
+
+let
+  tank = subvol: cfg: recursiveUpdate cfg {
+    device = "/dev/mapper/tank";
+    fsType = "btrfs";
+    options = [ "subvol=${subvol}" ] ++ (cfg.options or []);
+  };
+in
 {
-  boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/c9561805-9e61-4e00-956e-f3a98c74c4bf";
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/f0b6e9bc-a690-4cc0-96bc-0dab61556e5e";
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
+  boot.initrd.luks.devices."tank" = {
+    device = "/dev/disk/by-partlabel/tank";
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/f0b6e9bc-a690-4cc0-96bc-0dab61556e5e";
-    fsType = "btrfs";
-    options = [ "subvol=@nix" ];
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-partlabel/boot";
+    fsType = "vfat";
   };
+
+  fileSystems."/" = tank "/root" { options = [ "compress=zstd" ]; };
+  fileSystems."/nix" = tank "/nix" { options = [ "noatime" ]; };
+
+  fileSystems."/home" = tank "/home" { };
+  fileSystems."/srv" = tank "/srv" { };
+  fileSystems."/var" = tank "/var" { };
+  fileSystems."/var/tmp" = tank "/tmp" { };
 }
 
