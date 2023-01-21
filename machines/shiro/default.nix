@@ -5,22 +5,17 @@ with lib;
 {
   networking.hostName = "shiro";
 
-  hole.use.intel-cpu = true;
-
   imports = [
+    ../../profiles/archetype/games
+    ../../profiles/archetype/workstation
+    ../../profiles/hardware/bluetooth.nix
+    ../../profiles/hardware/gpu-amd.nix
+    ../../profiles/hardware/keyboard-keychron-k3.nix
+    ../../profiles/hardware/mouse-logitech-mx-master-3.nix
     ../common
-    ../hardware/keychron-k3.nix
-    ../hardware/logitech-mx-master-3.nix
-    ../hardware/amd-gpu.nix
-    ../hardware/intel-cpu.nix
-    ./hardware.nix
     ./fs.nix
+    ./hardware.nix
   ];
-
-  programs.sway.enable = true;
-  programs.steam.enable = true;
-
-  hardware.bluetooth.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [

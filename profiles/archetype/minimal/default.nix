@@ -4,14 +4,12 @@ with lib;
 
 {
   imports = [
-    ../../users
+    ../../../users
+    ../../programs/neovim.nix
     ./agenix.nix
-    ./bluetooth.nix
     ./boot.nix
     ./colours.nix
     ./flakes.nix
-    ./kanidm.nix
-    ./neovim.nix
     ./networking
     ./nfs.nix
     ./nix.nix

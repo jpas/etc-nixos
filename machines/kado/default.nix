@@ -3,9 +3,8 @@
 {
   networking.hostName = "kado";
 
-  hole.use.intel-cpu = true;
-
   imports = [
+    ../../profiles/archetype/minimal
     ../common
     ./fs.nix
     ./hardware.nix

@@ -1,24 +1,20 @@
 {
   networking.hostName = "kuro";
 
-  hole.use.intel-cpu = true;
-
   imports = [
+    ../../profiles/archetype/laptop
+    ../../profiles/hardware/gpu-intel.nix
+    ../../profiles/hardware/keyboard-keychron-k3.nix
+    ../../profiles/hardware/laptop-dell-xps-13-9300.nix
+    ../../profiles/hardware/mouse-logitech-mx-master-3.nix
     ../common
-    ../hardware/dell-u2720q.nix
-    ../hardware/dell-xps-13-9300.nix
-    ../hardware/keychron-k3.nix
-    ../hardware/logitech-mx-master-3.nix
-    ./hardware.nix
     ./fs.nix
-    ./pipewire-acp-paths.nix
+    ./hardware.nix
   ];
 
   boot.kernel.sysctl = {
     "dev.i915.perf_stream_paranoid" = 0;
   };
-
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   systemd.tmpfiles.rules = [
     # Allow usb devices to wake from sleep.

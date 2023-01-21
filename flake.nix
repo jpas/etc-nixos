@@ -20,6 +20,7 @@
       inherit (inputs) deploy-rs;
       inherit (nixpkgs) lib;
 
+
       eachDefaultSystem = f: utils.lib.eachDefaultSystem
         (system: f system (import nixpkgs {
           inherit system;
@@ -30,6 +31,7 @@
         inherit system;
         modules = map import profiles;
         specialArgs = {
+          meta = builtins.fromTOML (builtins.readFile ./meta.toml);
           flakes = self.inputs // { inherit self; };
         };
       };
@@ -53,42 +55,27 @@
       nixosConfigurations = {
         naze = mkSystem {
           system = "x86_64-linux";
-          profiles = [
-            ./machines/naze
-            ./profiles/workstation
-          ];
+          profiles = [ ./machines/naze ];
         };
 
         shiro = mkSystem {
           system = "x86_64-linux";
-          profiles = [
-            ./machines/shiro
-            ./profiles/workstation
-          ];
+          profiles = [ ./machines/shiro ];
         };
 
         kuro = mkSystem {
           system = "x86_64-linux";
-          profiles = [
-            ./machines/kuro
-            ./profiles/laptop
-          ];
+          profiles = [ ./machines/kuro ];
         };
 
         kado = mkSystem {
           system = "x86_64-linux";
-          profiles = [
-            ./machines/kado
-            ./profiles/base
-          ];
+          profiles = [ ./machines/kado ];
         };
 
         doko = mkSystem {
           system = "x86_64-linux";
-          profiles = [
-            ./machines/doko
-            ./profiles/base
-          ];
+          profiles = [ ./machines/doko ];
         };
       };
 

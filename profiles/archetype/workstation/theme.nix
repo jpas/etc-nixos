@@ -3,6 +3,8 @@
 with lib;
 
 {
+  # TODO: fix gtk file chooser using light theme for xwayland clients
+
   programs.sway = {
     extraPackages = attrValues {
       inherit (pkgs.gnome3) adwaita-icon-theme gnome-themes-extra;

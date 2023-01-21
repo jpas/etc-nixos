@@ -1,11 +1,11 @@
-{ lib, config, ... }:
+{ lib, meta, config, ... }:
 
 with lib;
 
+let
+in
 {
-  imports = [
-    ./aleph.nix
-  ];
+  imports = [ ./aleph.nix ];
 
   programs.ssh.knownHosts = {
     doko = {

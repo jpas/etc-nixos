@@ -5,23 +5,19 @@ with lib;
 {
   networking.hostName = "naze";
 
-  hole.use.amd-cpu = true;
-
   imports = [
+    ../../profiles/archetype/builder
+    ../../profiles/archetype/games
+    ../../profiles/archetype/workstation
+    ../../profiles/hardware/bluetooth.nix
+    ../../profiles/hardware/gpu-amd.nix
+    ../../profiles/hardware/keyboard-keychron-k3.nix
+    ../../profiles/hardware/mouse-logitech-mx-master-3.nix
+    ../../profiles/hardware/wifi.nix
     ../common
-    ../hardware/keychron-k3.nix
-    ../hardware/logitech-mx-master-3.nix
-    ../hardware/amd-gpu.nix
-    ./hardware.nix
     ./fs.nix
+    ./hardware.nix
   ];
-
-  programs.sway.enable = true;
-  programs.steam.enable = true;
-
-  hardware.bluetooth.enable = true;
-
-  networking.wireless.iwd.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [

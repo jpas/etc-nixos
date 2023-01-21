@@ -4,9 +4,19 @@ with lib;
 
 {
   imports = [
-    ../base
-    ./programs
-    ./sound.nix
+    ../../hardware/sound.nix
+    ../../programs/firefox.nix
+    ../../programs/imv.nix
+    ../../programs/kitty.nix
+    ../../programs/mako.nix
+    ../../programs/steam.nix
+    ../../programs/sway.nix
+    ../../programs/swayidle.nix
+    ../../programs/swaylock.nix
+    ../../programs/tofi.nix
+    ../../programs/wl-gammarelay-rs.nix
+    ../../programs/zathura.nix
+    ../minimal
     ./sway-session.nix
     ./theme.nix
     ./xdg.nix

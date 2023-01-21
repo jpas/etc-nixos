@@ -2,10 +2,10 @@
 
 with lib;
 
-mkIf config.networking.wireless.iwd.enable {
-  environment.systemPackages = [ pkgs.iw ];
+{
+  networking.wireless.iwd.enable = mkDefault true;
 
-  networking.wireless.enable = false;
+  networking.wireless.enable = mkDefault false;
   networking.wireless.iwd.settings = {
     General = {
       EnableNetworkConfiguration = true;
@@ -28,5 +28,6 @@ mkIf config.networking.wireless.iwd.enable {
     matchConfig.Type = "wlan";
     linkConfig.Unmanaged = true;
   };
-}
 
+  environment.systemPackages = [ pkgs.iw ];
+}

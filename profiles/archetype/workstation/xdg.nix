@@ -7,6 +7,15 @@ with lib;
     inherit (pkgs) xdg-user-dirs xdg-utils;
   };
 
+  environment.sessionVariables = {
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_CACHE_HOME = "$HOME/.cache";
+  };
+
+  environment.localBinInPath = true;
+
   environment.etc."xdg/user-dirs.defaults".text = ''
     DESKTOP=system/desktop
     DOWNLOAD=downloads
@@ -24,6 +33,7 @@ with lib;
 
   systemd.user.services = {
     xdg-user-dirs-update = {
+      before = [ "default.target" ];
       wantedBy = [ "default.target" ];
       serviceConfig = {
         Type = "oneshot";

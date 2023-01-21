@@ -6,10 +6,10 @@ with lib;
   networking.hostName = "beri";
   nixpkgs.system = "aarch64-linux";
 
-  imports = [ ../common ];
-
-  hole.use.arm-cpu = true;
-  hole.use.minimal = true;
+  imports = [ 
+    ../../profiles/archetype/minimal
+    ../common
+  ];
 
   fileSystems = {
     "/" = {

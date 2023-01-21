@@ -5,10 +5,11 @@ with lib;
 let
   cfg = config.programs.steam;
 in
-mkIf cfg.enable {
-  environment.systemPackages = [ pkgs.steam-run ];
-
+{
   programs.steam.remotePlay.openFirewall = true;
+  programs.steam.enable = true;
+
+  environment.systemPackages = [ pkgs.steam-run ];
 
   programs.sway.include."50-steam.conf" = ''
     for_window [class="Steam"] floating enable, border none

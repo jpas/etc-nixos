@@ -2,13 +2,35 @@
 
 with lib;
 
+let
+  # the default priorities put the speakers above headphones
+  acp-paths = pkgs.runCommand "acp-paths" { } ''
+    mkdir -p $out
+    for f in ${pkgs.pipewire.lib}/share/alsa-card-profile/mixer/paths/*; do
+      ln -s $f $out/
+    done
+
+    ${concatStringsSep "\n" (mapAttrsToList
+      (name: priority: ''
+        f=$out/${name}.conf
+        cp --remove-destination "$(readlink "$f")" "$f"
+        sed -i 's/^priority = [0-9]*/priority = ${toString priority}/' "$f"
+      '')
+      {
+        analog-input-internal-mic = 79;
+        analog-input-internal-mic-always = 79;
+        analog-output-speaker = 80;
+        analog-output-speaker-always = 80;
+      }
+    )}
+  '';
+in
 {
   imports = [
-    ./intel-cpu.nix
-    ./intel-gpu.nix
+    ./gpu-intel.nix
+    ./sound.nix
+    ./thunderbolt.nix
   ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
 
   # Disables i2c_hid because it makes tons of IRQ/s when touchpad is used,
   # draining battery and wasting cycles as it is unused.
@@ -20,28 +42,19 @@ with lib;
     options dell-smm-hwmon ignore_dmi=1
   '';
 
-  powerManagement.cpuFreqGovernor = "powersave";
-
   # Needed for wifi and bluetooth to work
   hardware.enableRedistributableFirmware = mkDefault true;
 
-  hardware.video.hidpi.enable = mkDefault true;
-
   services.fwupd.enable = mkDefault true;
 
-  services.hardware.bolt.enable = mkDefault true;
-
   services.pipewire = {
+    # TODO: port this to wireplumber
     media-session.config = {
       v4l2-monitor.rules = [
         {
           matches = [
-            {
-              "node.name" = "~v4l2_input.*";
-            }
-            {
-              "node.name" = "~v4l2_output.*";
-            }
+            { "node.name" = "~v4l2_input.*"; }
+            { "node.name" = "~v4l2_output.*"; }
           ];
           actions.update-props = {
             "node.pause-on-idle" = false;
@@ -49,9 +62,7 @@ with lib;
         }
         {
           matches = [
-            {
-              "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.0";
-            }
+            { "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.0"; }
           ];
           actions.update-props = {
             "node.description" = "Integrated Webcam";
@@ -59,9 +70,7 @@ with lib;
         }
         {
           matches = [
-            {
-              "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.2";
-            }
+            { "node.name" = "v4l2_input.pci-0000_00_14.0-usb-0_9_1.2"; }
           ];
           actions.update-props = {
             "node.description" = "Integrated Webcam - IR";
@@ -88,11 +97,13 @@ with lib;
     };
   };
 
-  services.tlp.settings = {
-    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+  systemd.user.services = {
+    pipewire-media-session.environment = {
+      ACP_PATHS_DIR = "${acp-paths}";
+    };
 
-    CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
-    CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+    wireplumber.environment = {
+      ACP_PATHS_DIR = "${acp-paths}";
+    };
   };
 }

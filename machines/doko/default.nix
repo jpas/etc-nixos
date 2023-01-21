@@ -2,11 +2,10 @@
 
 {
   networking.hostName = "doko";
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  hole.use.intel-cpu = true;
 
   imports = [
+    ../../profiles/archetype/builder
+    ../../profiles/archetype/minimal
     ../common
     ./acme.nix
     ./authelia.nix

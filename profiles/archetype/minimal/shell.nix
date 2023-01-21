@@ -3,15 +3,6 @@
 with lib;
 
 {
-  environment.sessionVariables = {
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_STATE_HOME = "$HOME/.local/state";
-    XDG_CACHE_HOME = "$HOME/.cache";
-  };
-
-  environment.localBinInPath = true;
-
   environment.etc.inputrc.text = ''
     ${builtins.readFile "${flakes.nixpkgs.outPath}/nixos/modules/programs/bash/inputrc"}
     # inputrc from configuration.nix
@@ -61,7 +52,7 @@ with lib;
       '';
 
       promptInit = ''
-        ${readFile ./shell-prompt-init.bash}
+        ${readFile ./shell-prompt.bash}
       '';
     };
 

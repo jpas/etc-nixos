@@ -1,0 +1,60 @@
+[users.jpas]
+groups = [ 'wheel' ]
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXyVMHbf69zSybXTmyQc/CHjx7j56O/VAl7N/KsMREw", # jpas@kuro
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID74U4vsKLLwJdb050bv0YzvJ8VYgAkF3kkTmkCOJxvQ", # jpas@shiro
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWZotrVIetC9LgY/KNLteRW/W3noG8+q3ckTyCBwnWE", # jpas@naze
+]
+
+[users.kbell]
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYMB+DlGQKxZe0lMCQmYU4yGKHXoNNE9hpGk3NkvyKu", # kbell@shiro
+]
+
+[machines.beri]
+net.ts.ipv4 = "100.104.46.24"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6268:2e18"
+
+[machines.doko]
+net.lo.ipv4 = "10.39.0.254"
+net.ts.ipv4 = "100.68.33.127"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6244:217f"
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIDAF9OYkf42d6VB21Md3iP+VaSN0C1lijNoYfpGV9m",
+]
+
+[machines.kado]
+net.lo.ipv4 = "10.39.0.20"
+net.ts.ipv4 = "100.65.152.104"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6241:9868"
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQhgPYR01kB+Vql3cH2pXPeUCW9sXhiQltX5Gfpwfdo",
+]
+
+[machines.kuro]
+net.lo.ipv4 = "10.39.0.50"
+net.ts.ipv4 = "100.116.4.62"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6274:43e"
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWAg8IMKXHkRkGLmhFH4eWfVtS1qbhHP2Vd3B53JtGL",
+]
+
+[machines.naze]
+net.lo.ipv4 = "10.39.0.52"
+net.ts.ipv4 = "100.97.5.124"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6261:57c"
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcO1mSZNIY7N+Or+uRxKjr4TzStWYu7AsrALe3SZ4Jb",
+]
+
+[machines.shiro]
+net.lo.ipv4 = "10.39.0.51"
+net.ts.ipv4 = "100.69.65.63"
+net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6245:413f"
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0",
+]
+
+[net]
+lo.domains = [ "l", "l.pas.sh" ]
+ts.domains = [ "o", "o.pas.sh" ]
