@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, meta, ... }:
 
 with lib;
 
@@ -6,6 +6,12 @@ let
   quoted = s: "\"${s}\"";
 
   cfg = config.systemd.network;
+
+  forMachinesIn = net: f:
+    pipe meta.machines [
+      (filterAttrs (_: hasAttrByPath [ "net" net ]))
+      (mapAttrs f)
+    ];
 
   dns = [
     "1.1.1.1#cloudflare-dns.com"
@@ -20,32 +26,6 @@ let
     lan0 = "eno2";
     lan1 = "eno3";
   };
-
-  hosts = [
-    { name = "uck.lo"; ipv4 = "10.39.0.2"; mac = "fc:ec:da:d0:eb:a3"; }
-    { name = "usw.lo"; ipv4 = "10.39.0.5"; mac = "b4:fb:e4:19:bd:87"; }
-    { name = "uap.lo"; ipv4 = "10.39.0.10"; mac = "80:2a:a8:43:89:72"; }
-
-    { name = "kado.lo"; ipv4 = "10.39.0.20"; mac = "0c:c4:7a:6a:cd:04"; }
-    { name = "kado.o"; ipv4 = "100.65.152.104"; }
-    { name = "ipmi.kado.lo"; ipv4 = "10.39.0.30"; mac = "0c:c4:7a:6e:1c:33"; }
-
-    { name = "doko.lo"; ipv4 = "10.39.0.254"; mac = "0c:c4:7a:93:a5:5f"; }
-    { name = "doko.o"; ipv4 = "100.68.33.127"; }
-    { name = "ipmi.doko.lo"; ipv4 = "10.39.0.31"; mac = "0c:c4:7a:93:9d:11"; }
-
-    { name = "haiiro.lo"; ipv4 = "10.39.0.60"; mac = "68:54:5a:94:4e:e0"; }
-    { name = "haiiro.o"; ipv4 = "100.91.221.11"; }
-
-    { name = "kuro.lo"; ipv4 = "10.39.0.50"; mac = "34:2e:b7:de:f9:09"; }
-    { name = "kuro.o"; ipv4 = "100.116.4.62"; }
-
-    { name = "naze.lo"; ipv4 = "10.39.0.52"; mac = "58:11:22:a6:15:23"; }
-    { name = "naze.o"; ipv4 = "100.90.165.107"; }
-
-    { name = "shiro.lo"; ipv4 = "10.39.0.51"; mac = "54:04:a6:0a:57:0e"; }
-    { name = "shiro.o"; ipv4 = "100.69.65.63"; }
-  ];
 in
 {
   services.fail2ban.enable = true;
@@ -136,15 +116,12 @@ in
     #dhcpPrefixDelegationConfig = {
     #  UplinkInterface = interfaces.wan0;
     #};
-    dhcpServerStaticLeases = pipe hosts [
-      (filter (host: host ? mac))
-      (map (host: {
-        dhcpServerStaticLeaseConfig = {
-          Address = host.ipv4;
-          MACAddress = host.mac;
-        };
-      }))
-    ];
+    dhcpServerStaticLeases = attrValues (forMachinesIn "lo" (_: machine: {
+      dhcpServerStaticLeaseConfig = {
+        Address = machine.net.lo.ipv4;
+        MACAddress = machine.net.lo.mac;
+      };
+    }));
   };
 
   networking.firewall.interfaces.${interfaces.lan0}.allowedUDPPorts = [
@@ -173,17 +150,14 @@ in
         interface = [ "0.0.0.0" ];
         access-control = [ "10.0.0.0/8 allow" ];
         local-zone = [
-          "${quoted "lo."} static"
-          "${quoted "o."} static"
+          "${quoted "lo.pas.sh."} static"
         ];
-        local-data = pipe hosts [
-          (filter (host: (hasSuffix ".lo" host.name) || (hasSuffix ".o" host.name)))
-          (map (host: quoted "${host.name}. IN A ${host.ipv4}"))
-        ];
-        local-data-ptr = pipe hosts [
-          (filter (host: hasSuffix "lo" host.name))
-          (map (host: quoted "${host.ipv4} ${host.name}"))
-        ];
+        local-data = (attrValues (forMachinesIn "lo"
+          (name: machine: quoted "${name}.lo.pas.sh. IN A ${machine.net.lo.ipv4}")
+        ));
+        local-data-ptr = attrValues (forMachinesIn "lo"
+          (name: machine: quoted "${machine.net.lo.ipv4} ${name}.lo.pas.sh")
+        );
       };
       forward-zone = [
         {

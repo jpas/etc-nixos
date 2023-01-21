@@ -71,6 +71,8 @@ mkIf config.programs.sway.enable {
     ''}
   '';
 
+  # TODO: stop session if sway exits in any way
+
   systemd.user.targets = {
     sway-session = {
       bindsTo = [ "graphical-session.target" ];

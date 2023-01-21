@@ -4,9 +4,9 @@ with lib;
 
 {
   networking.hostName = "beri";
-  nixpkgs.system = "aarch64-linux";
+  boot.loader.generic-extlinux-compatible.enable = true;
 
-  imports = [ 
+  imports = [
     ../../profiles/archetype/minimal
     ../common
   ];

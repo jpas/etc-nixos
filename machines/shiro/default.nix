@@ -4,6 +4,7 @@ with lib;
 
 {
   networking.hostName = "shiro";
+  boot.loader.systemd-boot.enable = true;
 
   imports = [
     ../../profiles/archetype/games

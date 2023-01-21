@@ -11,50 +11,108 @@ ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYMB+DlGQKxZe0lMCQmYU4yGKHXoNNE9hpGk3NkvyKu", # kbell@shiro
 ]
 
-[machines.beri]
-net.ts.ipv4 = "100.104.46.24"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6268:2e18"
+[net]
+lo.domains = [ "lo" ]
+ts.domains = [ "o", "o.pas.sh" ]
 
 [machines.doko]
-net.lo.ipv4 = "10.39.0.254"
-net.ts.ipv4 = "100.68.33.127"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6244:217f"
 ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIDAF9OYkf42d6VB21Md3iP+VaSN0C1lijNoYfpGV9m",
 ]
+  [machines.doko.net.lo]
+  ipv4 = "10.39.0.254"
+  mac = "0c:c4:7a:93:a5:5f"
+
+  [machines."ipmi.doko".net.lo]
+  ipv4 = "10.39.0.31"
+  mac = "0c:c4:7a:93:9d:11"
+
+  [machines.doko.net.ts]
+  ipv4 = "100.68.33.127"
+  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6244:217f"
+
 
 [machines.kado]
-net.lo.ipv4 = "10.39.0.20"
-net.ts.ipv4 = "100.65.152.104"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6241:9868"
 ssh.publicKeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQhgPYR01kB+Vql3cH2pXPeUCW9sXhiQltX5Gfpwfdo",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQhgPYR01kB+Vql3cH2pXPeUCW9sXhiQltX5Gfpwfdo",
 ]
 
+  [machines.kado.net.lo]
+  ipv4 = "10.39.0.20"
+  mac = "0c:c4:7a:6a:cd:04"
+
+  [machines."ipmi.kado".net.lo]
+  ipv4 = "10.39.0.30"
+  mac = "0c:c4:7a:6e:1c:33"
+
+  [machines.kado.net.ts]
+  net.ts.ipv4 = "100.65.152.104"
+  net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6241:9868"
+
 [machines.kuro]
-net.lo.ipv4 = "10.39.0.50"
-net.ts.ipv4 = "100.116.4.62"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6274:43e"
 ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWAg8IMKXHkRkGLmhFH4eWfVtS1qbhHP2Vd3B53JtGL",
 ]
 
+  [machines.kuro.net.lo]
+  ipv4 = "10.39.0.50"
+  mac = "34:2e:b7:de:f9:09"
+
+  [machines.kuro.net.ts]
+  ipv4 = "100.116.4.62"
+  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6274:43e"
+
+
 [machines.naze]
-net.lo.ipv4 = "10.39.0.52"
-net.ts.ipv4 = "100.97.5.124"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6261:57c"
 ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcO1mSZNIY7N+Or+uRxKjr4TzStWYu7AsrALe3SZ4Jb",
 ]
 
+  [machines.naze.net.lo]
+  ipv4 = "10.39.0.52"
+  mac = "58:11:22:a6:15:23"
+
+  [machines.naze.net.ts]
+  ipv4 = "100.97.5.124"
+  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6261:57c"
+
 [machines.shiro]
-net.lo.ipv4 = "10.39.0.51"
-net.ts.ipv4 = "100.69.65.63"
-net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6245:413f"
 ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0",
 ]
 
-[net]
-lo.domains = [ "l", "l.pas.sh" ]
-ts.domains = [ "o", "o.pas.sh" ]
+  [machines.shiro.net.lo]
+  ipv4 = "10.39.0.51"
+  mac = "54:04:a6:0a:57:0e"
+
+  [machines.shiro.net.ts]
+  ipv4 = "100.69.65.63"
+  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6245:413f"
+
+[machines.beri]
+  [machines.beri.net.ts]
+  ipv4 = "100.104.46.24"
+  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6268:2e18"
+
+[machines.haiiro]
+  [machines.haiiro.net.lo]
+  ipv4 = "10.39.0.60"
+  mac = "68:54:5a:94:4e:e0"
+
+  [machines.haiiro.net.ts]
+  ipv4 = "100.91.221.11"
+
+[machines.uck]
+  [machines.uck.net.lo]
+  ipv4 = "10.39.0.2"
+  mac = "fc:ec:da:d0:eb:a3"
+
+[machines.usw]
+  [machines.usw.net.lo]
+  ipv4 = "10.39.0.5"
+  mac = "b4:fb:e4:19:bd:87"
+
+[machines.uap]
+  [machines.uap.net.lo]
+  ipv4 = "10.39.0.10"
+  mac = "80:2a:a8:43:89:72"

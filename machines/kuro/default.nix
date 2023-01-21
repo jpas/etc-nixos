@@ -1,5 +1,6 @@
 {
   networking.hostName = "kuro";
+  boot.loader.systemd-boot.enable = true;
 
   imports = [
     ../../profiles/archetype/laptop

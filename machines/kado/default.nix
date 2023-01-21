@@ -2,6 +2,7 @@
 
 {
   networking.hostName = "kado";
+  boot.loader.systemd-boot.enable = true;
 
   imports = [
     ../../profiles/archetype/minimal

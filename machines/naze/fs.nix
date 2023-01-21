@@ -8,7 +8,7 @@ let
   tank = subvol: cfg: recursiveUpdate cfg {
     device = "/dev/mapper/tank";
     fsType = "btrfs";
-    options = [ "subvol=${subvol}" ] ++ (cfg.options or []);
+    options = [ "subvol=${subvol}" ] ++ (cfg.options or [ ]);
   };
 in
 {

@@ -24,11 +24,14 @@ with lib;
     inherit (pkgs)
       bat
       coreutils
-      dig curl wget
+      curl
+      dig
       exa
       fd
       file
+      git
       jq
+      less
       lsof
       p7zip
       pciutils
@@ -39,6 +42,7 @@ with lib;
       strace
       tmux
       usbutils
+      wget
       ;
   };
 
@@ -47,12 +51,13 @@ with lib;
     iftop.enable = true;
 
     bash = {
-      shellInit = ''
-        unset HISTFILE
-      '';
-
       promptInit = ''
         ${readFile ./shell-prompt.bash}
+      '';
+
+      interactiveShellInit = ''
+        HISTFILE="$${XDG_STATE_DIR:-$$HOME/.local/state}/bash_history"
+        HISTCONTROL=ignorespace:erasedups
       '';
     };
 
@@ -64,13 +69,6 @@ with lib;
         hide_kernel_threads = true;
         hide_userland_threads = true;
         show_cpu_frequency = true;
-      };
-    };
-
-    less = {
-      enable = mkDefault true;
-      envVariables = {
-        LESSHIST = mkDefault "/dev/null";
       };
     };
   };

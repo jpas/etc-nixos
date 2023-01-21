@@ -19,12 +19,13 @@ let
   mkSecret = { allow ? { }, ... }@args':
     (removeAttrs args' [ "allow" ]) // {
       publicKeys = (publicKeysFor (allow // wheel))
-        ++ (args'.publicKeys or [ ]);
+      ++ (args'.publicKeys or [ ]);
     };
 
   mkSecrets = args: paths: genAttrs paths (_: mkSecret args);
 
-in foldl recursiveUpdate { } [
+in
+foldl recursiveUpdate { } [
   (mkSecrets { allow = { inherit (machines) doko; }; } [
     "machines/doko/.acme-credentials.age"
     "machines/doko/.authelia-identity-provider-oidc-hmac-secret.age"

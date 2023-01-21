@@ -3,30 +3,32 @@
 with lib;
 
 let
+  hasPublicKeys = hasAttrByPath [ "ssh" "publicKeys" ];
+  hasNet = hasAttr "net";
+
+  machines = flip filterAttrs meta.machines
+    (_: m: (hasNet m) && (hasPublicKeys m));
+
+  hostsFor = flip mapAttrs machines
+    (name: machine: [ name ] ++ (pipe machine.net [
+      attrNames
+      (map (net: forEach meta.net.${net}.domains (d: "${name}.${d}")))
+      concatLists
+    ]));
+
 in
 {
   imports = [ ./aleph.nix ];
 
-  programs.ssh.knownHosts = {
-    doko = {
-      extraHostNames = [ "doko.o" "doko.lo" "doko.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIDAF9OYkf42d6VB21Md3iP+VaSN0C1lijNoYfpGV9m";
-    };
-    kado = {
-      extraHostNames = [ "kado.o" "kado.lo" "kado.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQhgPYR01kB+Vql3cH2pXPeUCW9sXhiQltX5Gfpwfdo";
-    };
-    kuro = {
-      extraHostNames = [ "kuro.o" "kuro.lo" "kuro.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWAg8IMKXHkRkGLmhFH4eWfVtS1qbhHP2Vd3B53JtGL";
-    };
-    naze = {
-      extraHostNames = [ "naze.o" "naze.lo" "naze.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcO1mSZNIY7N+Or+uRxKjr4TzStWYu7AsrALe3SZ4Jb";
-    };
-    shiro = {
-      extraHostNames = [ "shiro.o" "shiro.lo" "shiro.o.pas.sh" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0";
-    };
-  };
+  programs.ssh.knownHosts = flip concatMapAttrs machines
+    (name: machine: pipe machine.ssh.publicKeys [
+      (imap0 (i: publicKey: {
+        name = "${name}/${toString i}";
+        value = {
+          extraHostNames = hostsFor.${name};
+          inherit publicKey;
+        };
+      }))
+      listToAttrs
+    ]);
 }

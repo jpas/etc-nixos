@@ -4,6 +4,7 @@ with lib;
 
 {
   networking.hostName = "naze";
+  boot.loader.systemd-boot.enable = true;
 
   imports = [
     ../../profiles/archetype/builder

@@ -2,6 +2,7 @@
 
 {
   networking.hostName = "doko";
+  boot.loader.systemd-boot.enable = true;
 
   imports = [
     ../../profiles/archetype/builder

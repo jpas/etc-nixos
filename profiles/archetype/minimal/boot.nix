@@ -14,11 +14,8 @@ in
       enable = false;
     };
     systemd-boot = common // {
-      enable = config.nixpkgs.hostPlatform == "x86_64-linux";
       editor = false;
     };
-    generic-extlinux-compatible = common // {
-      enable = config.nixpkgs.hostPlatform == "aarch64-linux";
-    };
+    generic-extlinux-compatible = common // { };
   };
 }

@@ -222,9 +222,11 @@ in
       grim
       i3blocks
       kitty
+      mpv
       playerctl
       procps
       pulsemixer
+      signal-desktop
       slurp
       tofi
       wl-clipboard
