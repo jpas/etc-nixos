@@ -20,7 +20,6 @@
       inherit (inputs) deploy-rs;
       inherit (nixpkgs) lib;
 
-
       eachDefaultSystem = f: utils.lib.eachDefaultSystem
         (system: f system (import nixpkgs {
           inherit system;

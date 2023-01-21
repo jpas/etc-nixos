@@ -3,11 +3,6 @@
 with lib;
 
 {
-  imports = [
-    ./tailscale.nix
-    ./wireless.nix
-  ];
-
   networking.useDHCP = false;
   networking.useNetworkd = true;
 
