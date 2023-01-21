@@ -10,11 +10,12 @@ with lib;
     ./boot.nix
     ./colours.nix
     ./flakes.nix
-    ./networking
+    ./networking.nix
     ./nfs.nix
     ./nix.nix
     ./shell.nix
     ./ssh.nix
+    ./tailscale.nix
   ];
 
   time.timeZone = mkDefault "America/Toronto";
