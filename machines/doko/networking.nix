@@ -150,13 +150,13 @@ in
         interface = [ "0.0.0.0" ];
         access-control = [ "10.0.0.0/8 allow" ];
         local-zone = [
-          "${quoted "lo.pas.sh."} static"
+          "${quoted "lo."} static"
         ];
         local-data = (attrValues (forMachinesIn "lo"
-          (name: machine: quoted "${name}.lo.pas.sh. IN A ${machine.net.lo.ipv4}")
+          (name: machine: quoted "${name}.lo. IN A ${machine.net.lo.ipv4}")
         ));
         local-data-ptr = attrValues (forMachinesIn "lo"
-          (name: machine: quoted "${machine.net.lo.ipv4} ${name}.lo.pas.sh")
+          (name: machine: quoted "${machine.net.lo.ipv4} ${name}.lo")
         );
       };
       forward-zone = [
