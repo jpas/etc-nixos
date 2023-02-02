@@ -24,10 +24,6 @@ with lib;
 
   gtk.iconCache.enable = mkDefault true;
 
-  qt5.enable = mkDefault true;
-  qt5.platformTheme = "gnome";
-  qt5.style = "adwaita-dark";
-
   environment.etc."gtk-3.0/settings.ini".text = ''
     [Settings]
     gtk-application-prefer-dark-theme = true
@@ -36,5 +32,9 @@ with lib;
     gtk-icon-theme-name = Adwaita
     gtk-theme-name = Adwaita-dark
   '';
+
+  qt.enable = mkDefault true;
+  qt.platformTheme = "gnome";
+  qt.style = "adwaita-dark";
 }
 

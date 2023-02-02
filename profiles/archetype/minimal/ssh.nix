@@ -10,13 +10,11 @@ in
 {
   services.openssh = {
     enable = mkDefault true;
-
-    passwordAuthentication = mkDefault false;
-    kbdInteractiveAuthentication = mkDefault false;
-
-    extraConfig = ''
-      AuthenticationMethods publickey
-    '';
+    settings = {
+      PasswordAuthentication = mkDefault false;
+      KbdInteractiveAuthentication = mkDefault false;
+      AuthenticationMethods = "publickey";
+    };
   };
 
   programs.ssh = {
