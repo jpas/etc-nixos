@@ -29,13 +29,7 @@ let
     mako = patchPackage prev.mako [ ./patches/mako-check-etc-xdg.patch ];
     swayidle = patchPackage prev.swayidle [ ./patches/swayidle-check-etc-xdg.patch ];
     swaylock = patchPackage prev.swaylock [ ./patches/swaylock-check-etc-xdg.patch ];
-    tofi = patchPackage prev.tofi [
-      ./patches/tofi-check-etc-xdg.patch
-      (final.fetchpatch {
-        url = "https://github.com/philj56/tofi/compare/v0.7.0...v0.8.1.patch";
-        hash = "sha256-5uMslus1DZhsQqgMTLdXEXO7vbnGhjfvX+zkYIIKTic=";
-      })
-    ];
+    tofi = patchPackage prev.tofi [ ./patches/tofi-check-etc-xdg.patch ];
 
     kanidm = prev.kanidm.overrideAttrs (o: rec {
       name = "${o.pname}-${version}";
