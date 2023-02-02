@@ -7,7 +7,6 @@ with lib;
   boot.loader.systemd-boot.enable = true;
 
   imports = [
-    ../../profiles/archetype/builder
     ../../profiles/archetype/games
     ../../profiles/archetype/workstation
     ../../profiles/hardware/bluetooth.nix

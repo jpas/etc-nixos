@@ -5,7 +5,6 @@
   boot.loader.systemd-boot.enable = true;
 
   imports = [
-    ../../profiles/archetype/builder
     ../../profiles/archetype/minimal
     ../common
     ./acme.nix
