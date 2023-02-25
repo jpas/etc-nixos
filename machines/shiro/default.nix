@@ -24,6 +24,8 @@ with lib;
       48080
     ];
     allowedUDPPorts = [
+      # torchlight 2
+      4549
       # don't starve together
       10999
       10998
