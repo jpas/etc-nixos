@@ -44,6 +44,11 @@ with lib;
     };
   };
 
+  # By default the the kernel will put the intel_pstate driver in passive mode
+  # as the cpu in this system does not support HWP. So we actually want to use
+  # the schedutil or performance governors.
+  powerManagement.cpuFreqGovernor = "performance";
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
