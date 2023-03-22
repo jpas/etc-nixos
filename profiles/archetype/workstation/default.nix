@@ -61,6 +61,7 @@ with lib;
         #mplus-outline-fonts
         noto-fonts-emoji
         noto-fonts-extra
+        libertinus
         ;
     };
   };
