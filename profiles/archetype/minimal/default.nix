@@ -36,4 +36,6 @@ with lib;
     SystemMaxUse=100M
     MaxFileSec=7day
   '';
+
+  programs._1password.enable = mkDefault true;
 }
