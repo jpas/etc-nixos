@@ -54,6 +54,16 @@ in
         startup_check_address = sender;
         disable_html_emails = true;
       };
+      identity_providers.oidc = {
+        cors.allowed_origins_from_client_redirect_uris = true;
+        cors.endpoints = [
+          "authorization"
+          "introspection"
+          "revocation"
+          "token"
+          "userinfo"
+        ];
+      };
     };
   };
 
@@ -78,8 +88,8 @@ in
   };
 
   systemd.services.authelia.environment = with config.age.secrets; {
-    #AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE = authelia-identity-provider-oidc-hmac-secret.path;
-    #AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE = authelia-identity-provider-oidc-issuer-private-key.path;
+    AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE = authelia-identity-provider-oidc-hmac-secret.path;
+    AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE = authelia-identity-provider-oidc-issuer-private-key.path;
     AUTHELIA_JWT_SECRET_FILE = authelia-jwt-secret.path;
     AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
     AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE = authelia-storage-encryption-key.path;

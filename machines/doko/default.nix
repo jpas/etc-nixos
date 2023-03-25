@@ -15,12 +15,13 @@
     ./influx.nix
     ./jellyfin.nix
     ./kanidm.nix
+    ./lldap.nix
     ./networking.nix
+    ./ocis.nix
     ./radarr.nix
     ./sonarr.nix
     ./traefik.nix
     ./unifi.nix
-    ./lldap.nix
   ];
 
   services.lldap.enable = true;
