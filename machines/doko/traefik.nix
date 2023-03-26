@@ -82,7 +82,7 @@ in
     };
   };
 
-  services.authelia.settings.access_control.rules = [
+  services.authelia.instances.main.settings.access_control.rules = [
     { domain = "traefik.o.pas.sh"; subject = [ "group:admin" ]; policy = "one_factor"; }
   ];
 

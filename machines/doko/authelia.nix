@@ -3,12 +3,13 @@
 with lib;
 
 let
-  cfg = config.services.authelia;
+  cfg = config.services.authelia.instances.main;
+
+  mkSecret = file: { inherit file; owner = cfg.user; };
 in
 {
-  services.authelia.enable = true;
-
-  services.authelia = {
+  services.authelia.instances.main = {
+    enable = true;
     settings = {
       theme = "dark";
       log = {
@@ -23,9 +24,6 @@ in
         name = "session";
         domain = "pas.sh";
       };
-      #authentication_backend.file = {
-      #  path = "/var/lib/authelia/users.yml";
-      #};
       authentication_backend.ldap = {
         implementation = "custom";
         url = "ldap://127.0.0.1:3890";
@@ -41,7 +39,7 @@ in
         user = "uid=authelia,ou=people,dc=pas,dc=sh";
       };
       storage.local = {
-        path = "/var/lib/authelia/db.sqlite3";
+        path = "db.sqlite3";
       };
       access_control = {
         default_policy = "deny";
@@ -65,11 +63,23 @@ in
         ];
       };
     };
+
+    secrets = with config.age.secrets; {
+      jwtSecretFile = authelia-jwt-secret.path;
+      oidcIssuerPrivateKeyFile = authelia-identity-provider-oidc-issuer-private-key.path;
+      oidcHmacSecretFile = authelia-identity-provider-oidc-hmac-secret.path;
+      storageEncryptionKeyFile = authelia-storage-encryption-key.path;
+    };
+
+    environmentVariables = with config.age.secrets; {
+      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = authelia-authentication-backend-password.path;
+    };
   };
 
   services.traefik.dynamicConfigOptions.http = {
     services.auth = {
-      loadBalancer.servers = [{ url = "http://${cfg.address}"; }];
+      loadBalancer.servers = [{ url = "http://127.0.0.1:9091"; }];
     };
 
     routers.auth = {
@@ -80,28 +90,19 @@ in
 
     middlewares.auth = {
       forwardAuth = {
-        address = "http://${cfg.address}/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
+        address = "http://127.0.0.1:9091/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
         trustForwardHeader = true;
         authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
       };
     };
   };
 
-  systemd.services.authelia.environment = with config.age.secrets; {
-    AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE = authelia-identity-provider-oidc-hmac-secret.path;
-    AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE = authelia-identity-provider-oidc-issuer-private-key.path;
-    AUTHELIA_JWT_SECRET_FILE = authelia-jwt-secret.path;
-    AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
-    AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE = authelia-storage-encryption-key.path;
-    AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = authelia-authentication-backend-password.path;
-  };
-
   age.secrets = {
-    authelia-identity-provider-oidc-hmac-secret = { owner = "authelia"; file = ./.authelia-identity-provider-oidc-hmac-secret.age; };
-    authelia-identity-provider-oidc-issuer-private-key = { owner = "authelia"; file = ./.authelia-identity-provider-oidc-issuer-private-key.age; };
-    authelia-jwt-secret = { owner = "authelia"; file = ./.authelia-jwt-secret.age; };
-    authelia-notifier-smtp-password = { owner = "authelia"; file = ./.authelia-notifier-smtp-password.age; };
-    authelia-storage-encryption-key = { owner = "authelia"; file = ./.authelia-storage-encryption-key.age; };
-    authelia-authentication-backend-password = { owner = "authelia"; file = ./.authelia-authentication-backend-password.age; };
+    authelia-identity-provider-oidc-hmac-secret = mkSecret ./.authelia-identity-provider-oidc-hmac-secret.age;
+    authelia-identity-provider-oidc-issuer-private-key = mkSecret ./.authelia-identity-provider-oidc-issuer-private-key.age;
+    authelia-jwt-secret = mkSecret ./.authelia-jwt-secret.age;
+    authelia-notifier-smtp-password = mkSecret ./.authelia-notifier-smtp-password.age;
+    authelia-storage-encryption-key = mkSecret ./.authelia-storage-encryption-key.age;
+    authelia-authentication-backend-password = mkSecret ./.authelia-authentication-backend-password.age;
   };
 }

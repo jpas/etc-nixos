@@ -16,7 +16,7 @@ with lib;
     };
   };
 
-  services.authelia.settings.access_control.rules = [
+  services.authelia.instances.main.settings.access_control.rules = [
     { domain = "radarr.o.pas.sh"; subject = [ "group:media_admin" ]; policy = "one_factor"; }
   ];
 }

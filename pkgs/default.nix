@@ -8,7 +8,7 @@ let
   });
 
   hole = rec {
-    authelia = callPackage ./authelia { };
+    # authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
     gamescope = callPackage ./gamescope { };
     gammactl = callPackage ./gammactl { };

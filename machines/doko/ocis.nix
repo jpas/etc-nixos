@@ -71,7 +71,7 @@ in
     };
   };
 
-  services.authelia.settings.identity_providers.oidc.clients = [
+  services.authelia.instances.main.settings.identity_providers.oidc.clients = [
     {
       description = "ownCloud Web";
       id = "ocis-web";
