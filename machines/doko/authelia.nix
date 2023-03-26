@@ -39,7 +39,7 @@ in
         user = "uid=authelia,ou=people,dc=pas,dc=sh";
       };
       storage.local = {
-        path = "db.sqlite3";
+        path = "/var/lib/authelia-${cfg.name}/db.sqlite3";
       };
       access_control = {
         default_policy = "deny";
@@ -86,6 +86,7 @@ in
       rule = "Host(`auth.pas.sh`)";
       service = "auth";
       entryPoints = [ "web" ];
+      middlewares = [ "authelia-delete-prompt" ];
     };
 
     middlewares.auth = {
@@ -94,6 +95,18 @@ in
         trustForwardHeader = true;
         authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
       };
+    };
+
+    middlewares.authelia-delete-prompt {
+      modifyQuery = {
+        type = "delete";
+        paramName = "prompt";
+      };
+    };
+
+    experimental.plugins.modifyQuery = {
+      moduleName = "github.com/jpas/traefik-plugin-query-modification";
+      version = "v0.1.0";
     };
   };
 
