@@ -3,6 +3,16 @@
 with lib;
 
 {
+  services.caddy.virtualHosts = {
+    "radarr.o.pas.sh" = {
+      useACMEHost = "o.pas.sh";
+      extraConfig = ''
+        import forward_login
+        reverse_proxy 10.39.1.20:7878
+      '';
+    };
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     services.radarr = {
       loadBalancer.servers = [{ url = "http://10.39.1.20:7878"; }];

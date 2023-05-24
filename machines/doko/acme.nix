@@ -13,6 +13,15 @@ with lib;
     };
   };
 
+  security.acme.certs = {
+    "pas.sh" = {
+      extraDomainNames = [ "*.pas.sh" ];
+    };
+    "o.pas.sh" = {
+      extraDomainNames = [ "*.o.pas.sh" ];
+    };
+  };
+
   age.secrets = {
     acme-credentials = { group = "acme"; file = ./.acme-credentials.age; };
   };

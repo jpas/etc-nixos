@@ -77,36 +77,22 @@ in
     };
   };
 
-  services.traefik.dynamicConfigOptions.http = {
-    services.auth = {
-      loadBalancer.servers = [{ url = "http://127.0.0.1:9091"; }];
-    };
+  services.caddy.extraConfig = mkBefore ''
+    (forward_login) {
+      forward_auth 127.0.0.1:9091 {
+        uri /api/verify?rd=https//auth.pas.sh
+        copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+      }
+    }
+  '';
 
-    routers.auth = {
-      rule = "Host(`auth.pas.sh`)";
-      service = "auth";
-      entryPoints = [ "web" ];
-      middlewares = [ "authelia-delete-prompt" ];
-    };
-
-    middlewares.auth = {
-      forwardAuth = {
-        address = "http://127.0.0.1:9091/api/verify?rd=https%3A%2F%2Fauth.pas.sh%2F";
-        trustForwardHeader = true;
-        authResponseHeaders = [ "Remote-User" "Remote-Groups" "Remote-Name" "Remote-Email" ];
-      };
-    };
-
-    middlewares.authelia-delete-prompt {
-      modifyQuery = {
-        type = "delete";
-        paramName = "prompt";
-      };
-    };
-
-    experimental.plugins.modifyQuery = {
-      moduleName = "github.com/jpas/traefik-plugin-query-modification";
-      version = "v0.1.0";
+  services.caddy.virtualHosts = {
+    "auth.pas.sh" = {
+      useACMEHost = "pas.sh";
+      extraConfig = ''
+        uri /api/oidc/authorization replace &prompt=select_account%20consent ""
+        reverse_proxy 127.0.0.1:9091
+      '';
     };
   };
 

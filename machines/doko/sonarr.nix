@@ -3,6 +3,16 @@
 with lib;
 
 {
+  services.caddy.virtualHosts = {
+    "sonarr.o.pas.sh" = {
+      useACMEHost = "o.pas.sh";
+      extraConfig = ''
+        import forward_login
+        reverse_proxy 10.39.1.20:8989
+      '';
+    };
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     services.sonarr = {
       loadBalancer.servers = [{ url = "http://10.39.1.20:8989"; }];

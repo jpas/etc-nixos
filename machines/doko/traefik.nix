@@ -5,11 +5,7 @@ with lib;
 let
   cfg = config.services.traefik;
 in
-{
-  services.traefik.enable = true;
-
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
+mkIf cfg.enable {
   services.traefik.staticConfigFile = "/var/lib/traefik/config.yml";
 
   systemd.services.traefik.preStart = ''

@@ -67,6 +67,15 @@ in
     };
     users.groups.lldap = { };
 
+    services.caddy.virtualHosts = {
+      "lldap.o.pas.sh" = {
+        useACMEHost = "o.pas.sh";
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:17170
+        '';
+      };
+    };
+
     services.traefik.dynamicConfigOptions.http = {
       services.lldap = {
         loadBalancer.servers = [{ url = "http://127.0.0.1:17170"; }];
