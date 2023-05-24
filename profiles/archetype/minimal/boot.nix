@@ -7,7 +7,7 @@ let
 in
 {
   boot.kernelPackages = mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest);
-  boot.tmpOnTmpfs = mkDefault true;
+
   boot.loader = {
     timeout = mkDefault 1;
     grub = common // {
@@ -18,4 +18,6 @@ in
     };
     generic-extlinux-compatible = common // { };
   };
+
+  boot.tmp.useTmpfs = mkDefault true;
 }
