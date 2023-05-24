@@ -6,6 +6,8 @@ let
   # TODO(jpas): remove small moduli for diffie-hellman-group-exchange-sha256
   # awk '$5 > 2000' /etc/ssh/moduli > "${HOME}/moduli"
   # wc -l "${HOME}/moduli" # make sure there is something left
+
+  cfg = config.services.openssh;
 in
 {
   services.openssh = {
@@ -37,10 +39,8 @@ in
       "ssh-rsa"
     ];
 
-    inherit (config.services.openssh)
-      ciphers
-      kexAlgorithms
-      macs
-      ;
+    ciphers = cfg.settings.Ciphers;
+    kexAlgorithms = cfg.settings.KexAlgorithms;
+    macs = cfg.settings.Macs;
   };
 }
