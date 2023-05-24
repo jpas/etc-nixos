@@ -4,6 +4,11 @@ with lib;
 
 {
   services.jellyfin.enable = true;
+  systemd.services.jellyfin = {
+    serviceConfig = {
+      RequiresMountsFor = "/aleph";
+    };
+  };
 
   services.caddy.virtualHosts = {
     "jellyfin.pas.sh" = {
