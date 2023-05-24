@@ -13,7 +13,6 @@ let
     gamescope = callPackage ./gamescope { };
     gammactl = callPackage ./gammactl { };
     lemurs = callPackage ./lemurs { };
-    lldap = callPackage ./lldap { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
     wl-gammarelay-rs = callPackage ./wl-gammarelay-rs { };
