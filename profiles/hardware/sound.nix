@@ -12,7 +12,6 @@ with lib;
     alsa.enable = mkDefault true;
     alsa.support32Bit = mkDefault true;
     pulse.enable = mkDefault true;
-    media-session.enable = mkDefault false;
     wireplumber.enable = mkDefault true;
   };
 
