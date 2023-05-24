@@ -23,8 +23,16 @@ with lib;
     key_file = "/var/lib/lldap/private-key";
 
     environment = {
-      LLDAP_JWT_SECRET_FILE = config.age.secrets.lldap-jwt-secret.path;
+      LLDAP_JWT_SECRET_FILE = "%d/jwt-secret";
       LLDAP_LDAP_USER_PASS = "dolphins"; # TODO: fix me
+    };
+  };
+
+  systemd.services.lldap = {
+    serviceConfig = {
+      LoadCredential = [
+        "jwt-secret:${config.age.secrets.lldap-jwt-secret.path}"
+      ];
     };
   };
 
@@ -50,8 +58,5 @@ with lib;
     };
   };
 
-  age.secrets.lldap-jwt-secret = {
-    file = ./.lldap-jwt-secret.age;
-    owner = "lldap";
-  };
+  age.secrets.lldap-jwt-secret.file = ./.lldap-jwt-secret.age;
 }
