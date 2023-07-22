@@ -90,6 +90,10 @@ ssh.publicKeys = [
   ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6245:413f"
 
 [machines.beri]
+ssh.publicKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAIFggwH1xN77oTPG0c8t8aW8LPCZod3i1SqF8BtnANw"
+]
+
   [machines.beri.net.ts]
   ipv4 = "100.104.46.24"
   ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6268:2e18"

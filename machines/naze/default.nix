@@ -6,6 +6,8 @@ with lib;
   networking.hostName = "naze";
   boot.loader.systemd-boot.enable = true;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   imports = [
     ../../profiles/archetype/games
     ../../profiles/archetype/workstation

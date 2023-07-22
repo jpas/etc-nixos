@@ -76,7 +76,17 @@
           system = "x86_64-linux";
           profiles = [ ./machines/doko ];
         };
+
+        beri = mkSystem {
+          system = "aarch64-linux";
+          profiles = [ ./machines/beri ];
+        };
       };
+
+      images = pipe self.nixosConfigurations [
+        (filterAttrs (_: machine: machine.config.system.build ? sdImage))
+        (mapAttrs    (_: machine: machine.config.system.build.sdImage))
+      ];
 
       deploy = {
         sshUser = "root";
