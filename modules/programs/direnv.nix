@@ -2,6 +2,9 @@
 
 with lib;
 
+{}
+
+/*
 let
   cfg = config.programs.direnv;
 in
@@ -31,3 +34,4 @@ in
     nix.settings.keep-derivations = true;
   };
 }
+*/
