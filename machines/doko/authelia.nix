@@ -5,6 +5,8 @@ with lib;
 let
   cfg = config.services.authelia.instances.main;
 
+  haveOIDC = false; # length cfg.settings.identity_providers.oidc.clients > 0;
+
   mkSecret = file: { inherit file; owner = cfg.user; };
 in
 {
@@ -52,7 +54,7 @@ in
         startup_check_address = sender;
         disable_html_emails = true;
       };
-      identity_providers.oidc = {
+      identity_providers.oidc= mkIf haveOIDC {
         cors.allowed_origins_from_client_redirect_uris = true;
         cors.endpoints = [
           "authorization"
