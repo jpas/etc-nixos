@@ -17,7 +17,7 @@
     ./kanidm.nix
     ./lldap.nix
     ./networking.nix
-    ./ocis.nix
+    ./plane.nix
     ./radarr.nix
     ./sonarr.nix
     ./traefik.nix
