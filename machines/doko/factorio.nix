@@ -2,7 +2,7 @@
 
 {
   services.factorio = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     port = 34198;
     requireUserVerification = false;

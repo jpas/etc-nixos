@@ -21,6 +21,8 @@ with lib;
     ./hardware.nix
   ];
 
+  virtualisation.podman.enable = true;
+
   networking.firewall = {
     allowedTCPPorts = [
       8554

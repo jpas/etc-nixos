@@ -26,8 +26,8 @@
 
   services.lldap.enable = true;
 
-  services.caddy.enable = true;
-  services.traefik.enable = false;
+  services.caddy.enable = false;
+  services.traefik.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # TODO: fan control via ipmi?
