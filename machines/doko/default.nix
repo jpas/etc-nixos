@@ -22,6 +22,7 @@
     ./sonarr.nix
     ./traefik.nix
     ./unifi.nix
+    ./nextcloud.nix
   ];
 
   services.lldap.enable = true;
