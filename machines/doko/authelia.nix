@@ -79,7 +79,10 @@ in
     };
   };
 
-  systemd.services."authelia-main".requires = [ "lldap.service" ];
+  systemd.services."authelia-main" = {
+    after = [ "lldap.service" ];
+    bindsTo = [ "lldap.service" ];
+  };
 
   services.caddy.extraConfig = mkBefore ''
     (forward_login) {
