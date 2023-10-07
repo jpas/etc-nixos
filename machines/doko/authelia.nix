@@ -3,6 +3,7 @@
 with lib;
 
 let
+  enable = true;
   cfg = config.services.authelia.instances.main;
 
   optionalGetAttrByPath = default: path: set:
@@ -22,7 +23,7 @@ in
 {
   services.authelia.instances.main = mkMerge [
     {
-      enable = false;
+      inherit enable;
       settings = {
         theme = "dark";
         log = {
@@ -65,6 +66,26 @@ in
           startup_check_address = sender;
           disable_html_emails = true;
         };
+        identity_providers.oidc = {
+          cors.allowed_origins_from_client_redirect_uris = true;
+          cors.endpoints = [
+            "authorization"
+            "introspection"
+            "revocation"
+            "token"
+            "userinfo"
+          ];
+          clients = [
+            {
+              description = "dummy";
+              id = "dummy";
+              public = true;
+              consent_mode = "implicit";
+              scopes = [ ];
+              redirect_uris = [ "invalid://" ];
+            }
+          ];
+        };
       };
 
       secrets = with config.age.secrets; {
@@ -78,19 +99,8 @@ in
         AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = authelia-notifier-smtp-password.path;
         AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = authelia-authentication-backend-password.path;
       };
+
     }
-    # (mkIf haveOIDC {
-    #   identity_providers.oidc = {
-    #     cors.allowed_origins_from_client_redirect_uris = true;
-    #     cors.endpoints = [
-    #       "authorization"
-    #       "introspection"
-    #       "revocation"
-    #       "token"
-    #       "userinfo"
-    #     ];
-    #   };
-    # })
   ];
 
   systemd.services."authelia-main" = {
