@@ -7,13 +7,13 @@ let
 in
 {
   services.traefik.dynamicConfigOptions.http = {
-    services.radarr = {
+    services.${domain} = {
       loadBalancer.servers = [{ url = "http://10.39.1.20:9190"; }];
     };
 
-    routers.radarr = {
+    routers.${domain} = {
       rule = "Host(`${domain}.pas.sh`)";
-      service = "${domain}";
+      service = domain;
       entryPoints = [ "web" ];
       middlewares = [ "auth" ];
     };
