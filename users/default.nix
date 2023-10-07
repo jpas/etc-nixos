@@ -8,7 +8,7 @@ let
 
     age.secrets."passwd-${name}".file = ./. + "/${name}/.passwd.age";
     users.users."${name}" = flip recursiveUpdate user {
-      passwordFile = config.age.secrets."passwd-${name}".path;
+      hashedPasswordFile = config.age.secrets."passwd-${name}".path;
     };
   };
 
