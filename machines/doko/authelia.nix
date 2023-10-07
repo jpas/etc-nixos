@@ -79,6 +79,8 @@ in
     };
   };
 
+  systemd.services."authelia-main".requires = [ "lldap.service" ];
+
   services.caddy.extraConfig = mkBefore ''
     (forward_login) {
       forward_auth 127.0.0.1:9091 {
