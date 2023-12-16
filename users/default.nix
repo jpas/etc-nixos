@@ -6,7 +6,7 @@ let
   mkUser = name: user: {
     users.mutableUsers = false;
 
-    age.secrets."passwd-${name}".file = ./. + "/${name}/.passwd.age";
+    age.secrets."passwd-${name}".file = ./. + "/${name}/passwd.age";
     users.users."${name}" = flip recursiveUpdate user {
       hashedPasswordFile = config.age.secrets."passwd-${name}".path;
     };

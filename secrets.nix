@@ -42,8 +42,8 @@ foldl recursiveUpdate { } [
     [ "machines/kado/.torrents-vpn-private-key.age" ])
 
   (mkSecrets { allow = machines; } [
-    "users/root/.passwd.age"
-    "users/jpas/.passwd.age"
-    "users/kbell/.passwd.age"
+    "users/root/passwd.age"
+    "users/jpas/passwd.age"
+    "users/kbell/passwd.age"
   ])
 ]
