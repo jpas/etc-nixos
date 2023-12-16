@@ -53,7 +53,7 @@ with lib;
       cache32Bit = mkDefault true;
     };
 
-    fonts = attrValues {
+    packages = attrValues {
       inherit (pkgs)
         jetbrains-mono
         noto-fonts

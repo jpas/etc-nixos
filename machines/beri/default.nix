@@ -8,8 +8,10 @@ with lib;
 
   imports = [
     "${flakes.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-    ../../profiles/archetype/minimal
     ../common
+    ../../profiles/archetype/minimal
+    ../../profiles/hardware/wifi.nix
+    ../../profiles/hardware/bluetooth.nix
   ];
 
   systemd.network.networks = {
@@ -23,6 +25,10 @@ with lib;
       };
     };
   };
+
+  # need to make sure time is synced up to do many things...
+  systemd.additionalUpstreamSystemUnits = [ "systemd-time-wait-sync.service" ];
+  systemd.services.systemd-time-wait-sync.wantedBy = [ "multi-user.target" ];
 
   # source: https://github.com/NixOS/nixpkgs/commit/d91e1f98fa83fecf614111b3bfde9bf2b3c3aa3d
 

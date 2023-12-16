@@ -83,7 +83,7 @@ mkIf cfg.enable {
   ];
 
   systemd.services.traefik = {
-    serviceConfig.EnvironmentFile = config.security.acme.defaults.credentialsFile;
+    serviceConfig.EnvironmentFile = [ config.security.acme.defaults.environmentFile ];
   };
 
   users.users.traefik.extraGroups = [ "acme" ];

@@ -54,6 +54,7 @@ in
     # see `man 5 sway` for specifics
 
     set {
+      # Mod4 is the meta key
       $mod Mod4
       $font pango:monospace 10
       $terminal kitty
@@ -80,6 +81,7 @@ in
     workspace_auto_back_and_forth yes
 
     bindsym {
+      $mod+Shift+slash exec $terminal --class="sway_config" -- bash -c 'swaymsg --pretty -t get_config | less'
       $mod+Return      exec $terminal
       $mod+d           exec "tofi-run | xargs --no-run-if-empty -- swaymsg exec --"
 
@@ -198,7 +200,6 @@ in
     client.focused_inactive  $bg1 $bg1 $fg4 $bg1
     client.unfocused         $bg1 $bg1 $fg4 $bg1
     client.urgent            $fg4 $fg4 $bg1 $fg4
-
 
     bar main colors {
       background         $bg

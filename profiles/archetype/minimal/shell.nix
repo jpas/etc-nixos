@@ -15,10 +15,11 @@ with lib;
     l = "ls -l";
     la = "ls -la";
     ll = "ls -l";
-    ls = "exa --git";
+    ls = "eza --git";
   };
 
   programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   environment.systemPackages = attrValues {
     inherit (pkgs)
@@ -26,7 +27,7 @@ with lib;
       coreutils
       curl
       dig
-      exa
+      eza
       fd
       file
       git

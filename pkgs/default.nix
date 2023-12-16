@@ -10,7 +10,7 @@ let
   hole = rec {
     # authelia = callPackage ./authelia { };
     ftpserver = callPackage ./ftpserver { };
-    gamescope = callPackage ./gamescope { };
+    # gamescope = callPackage ./gamescope { };
     gammactl = callPackage ./gammactl { };
     lemurs = callPackage ./lemurs { };
     oauth2ms = callPackage ./oauth2ms { };

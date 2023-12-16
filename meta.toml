@@ -91,7 +91,7 @@ ssh.publicKeys = [
 
 [machines.beri]
 ssh.publicKeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAinkHPZWIIHgeafmhk9AO3mYjuaTGqd2ztG22iESch"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAIFggwH1xN77oTPG0c8t8aW8LPCZod3i1SqF8BtnANw"
 ]
 
   [machines.beri.net.ts]

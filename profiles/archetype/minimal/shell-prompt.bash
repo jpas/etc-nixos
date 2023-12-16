@@ -82,12 +82,12 @@ __pr_generate() {
 
 __pr_hook() {
   local previous_exit_status=$?
-  trap -- "" SIGINT
+  trap -- '' SIGINT
   PS1="$(__pr_generate $previous_exit_status)"
   trap - SIGINT
   return $previous_exit_status
 }
 
-if [[ "$TERM" != "dumb" ]]; then
-  PROMPT_COMMAND="__pr_hook"
+if ! [[ "${PROMPT_COMMAND:-}" =~ __pr_hook ]]; then
+  PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}__pr_hook"
 fi
