@@ -27,7 +27,7 @@ with lib;
   services.getty.extraArgs = [ "--nonewline" ];
 
   # Does not enable xserver, but make sure the keymap is in sync
-  services.xserver.layout = mkDefault "us";
+  services.xserver.xkb.layout = mkDefault "us";
   console.useXkbConfig = mkDefault true;
 
   virtualisation.oci-containers.backend = mkDefault "podman";
