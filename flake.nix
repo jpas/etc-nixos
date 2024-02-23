@@ -95,7 +95,7 @@
         nodes = flip mapAttrs self.nixosConfigurations
           (name: machine:
             let system = machine.config.nixpkgs.system; in {
-              hostname = "${name}";
+              hostname = "${name}.o.pas.sh";
               profiles.system = {
                 user = "root";
                 path = deploy-rs.lib.${system}.activate.nixos machine;
