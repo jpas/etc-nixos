@@ -98,8 +98,9 @@ in
   };
 
   systemd.user.services = {
-    wireplumber.environment = {
-      ACP_PATHS_DIR = "${acp-paths}";
-    };
+    # TODO: figure this out again later if it matters
+    # wireplumber.environment = {
+    #   ACP_PATHS_DIR = "${acp-paths}";
+    # };
   };
 }
