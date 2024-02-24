@@ -98,10 +98,6 @@ in
   };
 
   systemd.user.services = {
-    pipewire-media-session.environment = {
-      ACP_PATHS_DIR = "${acp-paths}";
-    };
-
     wireplumber.environment = {
       ACP_PATHS_DIR = "${acp-paths}";
     };
