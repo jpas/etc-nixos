@@ -6,7 +6,7 @@ let
   # the default priorities put the speakers above headphones
   acp-paths = pkgs.runCommand "acp-paths" { } ''
     mkdir -p $out
-    for f in ${pkgs.pipewire.lib}/share/alsa-card-profile/mixer/paths/*; do
+    for f in ${pkgs.pipewire}/lib/share/alsa-card-profile/mixer/paths/*; do
       ln -s $f $out/
     done
 
