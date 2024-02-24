@@ -9,7 +9,7 @@ let
 
   hole = rec {
     # authelia = callPackage ./authelia { };
-    ftpserver = callPackage ./ftpserver { };
+    # ftpserver = callPackage ./ftpserver { }; // only used in print-and-scan.nix
     # gamescope = callPackage ./gamescope { };
     gammactl = callPackage ./gammactl { };
     lemurs = callPackage ./lemurs { };
