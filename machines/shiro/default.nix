@@ -16,6 +16,7 @@ with lib;
     ../common
     ./fs.nix
     ./hardware.nix
+    ../../profiles/programs/factorio.nix
   ];
 
   networking.firewall = {
