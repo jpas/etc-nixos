@@ -29,7 +29,6 @@ ssh.publicKeys = [
 
   [machines.doko.net.ts]
   ipv4 = "100.68.33.127"
-  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6244:217f"
 
 
 [machines.kado]
@@ -46,8 +45,7 @@ ssh.publicKeys = [
   mac = "0c:c4:7a:6e:1c:33"
 
   [machines.kado.net.ts]
-  net.ts.ipv4 = "100.65.152.104"
-  net.ts.ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6241:9868"
+  ipv4 = "100.65.152.104"
 
 [machines.kuro]
 ssh.publicKeys = [
@@ -60,7 +58,6 @@ ssh.publicKeys = [
 
   [machines.kuro.net.ts]
   ipv4 = "100.116.4.62"
-  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6274:43e"
 
 
 [machines.naze]
@@ -73,8 +70,7 @@ ssh.publicKeys = [
   mac = "58:11:22:a6:15:23"
 
   [machines.naze.net.ts]
-  ipv4 = "100.97.5.124"
-  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6261:57c"
+  ipv4 = "100.118.58.37"
 
 [machines.shiro]
 ssh.publicKeys = [
@@ -87,7 +83,6 @@ ssh.publicKeys = [
 
   [machines.shiro.net.ts]
   ipv4 = "100.69.65.63"
-  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6245:413f"
 
 [machines.beri]
 ssh.publicKeys = [
@@ -96,7 +91,6 @@ ssh.publicKeys = [
 
   [machines.beri.net.ts]
   ipv4 = "100.104.46.24"
-  ipv6 = "fd7a:115c:a1e0:ab12:4843:cd96:6268:2e18"
 
 [machines.haiiro]
   [machines.haiiro.net.lo]
