@@ -10,6 +10,8 @@ with lib;
 
   imports = [
     ../../profiles/archetype/games
+    ../../profiles/archetype/games/factorio.nix
+    ../../profiles/archetype/games/do-not-starve-together.nix
     ../../profiles/archetype/workstation
     ../../profiles/hardware/bluetooth.nix
     ../../profiles/hardware/gpu-amd.nix
@@ -22,22 +24,6 @@ with lib;
   ];
 
   virtualisation.podman.enable = true;
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      8554
-      48080
-    ];
-    allowedUDPPorts = [
-      # torchlight 2
-      4549
-      # don't starve together
-      10999
-      10998
-      8000
-      8001
-    ];
-  };
 
   systemd.network.networks."20-lan0" = {
     matchConfig.Name = "enp7s0";
