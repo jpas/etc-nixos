@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, ... } @ inputs:
+  outputs = inputs@{ self, nixpkgs, utils, ... }:
     let
       inherit (inputs) deploy-rs;
       inherit (nixpkgs) lib;

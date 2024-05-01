@@ -1,4 +1,4 @@
-{ lib, flakes, ... }:
+{ lib, inputs, ... }:
 {
-  imports = [ flakes.agenix.nixosModules.age ];
+  imports = [ inputs.agenix.nixosModules.age ];
 }

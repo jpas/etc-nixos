@@ -1,4 +1,4 @@
-{ lib, config, pkgs, flakes, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 with lib;
 
@@ -7,7 +7,7 @@ with lib;
   boot.loader.generic-extlinux-compatible.enable = true;
 
   imports = [
-    "${flakes.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
     ../common
     ../../profiles/archetype/minimal
     ../../profiles/hardware/wifi.nix
