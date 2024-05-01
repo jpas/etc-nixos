@@ -40,7 +40,7 @@ with lib;
     HandlePowerKeyLongPress=poweroff
   '';
 
-  services.xserver.libinput.enable = mkDefault true;
+  services.libinput.enable = mkDefault true;
 
   fonts = {
     fontconfig = {
