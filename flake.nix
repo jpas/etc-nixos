@@ -30,8 +30,8 @@
         inherit system;
         modules = map import profiles;
         specialArgs = {
+          inherit inputs;
           meta = builtins.fromTOML (builtins.readFile ./meta.toml);
-          flakes = self.inputs // { inherit self; };
         };
       };
 

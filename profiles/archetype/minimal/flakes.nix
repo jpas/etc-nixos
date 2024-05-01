@@ -1,59 +1,22 @@
-{ lib, config, flakes, pkgs, ... }:
+{ lib, config, inputs, ... }:
 let
-  inherit (flakes) self;
-
-  flake-channels = pkgs.symlinkJoin {
-    name = "flake-channels";
-    paths = [
-      (pkgs.writeTextDir "/nixos/nixos/default.nix" ''
-        let
-          flake = builtins.getFlake "${self.outPath}";
-          hostname = flake.inputs.nixpkgs.lib.fileContents /proc/sys/kernel/hostname;
-          eval = flake.nixosConfigurations."''${hostname}";
-        in
-        { ... }: {
-          inherit (eval) pkgs config options;
-          system = eval.config.system.build.toplevel;
-          inherit (eval.config.system.build) vm vmWithBootLoader;
-        }
-      '')
-      (pkgs.writeTextDir "/nixos/default.nix" ''
-        { ... }: (import ./nixos {}).pkgs
-      '')
-    ];
-  };
+  inherit (inputs) self nixpkgs;
 in
 {
   imports = [ self.nixosModules.default or { } ];
-
-  system = {
-    configurationRevision = self.rev or "dirty";
-
-    extraSystemBuilderCmds = ''
-      ln -s ${self.outPath} $out/flake
-    '';
-
-    activationScripts = {
-      flake-channels.text = ''
-        ln -sfn ${flake-channels} /nix/var/nix/profiles/per-user/root/channels
-      '';
-    };
-  };
-
   nixpkgs.overlays = [ self.overlays.default or { } ];
 
-  nix = {
-    package = pkgs.nixUnstable;
-    settings.experimental-features = [ "flakes" "nix-command" ];
+  system.configurationRevision = self.rev or "dirty";
 
-    registry = {
-      nixpkgs.flake = flakes.nixpkgs;
-    };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # Removes nixos-config from NIX_PATH as there isn't a configuration.nix.
-    nixPath = lib.mkOptionDefault [
-      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-      "/nix/var/nix/profiles/per-user/root/channels/nixos"
-    ];
-  };
+  # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
+  nix.registry.nixpkgs.flake = nixpkgs;
+  nix.channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
+
+  # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
+  # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one used by this flake.
+  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
+  # https://github.com/NixOS/nix/issues/9574
+  nix.settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
 }
