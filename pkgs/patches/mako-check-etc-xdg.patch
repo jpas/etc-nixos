@@ -1,12 +1,12 @@
 diff --git a/config.c b/config.c
-index 50affec..191cb9b 100644
+index ff7e7db..95d4a04 100644
 --- a/config.c
 +++ b/config.c
-@@ -694,6 +694,7 @@ static char *get_config_path(void) {
- 	static const char *config_paths[] = {
- 		"$HOME/.mako/config",
- 		"$XDG_CONFIG_HOME/mako/config",
-+		"/etc/xdg/mako/config",
+@@ -716,6 +716,7 @@ static char *get_config_path(void) {
+ 	char *config_paths[] = {
+ 		mako_asprintf("%s/.mako/config", home),
+ 		mako_asprintf("%s/mako/config", config_home),
++		mako_asprintf("%s/mako/config", "/etc/xdg"),
  	};
  
- 	if (!getenv("XDG_CONFIG_HOME")) {
+ 	size_t config_paths_len = sizeof(config_paths) / sizeof(config_paths[0]);
