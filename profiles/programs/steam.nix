@@ -6,12 +6,16 @@ let
   cfg = config.programs.steam;
 in
 {
-  programs.steam.remotePlay.openFirewall = true;
   programs.steam.enable = true;
 
-  environment.systemPackages = [ pkgs.steam-run ];
+  hardware.steam-hardware.enable = mkDefault cfg.enable;
+  programs.steam.remotePlay.openFirewall = mkDefault cfg.enable;
 
-  programs.sway.include."50-steam.conf" = ''
+  environment.systemPackages = mkIf cfg.enable [
+    pkgs.steam-run
+  ];
+
+  programs.sway.include."50-steam.conf" = mkIf cfg.enable ''
     for_window [class="Steam"] floating enable, border none
     for_window [class="streaming_client"] floating enable, border pixel
     for_window [class="steam_proton"] floating enable, border pixel
