@@ -3,7 +3,7 @@
 {
   programs.gamescope.enable = true;
   programs.gamescope = {
-    args = [ "--rt" ];
-    capSysNice = true;
+    # args = [ "--rt" ];
+    # capSysNice = true;
   };
 }
