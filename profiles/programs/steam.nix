@@ -13,6 +13,7 @@ in
 
   environment.systemPackages = mkIf cfg.enable [
     pkgs.steam-run
+    pkgs.protontricks
   ];
 
   programs.sway.include."50-steam.conf" = mkIf cfg.enable ''
