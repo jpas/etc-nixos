@@ -7,7 +7,7 @@ with lib;
 
   programs.sway = {
     extraPackages = attrValues {
-      inherit (pkgs.gnome3) adwaita-icon-theme gnome-themes-extra;
+      inherit (pkgs) adwaita-icon-theme gnome-themes-extra;
       inherit (pkgs.qt5) qtwayland;
     };
 
