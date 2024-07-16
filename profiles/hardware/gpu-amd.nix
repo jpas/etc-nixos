@@ -11,7 +11,7 @@ with lib;
       ;
   };
 
-  hardware.opengl.extraPackages = attrValues {
+  hardware.graphics.extraPackages = attrValues {
     inherit (pkgs)
       rocm-opencl-icd
       ;

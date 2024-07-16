@@ -20,7 +20,7 @@ with lib;
     after = [ "pipewire.service" ];
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     extraPackages = [ pkgs.pipewire ];
     extraPackages32 = [ pkgs.pkgsi686Linux.pipewire ];
   };

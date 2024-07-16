@@ -5,7 +5,7 @@ with lib;
 {
   imports = [ ./gpu.nix ];
 
-  hardware.opengl.extraPackages = attrValues {
+  hardware.graphics.extraPackages = attrValues {
     inherit (pkgs)
       intel-compute-runtime
       intel-media-driver
@@ -13,7 +13,7 @@ with lib;
       ;
   };
 
-  hardware.opengl.extraPackages32 = attrValues {
+  hardware.graphics.extraPackages32 = attrValues {
     inherit (pkgs.pkgsi686Linux)
       vaapiIntel
       ;

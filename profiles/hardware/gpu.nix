@@ -3,8 +3,7 @@
 with lib;
 
 {
-  hardware.opengl.driSupport = mkDefault true;
-  hardware.opengl.extraPackages = attrValues {
+  hardware.graphics.extraPackages = attrValues {
     inherit (pkgs)
       libva
       libvdpau-va-gl
@@ -12,8 +11,8 @@ with lib;
       ;
   };
 
-  hardware.opengl.driSupport32Bit = mkDefault config.hardware.opengl.driSupport;
-  hardware.opengl.extraPackages32 = attrValues {
+  hardware.graphics.enable32Bit = mkDefault cfg.hardware.graphics.enable;
+  hardware.graphics.extraPackages32 = attrValues {
     inherit (pkgs.pkgsi686Linux)
       libva
       libvdpau-va-gl

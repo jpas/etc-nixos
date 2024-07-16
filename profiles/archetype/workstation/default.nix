@@ -25,11 +25,6 @@ with lib;
 
   programs.sway.enable = mkDefault true;
 
-  hardware.opengl = {
-    driSupport = mkDefault true;
-    driSupport32Bit = mkDefault true;
-  };
-
   documentation.dev.enable = mkDefault true;
 
   services.upower.enable = mkDefault true;
