@@ -17,6 +17,7 @@ with lib;
     ../../programs/tofi.nix
     ../../programs/wl-gammarelay-rs.nix
     ../../programs/zathura.nix
+    ../../programs/smartmontools.nix
     ../minimal
     ./sway-session.nix
     ./theme.nix
