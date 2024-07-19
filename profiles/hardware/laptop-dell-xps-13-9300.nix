@@ -45,8 +45,6 @@ in
   # Needed for wifi and bluetooth to work
   hardware.enableRedistributableFirmware = mkDefault true;
 
-  services.fwupd.enable = mkDefault true;
-
   services.pipewire = {
     # TODO: port this to wireplumber
     # media-session.config = {
