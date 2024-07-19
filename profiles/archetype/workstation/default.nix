@@ -30,6 +30,7 @@ with lib;
   services.upower.enable = mkDefault true;
   services.udisks2.enable = mkDefault true;
   services.fwupd.enable = mkDefault true;
+  services.smartd.enable = mkDefault true;
 
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
