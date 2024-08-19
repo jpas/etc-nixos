@@ -5,7 +5,6 @@ with lib;
 {
   imports = [
     ../../hardware/sound.nix
-    ../../programs/_1password-gui.nix
     ../../programs/firefox.nix
     ../../programs/imv.nix
     ../../programs/kitty.nix
