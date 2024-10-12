@@ -227,7 +227,6 @@ in
       playerctl
       procps
       pulsemixer
-      signal-desktop
       slurp
       tofi
       wl-clipboard
