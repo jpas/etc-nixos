@@ -21,5 +21,6 @@ in
     for_window [class="streaming_client"] floating enable, border pixel
     for_window [class="steam_proton"] floating enable, border pixel
     for_window [class="explorer.exe"] floating enable, border pixel
+    for_window [class="steam_app_[0123456789]+"] border none, inhibit_idle open
   '';
 }
