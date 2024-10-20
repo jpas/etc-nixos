@@ -57,6 +57,11 @@
           profiles = [ ./machines/naze ];
         };
 
+        niji = mkSystem {
+          system = "x86_64-linux";
+          profiles = [ ./machines/niji ];
+        };
+
         shiro = mkSystem {
           system = "x86_64-linux";
           profiles = [ ./machines/shiro ];
