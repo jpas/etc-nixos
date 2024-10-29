@@ -10,10 +10,4 @@ with lib;
       radeontop
       ;
   };
-
-  hardware.graphics.extraPackages = attrValues {
-    inherit (pkgs)
-      rocm-opencl-icd
-      ;
-  };
 }
