@@ -53,7 +53,7 @@ mkIf config.programs.sway.enable {
       # use this if they aren't displayed properly:
       export _JAVA_AWT_WM_NONREPARENTING=1
 
-      export SDL_VIDEODRIVER=wayland
+      export SDL_VIDEODRIVER=wayland,x11
     '';
 
     extraPackages = [ sway-session ];
