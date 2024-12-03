@@ -24,6 +24,7 @@ with lib;
   ];
 
   virtualisation.podman.enable = true;
+  virtualisation.waydroid.enable = true;
 
   systemd.network.networks."20-lan0" = {
     matchConfig.Name = "enp7s0";
