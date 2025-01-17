@@ -5,7 +5,6 @@ with lib;
 {
   security.rtkit.enable = mkDefault true;
 
-  hardware.pulseaudio.enable = mkForce false;
   services.pipewire.enable = mkDefault true;
 
   services.pipewire = {
