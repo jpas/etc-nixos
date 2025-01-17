@@ -15,7 +15,6 @@ let
     lemurs = callPackage ./lemurs { };
     oauth2ms = callPackage ./oauth2ms { };
     oauth2token = callPackage ./oauth2token { };
-    wl-gammarelay-rs = callPackage ./wl-gammarelay-rs { };
 
     direnv = patchPackage prev.direnv [
       (final.fetchpatch {
