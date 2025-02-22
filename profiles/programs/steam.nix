@@ -8,13 +8,11 @@ in
 {
   programs.steam.enable = true;
 
-  hardware.steam-hardware.enable = mkDefault cfg.enable;
-  programs.steam.remotePlay.openFirewall = mkDefault cfg.enable;
-
-  environment.systemPackages = mkIf cfg.enable [
-    pkgs.steam-run
-    pkgs.protontricks
-  ];
+  programs.steam = {
+    remotePlay.openFirewall = mkDefault cfg.enable;
+    localNetworkGameTransfers.openFirewall = mkDefault cfg.enable;
+    protontricks.enable = mkDefault cfg.enable;
+  };
 
   programs.sway.include."50-steam.conf" = mkIf cfg.enable ''
     for_window [class="Steam"] floating enable, border none
