@@ -81,6 +81,9 @@ ssh.publicKeys = [
   ipv4 = "10.39.0.53"
   mac = "10:7c:61:3c:bf:1f"
 
+  [machines.niji.net.ts]
+  ipv4 = "100.80.102.29"
+
 [machines.shiro]
 ssh.publicKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2FZH5elPX+l0DhMtLo+aLVZVx3LCzUAeJ1D+pcH8Y0",
