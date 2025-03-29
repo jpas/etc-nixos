@@ -4,7 +4,7 @@ with lib;
 
 {
   services.nfs = {
-    extraConfig = generators.toINI { } {
+    settings = {
       nfsd = {
         vers2 = false;
         vers3 = false;
