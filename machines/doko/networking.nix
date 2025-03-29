@@ -117,10 +117,8 @@ in
     #  UplinkInterface = interfaces.wan0;
     #};
     dhcpServerStaticLeases = attrValues (forMachinesIn "lo" (_: machine: {
-      dhcpServerStaticLeaseConfig = {
-        Address = machine.net.lo.ipv4;
-        MACAddress = machine.net.lo.mac;
-      };
+      Address = machine.net.lo.ipv4;
+      MACAddress = machine.net.lo.mac;
     }));
   };
 
