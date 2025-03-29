@@ -58,5 +58,5 @@ with lib;
     };
   };
 
-  age.secrets.lldap-jwt-secret.file = ./.lldap-jwt-secret.age;
+  age.secrets.lldap-jwt-secret.file = ./secrets/lldap-jwt-secret.age;
 }

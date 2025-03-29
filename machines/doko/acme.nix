@@ -23,7 +23,7 @@ with lib;
   };
 
   age.secrets = {
-    acme-credentials = { group = "acme"; file = ./.acme-credentials.age; };
+    acme-credentials = { group = "acme"; file = ./secrets/acme-credentials.age; };
   };
 
   users.groups.acme = { };

@@ -128,11 +128,11 @@ in
   };
 
   age.secrets = {
-    authelia-identity-provider-oidc-hmac-secret = mkSecret ./.authelia-identity-provider-oidc-hmac-secret.age;
-    authelia-identity-provider-oidc-issuer-private-key = mkSecret ./.authelia-identity-provider-oidc-issuer-private-key.age;
-    authelia-jwt-secret = mkSecret ./.authelia-jwt-secret.age;
-    authelia-notifier-smtp-password = mkSecret ./.authelia-notifier-smtp-password.age;
-    authelia-storage-encryption-key = mkSecret ./.authelia-storage-encryption-key.age;
-    authelia-authentication-backend-password = mkSecret ./.authelia-authentication-backend-password.age;
+    authelia-identity-provider-oidc-hmac-secret = mkSecret ./secrets/authelia-identity-provider-oidc-hmac-secret.age;
+    authelia-identity-provider-oidc-issuer-private-key = mkSecret ./secrets/authelia-identity-provider-oidc-issuer-private-key.age;
+    authelia-jwt-secret = mkSecret ./secrets/authelia-jwt-secret.age;
+    authelia-notifier-smtp-password = mkSecret ./secrets/authelia-notifier-smtp-password.age;
+    authelia-storage-encryption-key = mkSecret ./secrets/authelia-storage-encryption-key.age;
+    authelia-authentication-backend-password = mkSecret ./secrets/authelia-authentication-backend-password.age;
   };
 }

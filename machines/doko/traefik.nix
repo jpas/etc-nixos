@@ -89,6 +89,6 @@ mkIf cfg.enable {
   users.users.traefik.extraGroups = [ "acme" ];
 
   age.secrets = {
-    "traefik-config.json" = { owner = "traefik"; file = ./.traefik-config.json.age; };
+    "traefik-config.json" = { owner = "traefik"; file = ./secrets/traefik-config.json.age; };
   };
 }

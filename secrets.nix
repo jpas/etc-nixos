@@ -27,19 +27,19 @@ let
 in
 foldl recursiveUpdate { } [
   (mkSecrets { allow = { inherit (machines) doko; }; } [
-    "machines/doko/.acme-credentials.age"
-    "machines/doko/.authelia-identity-provider-oidc-hmac-secret.age"
-    "machines/doko/.authelia-identity-provider-oidc-issuer-private-key.age"
-    "machines/doko/.authelia-jwt-secret.age"
-    "machines/doko/.authelia-notifier-smtp-password.age"
-    "machines/doko/.authelia-storage-encryption-key.age"
-    "machines/doko/.authelia-authentication-backend-password.age"
-    "machines/doko/.traefik-config.json.age"
-    "machines/doko/.lldap-jwt-secret.age"
+    "machines/doko/secrets/acme-credentials.age"
+    "machines/doko/secrets/authelia-identity-provider-oidc-hmac-secret.age"
+    "machines/doko/secrets/authelia-identity-provider-oidc-issuer-private-key.age"
+    "machines/doko/secrets/authelia-jwt-secret.age"
+    "machines/doko/secrets/authelia-notifier-smtp-password.age"
+    "machines/doko/secrets/authelia-storage-encryption-key.age"
+    "machines/doko/secrets/authelia-authentication-backend-password.age"
+    "machines/doko/secrets/traefik-config.json.age"
+    "machines/doko/secrets/lldap-jwt-secret.age"
   ])
 
   (mkSecrets { allow = { inherit (machines) kuro; }; }
-    [ "machines/kado/.torrents-vpn-private-key.age" ])
+    [ "machines/kado/secrets/torrents-vpn-private-key.age" ])
 
   (mkSecrets { allow = machines; } [
     "users/root/passwd.age"
