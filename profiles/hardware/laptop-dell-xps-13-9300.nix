@@ -83,16 +83,17 @@ in
   ];
 
   systemd.services = {
-    dell-thermal-mode = {
-      wantedBy = [ "multi-user.target" "post-resume.target" ];
-      after = [ "post-resume.target" ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        Restart = "no";
-        ExecStart = "${pkgs.libsmbios}/bin/smbios-thermal-ctl --set-thermal-mode=quiet";
-      };
-    };
+    # disabled for now, kernel seems to no longer support this
+    # dell-thermal-mode = {
+    #   wantedBy = [ "multi-user.target" "post-resume.target" ];
+    #   after = [ "post-resume.target" ];
+    #
+    #   serviceConfig = {
+    #     Type = "oneshot";
+    #     Restart = "no";
+    #     ExecStart = "${pkgs.libsmbios}/bin/smbios-thermal-ctl --set-thermal-mode=quiet";
+    #   };
+    # };
   };
 
   systemd.user.services = {
