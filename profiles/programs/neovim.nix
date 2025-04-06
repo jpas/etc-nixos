@@ -43,7 +43,6 @@ let
           let g:lightline = { 'colorscheme': 'gruvbox' }
         '';
       }
-      supertab
       {
         plugin = vim-better-whitespace;
         config = ''
