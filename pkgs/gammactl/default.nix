@@ -1,19 +1,22 @@
 { lib
-, substituteAll
+, replaceVarsWith
+, bash
 , systemd
 }:
 
-substituteAll {
-  name = "gammactl";
-
+replaceVarsWith {
   src = ./gammactl;
 
+  replacements =  {
+    inherit bash systemd;
+  };
+
+  name = "gammactl";
   dir = "bin";
   isExecutable = true;
 
-  inherit systemd;
-
   meta = with lib; {
+    mainProgram = "gammactl";
     platforms = platforms.linux;
   };
 }
