@@ -23,7 +23,7 @@ with lib;
     ./hardware.nix
   ];
 
-  virtualisation.podman.enable = true;
+  virtualisation.docker.enable = true;
   virtualisation.waydroid.enable = true;
 
   systemd.network.networks."20-lan0" = {
