@@ -29,7 +29,11 @@ with lib;
 
   xdg.mime = { };
 
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   systemd.user.services = {
     xdg-user-dirs-update = {
