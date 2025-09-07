@@ -26,33 +26,33 @@ let
     swaylock = patchPackage prev.swaylock [ ./patches/swaylock-check-etc-xdg.patch ];
     tofi = patchPackage prev.tofi [ ./patches/tofi-check-etc-xdg.patch ];
 
-    kanidm = prev.kanidm.overrideAttrs (o: rec {
-      name = "${o.pname}-${version}";
-      version = "1.1.0-alpha.10";
-      src = prev.fetchFromGitHub {
-        owner = o.pname;
-        repo = o.pname;
-        rev = "v${version}";
-        hash = "sha256-ICS7nwgFGbTiobr8Sw/ZHO6jBUfiq8KyE/MiLg8uDUA=";
-      };
+    # kanidm = prev.kanidm.overrideAttrs (o: rec {
+    #   name = "${o.pname}-${version}";
+    #   version = "1.1.0-alpha.10";
+    #   src = prev.fetchFromGitHub {
+    #     owner = o.pname;
+    #     repo = o.pname;
+    #     rev = "v${version}";
+    #     hash = "sha256-ICS7nwgFGbTiobr8Sw/ZHO6jBUfiq8KyE/MiLg8uDUA=";
+    #   };
 
-      cargoPatches = (o.cargoPatches or [ ]) ++ [
-        (final.fetchpatch {
-          # fixes test_password_from_ipa_nt_hash and test_password_from_samba_nt_hash
-          url = "https://github.com/kanidm/kanidm/commit/546f1c8da7c651aa38c1b627dce58e0acc3b1510.patch";
-          hash = "sha256-c39XzWifgenli0UfSdijQzaVOpednKD9G1iJE37D4xg=";
-        })
-      ];
+    #   cargoPatches = (o.cargoPatches or [ ]) ++ [
+    #     (final.fetchpatch {
+    #       # fixes test_password_from_ipa_nt_hash and test_password_from_samba_nt_hash
+    #       url = "https://github.com/kanidm/kanidm/commit/546f1c8da7c651aa38c1b627dce58e0acc3b1510.patch";
+    #       hash = "sha256-c39XzWifgenli0UfSdijQzaVOpednKD9G1iJE37D4xg=";
+    #     })
+    #   ];
 
-      patches = (o.patches or [ ]) ++ cargoPatches;
+    #   patches = (o.patches or [ ]) ++ cargoPatches;
 
-      cargoDeps = o.cargoDeps.overrideAttrs (o: {
-        inherit src;
-        name = "${name}-vendor.tar.gz";
-        outputHash = "sha256-/CcmKYPtBHNdhJnO0OmZtW/39HH58qmCE9hFbIiNsaE=";
-        patches = cargoPatches;
-      });
-    });
+    #   cargoDeps = o.cargoDeps.overrideAttrs (o: {
+    #     inherit src;
+    #     name = "${name}-vendor.tar.gz";
+    #     outputHash = "sha256-/CcmKYPtBHNdhJnO0OmZtW/39HH58qmCE9hFbIiNsaE=";
+    #     patches = cargoPatches;
+    #   });
+    # });
 
     go-chromecast = prev.go-chromecast.overrideAttrs (o: {
       doCheck = false;

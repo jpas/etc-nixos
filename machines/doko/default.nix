@@ -14,7 +14,7 @@
     ./hardware.nix
     ./influx.nix
     ./jellyfin.nix
-    ./kanidm.nix
+    # ./kanidm.nix
     ./lldap.nix
     ./networking.nix
     ./plane.nix
