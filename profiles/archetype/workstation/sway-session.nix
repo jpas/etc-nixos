@@ -32,7 +32,6 @@ in
 mkIf config.programs.sway.enable {
   services.greetd = {
     enable = mkDefault true;
-    vt = 2;
     settings = {
       default_session = {
         command = "${config.services.greetd.package}/bin/agreety --cmd sway-login";
