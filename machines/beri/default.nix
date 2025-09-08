@@ -12,7 +12,10 @@ with lib;
     ../../profiles/archetype/minimal
     ../../profiles/hardware/wifi.nix
     ../../profiles/hardware/bluetooth.nix
+    ./home-assistant.nix
   ];
+
+  virtualisation.oci-containers.backend = "docker";
 
   systemd.network.networks = {
     "20-lan" = {
