@@ -32,10 +32,12 @@ with lib;
   services.fwupd.enable = mkDefault true;
   services.smartd.enable = mkDefault true;
 
-  services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-    HandlePowerKeyLongPress=poweroff
-  '';
+  services.logind.settings = {
+    Login = {
+      HandlePowerKey = "suspend";
+      HandlePowerKeyLongPress = "poweroff";
+    };
+  };
 
   services.libinput.enable = mkDefault true;
 
