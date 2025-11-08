@@ -10,6 +10,7 @@
     ./acme.nix
     ./authelia.nix
     ./factorio.nix
+    ./foundry.nix
     ./fs.nix
     ./hardware.nix
     ./influx.nix
