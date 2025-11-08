@@ -18,20 +18,22 @@ with lib;
 
     ldap_user_dn = "root";
     ldap_user_email = "root@pas.sh";
+    force_ldap_user_pass_reset = "always";
 
     database_url = "sqlite:///var/lib/lldap/users.db?mode=rwc";
     key_file = "/var/lib/lldap/private-key";
+  };
 
-    environment = {
-      LLDAP_JWT_SECRET_FILE = "%d/jwt-secret";
-      LLDAP_LDAP_USER_PASS = "dolphins"; # TODO: fix me
-    };
+  services.lldap.environment = {
+    LLDAP_JWT_SECRET_FILE = "%d/jwt-secret";
+    LLDAP_LDAP_USER_PASS_FILE = "%d/user-pass";
   };
 
   systemd.services.lldap = {
     serviceConfig = {
       LoadCredential = [
         "jwt-secret:${config.age.secrets.lldap-jwt-secret.path}"
+        "user-pass:${config.age.secrets.lldap-user-pass.path}"
       ];
     };
   };
@@ -59,4 +61,5 @@ with lib;
   };
 
   age.secrets.lldap-jwt-secret.file = ./secrets/lldap-jwt-secret.age;
+  age.secrets.lldap-user-pass.file = ./secrets/lldap-user-pass.age;
 }

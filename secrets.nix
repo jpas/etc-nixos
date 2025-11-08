@@ -36,6 +36,7 @@ foldl recursiveUpdate { } [
     "machines/doko/secrets/authelia-authentication-backend-password.age"
     "machines/doko/secrets/traefik-config.json.age"
     "machines/doko/secrets/lldap-jwt-secret.age"
+    "machines/doko/secrets/lldap-user-pass.age"
   ])
 
   (mkSecrets { allow = { inherit (machines) kuro; }; }
