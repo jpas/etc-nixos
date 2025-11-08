@@ -31,26 +31,19 @@ in
           format = "text";
         };
         server = {
-          host = "127.0.0.1";
-          port = 9091;
+          address = "127.0.0.1:9091";
         };
-        session = {
-          name = "session";
-          domain = "pas.sh";
-        };
+        session.cookies = [
+          {
+            domain = "pas.sh";
+            authelia_url = "https://auth.pas.sh";
+          }
+        ];
         authentication_backend.ldap = {
-          implementation = "custom";
-          url = "ldap://127.0.0.1:3890";
-          base_dn = "dc=pas,dc=sh";
-          username_attribute = "uid";
-          additional_users_dn = "ou=people";
-          users_filter = "(&({username_attribute}={input})(objectclass=person))";
-          additional_groups_dn = "ou=groups";
-          groups_filter = "(member={dn})";
-          group_name_attribute = "cn";
-          mail_attribute = "mail";
-          display_name_attribute = "uid";
-          user = "uid=authelia,ou=people,dc=pas,dc=sh";
+          implementation = "lldap";
+          address = "ldap://127.0.0.1:3890";
+          base_dn = "DC=pas,DC=sh";
+          user = "UID=authelia,OU=people,DC=pas,DC=sh";
         };
         storage.local = {
           path = "/var/lib/authelia-${cfg.name}/db.sqlite3";
@@ -59,8 +52,7 @@ in
           default_policy = "deny";
         };
         notifier.smtp = rec {
-          host = "smtp.fastmail.com";
-          port = 587;
+          address = "smtp.fastmail.com:587";
           username = "jarrod@jarrodpas.com";
           sender = "noreply@auth.pas.sh";
           startup_check_address = sender;
@@ -77,8 +69,8 @@ in
           ];
           clients = [
             {
-              description = "dummy";
-              id = "dummy";
+              client_name = "dummy";
+              client_id = "dummy";
               public = true;
               consent_mode = "implicit";
               scopes = [ ];
@@ -124,6 +116,29 @@ in
         uri /api/oidc/authorization replace &prompt=select_account%20consent ""
         reverse_proxy 127.0.0.1:9091
       '';
+    };
+  };
+
+  services.traefik.dynamicConfigOptions.http = {
+    services.auth = {
+      loadBalancer.servers = [{ url = "http://127.0.0.1:9091"; }];
+    };
+
+    routers.auth = {
+      rule = "Host(`auth.pas.sh`)";
+      service = "auth";
+      entryPoints = [ "web" ];
+    };
+
+    middlewares.auth.forwardAuth = {
+      address = "http://127.0.0.1:9091/api/authz/forward-auth?authelia_url=https%3A%2F%2Fauth.pas.sh%2F";
+      trustForwardHeader = true;
+      authResponseHeaders = [
+        "Remote-User"
+        "Remote-Groups"
+        "Remote-Email"
+        "Remote-Name"
+      ];
     };
   };
 
