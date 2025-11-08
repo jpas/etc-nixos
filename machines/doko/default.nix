@@ -13,16 +13,17 @@
     ./foundry.nix
     ./fs.nix
     ./hardware.nix
-    ./jellyfin.nix
     # ./kanidm.nix
     ./lldap.nix
     ./networking.nix
     ./plane.nix
-    ./radarr.nix
-    ./sonarr.nix
     ./traefik.nix
     ./unifi.nix
-    ./nextcloud.nix
+    # disabled until kado is revived
+    # ./jellyfin.nix
+    # ./radarr.nix
+    # ./sonarr.nix
+    # ./nextcloud.nix
   ];
 
   services.lldap.enable = true;
