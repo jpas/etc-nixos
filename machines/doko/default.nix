@@ -13,7 +13,6 @@
     ./foundry.nix
     ./fs.nix
     ./hardware.nix
-    ./influx.nix
     ./jellyfin.nix
     # ./kanidm.nix
     ./lldap.nix
