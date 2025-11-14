@@ -6,6 +6,7 @@ let
   sessionVariables = concatStringsSep " " [
     "DISPLAY"
     "I3SOCK"
+    "NIXOS_OZONE_WL"
     "SWAYSOCK"
     "WAYLAND_DISPLAY"
     "XDG_CURRENT_DESKTOP"
@@ -46,6 +47,7 @@ mkIf config.programs.sway.enable {
     };
 
     extraSessionCommands = ''
+      export NIXOS_OZONE_WL=1
       export XDG_SESSION_DESKTOP=sway
 
       # Fix for some Java AWT applications (e.g. Android Studio),
