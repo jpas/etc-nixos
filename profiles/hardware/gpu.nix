@@ -6,8 +6,8 @@ with lib;
   hardware.graphics.extraPackages = attrValues {
     inherit (pkgs)
       libva
+      libva-vdpau-driver
       libvdpau-va-gl
-      vaapiVdpau
       ;
   };
 
@@ -15,8 +15,8 @@ with lib;
   hardware.graphics.extraPackages32 = attrValues {
     inherit (pkgs.pkgsi686Linux)
       libva
+      libva-vdpau-driver
       libvdpau-va-gl
-      vaapiVdpau
       ;
   };
 }
