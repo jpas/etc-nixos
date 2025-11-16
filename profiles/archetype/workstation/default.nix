@@ -56,11 +56,11 @@ with lib;
     packages = attrValues {
       inherit (pkgs)
         jetbrains-mono
-        noto-fonts
-        #noto-fonts-cjk
         #mplus-outline-fonts
-        noto-fonts-emoji
-        noto-fonts-extra
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        noto-fonts-color-emoji
         libertinus
         ;
     };
