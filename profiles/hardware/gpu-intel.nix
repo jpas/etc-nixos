@@ -9,13 +9,13 @@ with lib;
     inherit (pkgs)
       intel-compute-runtime
       intel-media-driver
-      vaapiIntel
+      intel-vaapi-driver
       ;
   };
 
   hardware.graphics.extraPackages32 = attrValues {
     inherit (pkgs.pkgsi686Linux)
-      vaapiIntel
+      intel-vaapi-driver
       ;
   };
 }
