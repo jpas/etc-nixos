@@ -24,9 +24,6 @@
 
   systemd.network.networks."20-lan0" = {
     matchConfig.Name = "enp0s20f0";
-    linkConfig = {
-      RequiredForOnline = "routable";
-    };
     networkConfig = {
       DHCP = "yes";
     };
@@ -34,9 +31,18 @@
 
   systemd.network.networks."20-lan1" = {
     matchConfig.Name = "enp0s20f1";
+    linkConfig = {
+      RequiredForOnline = "routable";
+    };
     networkConfig = {
+      DNS = "10.39.1.254";
       Address = "10.39.1.20/24";
     };
+    routes = [
+      {
+        Gateway = "10.39.1.254";
+      }
+    ];
   };
 
   networking.firewall.trustedInterfaces = [ "enp0s20f1" ];
