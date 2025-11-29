@@ -138,7 +138,7 @@ in
   networking.nat.enable = true;
   networking.nat = {
     externalInterface = interfaces.wan0;
-    internalInterfaces = [ interfaces.lan0 ];
+    internalInterfaces = [ interfaces.lan0 interfaces.lan1 ];
   };
 
   services.unbound.enable = true;
