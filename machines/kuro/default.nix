@@ -3,6 +3,7 @@
   boot.loader.systemd-boot.enable = true;
 
   imports = [
+    ../../profiles/programs/obsidian.nix
     ../../profiles/archetype/laptop
     ../../profiles/hardware/gpu-intel.nix
     ../../profiles/hardware/keyboard-keychron-k3.nix

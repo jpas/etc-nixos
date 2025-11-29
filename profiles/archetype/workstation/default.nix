@@ -9,7 +9,6 @@ with lib;
     ../../programs/imv.nix
     ../../programs/kitty.nix
     ../../programs/mako.nix
-    ../../programs/obsidian.nix
     ../../programs/steam.nix
     ../../programs/sway.nix
     ../../programs/swayidle.nix

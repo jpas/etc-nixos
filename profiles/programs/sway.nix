@@ -60,7 +60,6 @@ in
       $terminal kitty
     }
 
-    input type:keyboard xkb_options caps:escape
     input type:touchpad tap enabled
 
     output * bg ${./swaybg.png} fill

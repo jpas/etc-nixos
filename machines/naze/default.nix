@@ -9,6 +9,7 @@ with lib;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   imports = [
+    ../../profiles/programs/obsidian.nix
     ../../profiles/archetype/games
     ../../profiles/archetype/games/factorio.nix
     ../../profiles/archetype/games/do-not-starve-together.nix
