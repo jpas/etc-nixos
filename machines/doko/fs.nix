@@ -24,12 +24,11 @@ with lib;
     options = [ "subvol=@nix" "noatime" "compress=zstd" "space_cache=v2" ];
   };
 
-  # disabled until kado is revived
-  # fileSystems."/aleph" = {
-  #   device = "10.39.1.20:/aleph";
-  #   fsType = "nfs4";
-  #   options = [ "fsc" "relatime" ];
-  # };
+  fileSystems."/aleph" = {
+    device = "10.39.1.20:/aleph";
+    fsType = "nfs4";
+    options = [ "fsc" "relatime" ];
+  };
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/b022d055-04e1-4ce6-ab01-6b66d47fd35a"; }
