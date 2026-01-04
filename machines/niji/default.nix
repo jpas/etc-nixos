@@ -16,6 +16,7 @@ with lib;
     ../../profiles/hardware/keyboard-keychron-k3.nix
     ../../profiles/hardware/mouse-logitech-mx-master-3.nix
     ../../profiles/hardware/wifi.nix
+    ../../profiles/programs/minecraft.nix
     ../common
     ./fs.nix
     ./hardware.nix

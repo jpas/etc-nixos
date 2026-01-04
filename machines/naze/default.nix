@@ -9,16 +9,17 @@ with lib;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   imports = [
-    ../../profiles/programs/obsidian.nix
     ../../profiles/archetype/games
-    ../../profiles/archetype/games/factorio.nix
     ../../profiles/archetype/games/do-not-starve-together.nix
+    ../../profiles/archetype/games/factorio.nix
     ../../profiles/archetype/workstation
     ../../profiles/hardware/bluetooth.nix
     ../../profiles/hardware/gpu-amd.nix
     ../../profiles/hardware/keyboard-keychron-k3.nix
     ../../profiles/hardware/mouse-logitech-mx-master-3.nix
     ../../profiles/hardware/wifi.nix
+    ../../profiles/programs/minecraft.nix
+    ../../profiles/programs/obsidian.nix
     ../common
     ./fs.nix
     ./hardware.nix
