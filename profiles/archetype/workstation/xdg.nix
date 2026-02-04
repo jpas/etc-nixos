@@ -27,8 +27,6 @@ with lib;
     VIDEOS=media/video
   '';
 
-  xdg.mime = { };
-
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
