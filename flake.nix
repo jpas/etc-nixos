@@ -1,23 +1,16 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     utils.url = "github:numtide/flake-utils";
 
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "utils";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, utils, ... }:
     let
-      inherit (inputs) deploy-rs;
       inherit (nixpkgs) lib;
 
       eachDefaultSystem = f: utils.lib.eachDefaultSystem
@@ -44,7 +37,6 @@
       devShells.default = pkgs.mkShell {
         buildInputs = [
           pkgs.nixpkgs-fmt
-          inputs.deploy-rs.packages.${system}.deploy-rs
           inputs.agenix.packages.${system}.agenix
         ];
       };
@@ -93,25 +85,7 @@
         (mapAttrs    (_: machine: machine.config.system.build.sdImage))
       ];
 
-      deploy = {
-        sshUser = "root";
-        fastConnection = true;
-
-        nodes = flip mapAttrs self.nixosConfigurations
-          (name: machine:
-            let system = machine.config.nixpkgs.system; in {
-              hostname = "${name}.tail09b98.ts.net";
-              profiles.system = {
-                user = "root";
-                path = deploy-rs.lib.${system}.activate.nixos machine;
-              };
-            });
-      };
-
       nixosModules = let modules = import ./modules; in
         modules // { default = { imports = attrValues modules; }; };
-
-      checks = flip mapAttrs deploy-rs.lib
-        (system: deployLib: deployLib.deployChecks self.deploy);
     };
 }

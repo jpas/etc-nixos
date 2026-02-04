@@ -117,7 +117,7 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "master",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -125,7 +125,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "deploy-rs": "deploy-rs",
         "nixpkgs": "nixpkgs",
         "utils": "utils"
       }
