@@ -13,11 +13,11 @@ with lib;
     ../../profiles/archetype/games/do-not-starve-together.nix
     ../../profiles/archetype/games/factorio.nix
     ../../profiles/archetype/workstation
-    ../../profiles/hardware/bluetooth.nix
+    #../../profiles/hardware/bluetooth.nix
     ../../profiles/hardware/gpu-amd.nix
     ../../profiles/hardware/keyboard-keychron-k3.nix
     ../../profiles/hardware/mouse-logitech-mx-master-3.nix
-    ../../profiles/hardware/wifi.nix
+    #../../profiles/hardware/wifi.nix
     ../../profiles/programs/minecraft.nix
     ../../profiles/programs/obsidian.nix
     ../common
