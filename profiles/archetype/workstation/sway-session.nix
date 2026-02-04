@@ -22,7 +22,7 @@ let
           echo "sway is already running, refusing to start." 1>&2
           exit 1
         fi
-        exec systemd-cat --identifier=sway sway "$@"
+        exec dbus-run-session systemd-cat --identifier=sway sway "$@"
       '';
       sway-logout = ''
         systemctl --user start sway-logout.target
