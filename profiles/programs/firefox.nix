@@ -39,6 +39,17 @@ in
     };
   };
 
+  xdg.mime = {
+    addedAssociations = {
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+    };
+    defaultApplications = {
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+    };
+  };
+
   programs.sway = mkIf cfg.enable {
     extraSessionCommands = ''
       export MOZ_ENABLE_WAYLAND=1
