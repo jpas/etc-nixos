@@ -29,18 +29,10 @@ mkIf cfg.enable {
       http.tls = {
         certResolver = "acme";
         domains = [
-          {
-            main = "pas.sh";
-            sans = [ "*.pas.sh" "*.o.pas.sh" ];
-          }
-          {
-            main = "jpas.xyz";
-            sans = [ "*.jpas.xyz" ];
-          }
-          {
-            main = "jarrodpas.com";
-            sans = [ "*.jarrodpas.com" ];
-          }
+          { main = "jarrodpas.com"; sans = [ "*.jarrodpas.com" ]; }
+          { main = "jpas.dev"; sans = [ "*.jpas.dev" ]; }
+          { main = "jpas.xyz"; sans = [ "*.jpas.xyz" ]; }
+          { main = "pas.sh"; sans = [ "*.pas.sh" "*.o.pas.sh" ]; }
         ];
       };
     };

@@ -13,14 +13,11 @@ with lib;
     };
   };
 
-  security.acme.certs = {
-    "pas.sh" = {
-      extraDomainNames = [ "*.pas.sh" ];
-    };
-    "o.pas.sh" = {
-      extraDomainNames = [ "*.o.pas.sh" ];
-    };
-  };
+  security.acme.certs = lib.genAttrs
+    [ "jarrodpas.com" "jpas.dev" "jpas.xyz" "pas.sh" "o.pas.sh" ]
+    (domain: {
+      extraDomainNames = [ "*.${domain}" ];
+    });
 
   age.secrets = {
     acme-credentials = { group = "acme"; file = ./secrets/acme-credentials.age; };
